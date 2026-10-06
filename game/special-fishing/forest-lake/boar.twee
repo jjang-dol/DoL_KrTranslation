@@ -1,0 +1,114 @@
+/* Hooks into and reuses the forest rescue system (<<forestRescueSetup>>, <<forestRescueCheck>>, <<forestRescue>> widgets) */
+:: Fishing Forest Lake Boar Attack
+<<effects>>
+<<beastNEWinit 1 boar>>
+<<if $settings.bestialityEnabled>>
+	<<set $fishingBoarMouthTarget to random(1, 3)>>
+	덤불 속에서 우당탕하는 소리가 터져 나오며, 엄니를 번뜩이는 <<beasttype>>【이가】 숲 밖으로 튀어나온다. <<bHe>>【은는】 곧장 당신을 향해 돌진하고,
+	<<if $fishingBoarMouthTarget is 1>>
+		미처 반응하기도 전에 <span class="red"><<bhis>> 턱으로 당신의 목을 물어뜯는다</span>.
+	<<elseif $fishingBoarMouthTarget is 2>>
+		미처 반응하기도 전에 <span class="red"><<bhis>> 턱으로 당신의 머리카락을 꽉 문다</span>.
+	<<else>>
+		당신을 덮친다.
+	<</if>>
+	<br><br>
+
+	<<link [[싸운다|Fishing Forest Lake Boar Molestation]]>><<set $molestationstart to 1>><</link>>
+<<else>>
+	덤불 속에서 우당탕하는 소리가 터져 나오며, <<beasttype>>【이가】 숲 밖으로 튀어나와 당신에게 돌진한다. 낚싯대로 쳐내며 간신히 쫓아냈지만, 상처를 피하지는 못했다.<<beastescape>>
+	<br><br>
+
+	<<link [[다음|Fishing Forest Lake Wait]]>><<endevent>><</link>>
+<</if>>
+
+
+:: Fishing Forest Lake Boar Molestation
+<<if $molestationstart is 1>>
+	<<set $molestationstart to 0>>
+	<<controlloss>>
+	<<violence 1>>
+	<<neutral 1>>
+	<<molested>>
+	<<beastCombatInit>>
+	<<if $fishingBoarMouthTarget is 1>>
+		<<set $NPCList[0].mouth to "neck">>
+		<<set $head to "grappled">>
+	<<elseif $fishingBoarMouthTarget is 2>>
+		<<set $NPCList[0].mouth to "hair">>
+		<<set $head to "grappled">>
+	<</if>>
+	<<unset $fishingBoarMouthTarget>>
+	<<forestRescueSetup>>
+<</if>>
+
+<<effects>>
+<<effectsman>>
+<<forestRescueCheck>>
+<br><br>
+
+<<beast $enemyno>>
+<br><br>
+
+<<stateman>>
+<br><br>
+
+<<actionsman>>
+
+<<if _combatend>>
+	<span id="next"><<link [[다음|Fishing Forest Lake Boar Molestation Finish]]>><</link>></span>
+<<else>>
+	<span id="next"><<link [[다음|Fishing Forest Lake Boar Molestation]]>><</link>></span>
+<</if>>
+
+
+:: Fishing Forest Lake Boar Molestation Finish
+<<effects>>
+<<set $fishing.fishingForestLake.event to "none">>
+<<set $fishing.fishingForestLake.eventDanger to 0>>
+<<if $enemyarousal gte $enemyarousalmax>>
+	<<beastejaculation>>
+	<<beasttype>>【은는】 콧김을 거칠게 뿜어내며 숲 속으로 물러난다.
+	<br><br>
+
+	<<tearful>> 당신은 자리에서 일어선다.
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+
+	<<link [[다시 낚시한다|Fishing Forest Lake Wait]]>><</link>>
+	<br>
+	<<link [[떠난다|Lake Fishing Rock]]>><<set $eventskip to 1>><</link>>
+<<elseif $enemyhealth lte 0>>
+	<<beasttype>>【은는】 몸을 돌려 달아나며, 허둥지둥 덤불을 헤치고 도망친다.
+	<br><br>
+
+	<<tearful>> 당신은 몸을 추스른다.
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+
+	<<link [[다시 낚시한다|Fishing Forest Lake Wait]]>><</link>>
+	<br>
+	<<link [[떠난다|Lake Fishing Rock]]>><<set $eventskip to 1>><</link>>
+<<elseif $rescue is 1 and $alarm is 1>>
+	<<forestRescue>>
+<</if>>
+
+
+:: Widgets Fishing Forest Lake Boar [widget]
+/* Text that can appear while waiting if a boar will attack soon */
+<<widget "fishingForestLakeBoarAttackWaitAmbient">>
+	<<addinlineevent 20>>
+		<<print either(
+			"바람에 젖은 짐승 털의 퀴퀴한 냄새가 실려 온다.",
+			"숲 너머에서 쿵쿵거리는 무거운 발소리가 들린다.",
+			"등 뒤 숲에서 나뭇가지가 부러지는 소리가 난다.",
+			"무언가 당신을 지켜보고 있는 것 같은 기분이 든다.",
+			"숲 쪽에서 킁킁거리는 소리가 들려온다."
+		)>>
+		<<set $fishing.fishingForestLake.eventDanger += 1>>
+	<</addinlineevent>>
+<</widget>>

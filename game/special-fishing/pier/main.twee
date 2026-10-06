@@ -1,0 +1,316 @@
+﻿/* The PC gets sent here any time they start fishing or after an event. From here, they get sent into the wait loop, where events can happen. */
+:: Fishing Pier Wait
+<<effects>>
+<<set $outside to 0>>
+<<run initFishingPier()>>
+<<wearActiveFishingRodProp>>
+<<set _fishingEditBaitEnabled to true>>
+
+<<fishingLocationDescription $bus>>
+<<fishingLocationPopulation $bus>>
+<<fishingPierLocationAmbient>>
+<br><br>
+
+<<set _exhibitionismCheck to Weather.dayState is "night" or (($exposed isnot 1 or hasSexStat("exhibitionism", 3)) and ($exposed lt 2 or hasSexStat("exhibitionism", 5)))>>
+
+<<if $stress gte $stressmax>>
+	<<passoutbeach>>
+<<else>>
+	<<if $exposed gte 1>>
+		<<exhibitionism "pierFishing">>
+		<br><br>
+	<</if>>
+	<<if $arousal gte $arousalmax>>
+		<<orgasmFishingPier>>
+	<<elseif _exhibitionismCheck>>
+		<<fishingPierWaitAmbient>>
+	<</if>>
+	<br><br>
+
+<<if Weather.dayState isnot "night" and !$daily.fishing.fishingPier.whitney.cantLeave and !_exhibitionismCheck>>
+		<<insufficientStat "exhibitionism" "이렇게 노출한 상태로 계속 서있기엔">>
+	<<else>>
+		<<link [[입질을 기다린다 (0:05)|Fishing Pier Wait Loop]]>><<pass 5>><</link>>
+		<<if ["bet", "idle"].includes($daily.fishing.fishingPier.whitney.phase) and $daily.fishing.fishingPier.whitney.pcCider gte 1>>
+			<br>
+			<<link [[사이다를 한 모금 마신다|Fishing Pier Wait]]>><<set $fishingAmbientOverride to "sip">><</link>><<gdrunk>>
+		<</if>>
+	<</if>>
+
+	<<if $daily.fishing.fishingPier.whitney.phase is "bet">>
+		<<if !$daily.fishing.fishingPier.whitney.cantLeave>>
+			<br>
+			<<link [[부두로 돌아간다|Fishing Pier Cannot Leave]]>><<set $daily.fishing.fishingPier.whitney.cantLeave to true>><</link>>
+		<</if>>
+	<<else>>
+		<br>
+		<<link [[부두로 돌아간다|Mer Pier]]>><</link>>
+	<</if>>
+<</if>>
+
+<<if $options.fishingBaitSelection is "dropdown">>
+	<br><br>
+	<<baitMobileDropdown>>
+<<elseif $options.images isnot 1>>
+	<br>
+	<<link "미끼 변경">><<run openBaitOverlay()>><</link>>
+<</if>>
+
+<<fishingPierDebugLinks>>
+
+
+
+:: Fishing Pier Wait Loop
+<<run V.fishing.waitsSinceLastCatch++>>
+<<cleareventpool>>
+
+<<addinlineevent "bite" fishingCatchEventWeight("fishingPier", 10)>>
+	<<set $fishingHookedFish to rollFish("fishingPier")>>
+	<<set _isPreferredBait to $fishing.currentBait !== undefined && setup.fishing.lootTables.fish[$fishingHookedFish.type].preferredBait is $fishing.currentBait>>
+	<<run onBaitLoss()>>
+	<<if fishTriggersMinigame($fishingHookedFish)>>
+		<<run fishingMinigameStart($fishingHookedFish.type)>>
+		<<include "Fishing Pier Minigame Loop">>
+	<<else>>
+		당신은 낚싯줄에 걸려드는 둔탁한 느낌을 받는다. <<= setup.foodstuff[$fishingHookedFish.type].name>>【이가】<<if _isPreferredBait>> 탐욕스럽게<</if>> <<if $fishing.currentBait>>미끼를 물고 늘어진다<<else>>바늘을 문다<</if>>. 당신은 낚싯대를 뒤로 젖히고 별다른 저항 없이 물 밖으로 끌어올린다.
+		<<onFishCaught>>
+		<<fishingCatchFishText $fishingHookedFish>>
+		<br><br>
+
+		<<include "Fishing Pier Catch">>
+	<</if>>
+<</addinlineevent>>
+
+<<addinlineevent "trash" 1>>
+	<<set $fishingTrash to rollFishingTrash("fishingPier")>>
+	<<include "Fishing Pier Trash Catch">>
+<</addinlineevent>>
+
+<<addinlineevent "clothing" 1>>
+	<<set $clothingItem to rollFishingClothing("fishingPier")>>
+	<<include "Fishing Pier Clothing Catch">>
+<</addinlineevent>>
+
+/* Whitney arrive events */
+<<if  $daily.fishing.fishingPier.whitney.phase is undefined and C.npc.Whitney.init is 1 and !["dungeon", "pillory"].includes(C.npc.Whitney.state) and !Time.schoolTime and !isInPark("whitney") and Time.hour gte (Time.schoolDay ? 15 : 7) and Time.hour lt 20 and !["heavyPrecipitation", "storm", "thunderstorm"].includes(Weather.name)>>
+	/* Whitney bullies Fisher off the pier */
+	<<if $daily.fishing.fishingPier.fisher.phase is "fishing">>
+		<<addinlineevent "whitneyBullyFisher" 0.6>>
+			<<include "Fishing Pier Whitney Bully Fisher">>
+		<</addinlineevent>>
+	<</if>>
+
+	/* Whitney normal arrive */
+	<<if [undefined, "finished"].includes($daily.fishing.fishingPier.fisher.phase)>>
+		<<addinlineevent "whitneyArrive" 0.6>>
+			<<include "Fishing Pier Whitney Arrive">>
+		<</addinlineevent>>
+	<</if>>
+<</if>>
+
+/* Whitney cider offer event */
+<<if $daily.fishing.fishingPier.whitney.phase is "idle" and fishingHasMinutesPassedSinceNpcArrival(30) and $whitneyromance is 1 and $daily.fishing.fishingPier.whitney.pcCider is 0 and $daily.fishing.fishingPier.whitney.pcCiderTotal lt 3 and !(playerIsPregnant() and playerAwareTheyArePregnant())>>
+	<<addinlineevent "whitneyCiderOffer" 2>>
+		<<include "Fishing Whitney Drink Offer">>
+	<</addinlineevent>>
+<</if>>
+
+/* Whitney Pier betting event. The bet is about the size of the next fish. */
+<<if $daily.fishing.fishingPier.whitney.phase is "idle" and fishingHasMinutesPassedSinceNpcArrival(60) and !$daily.fishing.fishingPier.whitney.betComplete and !$weekly.fishing.whitneyBet>>
+	<<addinlineevent "whitneyBet" fishingDangerEventWeight(1)>>
+		<<include "Fishing Whitney Pier Bet">>
+	<</addinlineevent>>
+<</if>>
+
+/* Whitney leaves */
+<<if $daily.fishing.fishingPier.whitney.phase is "idle">>
+	<<if Time.hour gte 20>>
+		<<addinlineevent "whitneyIdleLeaveNight" 10>>
+			<<include "Fishing Pier Whitney Leave Night">>
+		<</addinlineevent>>
+	<<elseif $daily.fishing.fishingPier.whitney.age gt 12>>
+		<<addinlineevent "whitneyIdleLeave" 10>>
+			<<include "Fishing Pier Whitney Idle Leave">>
+		<</addinlineevent>>
+	<</if>>
+
+	<<if Time.hour gte 22 && $daily.fishing.fishingPier.whitney.phase is "idle">>
+		<<set $eventPoolOverride to "whitneyIdleLeaveNight">>
+	<</if>>
+
+<<elseif $daily.fishing.fishingPier.whitney.phase is "bet">>
+	<<if Time.hour gte 20>>
+		<<addinlineevent "whitneyBetLeaveNight" 10>>
+			<<include "Fishing Pier Whitney Bet Leave Night">>
+		<</addinlineevent>>
+	<</if>>
+
+	<<if Time.hour gte 22 && $daily.fishing.fishingPier.whitney.phase is "bet">>
+		<<set $eventPoolOverride to "whitneyBetLeaveNight">>
+	<</if>>
+<</if>>
+
+/* fisher event start */
+<<if [undefined, "finished"].includes($daily.fishing.fishingPier.whitney.phase) and $daily.fishing.fishingPier.fisher.phase is undefined and fishingMinutesIntoSession(30) and Time.hour gte 6 and Time.hour lt 20 and !["heavyPrecipitation", "storm", "thunderstorm"].includes(Weather.name)>>
+	<<addinlineevent "fisherArrive" 1>>
+		<<include "Fishing Pier Fisher Arrive">>
+	<</addinlineevent>>
+<</if>>
+
+/* Fisher cliff tip event */
+<<if $daily.fishing.fishingPier.fisher.phase is "fishing" and numberOfFishCaught() gte 50 and !$fishing.locationsFound.includes("fishingCoastPath")>>
+	<<addinlineevent "fisherCliffTipOffer" 10>>
+		<<include "Fishing Pier Fisher Cliff Tip Offer">>
+	<</addinlineevent>>
+<</if>>
+
+/* Fisher leaves */
+<<if $daily.fishing.fishingPier.fisher.phase is "fishing">>
+	<<if Time.hour gte 20>>
+		<<addinlineevent "fisherLeaveNight" 10>>
+			<<include "Fishing Pier Fisher Leave Night">>
+		<</addinlineevent>>
+	<</if>>
+
+	<<if Time.hour gte 22>>
+		<<set $eventPoolOverride to "fisherLeaveNight">>
+	<</if>>
+<</if>>
+
+/* Fisher attacks if player is exposed */
+<<if $daily.fishing.fishingPier.fisher.phase is "fishing" and fishingHasMinutesPassedSinceNpcArrival(60) and $exposed gte 1>>
+	<<addinlineevent "fisherExposedAttack" fishingDangerEventWeight($daily.fishing.fishingPier.fisherOgle)>>
+		<<include "Fishing Pier Fisher Exposed Attack">>
+	<</addinlineevent>>
+<</if>>
+
+/* Bait Shop owner comes over on their lunch break to ask for a fish.  */
+<<if $fishing.baitShopIntro isnot undefined and baitShopOpen() and (Time.hour is 12 or Time.hour is 13) and [undefined, "finished"].includes($daily.fishing.fishingPier.whitney.phase) and $daily.fishing.baitShopRequest is "willRequest">>
+	<<addinlineevent "shackOwnerBreak" 100>>
+		<<include "Fishing Pier Shack Owner Break">>
+	<</addinlineevent>>
+<</if>>
+
+/* Tentacle pulls rod event */
+<<if [undefined, "finished"].includes($daily.fishing.fishingPier.whitney.phase)>>
+	<<addinlineevent "tentacles" fishingDangerEventWeight(0.25)>>
+		<<include "Fishing Pier Tentacles">>
+	<</addinlineevent>>
+<</if>>
+
+/* Wind blow event: weight 1 at 0 dance skill, 0.1 at 600 */
+<<if ["storm", "thunderstorm"].includes(Weather.name)>>
+	<<set _windChance to Math.clamp(1 - currentSkillValue('danceskill') * 0.9 / 600, 0.1, 1)>>
+	<<addinlineevent "wind" _windChance>>
+		<<if $daily.fishing.fishingPier.whitney.phase is "idle">>
+			<<include "Fishing Pier Wind Whitney Idle">>
+		<<elseif $daily.fishing.fishingPier.whitney.phase is "bet">>
+			<<include "Fishing Pier Wind Whitney Bet">>
+		<<elseif $daily.fishing.fishingPier.fisher.phase is "fishing">>
+			<<include "Fishing Pier Wind Fisher">>
+		<<else>>
+			<<include "Fishing Pier Wind">>
+		<</if>>
+	<</addinlineevent>>
+<</if>>
+
+/* Wave sprays up through the planks */
+<<if isPlayerFishingAlone()>>
+	<<addinlineevent "pierWave" 0.5>>
+		<<include "Fishing Pier Wave">>
+	<</addinlineevent>>
+<</if>>
+
+/* Eel swarm drags the player into the water */
+<<if $settings.swarmsEnabled and $daily.fishing.fishingPier.whitney.phase isnot "bet">>
+	<<addinlineevent "pierSwarm" fishingDangerEventWeight(0.25)>>
+		<<include "Fishing Pier Swarm">>
+	<</addinlineevent>>
+<</if>>
+
+/* Nothing happens, wait loop continues */
+<<addinlineevent "wait" 40>>
+	<<include "Fishing Pier Wait">>
+<</addinlineevent>>
+<<runeventpool>>
+
+
+
+:: Fishing Pier Cat Eat
+<<effects>>
+당신은 입을 크게 벌리고 <<= setup.foodstuff[$fishingHookedFish.type].name>>【을를】 통째로 입 안에 넣는다. <<fishingEatFishTfProgress>><<lstress>><<stress -6>>
+<<unset $fishingHookedFish>>
+<br><br>
+
+<<link [[다음|Fishing Pier Wait]]>><<set $fishingAmbientOverride to "castOut">><</link>>
+
+:: Widgets Fishing Pier Wait Flavor [widget]
+<<widget "fishingPierLocationAmbient">>
+	<<if [undefined, "finished"].includes($daily.fishing.fishingPier.whitney.phase) and $daily.fishing.fishingPier.fisher.phase is "fishing">>
+		<<fishingPierFisherAmbient>>
+	<<elseif ["bet", "idle"].includes($daily.fishing.fishingPier.whitney.phase)>>
+		<<if $daily.fishing.fishingPier.whitney.playerFellOff>>
+			휘트니가 툭 내뱉듯 웃으며 당신을 쳐다본다. "다시 왔냐, 걸레년. 수영은 할 만했어?"
+
+			<<unset $daily.fishing.fishingPier.whitney.playerFellOff>>
+		<<else>>
+			<<switch $daily.fishing.fishingPier.whitney.phase>>
+				<<case "idle">>
+					<<fishingPierWhitneyIdleAmbient>>
+				<<case "bet">>
+					<<fishingPierWhitneyBetAmbient>>
+			<</switch>>
+		<</if>>
+	<</if>>
+<</widget>>
+
+<<widget "fishingPierWaitAmbient">>
+	<<if $fishingAmbientOverride is "throwBack">>
+		<<if $fishing.currentBait>>
+			당신은 바다로 물고기를 도로 던져 넣고는 <<fishingRebaitMid>>
+		<<else>>
+			당신은 물고기를 바다로 도로 던져 넣고는 낚싯대를 다시 던진다.
+		<</if>>
+	<<elseif $fishingAmbientOverride is "stowAway">>
+		<<if $fishing.currentBait>>
+			당신은 물고기를 챙겨 넣고는 <<fishingRebaitMid>>
+		<<else>>
+			당신은 물고기를 챙겨 넣고 낚싯대를 다시 던진다.
+		<</if>>
+	<<elseif $fishingAmbientOverride is "reHook">>
+		<<if $fishing.currentBait>>
+			<<fishingRebaitStart>>
+		<<else>>
+			당신은 낚싯바늘을 다시 정돈하고 낚싯대를 던진다.
+		<</if>>
+	<<elseif $fishingAmbientOverride is "keepClothing">>
+		<<generalSend "wardrobe" $clothingItem.slot $clothingItem.item.name $clothingItem.colour>>
+		젖은 <<= $clothingItem.item.name>>의 물기를 짜내고 잘 챙겨둔다.
+	<<elseif $fishingAmbientOverride is "tossClothing">>
+		축축하게 젖은 <<= $clothingItem.item.name>>【을를】 부두에 있는 쓰레기통으로 가져가 갖다 버린다.
+	<<elseif $fishingAmbientOverride is "acceptedFishingRequest">>
+		"고마워! 기대하고 있을게. 물론 못 구해도 상관없어, 어떤 식인지 아니까. 거기는 <<baitShopFishLocationHint>>에서 찾을 수 있을 거야." 가게 주인이 샌드위치를 허겁지겁 해치우더니, 손을 흔들며 미끼 가게로 걸어간다.
+	<<elseif $fishingAmbientOverride is "declinedFishingRequest">>
+		"아 뭐, 알겠어. 나중에 언젠가 직접 잡을 수 있나 봐야겠네. 생각이 바뀌면 거기는 <<baitShopFishLocationHint>>에서 찾을 수 있을 거야." 가게 주인이 샌드위치를 허겁지겁 해치우더니, 손을 흔들며 미끼 가게로 걸어간다.
+	<<elseif $fishingAmbientOverride is "sip">>
+		<<fishingPierWhitneySip>>
+	<<elseif $fishingAmbientOverride is "castOut">>
+		물가로 낚싯대를 던진다.
+	<<else>>
+		<<set $daily.fishing.fishingPier.sheltered ??= Weather.precipitation is "rain">>
+		<<if (Weather.precipitation is "rain") isnot $daily.fishing.fishingPier.sheltered>>
+			<<set $daily.fishing.fishingPier.sheltered to Weather.precipitation is "rain">>
+			<<if Weather.precipitation is "rain">>
+				빗발이 거세지자, 당신은 정자 지붕 아래로 물러선다.
+			<<else>>
+				비가 그친다. 당신은 다시 난간 쪽으로 걸어 나간다.
+			<</if>>
+		<<else>>
+			<<cleareventpool>>
+			<<fishingWaitAmbient $bus>>
+
+			<<runeventpool>>
+		<</if>>
+	<</if>>
+	<<unset $fishingAmbientOverride>><<unset $clothingItem>>
+<</widget>>

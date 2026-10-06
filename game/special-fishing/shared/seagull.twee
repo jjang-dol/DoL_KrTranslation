@@ -1,0 +1,134 @@
+:: Fishing Seagull Shoo
+<<effects>>
+<<set _canEatFish to canEatFishTf($fishingHookedFish)>>
+<<if $athleticsSuccess>>
+	갈매기는 <span class="green">깜짝 놀라 물러서더니</span>, 바다 위로 날아간다.
+	<br><br>
+
+	<<if _canEatFish>>
+		아주 작은 물고기라, 통째로 입에 넣을 수 있을 것 같다.
+		<br><br>
+	<</if>>
+
+	<<if $bus is "fishingBeach">>
+		<<link [[setup.foodstuff[$fishingHookedFish.type].name + "【을를】 챙겨둔다"|Fishing Beach Wait]]>>
+			<<tending_give $fishingHookedFish.type 1>>
+			<<set $fishingAmbientOverride to "stowAway">>
+			<<if baitShopWants($fishingHookedFish.type)>><<set $daily.fishing.baitShopRequest to "ready">><</if>>
+			<<endevent>>
+		<</link>>
+		<br>
+		<<link [[놓아준다|Fishing Beach Wait]]>><<set $fishingAmbientOverride to "throwBack">><</link>>
+		<<if _canEatFish>>
+			<br>
+			<<link [[물고기를 먹는다|Fishing Beach Cat Eat]]>><</link>><<fishEatingTf>>
+		<</if>>
+	<<elseif $bus is "fishingPier">>
+		<<link [[setup.foodstuff[$fishingHookedFish.type].name + "【을를】 챙겨둔다"|Fishing Pier Wait]]>>
+			<<tending_give $fishingHookedFish.type 1>>
+			<<set $fishingAmbientOverride to "stowAway">>
+			<<if baitShopWants($fishingHookedFish.type)>><<set $daily.fishing.baitShopRequest to "ready">><</if>>
+			<<endevent>>
+		<</link>>
+		<br>
+		<<link [[놓아준다|Fishing Pier Wait]]>><<set $fishingAmbientOverride to "throwBack">><</link>>
+		<<if _canEatFish>>
+			<br>
+			<<link [[물고기를 먹는다|Fishing Pier Cat Eat]]>><</link>><<fishEatingTf>>
+		<</if>>
+	<<elseif $bus is "fishingCoastPath">>
+		<<link [[setup.foodstuff[$fishingHookedFish.type].name + "【을를】 챙겨둔다"|Fishing Coast Path Wait]]>>
+			<<tending_give $fishingHookedFish.type 1>>
+			<<set $fishingAmbientOverride to "stowAway">>
+			<<if baitShopWants($fishingHookedFish.type)>><<set $daily.fishing.baitShopRequest to "ready">><</if>>
+			<<endevent>>
+		<</link>>
+		<br>
+		<<link [[놓아준다|Fishing Coast Path Wait]]>><<set $fishingAmbientOverride to "throwBack">><</link>>
+		<<if _canEatFish>>
+			<br>
+			<<link [[물고기를 먹는다|Fishing Coast Path Cat Eat]]>><</link>><<fishEatingTf>>
+		<</if>>
+	<</if>>
+<<else>>
+	발버둥 쳐 보았지만, 갈매기가 쏜살같이 날아와 손에서 물고기를 <span class="red">채어가며</span> 날아가 버린다.
+	<<unset $fishingHookedFish>>
+	<br><br>
+
+	<<if $bus is "fishingBeach">>
+		<<link [[다음|Fishing Beach Wait]]>><</link>>
+	<<elseif $bus is "fishingPier">>
+		<<link [[다음|Fishing Pier Wait]]>><</link>>
+	<<elseif $bus is "fishingCoastPath">>
+		<<link [[다음|Fishing Coast Path Wait]]>><</link>>
+	<</if>>
+<</if>>
+
+
+:: Fishing Seagull Give
+<<effects>>
+<<= setup.foodstuff[$fishingHookedFish.type].name>>【을를】 내민다. 갈매기가 그것을 빤히 바라보더니, 손에서 채어가며 날아간다.<<lstress>><<stress -2>>
+<<unset $fishingHookedFish>>
+<br><br>
+
+<<if $bus is "fishingBeach">>
+	<<link [[다음|Fishing Beach Wait]]>><</link>>
+<<elseif $bus is "fishingPier">>
+	<<link [[다음|Fishing Pier Wait]]>><</link>>
+<<elseif $bus is "fishingCoastPath">>
+	<<link [[다음|Fishing Coast Path Wait]]>><</link>>
+<</if>>
+
+/* =================================== */
+/* ===== Minigame Result Widgets ===== */
+/* =================================== */
+
+:: Widgets Fishing Seagull Catch [widget]
+<<widget "fishingSeagullCatch">>
+	<<set _fish to _args[0]>>
+	<<set _fishingLocation to _args[1]>>
+	<<set _fishNameKr to setup.foodstuff[_fish.type].name>>
+	<<effects>>
+	<<set $daily.fishing.seagullSteal to true>>
+
+	<<if _fish.size gte 120>>
+		갈매기 한 마리가 머리 위를 빙빙 돌다 <<= _fishNameKr>>【을를】 발견하고는 당신 곁으로 내려앉는다. 녀석은 부리로 물고기를 꽉 물고 끌어당겨 본다. 꿈쩍도 하지 않는다. 갈매기는 온 힘을 다해 다시 한번 끌어당겨 보지만, 물고기는 여전히 요지부동이다. 녀석은 마지막으로 물고기를 한 번 쳐다보더니, 방금 일은 아예 없었던 일로 치기로 결심한 듯 뚱한 걸음걸이로 뒤뚱거리며 떠나간다.
+		<br><br>
+
+		<<if _fishingLocation is "fishingBeach">>
+			<<link [["<<= _fishNameKr>>【을를】 챙겨둔다"|Fishing Beach Wait]]>>
+				<<tending_give _fish.type 1>>
+				<<set $fishingAmbientOverride to "stowAway">>
+				<<if baitShopWants(_fish.type)>><<set $daily.fishing.baitShopRequest to "ready">><</if>>
+				<<endevent>>
+			<</link>>
+			<br>
+			<<link [[놓아준다|Fishing Beach Wait]]>><<set $fishingAmbientOverride to "throwBack">><</link>>
+		<<elseif _fishingLocation is "fishingPier">>
+			<<link [["<<= _fishNameKr>>【을를】 챙겨둔다"|Fishing Pier Wait]]>>
+				<<tending_give _fish.type 1>>
+				<<set $fishingAmbientOverride to "stowAway">>
+				<<if baitShopWants(_fish.type)>><<set $daily.fishing.baitShopRequest to "ready">><</if>>
+				<<endevent>>
+			<</link>>
+			<br>
+			<<link [[놓아준다|Fishing Pier Wait]]>><<set $fishingAmbientOverride to "throwBack">><</link>>
+		<<elseif _fishingLocation is "fishingCoastPath">>
+			<<link [["<<= _fishNameKr>>【을를】 챙겨둔다"|Fishing Coast Path Wait]]>>
+				<<tending_give _fish.type 1>>
+				<<set $fishingAmbientOverride to "stowAway">>
+				<<if baitShopWants(_fish.type)>><<set $daily.fishing.baitShopRequest to "ready">><</if>>
+				<<endevent>>
+			<</link>>
+			<br>
+			<<link [[놓아준다|Fishing Coast Path Wait]]>><<set $fishingAmbientOverride to "throwBack">><</link>>
+		<</if>>
+	<<else>>
+		갈매기 한 마리가 근처에 내려앉아 당신의 <<= _fishNameKr>>【을를】 주시한다. 잠시 뒤 껑충 다가와 당신의 잡은 물고기를 향해 덤벼든다.
+		<br><br>
+
+		<<link [[쫓아낸다|Fishing Seagull Shoo]]>><</link>><<athleticsdifficulty -100 200>>
+		<br>
+		<<link [[<<= _fishNameKr>>【을를】 넘겨준다|Fishing Seagull Give]]>><</link>>
+	<</if>>
+<</widget>>

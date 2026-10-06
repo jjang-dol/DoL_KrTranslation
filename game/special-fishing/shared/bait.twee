@@ -1,0 +1,162 @@
+:: Fishing Bait Widgets [widget]
+
+<<widget "baitOverlay">>
+	<<fishingBaitList>>
+	<label class="fishing-select-bait-radio">
+		<<checkbox "$fishing.autoRebait" false true autocheck>> 미끼 자동으로 끼우기
+	</label>
+	<br><br>
+
+	<<if $fishingSelectedBait is "none" or _fishingHaveBait is true>>
+		<<link "미끼 변경">>
+			<<if $fishing.currentBait and $fishing.currentBait isnot $fishingSelectedBait>>
+				<<set $foodstuff[$fishing.currentBait].amount += 1>>
+			<</if>>
+			<<if $fishingSelectedBait is "none">>
+				<<unset $fishing.currentBait>>
+			<<else>>
+				<<if $fishingSelectedBait isnot $fishing.currentBait>>
+					<<set $foodstuff[$fishingSelectedBait].amount -= 1>>
+				<</if>>
+				<<set $fishing.currentBait to $fishingSelectedBait>>
+			<</if>>
+			<<unset $fishingSelectedBait>>
+			<<set _hasBait to $fishing.currentBait and setup.foodstuff[$fishing.currentBait]>>
+			<<set _newBaitTooltip to _hasBait ? "미끼: " + setup.foodstuff[$fishing.currentBait].name.replace(/_/g, " ").toUpperFirst() + " (" + $foodstuff[$fishing.currentBait].amount + "개 남음)" : "낚싯바늘에 미끼가 없습니다 (클릭하여 변경)">>
+			<<if elementExists("#bait-sidebar")>>
+				<<replace "#bait-sidebar">>
+					<<if _hasBait>>
+						<<foodstufficon $fishing.currentBait>>
+					<<else>>
+						<<icon `"fish/hook.png"`>>
+					<</if>>
+				<</replace>>
+				<<run jQuery("#bait-sidebar").attr("tooltip", "<span>" + _newBaitTooltip + "</span>").removeData("tooltip-settings")>>
+			<</if>>
+			<<if elementExists("#bait-mobile-sidebar")>>
+				<<replace "#bait-mobile-sidebar">>
+					<<if _hasBait>>
+						<<foodstufficon $fishing.currentBait>>
+					<<else>>
+						<<icon `"fish/hook.png"`>>
+					<</if>>
+				<</replace>>
+				<<run jQuery("#bait-mobile-sidebar").attr("tooltip", "<span>" + _newBaitTooltip + "</span>").removeData("tooltip-settings")>>
+			<</if>>
+			<<run closeOverlay()>>
+		<</link>>
+		<br>
+	<</if>>
+	<<link "닫기">><<unset $fishingSelectedBait>><<run closeOverlay()>><</link>>
+	<br>
+<</widget>>
+
+<<widget "fishingBaitHelp">>
+	낚시의 목적은 물고기가 바늘에서 빠져나가거나 너무 멀어져 낚싯줄이 끊어지기 전에 끌어당겨 잡는 것입니다. 물고기마다 행동 방식이 다르지만, 일정한 행동 양식 카테고리로 분류되며 많은 물고기가 같은 카테고리를 공유합니다. 다양한 물고기에 대처하는 법을 배워 행동을 유도하면 더 쉽게 잡을 수 있습니다.
+	<br><br>
+	낚시 중에는 물고기를 끌어당기거나 제자리에 버티려 할 때 팔이 피로해지며, 실패할 경우 피로가 가중됩니다. 팔이 피로할수록 물고기를 끌어당기거나 붙잡아 두는 데 실패할 확률이 높아지므로, 물고기가 너무 날뛰지 않는 선에서 줄을 팽팽하지 않게 풀어주는 것은 팔을 쉬게 하는 좋은 방법입니다.
+	<br><br>
+	각 물고기는 선호하는 미끼가 있으며, 미끼 없이 낚시하면 물고기를 유인하기 어렵습니다. 미끼용 지렁이는 미끼 상점에서 쉽게 구할 수 있지만 미끼용 물고기 외에는 잘 꼬이지 않습니다. 각종 음식을 미끼로 쓸 수 있으며 일반적인 물고기를 잡는 데 효과적이고, 미끼용 물고기는 더 크고 잡기 어려운 물고기를 끌어들입니다. 물고기마다 좋아하는 미끼가 다르므로 여러 가지로 실험해 보며 원하는 물고기를 쉽게 잡을 방법을 찾을 수 있습니다.
+<</widget>>
+
+<<widget "fishingRebaitMid">>
+	<<if $foodstuff[$fishing.currentBait].amount lte 0>>
+		<span class="red">마지막</span> 남은 <<print setup.foodstuff[$fishing.currentBait].plural>>【을를】 바늘에 꿰고 다시 낚싯대를 던진다.
+	<<else>>
+		미끼를 다시 꿰고 낚싯대를 던진다. <<print setup.foodstuff[$fishing.currentBait].plural>>【이가】 $foodstuff[$fishing.currentBait].amount개 남아 있다.
+	<</if>>
+<</widget>>
+
+<<widget "fishingRebaitStart">>
+	<<if $foodstuff[$fishing.currentBait].amount lte 0>>
+		당신은 <span class="red">마지막</span> 남은 <<print setup.foodstuff[$fishing.currentBait].plural>>【을를】 바늘에 꿰고 다시 낚싯대를 던진다.
+	<<else>>
+		미끼를 다시 꿰고 낚싯대를 던진다. <<print setup.foodstuff[$fishing.currentBait].plural>>【이가】 $foodstuff[$fishing.currentBait].amount개 남아 있다.
+	<</if>>
+<</widget>>
+
+<<widget "fishingBaitList">>
+	<<unset $fishingSelectedBait>>
+
+	<label class="fishing-select-bait-radio">
+		<<icon `"fish/hook.png"`>> 없음
+		<<if !$fishing.currentBait>>
+			<<radiobutton "$fishingSelectedBait" "none" checked>>
+		<<else>>
+			<<radiobutton "$fishingSelectedBait" "none">>
+		<</if>>
+		|
+	</label>
+
+	<<set _foodKeys to ["bait_worm", "baitfish"].concat(Object.keys(setup.foodstuff).filter(k => !["bait_worm", "baitfish"].includes(k)))>>
+	<<for _i to 0; _i lt _foodKeys.length; _i++>>
+		<<set _food to _foodKeys[_i]>>
+		<<if setup.foodstuff[_food].is_fishing_bait is true and $foodstuff[_food]?.amount gte 1>>
+			<<set _fishingHaveBait to true>>
+			<<if !$fishingSelectedBait and $fishing.currentBait is _food>>
+				<<set $fishingSelectedBait to _food>>
+			<</if>>
+			<label class="fishing-select-bait-radio">
+				<<foodstufficon _food>><<recipe_name _food "cap">> (<<= $foodstuff[_food].amount>>개)
+				<<if _food is $fishingSelectedBait>>
+					<<radiobutton "$fishingSelectedBait" _food checked>>
+				<<else>>
+					<<radiobutton "$fishingSelectedBait" _food>>
+				<</if>>
+				|
+			</label>
+		<</if>>
+	<</for>>
+	<br><br>
+<</widget>>
+
+<<widget "baitSidebar">>
+	<<set $fishing.displayBaitNotification ??= true>>
+	<<set _baitEditEnabled to canOpenBaitOverlay()>>
+	<<if $fishing?.currentBait and setup.foodstuff[$fishing.currentBait]>>
+		<<set _baitTooltip to "미끼: " + setup.foodstuff[$fishing.currentBait].name.replace(/_/g, " ").toUpperFirst() + " (" + $foodstuff[$fishing.currentBait].amount + "개 남음)">>
+	<<else>>
+		<<set _baitTooltip to "낚싯바늘에 미끼가 없습니다 (클릭하여 변경)">>
+	<</if>>
+	<button type="button" id="bait-sidebar" @class="'bait-sidebar' + (_baitEditEnabled ? '' : ' bait-sidebar-disabled') + ($fishing.displayBaitNotification ? ' bait-sidebar-notify' : '')" tooltip="<span>_baitTooltip</span>" onclick="openBaitOverlay(); this.classList.remove('bait-sidebar-notify');">
+		<<if $fishing?.currentBait and setup.foodstuff[$fishing.currentBait]>>
+			<<foodstufficon $fishing.currentBait>>
+		<<else>>
+			<<icon `"fish/hook.png"`>>
+		<</if>>
+	</button>
+<</widget>>
+
+<<widget "baitMobileDropdown">>
+	<select id="fishing-bait-select" onchange="fishingChangeBaitFromDropdown(this.value)">
+		<option value="none">없음</option>
+		<<set _foodKeys to ["bait_worm", "baitfish"].concat(Object.keys(setup.foodstuff).filter(k => !["bait_worm", "baitfish"].includes(k)))>>
+		<<for _i to 0; _i lt _foodKeys.length; _i++>>
+			<<set _food to _foodKeys[_i]>>
+			<<if setup.foodstuff[_food].is_fishing_bait is true and ($foodstuff[_food]?.amount gte 1 or $fishing.currentBait is _food)>>
+				<option @value="_food"><<= setup.foodstuff[_food].name.replace(/_/g, " ").toUpperFirst()>> (<<= $foodstuff[_food].amount>>개)</option>
+			<</if>>
+		<</for>>
+	</select>
+	<<timed 0s>><<run $("#fishing-bait-select").val($fishing.currentBait ? $fishing.currentBait : "none")>><</timed>>
+	<br>
+	<label class="fishing-select-bait-radio">
+		<<checkbox "$fishing.autoRebait" false true autocheck>> 미끼 자동으로 끼우기
+	</label>
+<</widget>>
+
+<<widget "baitMobileSidebar">>
+	<<set _baitEditEnabled to canOpenBaitOverlay()>>
+	<<if $fishing?.currentBait and setup.foodstuff[$fishing.currentBait]>>
+		<<set _baitTooltip to "미끼: " + setup.foodstuff[$fishing.currentBait].name.replace(/_/g, " ").toUpperFirst() + " (" + $foodstuff[$fishing.currentBait].amount + "개 남음)">>
+	<<else>>
+		<<set _baitTooltip to "낚싯바늘에 미끼가 없습니다 (클릭하여 변경)">>
+	<</if>>
+	<button type="button" id="bait-mobile-sidebar" @class="'bait-mobile-sidebar' + (_baitEditEnabled ? '' : ' bait-sidebar-disabled')" tooltip="<span>_baitTooltip</span>" onclick="openBaitOverlay()">
+		<<if $fishing?.currentBait and setup.foodstuff[$fishing.currentBait]>>
+			<<foodstufficon $fishing.currentBait>>
+		<<else>>
+			<<icon `"fish/hook.png"`>>
+		<</if>>
+	</button>
+<</widget>>

@@ -1,0 +1,2125 @@
+:: Widgets Fishing [widget]
+<<widget "fishingLocationDescription">>
+	<<set _fishingLocation to _args[0]>>
+
+	<<if Weather.fog gte 0.3>>
+		<<switch _fishingLocation>>
+			<<case "fishingPier">>
+				<<set _fishingLocationText to "부두 판자가 발밑에서 부드럽게 삐걱거리고, 주변은 안개 속에 반쯤 가려져 있다">>
+			<<case "fishingBeach">>
+				<<set _fishingLocationText to "안개에 희미해진 해안선을 따라 파도가 밀려들고 밀려난다">>
+			<<case "fishingForestLake">>
+				<<set _fishingLocationText to "안개가 수면 위로 낮게 깔려 있다.">>
+			<<case "fishingCoastPath">>
+				<<set _fishingLocationText to "안개에 가려진 바위에 파도가 부딪친다">>
+			<<case "fishingMoor">>
+				<<set _fishingLocationText to "짙은 안개 속에서 나무뿌리와 갈대 사이로 검은 웅덩이가 보인다">>
+			<<default>>
+				<<error { message: "fishingLocationDescription: unhandled location: " + _fishingLocation }>>
+		<</switch>>
+	<<else>>
+		<<switch _fishingLocation>>
+			<<case "fishingPier">>
+				<<set _fishingLocationText to "부두의 나무 판자가 발밑에서 부드럽게 삐걱거린다">>
+			<<case "fishingBeach">>
+				<<set _fishingLocationText to "해안선을 따라 하얀 거품이 밀려들고 밀려난다">>
+			<<case "fishingForestLake">>
+				<<set _fishingLocationText to "수면 위로 잔잔한 파문이 일렁인다">>
+			<<case "fishingCoastPath">>
+				<<set _fishingLocationText to "근처 바위에 파도가 부딪친다">>
+			<<case "fishingMoor">>
+				<<set _fishingLocationText to "나무뿌리와 갈대 사이로 검은 물웅덩이가 일렁인다">>
+			<<default>>
+				<<error { message: "fishingLocationDescription: unhandled location: " + _fishingLocation }>>
+		<</switch>>
+	<</if>>
+
+	<<switch Weather.dayState>>
+		<<case "dawn">>
+			<<if ["heavyPrecipitation", "storm", "thunderstorm", "heavyClouds"].includes(Weather.name) or Weather.fog gte 0.3>>
+				<<set _fishingTimeText to fishingLocationWaterBodyName(_fishingLocation) + " 위로 흐릿한 주황빛이 밝아온다">>
+			<<else>>
+				<<set _fishingTimeText to fishingLocationWaterBodyName(_fishingLocation) + " 위로 새벽 햇살이 퍼져 나간다">>
+			<</if>>
+		<<case "day">>
+			<<if ["heavyPrecipitation", "storm", "thunderstorm", "heavyClouds"].includes(Weather.name) or Weather.fog gte 0.3>>
+				<<set _fishingTimeText to fishingLocationWaterBodyName(_fishingLocation) + " 위로 태양이 구름에 가려져 있다">>
+			<<else>>
+				<<set _fishingTimeText to fishingLocationWaterBodyName(_fishingLocation) + " 전역으로 햇살이 퍼져 나간다">>
+			<</if>>
+		<<case "dusk">>
+			<<if ["heavyPrecipitation", "storm", "thunderstorm", "heavyClouds"].includes(Weather.name) or Weather.fog gte 0.3>>
+				<<set _fishingTimeText to fishingLocationWaterBodyName(_fishingLocation) + " 위로 어스름이 내린다">>
+			<<else>>
+				<<set _fishingTimeText to fishingLocationWaterBodyName(_fishingLocation) + " 위로 그림자가 드리운다">>
+			<</if>>
+		<<case "night">>
+			<<if Time.isBloodMoon()>>
+				<<set _fishingTimeText to fishingLocationWaterBodyName(_fishingLocation) + " 위로 붉은 빛이 내린다">>
+			<<elseif ["heavyPrecipitation", "storm", "thunderstorm", "heavyClouds"].includes(Weather.name) or Weather.fog gte 0.3>>
+				<<set _fishingTimeText to fishingLocationWaterBodyName(_fishingLocation) + " 위로 달빛이 가려져 있다">>
+			<<else>>
+				<<set _fishingTimeText to "밤이 찾아오고 " + fishingLocationWaterBodyName(_fishingLocation) + " 주변이 어두워진다">>
+			<</if>>
+		<<default>>
+			<<error { message: "fishingLocationDescription: unhandled Weather.dayState: " + Weather.dayState }>>
+	<</switch>>
+
+	<<switch Weather.name>>
+		<<case "clear">>
+			<<if ["fishingPier", "fishingBeach", "fishingCoastPath"].includes(_fishingLocation)>>
+				<<set _fishingWeatherText to "해안가 위로 맑은 공기가 감돈다.">>
+			<<elseif _fishingLocation is "fishingForestLake">>
+				<<set _fishingWeatherText to "나뭇가지 사이로 맑은 공기가 스며든다.">>
+			<<elseif _fishingLocation is "fishingMoor">>
+				<<set _fishingWeatherText to "갈대와 황야 위로 맑은 공기가 머문다.">>
+			<</if>>
+		<<case "lightClouds">>
+			<<if ["fishingPier", "fishingBeach", "fishingCoastPath"].includes(_fishingLocation)>>
+				<<set _fishingWeatherText to "해안선 위로 얇은 구름이 떠다닌다.">>
+			<<elseif _fishingLocation is "fishingForestLake">>
+				<<set _fishingWeatherText to "나뭇가지 위로 얇은 구름이 지나간다.">>
+			<<elseif _fishingLocation is "fishingMoor">>
+				<<set _fishingWeatherText to "황무지 위로 얇은 구름이 지나간다.">>
+			<</if>>
+		<<case "heavyClouds">>
+			<<if ["fishingPier", "fishingBeach", "fishingCoastPath"].includes(_fishingLocation)>>
+				<<set _fishingWeatherText to "먹구름이 해안가를 어둡게 물들인다.">>
+			<<elseif _fishingLocation is "fishingForestLake">>
+				<<set _fishingWeatherText to "먹구름이 숲을 어둡게 만든다.">>
+			<<elseif _fishingLocation is "fishingMoor">>
+				<<set _fishingWeatherText to "갈대밭 위로 무거운 구름이 낮게 드리워진다.">>
+			<</if>>
+		<<case "lightPrecipitation">>
+			<<if Weather.precipitation is "rain">>
+				<<if ["fishingPier", "fishingBeach", "fishingCoastPath"].includes(_fishingLocation)>>
+					<<set _fishingWeatherText to "해안가를 따라 가벼운 비가 내린다.">>
+				<<elseif _fishingLocation is "fishingForestLake">>
+					<<set _fishingWeatherText to "나뭇잎을 두드리며 가느다란 비가 내린다.">>
+				<<elseif _fishingLocation is "fishingMoor">>
+					<<set _fishingWeatherText to "진흙 땅 위에 가랑비가 점점이 떨어진다.">>
+				<</if>>
+			<<else>>
+				<<if ["fishingPier", "fishingBeach", "fishingCoastPath"].includes(_fishingLocation)>>
+					<<set _fishingWeatherText to "해안선을 따라 가벼운 눈발이 날린다.">>
+				<<elseif _fishingLocation is "fishingForestLake">>
+					<<set _fishingWeatherText to "나뭇가지와 잎사귀 사이로 가벼운 눈이 내린다.">>
+				<<elseif _fishingLocation is "fishingMoor">>
+					<<set _fishingWeatherText to "헤더꽃 사이에 가벼운 눈이 쌓인다.">>
+				<</if>>
+			<</if>>
+		<<case "heavyPrecipitation">>
+			<<if Weather.precipitation is "rain">>
+				<<if ["fishingPier", "fishingBeach", "fishingCoastPath"].includes(_fishingLocation)>>
+					<<set _fishingWeatherText to "해안선이 흐려질 정도로 거센 비가 내린다.">>
+				<<elseif _fishingLocation is "fishingForestLake">>
+					<<set _fishingWeatherText to "나뭇잎을 때리며 굵은 비가 내린다.">>
+				<<elseif _fishingLocation is "fishingMoor">>
+					<<set _fishingWeatherText to "갈대와 진흙탕 위로 거센 비가 휘몰아친다.">>
+				<</if>>
+			<<else>>
+				<<if ["fishingPier", "fishingBeach", "fishingCoastPath"].includes(_fishingLocation)>>
+					<<set _fishingWeatherText to "해안선이 흐려질 정도로 눈이 거세게 내린다.">>
+				<<elseif _fishingLocation is "fishingForestLake">>
+					<<set _fishingWeatherText to "나무줄기와 갈대 사이로 거센 눈이 내린다.">>
+				<<elseif _fishingLocation is "fishingMoor">>
+					<<set _fishingWeatherText to "황무지와 진흙 위로 눈이 거세게 쏟아진다.">>
+				<</if>>
+			<</if>>
+		<<case "storm">>
+			<<if Weather.precipitation is "rain">>
+				<<if ["fishingPier", "fishingBeach", "fishingCoastPath"].includes(_fishingLocation)>>
+					<<set _fishingWeatherText to "해안가에 거센 비바람이 몰아친다.">>
+				<<elseif _fishingLocation is "fishingForestLake">>
+					<<set _fishingWeatherText to "나뭇가지가 흔들리고 나뭇잎 사이로 비가 쏟아진다.">>
+				<<elseif _fishingLocation is "fishingMoor">>
+					<<set _fishingWeatherText to "갈대밭 사이로 거센 비바람이 들이친다.">>
+				<</if>>
+			<<else>>
+				<<if ["fishingPier", "fishingBeach", "fishingCoastPath"].includes(_fishingLocation)>>
+					<<set _fishingWeatherText to "해안가를 따라 눈보라가 휘몰아친다.">>
+				<<elseif _fishingLocation is "fishingForestLake">>
+					<<set _fishingWeatherText to "나뭇가지가 흔들리며 나뭇가지 사이로 눈보라가 휘날린다.">>
+				<<elseif _fishingLocation is "fishingMoor">>
+					<<set _fishingWeatherText to "갈대밭을 찢을 듯이 눈보라가 몰아친다.">>
+				<</if>>
+			<</if>>
+		<<case "thunderstorm">>
+			<<if Weather.precipitation is "rain">>
+				<<if ["fishingPier", "fishingBeach", "fishingCoastPath"].includes(_fishingLocation)>>
+					<<set _fishingWeatherText to "해안가에 천둥번개를 동반한 거센 비가 내린다.">>
+				<<elseif _fishingLocation is "fishingForestLake">>
+					<<set _fishingWeatherText to "바람에 나무가 흔들리고 나뭇잎 사이로 비가 쏟아진다.">>
+				<<elseif _fishingLocation is "fishingMoor">>
+					<<set _fishingWeatherText to "젖은 땅과 갈대밭 위로 천둥비가 들이친다.">>
+				<</if>>
+			<<else>>
+				<<if ["fishingPier", "fishingBeach", "fishingCoastPath"].includes(_fishingLocation)>>
+					<<set _fishingWeatherText to "해안가에 폭풍설이 몰아친다.">>
+				<<elseif _fishingLocation is "fishingForestLake">>
+					<<set _fishingWeatherText to "나뭇가지 사이로 눈보라가 휘날리며 나뭇가지가 흔들린다.">>
+				<<elseif _fishingLocation is "fishingMoor">>
+					<<set _fishingWeatherText to "진흙과 갈대밭 위로 폭풍설이 휘몰아친다.">>
+				<</if>>
+			<</if>>
+		<<default>>
+			<<error { message: "fishingLocationDescription: unhandled Weather.name: " + Weather.name }>>
+	<</switch>>
+
+	<<= _fishingLocationText + ", " + _fishingTimeText + ". " + _fishingWeatherText>>
+<</widget>>
+
+<<widget "fishingLocationPopulation">>
+	<<set _firstView to $daily.fishing[_args[0]]?.fishPopulation is undefined>>
+	<<run rollFishPopulation(_args[0])>>
+
+	<<if $daily.fishing[_args[0]]?.fishPopulation is "teeming">>
+		<<if _firstView>><span class="green">오늘은 물고기들이 사방에서 펄떡거리고 있다.</span><<else>>오늘은 물고기들이 사방에서 펄떡거리고 있다.<</if>>
+	<<elseif $daily.fishing[_args[0]]?.fishPopulation is "quiet">>
+		<<if _firstView>><span class="purple">오늘 물가는 잠잠하며, 보이는 물고기가 별로 없다.</span><<else>>오늘 물가는 잠잠하며, 보이는 물고기가 별로 없다.<</if>>
+	<</if>>
+<</widget>>
+
+<<widget "fishingCatchFishText">>
+	<<set _fish to _args[0]>>
+	<<set _fishingRecordEntry to $fishing.record[_fish.type]>>
+	<<set _isBiggest to _wasFishCaughtLargest>>
+	<<set _fishNameKr to setup.foodstuff[_fish.type].name>>
+
+	물고기를 물 밖으로 끌어올린다.
+
+	<<if _isBiggest>>크기를 재보니 <span class="green"><<= _fish.size>>cm다.</span><<else>><<= _fish.size>>cm다.<</if>>
+	<<if _fishingRecordEntry.numCaught is 1>>
+		(<<= _fishNameKr>>【을를】 <span class="gold">난생 처음 잡았다</span>)<<lstress>><<stress -10>>
+	<<elseif _isBiggest>>
+		(지금까지 잡은 <<= _fishNameKr>> 중에서 가장 크다!)<<lstress>><<stress -5>>
+	<<elseif isPlayerFishingAlone()>>
+		<<if $rng gte 98 and $world_corruption_soft gte 40>>
+			<<= _fishNameKr>>【이가】 낚싯바늘에 힘없이 축 늘어져 있으며, 눈동자는 회색으로 흐려져 있다. 한참 전에 죽었던 것처럼 보이지만, 상식적으로 말이 되지 않는다.<<gstress>><<stress 4>>
+		<<elseif $rng gte 96>>
+			<<= _fishNameKr>>【이가】 들어 올리자마자 미친 듯이 파닥거리며 사방에 물을 튀긴다.<<wetUpper 80>><<gstress>><<stress 3>>
+		<<elseif $rng gte 94 and $world_corruption_soft gte 40>>
+			이 <<= _fishNameKr>>【은는】 뭔가 잘못되었다. 비늘이 불규칙한 나선형으로 자라 있고, 등골을 따라 흉측한 돌기가 돋아 있다.<<gstress>><<stress 4>>
+		<<elseif $rng gte 80 and Time.isBloodMoon()>>
+			<<= _fishNameKr>>의 눈이 너무 많다. 그 눈들이 붉은 달빛을 반사하며 일제히 당신을 응시한다.<<ggstress>><<stress 8>>
+		<<else>>
+			<<lstress>><<stress -2>>
+		<</if>>
+	<<else>>
+		<<lstress>><<stress -2>>
+	<</if>>
+<</widget>>
+
+<<widget "fishingEatFishTfProgress">>
+	<<if not $daily.fishing.eatenFishTf>>
+		<<set _fishEatTf to highestFishEatingTf()>>
+		<<transform _fishEatTf 1>>
+		<<set $daily.fishing.eatenFishTf to true>>
+	<</if>>
+<</widget>>
+
+<<widget "fishEatingTf">>
+	<<switch highestFishEatingTf()>>
+		<<case "fox">><<fox>>
+		<<case "bird">><<harpy>>
+		<<case "cat">><<cat>>
+	<</switch>>
+<</widget>>
+
+<<widget "fishingBob">>
+	<<print either("찌", "낚시찌")>>
+<</widget>>
+
+<<widget "fishingRipples">>
+	<<print either("파문", "잔물결", "소용돌이")>>
+<</widget>>
+
+
+<<widget "fishingWaitAmbient">>
+	<<set _fishingLocation to _args[0]>>
+
+	<<set _fishingRecentBadEndSource to $badEndStats.last()?.source>>
+	<<set _fishingWearingUpper to !$worn.over_upper.type.includes("naked") or !$worn.upper.type.includes("naked") or !$worn.under_upper.type.includes("naked")>>
+	<<set _fishingWearingFootwear to !$worn.feet.type.includes("naked")>>
+	<<set _fishingWearingClothes to _fishingWearingUpper or !$worn.over_lower.type.includes("naked") or !$worn.lower.type.includes("naked") or !$worn.under_lower.type.includes("naked")>>
+
+	/*
+* ========== GENERIC ==========
+*/
+
+	<<addinlineevent 3>>
+		어깨를 <<print either("한 번 돌리고는", "가볍게 풀고는")>> 다시 자세를 잡는다.
+	<</addinlineevent>>
+	<<addinlineevent 3>>
+		낚싯줄 옆으로 천천히 지나가는 <<fishingRipples>>【을를】 바라본다.
+	<</addinlineevent>>
+	<<addinlineevent 3>>
+		숨을 내쉬며 낚싯줄에서 <<print either("주의를", "시선을")>> 떼지 않는다.
+	<</addinlineevent>>
+	<<addinlineevent 3>>
+		<<= fishingLocationWaterBodyName(_fishingLocation)>> 수면에 <<print either("무언가 움직임이", "이상한 낌새가")>> 있는지 살핀다.
+	<</addinlineevent>>
+	<<addinlineevent 3>>
+		낚싯줄을 <<print either("팽팽하게", "곧게")>> 유지한 채 기다린다.
+	<</addinlineevent>>
+	<<addinlineevent 3>>
+		자세를 고쳐 <<print either("발을 다시 딛는다", "발판을 다잡는다")>>.
+	<</addinlineevent>>
+	<<addinlineevent 3>>
+		작은 <<fishingRipples>>【이가】 퍼졌다가 사라지는 것을 지켜본다.
+	<</addinlineevent>>
+	<<addinlineevent 1>>
+		가만히 머물며 물소리에 귀를 기울인다.
+	<</addinlineevent>>
+	<<addinlineevent 3>>
+		빛을 받아 반짝이며 물속으로 비스듬히 들어가는 낚싯줄을 알아챈다.
+	<</addinlineevent>>
+
+	<<if $fishing.currentBait is undefined>>
+		<<addinlineevent 10>>
+			미끼를 써야 하는 게 아닐지 생각한다.
+		<</addinlineevent>>
+		<<addinlineevent 15>>
+			빈 낚싯바늘 옆으로 물고기 한 마리가 헤엄쳐 지나가는 것을 본다.
+		<</addinlineevent>>
+	<</if>>
+
+	<<addinlineevent 6>>
+		<<set _fishingSurfacer to weightedRandom(... fishingSurfacingFish(_fishingLocation))>>
+		<<= setup.foodstuff[_fishingSurfacer].name>>【이가】 잠시 수면 위로 떠오르는 것을 본다.<<lstress>><<stress -1>>
+	<</addinlineevent>>
+
+	<<addinlineevent 3>>
+		낚싯바늘에는 아직 아무것도 걸리지 않았다.
+	<</addinlineevent>>
+	<<addinlineevent 3>>
+		<<= fishingLocationWaterBodyName(_fishingLocation)>> 위에서 <<fishingBob>>【이가】 오르내리는 것을 바라본다.
+	<</addinlineevent>>
+	<<addinlineevent 3>>
+		낚싯줄에 <<print either("떨림이", "움직임이")>> 있는지 살핀다.
+	<</addinlineevent>>
+	<<addinlineevent 3>>
+		잔물결 하나가 낚싯줄 옆을 스쳐 지나가지만, 아무것도 물지 않는다.
+	<</addinlineevent>>
+	<<addinlineevent 3>>
+		몸의 중심을 옮기며 낚싯대를 <<print either("수평으로", "안정되게")>> 유지한다.
+	<</addinlineevent>>
+	<<addinlineevent 3>>
+		낚싯대를 <<print either("가만히 붙잡고", "고정하고")>> 기다린다.
+	<</addinlineevent>>
+	<<addinlineevent 3>>
+		낚싯대를 쥔 손의 위치를 <<print either("바꾼다", "다시 잡는다")>>.
+	<</addinlineevent>>
+	<<addinlineevent 3>>
+		손아귀를 <<print either("바꿔 쥐며", "고쳐 잡으며")>> 낚싯대를 안정시킨다.
+	<</addinlineevent>>
+	<<addinlineevent 3>>
+		낚싯대를 <<print either("들어 올리자", "옮기자")>> 낚싯줄에서 물방울이 떨어진다.
+	<</addinlineevent>>
+	<<addinlineevent 3>>
+		느슨해진 줄을 감으려고 릴을 <<print either("살짝", "조금")>> 돌린다.
+	<</addinlineevent>>
+	<<addinlineevent 3>>
+		어깨에 무리가 가지 않도록 낚싯대를 고쳐 잡는다.
+	<</addinlineevent>>
+	<<addinlineevent 3>>
+		<<fishingBob>>에서 눈을 떼지 않으며 <<print either("어떤 움직임이라도", "미세한 떨림이라도")>> 놓치지 않으려 한다.
+	<</addinlineevent>>
+	<<addinlineevent 3>>
+		낚싯대를 살짝 들어 줄의 팽팽함을 확인한다.
+	<</addinlineevent>>
+
+	/* Cloudy */
+	<<if ["lightClouds", "heavyClouds"].includes(Weather.name)>>
+		<<addinlineevent 1>>
+			<<= fishingLocationWaterBodyName(_fishingLocation)>> 위로 구름 그림자가 흘러간다.
+		<</addinlineevent>>
+		<<if Weather.dayState is "day" and Weather.temperature lte 5>>
+			<<addinlineevent 1>>
+				구름이 걷히고 잠시 햇살이 몸을 따뜻하게 데운다.
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+
+	/* Raining */
+	<<if Weather.precipitation is "rain">>
+		<<addinlineevent 4>>
+			빗방울이 <<fishingBob>>【을를】 물 위에서 춤추게 하는 것을 바라본다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			<<= fishingLocationWaterBodyName(_fishingLocation)>>【을를】 가로지르며 비가 <<print either("두드리는", "울리는")>> 소리를 듣는다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			<<= fishingLocationWaterBodyName(_fishingLocation)>> 수면을 두드리는 빗소리를 듣는다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			꾸준히 내리는 빗소리가 주변의 소음을 잠재우는 것을 듣는다.
+		<</addinlineevent>>
+
+		<<if ["storm", "thunderstorm", "heavyPrecipitation"].includes(Weather.name)>>
+			<<addinlineevent 1>>
+				거센 빗줄기 사이로 눈을 가늘게 뜬다.
+			<</addinlineevent>>
+
+			<<if $world_corruption_soft gt 70>>
+				<<addinlineevent 3>>
+					바람과 비가 악의를 품은 듯 강하게 몰아쳐 피부를 따갑게 만든다.<<gpain>><<pain 4>>
+				<</addinlineevent>>
+				<<addinlineevent 3>>
+					사나운 비가 얼굴을 후려치고, 바람이 당신을 물가 쪽으로 밀어붙인다.<<gpain>><<pain 4>>
+				<</addinlineevent>>
+			<</if>>
+		<</if>>
+	<</if>>
+
+	/* No rain or snow */
+	<<if Weather.precipitation is "none">>
+		<<addinlineevent 2>>
+			<<print either("돌풍이", "바람이")>> 낚싯줄을 흔들자 낚싯대를 조정해 균형을 맞춘다.
+		<</addinlineevent>>
+		<<addinlineevent 2>>
+			바람이 낚싯대 끝을 잡아당긴다. 손아귀에 힘을 준다.
+		<</addinlineevent>>
+		<<addinlineevent 2>>
+			바람이 잠시 거세지며 작은 <<fishingRipples>>【을를】 <<= fishingLocationWaterBodyName(_fishingLocation)>> 위로 실어 보낸다.
+		<</addinlineevent>>
+		<<addinlineevent 2>>
+			<<fishingBob>>【이가】 바람에 밀려 떠가는 것을 바라본다.
+		<</addinlineevent>>
+		<<addinlineevent 2>>
+			산들바람이 거세지며 낚싯줄이 휘어진다.
+		<</addinlineevent>>
+		<<addinlineevent 2>>
+			바람이 방향을 바꾸며 <<= fishingLocationWaterBodyName(_fishingLocation)>>의 냄새를 실어 온다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* Foggy */
+	<<if Weather.fog gte 0.3 and Weather.fog lt 0.8>>
+		<<addinlineevent 1>>
+			<<= fishingLocationWaterBodyName(_fishingLocation)>> 위로 안개가 낮게 깔린다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			멀리 있는 형체들이 안개 속으로 흐릿해진다.
+		<</addinlineevent>>
+		<<addinlineevent 3>>
+			낚싯줄 너머의 형체들이 안개 속에서 흐릿하게 번진다.
+		<</addinlineevent>>
+	<</if>>
+
+	<<if Weather.fog gte 0.8>>
+		<<addinlineevent 2>>
+			안개 때문에 낚싯줄 너머로는 거의 아무것도 보이지 않는다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			짙은 안개 속에서 소리가 이상하게 퍼져 나간다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			안개 속 형체에 시선을 맞추려 하면 흐릿해지다 사라진다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* Lightning */
+	<<if ["storm", "thunderstorm"].includes(Weather.name) and Weather.precipitation is "rain">>
+		<<addinlineevent 1>>
+			하늘에 번개가 번쩍인다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			번개가 번쩍이며 잠시 물빛을 은빛으로 물들인다.
+		<</addinlineevent>>
+
+		/* Dawn */
+		<<if Weather.dayState is "dawn">>
+			<<addinlineevent 1>>
+				창백한 새벽빛 속에서 천둥이 물가를 따라 울려 퍼진다.
+			<</addinlineevent>>
+		<</if>>
+
+		<<if Weather.dayState is "dusk">>
+			<<addinlineevent 1>>
+				저녁이 다가오며 천둥이 물 위로 쿵쿵 울린다.
+			<</addinlineevent>>
+			<<addinlineevent 1>>
+				하늘이 어두워지며 천둥소리가 물 위로 퍼져 나간다.
+			<</addinlineevent>>
+			<<addinlineevent 1>>
+				번개가 물 위로 어두워지는 구름을 갈라놓는다.
+			<</addinlineevent>>
+		<</if>>
+
+		<<if Weather.dayState is "night">>
+			<<addinlineevent 1>>
+				천둥이 밤공기를 뒤흔들다가 다시 빗소리 속으로 잦아든다.
+			<</addinlineevent>>
+			<<addinlineevent 1>>
+				천둥이 어두운 물 위로 울려 퍼진다.
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+
+	/* Snow */
+	<<if Weather.precipitation is "snow">>
+		<<addinlineevent 3>>
+			눈송이 하나가 낚싯대 끝에 내려앉았다가 녹아 없어진다.
+		<</addinlineevent>>
+		<<addinlineevent 2>>
+			눈송이가 <<= fishingLocationWaterBodyName(_fishingLocation)>> 위로 떨어지는 것을 바라본다.
+		<</addinlineevent>>
+
+		<<if ["storm", "thunderstorm", "heavyPrecipitation"].includes(Weather.name)>>
+			<<addinlineevent 1>>
+				거센 바람에 하마터면 발을 헛디딜 뻔한다.
+			<</addinlineevent>>
+			<<addinlineevent 1>>
+				<<= fishingLocationWaterBodyName(_fishingLocation)>>【이가】 요동친다.
+				<<if Weather.name is "heavyPrecipitation">>
+					거센 폭우
+				<<else>>
+					<<= Weather.name>>
+				<</if>>
+				이 몰아치고 있다.
+			<</addinlineevent>>
+		<</if>>
+
+		<<if ["storm", "thunderstorm"].includes(Weather.name)>>
+			<<addinlineevent 1>>
+				<<= Weather.name>>【이가】 머리 위에서 몰아친다.
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+
+	/* Dawn */
+	<<if Weather.dayState is "dawn" and Weather.precipitation === "none">>
+		<<addinlineevent 1>>
+			첫 새벽빛이 <<= fishingLocationWaterBodyName(_fishingLocation)>> 위로 퍼지는 것을 바라본다.<<lstress>><<stress -1>>
+		<</addinlineevent>>
+	<</if>>
+
+	/* Day / Dawn / Dusk */
+	<<if ["dawn", "day", "dusk"].includes(Weather.dayState) and Weather.precipitation === "none">>
+		<<addinlineevent 2>>
+			물 위로 반사되는 햇빛에 눈을 가늘게 뜬다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* Dusk */
+	<<if Weather.dayState is "dusk">>
+		<<addinlineevent 1>>
+			날이 어두워지고 있다.
+		<</addinlineevent>>
+	<</if>>
+
+	<<if Weather.dayState isnot "night">>
+		<<addinlineevent 1>>
+			새들이 머리 위를 맴도는 것을 바라본다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			새들이 머리 위로 지나가며 물 위에 그림자가 드리운다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* Cold Weather */
+	<<if Weather.temperature lte 5>>
+		<<if !["disabled", "hidden"].includes($transformationParts.angel.wings)
+			or !["disabled", "hidden"].includes($transformationParts.fallenAngel.wings)
+			or !["disabled", "hidden"].includes($transformationParts.demon.wings)
+			or !["disabled", "hidden"].includes($transformationParts.bird.wings)>>
+			<<addinlineevent 4>>
+				몸을 따뜻하게 하려고 날개로 자신을 감싼다.
+			<</addinlineevent>>
+		<</if>>
+
+		<<addinlineevent 3>>
+			차가운 공기 때문에 낚싯대를 쥔 손이 뻣뻣해진다.
+		<</addinlineevent>>
+		<<addinlineevent 3>>
+			낚싯대를 감싼 손가락이 추위에 뻣뻣해진 것을 느낀다.
+		<</addinlineevent>>
+
+		<<addinlineevent 1>>
+			몸을 데우려고 손에 <<print either("입김을 분다", "숨을 불어 넣는다")>>.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			차가운 공기 때문에 숨을 쉴 때마다 <<print either("날카롭게", "따갑게")>> 느껴진다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			춥다고 느낀다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			손이 차갑다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			추위에 몸을 떤다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			숨을 내쉬며 <<print either("안개처럼", "구름처럼")>> 흩어지는 입김을 바라본다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			추위를 피하려 어깨를 움츠린다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			차가운 공기가 뺨을 <<print either("깨물듯", "따갑게")>> 스친다.
+		<</addinlineevent>>
+	<</if>>
+
+	/*
+	* ========== INSECTS ==========
+	*/
+
+	<<if ["fishingForestLake", "fishingMoor"].includes(_fishingLocation) and Time.season is not "winter">>
+		<<addinlineevent 2>>
+			파리 한 마리가 귓가를 <<print either("윙윙거리며", "붕붕거리며")>> 스치더니 다시 맴돈다. 손을 저어 쫓아낸다.<<gstress>><<stress 1>>
+		<</addinlineevent>>
+		<<addinlineevent 2>>
+			목덜미를 무는 벌레를 손으로 찰싹 때린다.<<gpain>><<pain 1>>
+		<</addinlineevent>>
+		<<addinlineevent 3>>
+			날파리 떼가 얼굴로 몰려든다. 손을 저어 쫓아내며 낚싯줄에 집중하려 애쓴다.<<gstress>><<stress 1>>
+		<</addinlineevent>>
+		<<addinlineevent 2>>
+			작은 벌레 한 마리가 손등을 기어간다. 가볍게 털어낸다.
+		<</addinlineevent>>
+		<<addinlineevent 2>>
+			수풀 속에서 벌레들이 <<print either("웅웅거리는", "왱왱거리는")>> 소리를 듣는다.
+		<</addinlineevent>>
+	<</if>>
+
+	/*
+	* ========== FOREST ==========
+	* (split out from lake since a river location might be added in the future)
+	*/
+	<<if _fishingLocation is "fishingForestLake">>
+
+		/* Generic */
+		<<addinlineevent 1>>
+			기슭에서 잔잔한 <<fishingRipples>>【이가】 퍼지는 것을 바라본다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			작은 물결이 기슭을 찰랑이는 소리를 듣는다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			갈대 무더기가 기슭을 따라 떠가는 것을 바라본다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			물결의 고리가 넓어지다 사라지는 것을 바라본다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			무심코 기슭을 위아래로 <<print either("훑어본다", "둘러본다")>>.
+		<</addinlineevent>>
+		<<addinlineevent 3>>
+			작은 파도마다 <<fishingBob>>【이가】 까딱이는 것을 바라본다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			물가에서 발을 고쳐 딛는다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			주변에서 덤불이 바스락거린다.<<gstress>><<stress 1>>
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			나무 사이로 지나가는 <<print either("산들바람", "바람")>> 소리를 듣는다.
+		<</addinlineevent>>
+
+		<<if !["disabled", "hidden"].includes($transformationParts.wolf.ears)>>
+			<<addinlineevent 1>>
+				고개를 기울이고 멀리서 들려올 늑대 울음소리를 기다린다.
+			<</addinlineevent>>
+		<</if>>
+
+		/* Foggy */
+		<<if Weather.fog gte 0.3>>
+			<<addinlineevent 1>>
+				물가를 따라 나무 사이로 안개가 움직이는 것을 바라본다.
+			<</addinlineevent>>
+		<</if>>
+
+		<<if Weather.fog gte 0.8>>
+			<<addinlineevent 1>>
+				짙은 안개가 건너편 기슭을 삼켜 버린다.
+			<</addinlineevent>>
+		<</if>>
+
+		/* Snow */
+		<<if V.weatherObj.snow > 450>>
+			<<addinlineevent 1>>
+				나무에서 눈덩이가 떨어지는 소리를 듣는다.
+			<</addinlineevent>>
+		<</if>>
+
+		/* Dawn */
+		<<if Weather.dayState is "dawn">>
+			<<addinlineevent 1>>
+				아침이 시작되며 나무 사이로 새소리가 퍼진다.<<lstress>><<stress -1>>
+			<</addinlineevent>>
+			<<addinlineevent 1>>
+				멀리서 사슴 울음소리가 숲 사이로 조용히 퍼져 온다.<<lstress>><<stress -1>>
+			<</addinlineevent>>
+		<</if>>
+
+		/* Day */
+		<<if Weather.dayState is "day">>
+			<<addinlineevent 1>>
+				나무에서 새들이 바스락거리는 소리를 듣는다.
+			<</addinlineevent>>
+			<<addinlineevent 1>>
+				머리 위 나뭇가지에서 새들이 파닥이는 소리를 듣는다.
+			<</addinlineevent>>
+			<<addinlineevent 1>>
+				나무를 쪼는 딱따구리 소리를 듣는다.
+			<</addinlineevent>>
+		<</if>>
+
+		/* Dusk */
+		<<if Weather.dayState is "dusk">>
+			<<addinlineevent 1>>
+				숲이 어두워지며 새소리가 하나둘 잦아든다.
+			<</addinlineevent>>
+		<</if>>
+
+		/* Night */
+		<<if Weather.dayState is "night">>
+			<<addinlineevent 1>>
+				나무 어딘가에서 부엉이 울음소리가 들려온다.
+			<</addinlineevent>>
+			<<addinlineevent 1>>
+				물 근처 어딘가에서 개구리 울음소리를 듣는다.
+			<</addinlineevent>>
+		<</if>>
+
+		<<if Weather.dayState isnot "night">>
+			<<addinlineevent 1>>
+				덤불 속에서 작은 무언가가 부스럭거리며 지나가는 소리를 듣는다.
+			<</addinlineevent>>
+			<<addinlineevent 1>>
+				까마귀 한 마리가 나무에서 한 번 울고는 다시 조용해진다.
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+
+	/*
+	* ========== LAKE ==========
+	*/
+	<<if _fishingLocation is "fishingForestLake">>
+
+		/* Foggy */
+		<<if Weather.fog gte 0.3>>
+			<<addinlineevent 1>>
+				안개 때문에 호수 건너편이 잘 보이지 않는다.
+			<</addinlineevent>>
+		<</if>>
+
+		/* Lightning */
+		<<if ["storm", "thunderstorm"].includes(Weather.name) and Weather.precipitation is "rain">>
+			<<addinlineevent 1>>
+				낮게 깔린 구름 사이로 번개가 호수 위를 가른다.
+			<</addinlineevent>>
+
+			<<addinlineevent 1>>
+				번개가 호수와 나무 사이로 번쩍인다.
+			<</addinlineevent>>
+
+			/* Night */
+			<<if Weather.dayState is "night">>
+				<<addinlineevent 1>>
+					번개가 호숫가 전체를 순간적으로 환히 비춘다.
+				<</addinlineevent>>
+			<</if>>
+		<</if>>
+
+		/* Day */
+		<<if Weather.dayState is "day" and ["clear", "lightClouds"].includes(Weather.name) and Weather.fog lte 0.5>>
+			<<addinlineevent 1>>
+				호수에 비치는 햇빛에 눈을 가늘게 뜬다.
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+
+	/*
+	* ========== OCEAN ==========
+	*/
+	<<if ["fishingPier", "fishingBeach", "fishingCoastPath"].includes(_fishingLocation)>>
+		/* Generic */
+		<<addinlineevent 1>>
+			<<print either("상쾌한", "청량한")>> 바다 공기를 들이마신다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			공기 중에서 짠 내를 맡는다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			얼굴에 튄 바닷물을 닦아낸다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			밀물이 물가를 <<print either("끌어당기는", "쓸어가는")>> 소리를 듣는다.<<stress -1>><<lstress>>
+		<</addinlineevent>>
+
+		/* Foggy */
+		<<if Weather.fog gte 0.3>>
+			<<if Weather.dayState isnot "night">>
+				<<addinlineevent 1>>
+					안개 너머로 돌고래들이 헤엄치고 있는 것 같다.<<stress -1>><<lstress>>
+				<</addinlineevent>>
+			<</if>>
+
+			<<if Weather.fog lte 0.5 and Weather.dayState isnot "night">>
+				<<addinlineevent 1>>
+					멀리서 돌고래들이 헤엄치는 것을 본다.<<stress -1>><<lstress>>
+				<</addinlineevent>>
+			<</if>>
+
+			<<if Weather.fog lte 0.8>>
+				<<addinlineevent 1>>
+					먼 곳에서 밀려오는 큰 파도를 바라본다.
+				<</addinlineevent>>
+				<<addinlineevent 1>>
+					물가에서 멀리 떨어진 곳에서 파도 하나가 부서지는 것을 바라본다.
+				<</addinlineevent>>
+				<<addinlineevent 1>>
+					무심코 수평선을 <<print either("훑으며", "살피며")>> 배가 있는지 찾아본다.
+				<</addinlineevent>>
+			<</if>>
+		<</if>>
+
+		/* Hot */
+		<<if Weather.temperature gte 20>>
+			<<addinlineevent 1>>
+				따뜻한 바다 공기를 들이마신다.
+			<</addinlineevent>>
+		<</if>>
+
+		/* Cold */
+		<<if Weather.temperature lte 5>>
+			<<addinlineevent 1>>
+				차가운 바다 공기를 들이마신다.
+			<</addinlineevent>>
+			<<addinlineevent 1>>
+				차가운 공기와 바닷물 물보라가 뺨을 따갑게 스친다.
+			<</addinlineevent>>
+		<</if>>
+
+		/* Dawn */
+		<<if Weather.dayState is "dawn">>
+			<<addinlineevent 1>>
+				해가 떠오르는 것을 바라본다.<<stress -1>><<lstress>>
+			<</addinlineevent>>
+		<</if>>
+
+		/* Day */
+		<<if Weather.dayState is "day">>
+			<<if ["clear", "lightClouds"].includes(Weather.name)>>
+				<<addinlineevent 1>>
+					물가 근처 물 위로 반사되는 눈부신 빛에 눈을 가늘게 뜬다.
+				<</addinlineevent>>
+			<</if>>
+		<</if>>
+
+		/* Night */
+		<<if Weather.dayState is "night">>
+			<<if ["clear", "lightClouds"].includes(Weather.name)>>
+				<<addinlineevent 1>>
+					흘러가는 구름 사이로 밝은 별 몇 개를 찾아낸다.
+				<</addinlineevent>>
+			<</if>>
+
+			<<if ["storm", "thunderstorm"].includes(Weather.name) and Weather.precipitation is "rain">>
+				<<addinlineevent 1>>
+					번개가 번쩍이며 잠시 탁 트인 바다를 드러낸다.
+				<</addinlineevent>>
+			<</if>>
+		<</if>>
+
+		<<if Weather.dayState isnot "night">>
+			<<addinlineevent 1>>
+				갈매기들이 머리 위를 <<print either("맴도는", "선회하는")>> 소리를 듣는다.
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+
+	/*
+	* ========== BEACH ==========
+	*/
+	<<if _fishingLocation is "fishingBeach">>
+		/* Generic */
+		<<addinlineevent 1>>
+			파도가 모래 위로 <<print either("접히듯", "부서지며")>> 밀려오는 소리를 듣는다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			파도가 조개껍데기를 바다로 끌고 가는 것을 바라본다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			게 한 마리가 모래 위를 <<print either("종종걸음 치는", "잽싸게 움직이는")>> 것을 바라본다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			젖은 모래 위에서 발을 고쳐 딛는다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			파도가 해초를 물가를 따라 <<print either("끌어가는", "쓸어가는")>> 것을 바라본다.
+		<</addinlineevent>>
+
+		/* Raining */
+		<<if Weather.precipitation is "rain">>
+			<<addinlineevent 1>>
+				젖은 모래 위로 빗소리가 쏴아 하고 스치는 것을 듣는다.
+			<</addinlineevent>>
+		<</if>>
+
+		/* Lightning */
+		<<if ["storm", "thunderstorm"].includes(Weather.name) and Weather.precipitation is "rain">>
+			/* Day */
+			<<if Weather.dayState is "day">>
+				<<addinlineevent 1>>
+					번개가 바다 위로 번쩍이며 젖은 모래를 환히 비춘다.
+				<</addinlineevent>>
+				<<addinlineevent 1>>
+					천둥이 탁 트인 해변을 울린다.
+				<</addinlineevent>>
+			<</if>>
+
+			/* Dusk */
+			<<if Weather.dayState is "dusk">>
+				<<addinlineevent 1>>
+					밤이 깊어지며 천둥이 해변 위로 울려 퍼진다.
+				<</addinlineevent>>
+			<</if>>
+
+			/* Night */
+			<<if Weather.dayState is "night">>
+				<<addinlineevent 1>>
+					번개가 번쩍이며 잠시 파도를 은빛으로 물들인다.
+				<</addinlineevent>>
+				<<addinlineevent 1>>
+					천둥이 해변 위로 쿵 울리다 어둠 속으로 잦아든다.
+				<</addinlineevent>>
+			<</if>>
+		<</if>>
+
+		/* Day */
+		<<if Weather.dayState is "day" and ["clear", "lightClouds"].includes(Weather.name) and Weather.fog lte 0.5>>
+			<<addinlineevent 1>>
+				파도에 반사되는 햇빛에 눈을 가늘게 뜬다.
+			<</addinlineevent>>
+			<<addinlineevent 1>>
+				따뜻한 해변의 햇살을 만끽한다.<<lstress>><<stress -1>>
+			<</addinlineevent>>
+		<</if>>
+
+		/* Night */
+		<<if Weather.dayState is "night">>
+			<<addinlineevent 1>>
+				해안선이 어둠 속으로 사라진다.
+			<</addinlineevent>>
+		<</if>>
+
+		<<if Weather.dayState isnot "night" and Weather.precipitation === "none">>
+			<<addinlineevent 1>>
+				바람이 멀리서 들려오는 목소리를 실어 나르는 것을 듣는다.
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+
+	/*
+	* ========== PIER ==========
+	*/
+	<<if _fishingLocation is "fishingPier">>
+		/* Generic */
+		<<addinlineevent 1>>
+			부두에 파도가 <<print either("부딪히는", "부서지는")>> 것을 바라본다.<<stress -1>><<lstress>>
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			교각 주변에 거품이 <<print either("모여드는", "소용돌이치는")>> 것을 바라본다.<<stress -1>><<lstress>>
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			작은 게 한 마리가 젖은 판자 위를 <<print either("잽싸게", "종종거리며")>> 지나가는 것을 바라본다.<<stress -1>><<lstress>>
+		<</addinlineevent>>
+		<<addinlineevent 2>>
+			낚싯줄이 닳지는 않았는지 살펴본다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			축축한 판자 위에서 발을 고쳐 딛는다.
+		<</addinlineevent>>
+
+		/* Snowing */
+		<<if Weather.precipitation is "snow">>
+			<<addinlineevent 1>>
+				난간 위에서 눈이 녹아 사라지는 것을 바라본다.
+			<</addinlineevent>>
+		<</if>>
+
+		/* Raining */
+		<<if Weather.precipitation is "rain">>
+			<<addinlineevent 2>>
+				부두 나무를 두드리는 빗소리를 듣는다.
+			<</addinlineevent>>
+			<<addinlineevent 6>>
+				정자 지붕을 두드리는 빗소리를 듣는다.
+			<</addinlineevent>>
+			<<addinlineevent 4>>
+				정자 지붕 끝에서 빗물이 꾸준히 떨어진다.
+			<</addinlineevent>>
+			<<addinlineevent 2>>
+				돌풍이 비를 옆으로, 그리고 잠시 정자 아래까지 밀어붙인다.
+			<</addinlineevent>>
+		<</if>>
+
+		/* Lightning */
+		<<if ["storm", "thunderstorm"].includes(Weather.name) and Weather.precipitation is "rain">>
+			<<addinlineevent 1>>
+				항구 위로 천둥이 <<print either("굴러가듯", "우르릉거리며")>> 울린다.
+			<</addinlineevent>>
+			<<addinlineevent 1>>
+				부두 위로 천둥이 갈라지며 발밑의 판자가 덜컹인다.
+			<</addinlineevent>>
+
+			<<if Weather.dayState is "day">>
+				<<addinlineevent 1>>
+					부두 너머로 번개가 갈라지며 바다를 환히 비춘다.
+				<</addinlineevent>>
+			<</if>>
+
+			<<if Weather.dayState is "dusk">>
+				<<addinlineevent 1>>
+					번개가 부두 위 하늘을 가른다.
+				<</addinlineevent>>
+			<</if>>
+		<</if>>
+
+		/* Day */
+		<<if Weather.dayState is "day" and ["clear", "lightClouds"].includes(Weather.name) and Weather.fog lte 0.5>>
+			<<addinlineevent 1>>
+				물에 반사된 햇빛이 눈으로 파고든다.
+			<</addinlineevent>>
+		<</if>>
+
+		/* Working Day */
+		<<if Weather.dayState is "day" and Time.weekDay gte 2 and Time.weekDay lte 6>>
+			<<addinlineevent 1>>
+				부두를 따라 상자를 나르는 항만 노동자들을 바라본다.
+			<</addinlineevent>>
+			<<addinlineevent 1>>
+				항만 노동자들이 물 너머로 서로 부르는 소리를 듣는다.
+			<</addinlineevent>>
+			<<addinlineevent 1>>
+				항만 노동자 두 명이 짐을 수레에 싣느라 씨름하는 것을 본다.
+			<</addinlineevent>>
+
+			<<if fameTotal() gte 2000 and $docks.status gte 50>>
+				<<addinlineevent 1>>
+					항만 노동자들 중 밖에서 마주친 적 있는 사람을 알아볼지 궁금해진다.
+				<</addinlineevent>>
+			<</if>>
+		<</if>>
+
+		/* Dusk */
+		<<if Weather.dayState is "dusk">>
+			<<addinlineevent 1>>
+				부두에서 마지막 빛이 사라지는 것을 바라본다.
+			<</addinlineevent>>
+
+			<<if $docks.status gte 60>>
+				<<addinlineevent 1>>
+					퇴근하는 항만 노동자에게 고개를 끄덕인다.
+				<</addinlineevent>>
+				<<addinlineevent 1>>
+					퇴근 준비를 하는 항만 노동자 몇 명에게 짧게 인사를 건넨다.
+				<</addinlineevent>>
+			<</if>>
+		<</if>>
+
+		/* Night */
+		<<if Weather.dayState is "night">>
+			<<addinlineevent 1>>
+				그늘진 부두 아래로 물이 찰박이는 소리를 듣는다.
+			<</addinlineevent>>
+		<</if>>
+
+		/* Hallucinogens */
+		<<if $hallucinogen gte 200>>
+			<<addinlineevent 1>>
+				파도 소리 속에서 목소리가 들리는 것 같더니, 이내 바람 소리만 남는다.
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+
+	/*
+	* ========== CLIFF FACE ==========
+	*/
+	<<if _fishingLocation is "fishingCoastPath">>
+		/* Generic */
+		<<addinlineevent 1>>
+			절벽을 따라 바람이 <<print either("긁히듯", "휘파람 소리를 내며")>> 지나가는 것을 듣는다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			파도에서 물보라가 <<print either("솟구치는", "일어나는")>> 것을 바라본다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			바위 사이 틈에 거품이 <<print either("모여드는", "고이는")>> 것을 바라본다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			절벽 아래에서 갈매기들이 <<print either("우는", "울부짖는")>> 소리를 듣는다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			파도가 절벽에 부딪혀 되돌아오는 소리를 듣는다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			위쪽 초원에서 꽃 <<print either("향기가", "내음이")>> 흘러내려 온다.<<lstress>><<stress -1>>
+		<</addinlineevent>>
+
+		/* Raining */
+		<<if Weather.precipitation is "rain">>
+			<<addinlineevent 1>>
+				길을 따라 돌과 관목을 두드리는 빗소리를 듣는다.
+			<</addinlineevent>>
+		<</if>>
+
+		/* Lightning */
+		<<if ["storm", "thunderstorm"].includes(Weather.name) and Weather.precipitation is "rain">>
+			<<addinlineevent 1>>
+				번개가 길 너머 바다를 가로질러 번쩍인다.
+			<</addinlineevent>>
+			<<addinlineevent 1>>
+				천둥이 절벽을 따라 메아리친다.
+			<</addinlineevent>>
+			<<addinlineevent 1>>
+				번개가 잠시 바위에 부딪히는 파도의 윤곽을 드러낸다.
+			<</addinlineevent>>
+			<<addinlineevent 6>>
+				갑작스러운 돌풍에 하마터면 물속으로 밀려날 뻔했지만 겨우 발을 붙든다.<<stress 10>><<ggstress>>
+			<</addinlineevent>>
+			<<addinlineevent 6>>
+				젖은 돌 위에서 미끄러지다 물에서 몇 걸음 앞에서 멈춘다.<<stress 10>><<ggstress>>
+			<</addinlineevent>>
+			<<addinlineevent 6>>
+				세찬 돌풍이 파도 쪽으로 밀어붙이지만, 아슬아슬하게 발을 딛고 버틴다.<<stress 10>><<ggstress>>
+			<</addinlineevent>>
+			<<addinlineevent 6>>
+				느슨하고 젖은 자갈이 발밑에서 미끄러지지만, 물에 빠지기 직전에 몸을 가눈다.<<stress 10>><<ggstress>>
+			<</addinlineevent>>
+
+			/* Dawn */
+			<<if Weather.dayState is "dawn">>
+				<<addinlineevent 1>>
+					동이 트며 먼바다에서 천둥이 밀려온다.
+				<</addinlineevent>>
+			<</if>>
+
+			/* Night */
+			<<if Weather.dayState is "night">>
+				<<addinlineevent 1>>
+					번개가 번쩍이며 머리 위 절벽을 환히 비춘다.
+				<</addinlineevent>>
+				<<addinlineevent 1>>
+					천둥이 해안을 따라 울려 퍼진다.
+				<</addinlineevent>>
+			<</if>>
+		<</if>>
+
+		/* Foggy Dawn */
+		<<if Weather.fog gte 0.3 and Weather.dayState is "dawn">>
+			<<addinlineevent 1>>
+				새벽빛 속에서 안개가 절벽을 타고 흘러내린다.
+			<</addinlineevent>>
+		<</if>>
+
+		/* Dusk */
+		<<if Weather.dayState is "dusk">>
+			<<addinlineevent 1>>
+				머리 위 절벽이 그림자 속으로 저물어간다.
+			<</addinlineevent>>
+		<</if>>
+
+		/* Cold */
+		<<if Weather.temperature lte 6>>
+			<<addinlineevent 1>>
+				바다에서 불어오는 차가운 돌풍에 손가락이 아려온다.
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+
+	/*
+	* ========== MOOR ==========
+	*/
+	<<if _fishingLocation is "fishingMoor">>
+		/* Generic */
+		<<addinlineevent 1>>
+			갈대 사이로 어두운 물이 <<print either("소용돌이치는", "흘러가는")>> 것을 바라본다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			황야에서 조용히 <<print either("보글거리는", "꿀렁이는")>> 소리를 듣는다.
+		<</addinlineevent>>
+		<<addinlineevent 3>>
+			낚싯줄에 수초가 걸리지 않았는지 살펴본다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			더 마른 땅으로 자리를 옮긴다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			물가에서 발을 고쳐 딛는다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			히스 덤불 사이로 바람이 <<print either("끌리듯", "쉭쉭거리며")>> 지나가는 소리를 듣는다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			시선이 갈대 사이를 떠돈다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			이끼 <<print either("덩어리가", "뭉치가")>> 떠내려가는 것을 바라본다.
+		<</addinlineevent>>
+
+		/* Foggy */
+		<<if Weather.fog gte 0.3>>
+			<<addinlineevent 1>>
+				고여 있는 웅덩이 위를 스치는 벌레들을 바라본다.
+			<</addinlineevent>>
+		<</if>>
+
+		/* Heavy Fog */
+		<<if Weather.fog gte 0.8>>
+			<<addinlineevent 1>>
+				어둠과 짙은 안개가 주변에 고인다.<<stress 1>><<gstress>>
+			<</addinlineevent>>
+		<</if>>
+
+		/* Rain */
+		<<if Weather.precipitation is "rain">>
+			<<addinlineevent 1>>
+				갈대 사이로 비가 쉭쉭거리며 스치는 소리를 듣는다.
+			<</addinlineevent>>
+			<<addinlineevent 1>>
+				주변의 진흙 웅덩이를 두드리는 빗소리를 듣는다.
+			<</addinlineevent>>
+		<</if>>
+
+		/* Lightning */
+		<<if ["storm", "thunderstorm"].includes(Weather.name) and Weather.precipitation is "rain">>
+
+			/* Dawn */
+			<<if Weather.dayState is "dawn">>
+				<<addinlineevent 1>>
+					아침 햇살 속에서 황야 위로 번개가 번쩍인다.
+				<</addinlineevent>>
+				<<addinlineevent 1>>
+					젖은 평지를 가로질러 천둥이 울린다.
+				<</addinlineevent>>
+			<</if>>
+
+			/* Day */
+			<<if Weather.dayState is "day">>
+				<<addinlineevent 1>>
+					갈대와 얕은 물 위로 번개가 번쩍인다.
+				<</addinlineevent>>
+				<<addinlineevent 1>>
+					무겁고 가까운 천둥소리가 황무지 위로 울린다.
+				<</addinlineevent>>
+			<</if>>
+
+			/* Dusk */
+			<<if Weather.dayState is "dusk">>
+				<<addinlineevent 1>>
+					어둑한 하늘을 가르며 번개가 황무지 위로 번쩍인다.
+				<</addinlineevent>>
+				<<addinlineevent 1>>
+					해질녘 황무지를 가로질러 천둥이 메아리친다.
+				<</addinlineevent>>
+			<</if>>
+
+			/* Night */
+			<<if Weather.dayState is "night">>
+				<<addinlineevent 1>>
+					짧은 번개가 황무지를 순간적으로 밝힌다.
+				<</addinlineevent>>
+				<<addinlineevent 1>>
+					천둥이 황무지 위 어둠을 가로질러 울려 퍼진다.
+				<</addinlineevent>>
+			<</if>>
+
+		<</if>>
+		/* Hot */
+		<<if Weather.temperature gte 20>>
+			<<addinlineevent 1>>
+				따뜻한 공기가 황무지의 냄새를 실어 온다.
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+
+	/*
+	* =========== SPECIFIC ===========
+	*/
+
+	<<if fameTotal() gte 2000 and Weather.dayState isnot "night" and !Time.isBloodMoon() and ["fishingPier", "fishingBeach"].includes(_fishingLocation)>>
+		<<addinlineevent 1>>
+			이곳에서 누군가 당신을 알아볼지 궁금해진다.
+		<</addinlineevent>>
+	<</if>>
+	<<if $community_service gte 1>>
+		<<addinlineevent 1>>
+			아직 갚아야 할 봉사 시간이 얼마나 남았는지 생각한다.<<gstress>><<stress 1>>
+		<</addinlineevent>>
+	<</if>>
+	<<if $islander_language gte 100>>
+		<<addinlineevent 1>>
+			머릿속으로 조용히 옛 섬 방언을 번역해 본다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* School */
+	<<if $detention gte 1 and !$headnodetention>>
+		<<addinlineevent 1>>
+			다음 벌점 시간을 피할 수 있을지 생각한다.
+		<</addinlineevent>>
+	<</if>>
+	<<if $schoolstate is "lunch">>
+		<<addinlineevent 1>>
+			지금쯤 다들 어디서 점심을 보내고 있을지 상상해 본다.
+		<</addinlineevent>>
+	<</if>>
+	<<if Time.schoolTime>>
+		<<addinlineevent 1>>
+			수업을 빼먹은 것 때문에 얼마나 곤란해질지 생각한다.<<gstress>><<stress 1>>
+		<</addinlineevent>>
+	<</if>>
+	<<if Time.isSchoolDay(Time.tomorrow)>>
+		<<addinlineevent 1>>
+			내일은 일찍 일어나 학교에 가야 한다.
+		<</addinlineevent>>
+	<</if>>
+	<<if $scienceproject is "ongoing" and $scienceprojectdays is 0>>
+		<<addinlineevent 1>>
+			오늘 과학 박람회에서 누가 우승할지 궁금해진다.
+		<</addinlineevent>>
+	<</if>>
+	<<if $scienceprojectdays is 1>>
+		<<addinlineevent 1>>
+			내일 과학 박람회에 가야 할지 고민한다.
+		<</addinlineevent>>
+	<</if>>
+	<<if $mathsproject is "ongoing" and $mathsprojectdays is 0>>
+		<<if Time.dayState is "day">>
+			<<addinlineevent 1>>
+				리버가 수학 경시대회에 당신이 빠진 것을 눈치챘을지 생각한다.
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+	<<if $mathsprojectdays gt 0>>
+		<<if $mathschance gte 1>>
+			<<addinlineevent 3>>
+				물고기 수를 세는 것을 멈출 수가 없다. 수학 경시대회 압박이 마음을 짓누르는 모양이다.
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+	<<if $mathsprojectdays is 1>>
+		<<addinlineevent 1>>
+			수학 경시대회가 내일이다. 정말 충분히 준비했는지 생각해 본다.
+		<</addinlineevent>>
+	<</if>>
+	<<if $englishPlay is "ongoing" and $englishPlayDays is 0>>
+		<<addinlineevent 1>>
+			연극이 오늘 밤이다. 당신 없이 어떻게 되어 가고 있을지 궁금해진다.
+		<</addinlineevent>>
+		<<if Time.hour gte 17>>
+			<<if $englishPlayRoles.Player isnot "none">>
+				<<addinlineevent 1>>
+					오늘 밤 연극에 배역을 맡았었다. 다들 당신이 없다는 걸 눈치챘을 것이다.
+				<</addinlineevent>>
+			<</if>>
+		<</if>>
+	<</if>>
+	<<if $englishPlayDays gt 0>>
+		<<if $englishPlayRoles.Player isnot "none">>
+			<<addinlineevent 1>>
+				연극 대사가 머릿속에서 계속 떠오른다.
+			<</addinlineevent>>
+		<<else>>
+			<<addinlineevent 1>>
+				학교 과제를 앞두고 그러하듯, 머릿속으로 문장을 짓고 있는 자신을 발견한다.
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+	<<if $englishPlayDays is 1>>
+		<<addinlineevent 1>>
+			내일 연극이 어떻게 될지 생각한다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* Temple */
+	<<if $templePromised is "Sydney">>
+		<<addinlineevent 1>>
+			시드니와 맹세에 대해 생각한다.<<stress -1>><<lstress>>
+		<</addinlineevent>>
+	<</if>>
+	<<if $temple_rank is "priest">>
+		<<addinlineevent 1>>
+			신전이 지운 기대의 무게에 대해 생각한다.
+		<</addinlineevent>>
+	<</if>>
+	<<if $temple_rank is "initiate">>
+		<<addinlineevent 1>>
+			여전히 제대로 된 입문자처럼 보이는지 생각한다.
+		<</addinlineevent>>
+	<</if>>
+	<<if $temple_event is 1>>
+		<<addinlineevent 1>>
+			신전에서 당신을 기다리고 있는 것이 무엇일지 생각한다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* Ear Slime */
+	<<if  numberOfEarSlime()>>
+		<<addinlineevent 1>>
+			귀 속 슬라임<<if numberOfEarSlime() gt 1>>들<</if>>【이가】 당신에게 미치는 영향에 대해 곱씹지 않으려 애쓴다.
+		<</addinlineevent>>
+	<</if>>
+	<<if numberOfEarSlime()>>
+		<<addinlineevent 1>>
+			귓속의 속삭임을 무시하려 애쓴다.
+		<</addinlineevent>>
+	<</if>>
+	<<if numberOfEarSlime()>>
+		<<addinlineevent 1>>
+			귀 속 슬라임<<if numberOfEarSlime() gt 1>>들<</if>>【이가】 당신에게서 무엇을 원할지, 다음엔 무엇을 요구할지 궁금해진다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* Rent */
+	<<if $renttime lte 0 and $money lt $rentmoney + ($babyRent ?? 0)>>
+		<<addinlineevent 1>>
+			이번 주 집세를 어떻게 마련할지 생각한다.<<stress 1>><<gstress>>
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			베일리에게 집세를 내지 못하면 어떻게 될지 걱정한다.<<stress 1>><<gstress>>
+		<</addinlineevent>>
+	<</if>>
+
+	/* Clothing */
+	<<if $worn.neck.collared is 1>>
+		<<addinlineevent 1>>
+			숨을 쉴 때마다 목줄이 움직이는 것을 느낀다.
+		<</addinlineevent>>
+	<</if>>
+	<<if $worn.feet.type.includes("shackle")>>
+		<<addinlineevent 1>>
+			발목을 당기는 힘을 풀어보려 자세를 고친다.
+		<</addinlineevent>>
+	<</if>>
+	<<if $worn.neck.collaredpolice is 1>>
+		<<addinlineevent 1>>
+			목에 걸린 관급 금속 목줄의 무게를 느낀다.
+		<</addinlineevent>>
+	<</if>>
+	<<if Weather.temperature lte 5 and _fishingWearingUpper>>
+		<<addinlineevent 1>>
+			$worn.upper.name 안으로 몸을 웅크리며 온기를 지키려 한다.
+		<</addinlineevent>>
+	<</if>>
+	<<if Weather.precipitation is "rain" and _fishingWearingUpper>>
+		<<addinlineevent 1>>
+			소매를 따라 빗방울이 맺히는 것을 느낀다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* Town Projects */
+	<<if $town_projects.bridge gte 4>>
+		<<addinlineevent 1>>
+			새 다리 덕분에 운하를 건너기가 얼마나 안전해졌는지 생각한다.<<lstress>><<stress -1>>
+		<</addinlineevent>>
+	<</if>>
+	<<if $town_projects.road gte 4>>
+		<<addinlineevent 1>>
+			이제 호수로 가는 길이 더 안전해졌기를 바란다.
+		<</addinlineevent>>
+	<</if>>
+	<<if $town_projects.diving gte 4>>
+		<<addinlineevent 1>>
+			윈터가 호수에서 무엇을 찾아낼지 궁금해진다.
+		<</addinlineevent>>
+	<</if>>
+	<<if $town_projects.thicket gte 4>>
+		<<addinlineevent 1>>
+			새로 생긴 연못에 어떤 야생동물이 나타날지 궁금해진다.
+		<</addinlineevent>>
+	<</if>>
+	<<if $town_projects.green gte 4>>
+		<<addinlineevent 1>>
+			사람들이 새 학교 녹지를 즐기기를 바란다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* Smugglers */
+	<<if $smuggler_known is 1 and $smuggler_timer is 0>>
+		<<addinlineevent 1>>
+			오늘 밤 밀수업자들이 화물을 옮긴다. 또 누가 이 사실을 알고 있을지 궁금해진다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* Pregnancy */
+	<<if playerAwareTheyArePregnant()>>
+		<<addinlineevent 1>>
+			몸속에 있는 생명에 대해 생각한다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			잠시 배 위에 손을 얹는다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			몸속에서 움직임을 느낀다.<<lstress>><<stress -1>>
+		<</addinlineevent>>
+	<</if>>
+
+	/* Other */
+	<<if $harper_appointments.enabled and Time.weekDay is 6 and $daily.harperVisit isnot 1>>
+		<<addinlineevent 1>>
+			오늘 하퍼 선생님을 만나러 가야 할지 생각한다.
+		<</addinlineevent>>
+	<</if>>
+	<<if $brothel_escortjob and !$brothel_escortjob.done and !$brothel_escortjob.missed and $brothel_escortjob.accept>>
+		<<addinlineevent 1>>
+			오늘 늦게 있을 에스코트 일의 세부 사항을 떠올려 본다.
+		<</addinlineevent>>
+	<</if>>
+	<<if $pubfame?.status is "accepted">>
+		<<addinlineevent 1>>
+			미키가 맡긴 일이 마음 한구석에 아직 남아 있다.
+		<</addinlineevent>>
+	<</if>>
+
+	/*
+	* =========== LOVE INTERESTS ===========
+	*/
+	/* Whitney is excluded from love interest thoughts while they're present at the pier */
+	<<set _whitneyAbsent to [undefined, "finished"].includes($daily?.fishing?.fishingPier?.whitney?.phase)>>
+
+	/* Generic Love Interest Thoughts */
+	<<if $loveInterest.primary isnot "None" and ($loveInterest.primary isnot "Whitney" or _whitneyAbsent)>>
+		<<addinlineevent 1>>
+			<<= (["Black Wolf", "Great Hawk"].includes($loveInterest.primary) ? "그 " : "") + window.KR.gatPersonNameDictKR($loveInterest.primary)>>【이가】 지금쯤 무엇을 하고 있을지 궁금해진다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			어느새 <<= (["Black Wolf", "Great Hawk"].includes($loveInterest.primary) ? "그 " : "") + window.KR.gatPersonNameDictKR($loveInterest.primary)>>【을를】 생각하고 있는 자신을 발견한다.
+		<</addinlineevent>>
+		<<if Weather.dayState is "dawn">>
+			<<addinlineevent 1>>
+				<<= (["Black Wolf", "Great Hawk"].includes($loveInterest.primary) ? "그 " : "") + window.KR.gatPersonNameDictKR($loveInterest.primary)>>【이가】 오늘은 식사를 했을지 궁금해진다.
+			<</addinlineevent>>
+		<</if>>
+		<<if ["dawn", "day"].includes(Weather.dayState)>>
+			<<addinlineevent 1>>
+				낚시가 끝나면 <<= (["Black Wolf", "Great Hawk"].includes($loveInterest.primary) ? "그 " : "") + window.KR.gatPersonNameDictKR($loveInterest.primary)>>【을를】 찾아가 볼까 생각한다.
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+	<<if $loveInterest.secondary isnot "None" and ($loveInterest.secondary isnot "Whitney" or _whitneyAbsent)>>
+		<<addinlineevent 1>>
+			생각이 <<= (["Black Wolf", "Great Hawk"].includes($loveInterest.secondary) ? "그 " : "") + window.KR.gatPersonNameDictKR($loveInterest.secondary)>>【에게】로 흘러간다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			어느새 <<= (["Black Wolf", "Great Hawk"].includes($loveInterest.secondary) ? "그 " : "") + window.KR.gatPersonNameDictKR($loveInterest.secondary)>>【을를】 생각하고 있는 자신을 발견한다.
+		<</addinlineevent>>
+		<<if Weather.dayState is "dawn">>
+			<<addinlineevent 1>>
+				<<= (["Black Wolf", "Great Hawk"].includes($loveInterest.secondary) ? "그 " : "") + window.KR.gatPersonNameDictKR($loveInterest.secondary)>>【이가】 오늘은 식사를 했을지 궁금해진다.
+			<</addinlineevent>>
+		<</if>>
+		<<if ["dawn", "day"].includes(Weather.dayState)>>
+			<<addinlineevent 1>>
+				낚시가 끝나면 <<= (["Black Wolf", "Great Hawk"].includes($loveInterest.secondary) ? "그 " : "") + window.KR.gatPersonNameDictKR($loveInterest.secondary)>>【을를】 찾아가 볼까 생각한다.
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+	<<if $loveInterest.tertiary isnot "None" and ($loveInterest.tertiary isnot "Whitney" or _whitneyAbsent)>>
+		<<addinlineevent 1>>
+			<<= (["Black Wolf", "Great Hawk"].includes($loveInterest.tertiary) ? "그 " : "") + window.KR.gatPersonNameDictKR($loveInterest.tertiary)>>【이가】 지금쯤 무엇을 하고 있을지 궁금해진다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			어느새 <<= (["Black Wolf", "Great Hawk"].includes($loveInterest.tertiary) ? "그 " : "") + window.KR.gatPersonNameDictKR($loveInterest.tertiary)>>【을를】 생각하고 있는 자신을 발견한다.
+		<</addinlineevent>>
+		<<if Weather.dayState is "dawn">>
+			<<addinlineevent 1>>
+				<<= (["Black Wolf", "Great Hawk"].includes($loveInterest.tertiary) ? "그 " : "") + window.KR.gatPersonNameDictKR($loveInterest.tertiary)>>【이가】 오늘은 식사를 했을지 궁금해진다.
+			<</addinlineevent>>
+		<</if>>
+		<<if ["dawn", "day"].includes(Weather.dayState)>>
+			<<addinlineevent 1>>
+				낚시가 끝나면 <<= (["Black Wolf", "Great Hawk"].includes($loveInterest.tertiary) ? "그 " : "") + window.KR.gatPersonNameDictKR($loveInterest.tertiary)>>【을를】 찾아가 볼까 생각한다.
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+
+	/* Robin */
+	<<if $robinromance gte 1>>
+		<<addinlineevent 1>>
+			로빈이 오늘 잘 지내고 있을지 궁금해진다.
+		<</addinlineevent>>
+	<</if>>
+	<<if getRobinLocation() is "beach">>
+		<<addinlineevent 1>>
+			나중에 로빈의 좌판에 들러볼까 생각한다.
+		<</addinlineevent>>
+	<</if>>
+	<<if C.npc.Robin.trauma gte 40>>
+		<<addinlineevent 1>>
+			로빈을 도울 수 있기를 바란다.
+		<</addinlineevent>>
+	<</if>>
+	<<if $robinmissing>>
+		<<addinlineevent 1>>
+			로빈이 어디 있는지 궁금해진다.<<gstress>><<stress 1>>
+		<</addinlineevent>>
+	<</if>>
+	<<if $robindebtevent gte 1 and $robinmissing isnot 0>>
+		<<addinlineevent 1>>
+			로빈은 지금 어딘가에 있다. <<nnpc_he "Robin">>【이가】 무사하기를 바란다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* Whitney - not while they're present at the pier */
+	<<if isLoveInterest("Whitney") and _whitneyAbsent>>
+		<<addinlineevent 1>>
+			휘트니가 지금 무슨 말썽을 부리고 있을지 궁금해진다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* Sydney */
+	<<if isLoveInterest("Sydney")>>
+		<<addinlineevent 1>>
+			시드니의 조심스러운 미소를 떠올린다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			신전에서 고개를 숙인 시드니의 얼굴을 떠올린다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* Avery */
+	<<if !["fallen", "kicked"].includes($avery_fate)>> 
+		<<if isLoveInterest("Avery")>>
+			<<addinlineevent 1>>
+				에이버리가 지금 무엇을 하고 있을지 궁금해진다.
+			<</addinlineevent>>
+		<</if>>
+		<<if $averydate is 1 and $averydateattended isnot 1>>
+			<<addinlineevent 1>>
+				오늘 밤 에이버리가 무슨 계획을 세워두었을지 궁금해진다.
+			<</addinlineevent>>
+		<</if>>
+		<<if $avery_mansion and !($avery_tower.stage is 3 and $avery_mansion.stopPartyAfterTower) and !["missed", "started"].includes($avery_mansion.party_state)>>
+			<<addinlineevent 1>>
+				에이버리의 저택 파티가 곧 열린다. 여전히 무엇을 예상해야 할지 잘 모르겠다.
+			<</addinlineevent>>
+		<</if>>
+		<<if $averyragerevealed is 1>>
+			<<addinlineevent 1>>
+				가면이 벗겨질 때 에이버리가 짓던 표정을 떠올린다.<<stress 1>><<gstress>>
+			<</addinlineevent>>
+		<</if>>
+		<<if $avery_mansion>>
+			<<if $avery_mansion.jobs?.length gte 1>>
+				<<addinlineevent 1>>
+					에이버리의 저택에서 해야 할 일이 얼마나 많은지 생각한다.
+				<</addinlineevent>>
+			<</if>>
+			<<if ($avery_mansion.pool + $avery_mansion.kitchen + $avery_mansion.lounge + $avery_mansion.display + $avery_mansion.bedroom + $avery_mansion.bathroom + $avery_mansion.dining + $avery_mansion.garden) gte 8>>
+				<<addinlineevent 1>>
+					저택에서 당신을 기다리고 있을 먼지 쌓인 구석과 미처 끝내지 못한 잡일들을 떠올린다.
+				<</addinlineevent>>
+			<</if>>
+			<<if $avery_mansion.food isnot "none">>
+				<<if $foodstuff[$avery_mansion.food]?.amount gte 1>>
+					<<addinlineevent 1>>
+						당신이 만든 <<recipe_name $avery_mansion.food>>【을를】 에이버리가 마음에 들어 하기를 바란다.
+					<</addinlineevent>>
+				<<else>>
+					<<if Time.weekDay gte 2 and Time.weekDay lte 6>>
+						<<addinlineevent 1>>
+							오늘 밤까지 에이버리에게 줄 <<recipe_name $avery_mansion.food>>【을를】 어디서 구할지 고민한다.
+						<</addinlineevent>>
+					<</if>>
+				<</if>>
+			<</if>>
+			<<if $avery_mansion.schedule is "party">>
+				<<addinlineevent 1>>
+					오늘 밤 에이버리의 파티에서 무슨 일이 일어날지 궁금해진다.
+				<</addinlineevent>>
+			<</if>>
+			<<if ["missed", "skipped"].includes($avery_mansion.party_state)>>
+				<<addinlineevent 1>>
+					에이버리의 파티에 빠진 여파를 걱정한다.<<gstress>><<stress 1>>
+				<</addinlineevent>>
+			<</if>>
+		<</if>>
+	<<else>>
+		<<addinlineevent 1>>
+			높은 건물들을 떠올린다.<<gtrauma>><<trauma 1>>
+		<</addinlineevent>>
+	<</if>>
+
+	/* Alex */
+	<<if isLoveInterest("Alex")>>
+		<<addinlineevent 1>>
+			농장에서 알렉스의 하루가 어떻게 지나가고 있을지 궁금해진다.
+		<</addinlineevent>>
+	<</if>>
+	<<if $farm?.aggro gte 30>>
+		<<addinlineevent 1>>
+			레미가 농장에 다음으로 무슨 짓을 할지 생각한다.<<gstress>><<stress 1>>
+		<</addinlineevent>>
+	<</if>>
+	<<if $farm_stage gte 7 and $farm_attack_timer is 0>>
+		<<addinlineevent 1>>
+			오늘 밤 레미가 농장에 무슨 짓을 할지 생각을 멈출 수가 없다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* Black Wolf */
+
+
+	/* Kylar */
+	<<if isLoveInterest("Kylar")>>
+		<<addinlineevent 1>>
+			카일라가 당신이 있는 곳을 알고 있을지 궁금해진다.<<gstress>><<stress 1>>
+		<</addinlineevent>>
+	<</if>>
+
+	/* Kylar Bad End */
+	<<if $trauma gte ($traumamax / 5) * 3 and  $badEndStats.find(function (stat) { return stat.source is "Kylar Abduction"; }) and !isLoveInterest("Kylar")>>
+		<<set _fishingBadEndWeight to _fishingRecentBadEndSource is "Kylar Abduction" ? 2 : 0.5>>
+		<<addinlineevent _fishingBadEndWeight>>
+			카일라의 저택 벽이 당신을 옥죄어 오던 순간을 떠올린다.<<trauma 1>><<gtrauma>>
+		<</addinlineevent>>
+		<<addinlineevent _fishingBadEndWeight>>
+			카일라에게 붙잡혀 있던 동안 침착함을 유지하기가 얼마나 힘들었는지 떠올린다.<<trauma 1>><<gtrauma>>
+		<</addinlineevent>>
+	<</if>>
+	<<if C.npc.Kylar.state === "prison">>
+		<<addinlineevent 1>>
+			<<nnpc_he "Kylar">>【이가】 감옥에서 나오면 무슨 짓을 할지 궁금해진다.<<stress 1>><<gstress>>
+		<</addinlineevent>>
+	<</if>>
+	/* Eden */
+	<<if isLoveInterest("Eden")>>
+		<<addinlineevent 1>>
+			숲속에서 들리던 에덴의 목소리를 떠올린다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* Eden Bad End */
+	<<if $trauma gte ($traumamax / 5) * 3 and $badEndStats.find(function (stat) { return stat.source is "Eden"; })>>
+		<<set _fishingBadEndWeight to _fishingRecentBadEndSource is "Eden" ? 2 : 0.5>>
+		<<if $syndromeeden gte 1 && isLoveInterest("Eden")>>
+			<<addinlineevent 1>>
+				당신이 여기 있는 걸 알면 에덴이 속상해할까?<<stress 1>><<gstress>>
+			<</addinlineevent>>
+			<<addinlineevent 1>>
+				에덴을 생각한다... <<nnpc_him "Eden">>【을를】 미워해야 할까?<<stress 1>><<gstress>>
+			<</addinlineevent>>
+		<<else>>
+			<<addinlineevent _fishingBadEndWeight>>
+				오두막 문이 잠기던 소리를 떠올린다.<<trauma 1>><<gtrauma>>
+			<</addinlineevent>>
+			<<addinlineevent _fishingBadEndWeight>>
+				에덴의 총이 발사되던 소리를 떠올린다.<<trauma 1>><<gtrauma>>
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+	/* Great Hawk */
+	<<if isLoveInterest("Great Hawk")>>
+		<<addinlineevent 1>>
+			바람을 타고 나는 그레이트 호크를 떠올린다.<<lstress>><<stress -1>>
+		<</addinlineevent>>
+	<</if>>
+	<<if $birdescaped gte 2 and $syndromebird isnot 1>>
+		<<addinlineevent 1>>
+			그레이트 호크가 언젠가는 포기할지 궁금해진다.<<gstress>><<stress 1>>
+		<</addinlineevent>>
+	<</if>>
+
+	/* Gwylan */
+	<<if $gwylan>>
+		<<if isLoveInterest("Gwylan")>>
+		<<addinlineevent 1>>
+			지금쯤 그윌란이 숲을 돌아다니고 있을지 궁금해진다.
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			그윌란이 낚시에 대해 뭔가 알고 있을지 궁금해진다.
+		<</addinlineevent>>
+		<</if>>
+		<<if $gwylan.ritualMissed>>
+			<<addinlineevent 1>>
+				당신 없이 가게에서 그윌란이 잘 지내고 있을지 궁금해진다.
+			<</addinlineevent>>
+		<</if>>
+		<<if $gwylan.hunting gte 1>>
+			<<addinlineevent 1>>
+				호기심 어린 시선이 느껴지는 것 같다. 신경 쓰지 않고 집중을 유지한다.
+			<</addinlineevent>>
+		<</if>>
+		<<if $gwylanTalked and $gwylanSeen>>
+			<<run statusCheck("Gwylan")>>
+			<<if _gwylanLovePercent gte 50 and _gwylanLovePercent lt 100>>
+				<<addinlineevent 1>>
+					생각이 그윌란에게로 향한다. 다음에 <<nnpc_him "Gwylan">>에게 어떤 이야기를 들려줄지 한동안 고민한다.
+				<</addinlineevent>>
+			<</if>>
+		<</if>>
+		<<if $gwylanSeen?.includes("ritual_beast")>>
+			<<addinlineevent 1>>
+				그윌란은 그 의식이 세상의 무언가를 봉인한다고 주장한다. 여전히 그 말을 완전히 이해했다는 확신은 들지 않는다.<<gstress>><<stress 1>>
+			<</addinlineevent>>
+		<</if>>
+		<<if $hypnosis_traits.devotion gte 3>>
+			<<addinlineevent 1>>
+				<span @class="basicHypnoCss()">생각이 그윌란에게로 향한다.</span>
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+	/* Museum */
+	<<if $museumAntiques.antiques.antiquebell is "stolen">>
+		<<addinlineevent 1>>
+			종을 어떻게 박물관에 돌려줄지 궁금해진다.<<gstress>><<stress 1>>
+		<</addinlineevent>>
+	<</if>>
+	<<if $museumAntiques.museumCount gte 20>>
+		<<addinlineevent 1>>
+			그동안 박물관에 얼마나 많은 도움을 주었는지 생각한다.<<stress -1>><<lstress>>
+		<</addinlineevent>>
+	<</if>>
+	<<if $museuminterest gte 60>>
+		<<addinlineevent 1>>
+			윈터가 박물관에서 또 다른 인파를 상대하고 있을지 궁금해진다.
+		<</addinlineevent>>
+	<</if>>
+	/* 
+	* =========== TRANSFORMATIONS ===========
+	*/
+
+	/* Generic Fangs */
+	<<if !["disabled", "hidden"].includes($transformationParts.traits.fangs)>>
+		<<addinlineevent 1>>
+			무심코 혀로 송곳니를 건드려 본다.
+		<</addinlineevent>>
+		<<addinlineevent 3>>
+			날생선을 물어뜯으면 어떤 느낌일지 생각해 본다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* Angel */
+	<<if !["disabled", "hidden"].includes($transformationParts.angel.halo)>>
+		<<addinlineevent 1>>
+			물 위에 비친 자신의 후광을 본다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* Cat */
+	<<if !["disabled", "hidden"].includes($transformationParts.cat.ears)>>
+		<<addinlineevent 3>>
+			<<fishingBob>> 근처에서 거품이 조용히 톡 터지자 귀가 쫑긋 선다.
+		<</addinlineevent>>
+		<<addinlineevent 3>>
+			몇 걸음 떨어진 곳에서 물고기가 튀어 오르며 첨벙이자, 귀가 그 소리 쪽으로 돌아간다.
+		<</addinlineevent>>
+	<</if>>
+	<<if !["disabled", "hidden"].includes($transformationParts.cat.tail)>>
+		<<addinlineevent 3>>
+			낚싯줄이 움직일 때마다 꼬리가 씰룩인다.
+		<</addinlineevent>>
+	<</if>>
+	<<if $cat gte 1>>
+		<<addinlineevent 3>>
+			<<= fishingLocationWaterBodyName(_fishingLocation)>>의 물결에 달려들고 싶은 충동을 참는다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* Wolf */
+	<<if !["disabled", "hidden"].includes($transformationParts.wolf.ears)>>
+		<<addinlineevent 3>>
+			<<= fishingLocationWaterBodyName(_fishingLocation)>>에서 나는 희미한 첨벙 소리에 귀가 쫑긋 선다.
+		<</addinlineevent>>
+		<<addinlineevent 3>>
+			몇 걸음 떨어진 곳에서 물고기가 튀어 오르며 첨벙이자, 귀가 그 소리 쪽으로 돌아간다.
+		<</addinlineevent>>
+	<</if>>
+	<<if !["disabled", "hidden"].includes($transformationParts.wolf.tail)>>
+		<<addinlineevent 3>>
+			<<= fishingLocationWaterBodyName(_fishingLocation)>>에서 움직임이 보이자 꼬리가 흔들리기 시작한다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* Fox */
+	<<if !["disabled", "hidden"].includes($transformationParts.fox.ears)>>
+		<<addinlineevent 3>>
+			낚싯줄 근처에서 거품이 조용히 톡 터지자 귀가 쫑긋 선다.
+		<</addinlineevent>>
+		<<addinlineevent 3>>
+			몇 걸음 떨어진 곳에서 물고기가 튀어 오르며 첨벙이자, 귀가 그 소리 쪽으로 돌아간다.
+		<</addinlineevent>>
+	<</if>>
+	<<if !["disabled", "hidden"].includes($transformationParts.fox.tail)>>
+		<<addinlineevent 3>>
+			뭔가 물기를 기다리며 꼬리가 좌우로 흔들린다.
+		<</addinlineevent>>
+	<</if>>
+
+	/* Fallen Angel */
+	<<if !["disabled", "hidden"].includes($transformationParts.fallenAngel.wings)>>
+
+	<</if>>
+	/* 
+	* =========== STATS ===========
+	*/
+
+	/* Arousal */
+	<<if $arousal gte ($arousalmax / 5) * 3>>
+		<<addinlineevent 3>>
+			숨을 천천히 쉬며 <<fishingBob>>에 정신을 붙든다. <<arousal -1>><<larousal>>
+		<</addinlineevent>>
+	<</if>>
+	<<if $arousal gte ($arousalmax / 5) * 3>>
+		<<addinlineevent 3>>
+			숨을 고르게 쉬며 낚싯줄을 지켜본다. <<arousal -1>><<larousal>>
+		<</addinlineevent>>
+	<</if>>
+	<<if $arousal gte ($arousalmax / 5) * 3>>
+		<<addinlineevent 3>>
+			다시 <<fishingBob>>으로 정신을 돌린다. <<arousal -1>><<larousal>>
+		<</addinlineevent>>
+	<</if>>
+	<<if $arousal gte ($arousalmax / 5) * 3>>
+		<<addinlineevent 3>>
+			자세를 다잡고 그저 물고기만 생각하려 애쓴다. <<arousal -1>><<larousal>>
+		<</addinlineevent>>
+	<</if>>
+	<<if $arousal gte ($arousalmax / 5) * 3>>
+		<<addinlineevent 3>>
+			이를 악물고 낚싯줄에만 집중하려 애쓴다. <<arousal -1>><<larousal>>
+		<</addinlineevent>>
+	<</if>>
+
+	/* Stress */
+	<<if $stress gte ($stressmax / 5) * 3>>
+		<<addinlineevent 1>>
+			굳어 있던 어깨에 억지로 힘을 뺀다.<<stress -1>><<lstress>>
+		<</addinlineevent>>
+	<</if>>
+	<<if $stress gte ($stressmax / 5) * 3>>
+		<<addinlineevent 1>>
+			어깨의 긴장을 풀어보려 애쓴다.<<stress -1>><<lstress>>
+		<</addinlineevent>>
+	<</if>>
+	<<if $stress gte ($stressmax / 5) * 3>>
+		<<addinlineevent 3>>
+			천천히 숨을 내쉬며 <<fishingRipples>>【을를】 바라본다.<<stress -1>><<lstress>>
+		<</addinlineevent>>
+	<</if>>
+	<<if $stress gte ($stressmax / 5) * 3>>
+		<<addinlineevent 3>>
+			낚싯대를 쥔 손아귀에서 억지로 힘을 뺀다.<<stress -1>><<lstress>>
+		<</addinlineevent>>
+	<</if>>
+
+	/* Trauma */
+	<<if $trauma gte ($traumamax / 5) * 3>>
+		<<addinlineevent 1>>
+			굳어 있던 어깨에 억지로 힘을 뺀다.<<trauma -1>><<ltrauma>>
+		<</addinlineevent>>
+	<</if>>
+	<<if $trauma gte ($traumamax / 5) * 3>>
+		<<addinlineevent 1>>
+			어깨의 긴장을 풀어보려 애쓴다.<<trauma -1>><<ltrauma>>
+		<</addinlineevent>>
+	<</if>>
+	<<if $trauma gte ($traumamax / 5) * 3>>
+		<<addinlineevent 3>>
+			생각을 가라앉히려 물을 계속 응시한다.<<trauma -1>><<ltrauma>>
+		<</addinlineevent>>
+	<</if>>
+	<<if $trauma gte ($traumamax / 5) * 3>>
+		<<addinlineevent 1>>
+			숨을 가다듬고 침착함을 유지하려 애쓴다.<<trauma -1>><<ltrauma>>
+		<</addinlineevent>>
+	<</if>>
+	<<if $trauma gte ($traumamax / 5) * 3>>
+		<<addinlineevent 3>>
+			낚싯대를 쥔 손아귀에서 억지로 힘을 뺀다.<<trauma -1>><<ltrauma>>
+		<</addinlineevent>>
+	<</if>>
+
+	/* Tiredness */
+	<<if $tiredness gte (C.tiredness.max / 5) * 3>>
+		<<addinlineevent 3>>
+			하품을 참으며 낚싯줄을 팽팽하게 유지한다. 
+		<</addinlineevent>>
+	<</if>>
+	<<if $tiredness gte (C.tiredness.max / 5) * 3>>
+		<<addinlineevent 3>>
+			눈을 비비며 다시 <<fishingBob>>에 초점을 맞춘다.
+		<</addinlineevent>>
+	<</if>>
+		<<if $tiredness gte (C.tiredness.max / 5) * 3>>
+		<<addinlineevent 1>>
+			눈꺼풀이 무거워지는 것을 느끼지만 겨우 깨어 있는다. 
+		<</addinlineevent>>
+	<</if>>
+	<<if $tiredness gte (C.tiredness.max / 5) * 3>>
+		<<addinlineevent 1>>
+			자세를 고치며 깨어 있으려 애쓴다. 
+		<</addinlineevent>>
+	<</if>>
+	<<if $tiredness gte (C.tiredness.max / 5) * 3>>
+		<<addinlineevent 1>>
+			천천히 눈을 깜빡이며 계속 주의를 기울인다. 
+		<</addinlineevent>>
+	<</if>>
+	<<if $tiredness gte (C.tiredness.max / 5) * 3>>
+		<<addinlineevent 1>>
+			낚싯대를 고쳐 잡고 피로 속에서도 눈을 깜빡인다.
+		<</addinlineevent>>
+	<</if>>
+	<<if $tiredness gte (C.tiredness.max / 5) * 3>>
+		<<addinlineevent 3>>
+			잠자리에 들 생각을 하면서도 낚시를 계속한다. 
+		<</addinlineevent>>
+	<</if>>
+	<<if $tiredness gte (C.tiredness.max / 5) * 4>>
+		<<addinlineevent 3>>
+			눈꺼풀이 무겁게 처지고, 하마터면 물속으로 빠질 뻔하다 겨우 정신을 차린다.<<stress 1>><<gstress>>
+		<</addinlineevent>>
+	<</if>>
+
+	/* Hallucinations */
+	<<if $hallucinogen gte 200>>
+		<<addinlineevent 1>>
+			눈을 깜빡이며 잠시 물이 이상하게 움직였다고 생각한다.<<gstress>><<stress 1>>
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			잔물결 하나를 뚫어지게 보다가 그것이 눈처럼 보이기 시작한다.<<gstress>><<stress 1>>
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			존재하지 않는 발소리를 듣고는 어깨 너머를 돌아본다.<<gstress>><<stress 2>>
+		<</addinlineevent>>
+		<<addinlineevent 1>>
+			뭔가가 당신을 지켜보고 있는 듯한 느낌이 든다.<<gstress>><<stress 2>>
+		<</addinlineevent>>
+		<<if _fishingLocation is "fishingForestLake">>
+			<<addinlineevent .5>>
+				뒤편 숲에서 나뭇가지 부러지는 소리가 난다
+			<</addinlineevent>>
+		<</if>>
+		<<if _fishingLocation is "fishingMoor">>
+			<<addinlineevent .5>>
+				얕은 물속에서 낮고 묵직한 첨벙임이 들린다.
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+
+	/* Drunk */
+	<<if $drunk gte 100>>
+		<<addinlineevent 2>>
+			<span @class="basicDrunkCss()">몸을 가누며 <<fishingBob>>【을를】 조심스레 지켜본다.</span>
+		<</addinlineevent>>
+	<</if>>
+	<<if $drunk gte 100>>
+		<<addinlineevent 2>>
+			<span @class="basicDrunkCss()">균형을 바로잡으며 계속 낚싯줄을 지켜본다.</span>
+		<</addinlineevent>>
+	<</if>>
+	<<if $drunk gte 100>>
+		<<addinlineevent 2>>
+			<span @class="basicDrunkCss()">눈을 깜빡이며 애써 <<fishingBob>>【을를】 좇는다.</span>
+		<</addinlineevent>>
+	<</if>>
+	<<if $drunk gte 100>>
+		<<addinlineevent 2>>
+			<span @class="basicDrunkCss()">손을 안정시키려 애쓰며 동작을 늦춘다.</span>
+		<</addinlineevent>>
+	<</if>>
+
+	/* Bird Dive event */
+	<<if Weather.dayState isnot "night">>
+		<<addinlineevent 2>>
+			새 한 마리가 근처 <<= fishingLocationWaterBodyName(_fishingLocation)>>로 뛰어들더니 부리에 작은 물고기를 물고 떠올라 날아간다.
+		<</addinlineevent>>
+	<</if>>
+
+	/*
+	* =========== BAD END THOUGHTS ===========
+	*/
+
+	/* Underground Farm */
+	<<if isPlayerFishingAlone() and $badEndStats.find(function (stat) { return stat.source is "Underground Farm"; })>>
+		<<addinlineevent 1>>
+			바람결에 지푸라기 냄새가 스치자 레미의 농장이 떠오른다.<<trauma 1>><<gtrauma>>
+		<</addinlineevent>>
+		<<if $skin.left_bottom.special is "cattle">>
+			<<addinlineevent 1>>
+				...낙인 자국이 가렵다.<<trauma 1>><<gtrauma>>
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+
+	/* Wolf Cave */
+	<<if isPlayerFishingAlone() and $badEndStats.find(function (stat) { return stat.source is "Wolf Cave"; }) and !isLoveInterest("Black Wolf")>>
+		<<addinlineevent 1>>
+			늑대 울음소리 같은 것이 들려오는 듯해 그 소리가 잦아들 때까지 숨을 참는다.<<trauma 1>><<gtrauma>>
+		<</addinlineevent>>
+	<</if>>
+
+	/* Island */
+	<<if isPlayerFishingAlone() and $badEndStats.find(function (stat) { return stat.source is "Island"; })>>
+		<<addinlineevent 1>>
+			그 섬의 밤들이 얼마나 외로웠는지 떠올린다.<<trauma 1>><<gtrauma>>
+		<</addinlineevent>>
+	<</if>>
+
+	/* Underground Dungeon */
+	<<if isPlayerFishingAlone() and $badEndStats.find(function (stat) { return stat.source is "Underground Dungeon"; })>>
+		<<addinlineevent 1>>
+			생각이 그 지하 매음굴로 흘러간다. 어딘가에서, 그들이 당신에게 한 짓을 여전히 누군가 지켜보고 있다.<<trauma 1>><<gtrauma>>
+		<</addinlineevent>>
+		<<if $skin.left_shoulder.pen is "tattoo" and $skin.left_shoulder.special is "one_six_three">>
+			<<addinlineevent 1>>
+				옆을 흘깃 보다가 어쩔 수 없이 보게 된다
+				<<if _fishingWearingUpper>>
+					옷 사이로 삐져나온 문신의 끝자락을. 163.<<trauma 2>><<gtrauma>>
+				<<else>>
+					163이라고 적힌 문신을.<<trauma 2>><<gtrauma>>
+				<</if>>
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+
+	/* Pound */
+	<<if isPlayerFishingAlone() and $badEndStats.find(function (stat) { return stat.source is "Pound"; })>>
+		<<addinlineevent 1>>
+			사육장의 우리들과 젖은 콘크리트 냄새를 떠올린다.<<trauma 1>><<gtrauma>>
+		<</addinlineevent>>
+	<</if>>
+
+	/* Prison */
+	<<if isPlayerFishingAlone() and $badEndStats.find(function (stat) { return stat.source is "Prison"; })>>
+		<<addinlineevent 1>>
+			상어 이빨을 본 것 같지만, 그냥 조약돌이다.
+		<</addinlineevent>>
+		<<if _fishingLocation is "fishingBeach">>
+			<<addinlineevent 1>>
+				모래 속에서 상어 이빨을 찾아보게 되는 것을 어쩔 수 없다.
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+
+	/* Wraith */
+	<<if $wraith.state and isPlayerFishingAlone() and Time.isBloodMoon()>>
+		<<addinlineevent 3>>
+			누군가 당신의 이름을 부른 것 같지만, 아무도 없다.<<trauma 1>><<gtrauma>>
+		<</addinlineevent>>
+		<<if _fishingLocation is "fishingForestLake">>
+			<<addinlineevent 3>>
+				나무 쪽을 자꾸 돌아보게 된다. 뭔가가 그곳에서 기다리고 있다는 확신이 든다.<<stress 1>><<gstress>>
+			<</addinlineevent>>
+		<</if>>
+		<<if _fishingLocation is "fishingMoor">>
+			<<addinlineevent 3>>
+				갈대 쪽을 자꾸 돌아보게 된다. 뭔가가 그곳에서 기다리고 있다는 확신이 든다.<<stress 1>><<gstress>>
+			<</addinlineevent>>
+		<</if>>
+		<<addinlineevent 3>>
+			잠시, 물에 비친 모습이 빛나는 <<wraithEyes>> 눈동자처럼 보인다.<<stress 1>><<gstress>>
+		<</addinlineevent>>
+		<<addinlineevent 3>>
+			붉게 물든 물 위로 무언가가 당신의 그림자를 뒤쫓고 있는 것 같은 기분이 든다.<<stress 1>><<gstress>>
+		<</addinlineevent>>
+	<</if>>
+<</widget>>

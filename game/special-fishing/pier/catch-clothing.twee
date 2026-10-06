@@ -1,0 +1,49 @@
+:: Fishing Pier Clothing Catch
+<<effects>>
+<<if $daily.fishing.fishingPier.whitney.phase is "bet">>
+	<<fishingPierCatchClothingWhitneyBet>>
+<<elseif $daily.fishing.fishingPier.fisher.phase is "fishing">>
+	<<fishingPierCatchClothingFisher>>
+<<else>>
+	<<fishingPierCatchClothing>>
+<</if>>
+
+
+:: Widgets Fishing Pier Clothing Catch [widget]
+<<widget "fishingPierCatchClothingWhitneyBet">>
+	<<fishingClothingCatchText>>
+	<br><br>
+
+	<<fishingPierWhitneyBetNonFish>>
+<</widget>>
+
+
+<<widget "fishingPierCatchClothingFisher">>
+	<<fishingClothingCatchText>>
+	<br><br>
+
+	<<if $rng lt 50>>
+		<<loadNPC 0 "fishing_pier_npc_fisher">><<person1>>
+		<<switch random(1, 2)>>
+			<<case 1>>
+				"어떤 날엔 물고기보다 쓰레기가 더 많지." 당신이 낚은 것을 힐끗 보며 <<personsimple>>【이가】 말한다.
+			<<case 2>>
+				<<personsimple>>【은는】 고개를 젓는다. "사람들이 아무 데나 쓰레기를 버린다니까. 이 장소에 대한 예의가 없어."
+		<</switch>>
+		<br><br>
+	<</if>>
+
+	<<link [[보관한다|Fishing Pier Wait]]>><<endevent>><<set $fishingAmbientOverride to "keepClothing">><</link>>
+	<br>
+	<<link [[버린다|Fishing Pier Wait]]>><<endevent>><<set $fishingAmbientOverride to "tossClothing">><</link>>
+<</widget>>
+
+
+<<widget "fishingPierCatchClothing">>
+	<<fishingClothingCatchText>>
+	<br><br>
+
+	<<link [[보관한다|Fishing Pier Wait]]>><<set $fishingAmbientOverride to "keepClothing">><</link>>
+	<br>
+	<<link [[버린다|Fishing Pier Wait]]>><<set $fishingAmbientOverride to "tossClothing">><</link>>
+<</widget>>

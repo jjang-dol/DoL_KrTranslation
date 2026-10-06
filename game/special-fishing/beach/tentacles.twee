@@ -1,0 +1,764 @@
+/* Reuses parts of the :: Sea Tentacles event and the :: Beach Party event */
+:: Fishing Beach Tentacles
+<<effects>>
+발밑 모래사장을 따라 무언가 스르륵 기어오는 소리가 들린다. 미처 피하기도 전에, <<print ["미끌거리는", "끈적거리는", "굵은", "고동치는", "미끈한", "축축한", "떨리는", "흠뻑 젖은", "부르르 떠는", "진동하는", "가느다란", "꿈틀거리는", "얇은", "불룩한", "울퉁불퉁한"].random()>> 촉수가 발목을 칭칭 감아쥐더니, 당신을 넘어뜨려 물가 쪽으로 거칠게 끌어당긴다.
+<br><br>
+
+<<if $angel gte 4 and $angelBanish gte 1>>
+	<<link [[촉수를 쫓아낸다|Fishing Beach Tentacles Banish]]>><<angelBanishUse>><</link>><<angelBanishNote>>
+	<br>
+<</if>>
+
+<<link [[한 발 물러난다|Fishing Beach Tentacles Escape]]>><</link>><<athleticsdifficulty 600 1200>>
+
+
+:: Fishing Beach Tentacles Banish
+<<effects>>
+당신의 다리를 휘감고 있던 촉수에 정신을 집중한 뒤, 손으로 복잡한 손동작을 취한다. <span class="green">촉수가 아지랑이처럼 떨리며 거칠게 움츠러들고,</span> 당신을 놓아준 채 다시 물속으로 미끄러져 들어간다.
+<br>
+<<if beachCampfirePartyPresent()>>
+	당신은 거친 숨을 몰아쉬며 일어나, 캠프파이어 쪽을 돌아본다. 십 대들은 눈치채지 못했거나 모르는 척하고 있다.<<stress 7>><<gstress>>
+<<else>>
+	당신은 거친 숨을 몰아쉬며 일어난다.<<stress 7>><<gstress>>
+<</if>>
+<br><br>
+
+<<link [[다음|Fishing Beach Wait]]>><</link>>
+
+
+:: Fishing Beach Tentacles Escape
+<<effects>>
+<<if $athleticsSuccess>>
+	<<rng>>
+	<<if $rng gte 50>>
+		<span class="green">당신은 다리를 비틀어 빼내고</span> 비틀거리며 일어선다. 하지만 촉수가 물러나며 발버둥 치는 바람에, 찬물이 당신을 덮치고는 부서지는 파도 속으로 사라진다. 당신은 온몸이 흠뻑 젖은 채 벌벌 떨며 서 있다.<<stress 5>><<gstress>><<wetAll>>
+		<br><br>
+
+		<<if beachCampfirePartyPresent()>>
+			<<generatey1>><<person1>>
+			숨을 고르는 동안, 캠프파이어 쪽 모래를 밟으며 다가오는 발소리가 들린다. 고개를 들어보니 한 <<person>>【이가】 당신을 향해 달려오고 있다.
+			<br><br>
+
+			<<link [[기다린다|Fishing Beach Tentacles Escape Wet Wait]]>><</link>>
+			<br>
+			<<link [[도망친다|Fishing Beach Tentacles Escape Wet Run]]>><<athleticsdifficulty 200 600>><</link>>
+		<<else>>
+			<<link [[다음|Fishing Beach Wait]]>><</link>>
+		<</if>>
+	<<else>>
+		<span class="green">당신은 다리를 비틀어 빼내고</span> 비틀거리며 일어나 물가에서 물러난다. 당신은 일어서서 눈앞에서 부서지는 파도를 보며 숨을 고른다.<<stress 5>><<gstress>>
+		<br><br>
+
+		<<link [[다음|Fishing Beach Wait]]>><</link>>
+	<</if>>
+<<else>>
+	촉수가 세차게 당겨지며, <span class="red">당신은 물 쪽으로 거꾸로 끌려간다.</span> 손가락으로 모래를 짓밟아 보지만 발판을 잡을 수가 없다.
+	<<if beachCampfirePartyPresent()>>
+		<<if $rng gte 20>>
+			모닥불가에 있던 십 대들이 입을 다물고 충격받은 표정으로 쳐다본다. <<generatey1>><<person1>>그중 한 명이 벌떡 일어나 당신을 향해 달려온다. "버텨!" <<He>>【이가】 소리치며 물속으로 뛰어든다.
+			<br><br>
+
+			<<link [[다음|Fishing Beach Tentacle Rescue Attempt]]>><</link>>
+		<<else>>
+			모닥불가에 있던 십 대들이 입을 다물고 당신이 끌려가는 모습을 멍하니 바라본다. 물이 머리 위로 닫히기 직전 마지막으로 본 것은 공포에 질려 굳어버린 그들의 얼굴이었다.<<stress 7>><<gstress>>
+			<br><br>
+
+			<<link [[다음|Sea Tentacles]]>><<location "seadocks">><<set $molestationstart to 1>><</link>>
+		<</if>>
+	<<else>>
+		물이 머리 위로 닫히기 직전 마지막으로 본 것은 젖은 모래사장에 반사된 <<if Time.isBloodMoon()>>붉은 <</if>>달빛이었다.<<stress 6>><<gstress>>
+		<br><br>
+
+		<<link [[다음|Sea Tentacles]]>><<location "seadocks">><<set $molestationstart to 1>><</link>>
+	<</if>>
+<</if>>
+
+
+:: Fishing Beach Tentacle Rescue Attempt
+<<effects>>
+<<wetAll>>
+<<if $rng gte 85>>
+	<<person>>【이가】 당신을 잡으려 손을 뻗지만, 당신은 이미 수면 아래로 미끄러져 내려간다. <<His>> 손이 당신의 손을 스쳐 지나가고, 바다가 당신을 삼키기 전 마지막으로 본 것은 <<his>> 얼굴에 서린 공포와 무력함이었다.<<stress 7>><<gstress>>
+	<br><br>
+
+	<<link [[다음|Sea Tentacles]]>><<endevent>><<location "seadocks">><<set $molestationstart to 1>><</link>>
+<<else>>
+	<<person>>【은는】 더 깊이 걸어 들어와 당신이 뻗은 손을 붙잡는다. <<His>> 손가락이 당신의 손가락에 닿자마자 온 힘을 다해 끌어당긴다. 당신은 발을 디디고, 두 사람이 함께 물가에서 비틀거리며 물러나면서 무언가에게 붙잡혔던 손아귀에서 벗어난다.<<stress 4>><<gstress>>
+	<br><br>
+
+	<<link [[다음|Fishing Beach Tentacle Rescue Attempt 2]]>><</link>>
+<</if>>
+
+
+:: Fishing Beach Tentacle Rescue Attempt 2
+<<effects>>
+당신은 모래사장에 털썩 주저앉아 숨을 헐떡이며 몸을 떤다.
+<<if $speech_attitude is "meek">>
+	"감사합니다," 당신이 조용히 말한다.
+<<elseif $speech_attitude is "bratty">>
+	"타이밍 좋았네," 당신이 간신히 말한다.
+<<else>>
+	"고마워," 당신이 간신히 말한다.
+<</if>>
+<br><br>
+
+<<if $exposed gte 1>>
+	<<if $uncomfortable.nude or !hasSexStat("exhibitionism", 3)>>
+		당신은 스스로 팔을 감싸 안으며, 자신이 얼마나 노출되어 있는지 뒤늦게 깨닫는다.<<stress 2>><<gstress>><<fameexhibitionism 5>>
+	<<else>>
+		이 모든 상황에도 불구하고, 이렇게 노출되었다는 사실에 짜릿함을 느낀다.<<arousal 20>><<garousal>><<fameexhibitionism 10>>
+	<</if>>
+	<br><br>
+
+	<<He>>【은는】 여전히 숨을 고르며 한 발자국 물러서더니, 당신의 <<lewdness>>【을를】 힐끗 보곤 뺨을 붉히며 황급히 시선을 돌린다. "그러니까, 어..." <<He>>【은는】 캠프파이어 쪽을 힐끗 보더니 다시 당신을 본다. "너 정말..." 말을 흐린다. 캠프파이어 쪽에서는 친구들이 쥐 죽은 듯 조용해졌다가, 그중 한 명이 무언가를 소리치자 무리에서 웃음소리가 터져 나온다. 어둠 속에서도 <<personsimple>>의 얼굴이 시뻘겋게 달아오르는 것이 보인다.
+	<br><br>
+
+	"캠프파이어 쪽에 여분의 수건이 있어" <<he>>【이가】 더듬거리며 말한다. "원하면 내가 가져다줄게."
+	<br><br>
+
+	<<if hasSexStat("promiscuity", 2)>>
+		<<link [[감사의 의미로 <<him>>에게 입맞춘다|Fishing Beach Rescue Flirt Kiss]]>><</link>><<promiscuous2>>
+		<br>
+	<<else>>
+		<<insufficientStat "promiscuity" "감사의 의미로 그에게 입맞추기엔">>
+		<br>
+	<</if>>
+	<<link [[수건을 받는다|Fishing Beach Rescue Towel Retrieve]]>><</link>>
+	<<if hasSexStat("exhibitionism", 5)>>
+		<br>
+		<<link [[<<him>>【와과】 함께 캠프파이어로 걸어간다|Fishing Beach Rescue Towel Flaunt]]>><</link>><<exhibitionist5>>
+	<<else>>
+		<br>
+		<<insufficientStat "exhibitionism" "노출한 상태로 캠프파이어로 가기엔">>
+	<</if>>
+	<br>
+	<<link [[거절한다|Fishing Beach Rescue Towel Decline]]>><<set $phase to 0>><</link>>
+
+<<else>>
+	<<He>>【은는】 여전히 숨을 고르며 한 발자국 물러선다.
+	<<if $cool gte 40>>
+		"그래, 다행이야." <<He>>【은는】 캠프파이어 쪽을 힐끗 보더니 다시 당신을 본다. "이리 와서 우리랑 같이 앉아. 좀 몸을 녹이고 가."
+		<br><br>
+
+		<<link [[다시 낚시한다|Fishing Beach Wait]]>><<endevent>><</link>>
+		<br>
+		<<link [[그들과 합류한다|Beach Party]]>><<endevent>><</link>>
+		<br>
+		<<link [[떠난다|Beach]]>><<endevent>><<set $eventskip to 1>><</link>>
+	<<else>>
+		"알았어, 무사해서 다행이네." <<He>>【은는】 캠프파이어 쪽을 다시 힐끗 보더니 그쪽으로 걸어간다.
+		<br><br>
+
+		<<link [[다시 낚시한다|Fishing Beach Wait]]>><<endevent>><</link>>
+		<br>
+		<<link [[떠난다|Beach]]>><<endevent>><<set $eventskip to 1>><</link>>
+	<</if>>
+<</if>>
+
+
+:: Fishing Beach Rescue Towel Decline
+<<effects>>
+<<if $phase is 1>>
+	<<He>>【은는】 여전히 뺨이 상기된 채 잠시 당신을 바라본다. "아. 글쎄, 난 상관없어," <<he>>【은는】 작은 미소를 지으며 말한다.
+<<else>>
+	"마음대로 해," <<he>>【은는】 웃으며 당신의 <<lewdness>> 쪽을 턱짓으로 가리킨다. "계속 여기 있을 거라면, 보는 눈들이 나쁘진 않겠지."
+<</if>>
+<br><br>
+
+<<link [[떠난다|Beach]]>><<endevent>><<set $eventskip to 1>><</link>>
+
+
+:: Fishing Beach Rescue Flirt Kiss
+<<effects>>
+<<if $speech_attitude is "meek">>
+	"고맙습니다," 당신이 조용히 말하며 <<him>>의 뺨에 가볍게 입을 맞춘다.
+<<elseif $speech_attitude is "bratty">>
+	"그 정도는 받아 마땅하지," 당신이 말하며 <<him>>의 뺨에 입을 맞춘다.
+<<else>>
+	"구해줘서 고마워," 당신이 말하며 <<him>>의 뺨에 입을 맞춘다.
+<</if>>
+<<He>>【은는】 잠시 멍하니 굳어버리고, 캠프파이어 주변의 친구들이 환호성을 지른다. 당신이 물러서자 <<his>> 얼굴은 새빨개져 있다. "내가, 어... 원하면 수건을 가져다줄 수도 있고, 아니면 말고..." <<he>>【이가】 말을 흐린다.
+<br><br>
+
+<<link [[수건을 받는다|Fishing Beach Rescue Towel Retrieve]]>><<set $daily.fishing.fishingTowelEventPhase to true>><</link>>
+<<if hasSexStat("promiscuity", 3)>>
+	<br>
+	<<link [[더 나간다|Fishing Beach Rescue Flirt Press]]>>
+		/* The persons friends at the campfire are cheering for you, and like you for doing this. So you shouldn't be assaulted at the campfire today */
+		<<set $daily.fishing.safeFromBeachCampfireDanger to true>>
+	<</link>><<promiscuous3>>
+<<else>>
+	<br>
+	<<insufficientStat "promiscuity" "더 진도를 나가기엔">>
+<</if>>
+<<if hasSexStat("exhibitionism", 5)>>
+	<br>
+	<<link [[<<him>>【와과】 함께 캠프파이어로 걸어간다|Fishing Beach Rescue Towel Flaunt]]>><</link>><<exhibitionist5>>
+<<else>>
+	<br>
+	<<insufficientStat "exhibitionism" "노출한 상태로 캠프파이어로 가기엔">>
+<</if>>
+<br>
+<<link [[자리를 뜬다|Fishing Beach Rescue Flirt Kiss Leave]]>><</link>>
+
+
+:: Fishing Beach Rescue Flirt Kiss Leave
+<<effects>>
+당신은 대신 몸을 돌려 밤바람에 <<lewdness>>【을를】 고스란히 드러낸 채 해변을 따라 걸어간다. 당신의 등 뒤에서 <<person>>【은는】 아무 말 없이 서서 멀어지는 당신을 지켜볼 뿐이다.
+<br><br>
+
+<<link [[떠난다|Beach]]>><<endevent>><<set $eventskip to 1>><</link>>
+
+
+:: Fishing Beach Rescue Flirt Press
+<<effects>>
+<<if $speech_attitude is "meek">>
+	"그럴 필요 없어요," 당신이 한 걸음 다가서며 몸을 <<his>> 몸에 밀착시키며 말한다.
+<<elseif $speech_attitude is "bratty">>
+	"지금 당장 그게 네 원하던 거야?" 당신이 한 걸음 다가서며 몸을 밀착시킨다.
+<<else>>
+	"그럴 필요는 없어," 당신이 말한다. 한 걸음 다가서며 몸을 <<his>> 몸에 밀착시킨다.
+<</if>>
+<br><br>
+
+<<His>> 뺨의 홍조가 더 짙어진다. <<He>>【은는】 잠시 당신의 시선을 마주하다가 다가와 입을 맞추고, 캠프파이어가의 친구들은 환호하며 박수를 친다.
+<br><br>
+
+<<if hasSexStat("exhibitionism", 5)>>
+	<<link [[<<him>>【을를】 모래사장에 밀어 넘어뜨린다|Fishing Beach Rescue Flirt Public]]>><</link>><<exhibitionist5>>
+	<br>
+<</if>>
+<<link [[해변 아래쪽으로 이동한다|Fishing Beach Rescue Flirt Private]]>><</link>>
+
+
+:: Fishing Beach Rescue Flirt Public
+<<effects>>
+<<fameexhibitionism 25>>
+
+당신이 <<him>>【을를】 밀쳐 모래사장에 눕힌다. 캠프파이어 쪽에서 순간 정적이 흐르더니, 누군가 소리치고 나머지도 박수와 환호로 동참한다. <<He>>【은는】 멍하고 붉어진 얼굴로 바보 같은 미소를 지으며 당신을 올려다본다.
+<br><br>
+
+<<link [[다음|Fishing Beach Rescue Flirt Sex]]>><<set $sexstart to 1>><<set $phase to true>><</link>>
+
+
+:: Fishing Beach Rescue Flirt Private
+<<effects>>
+당신은 <<his>> 손을 잡고 캠프파이어 불빛이 닿지 않는 해변 아래쪽으로 끌고 간다. 등 뒤에서는 친구들의 환호성과 캣콜링이 들려오다가 두 사람이 멀어짐에 따라 밤 속으로 잦아든다. <<He>>【은는】 말없이 따라온다. 1분쯤 걷자, <<he>>【은는】 바보 같은 미소를 지으며 당신을 모래사장 위로 밀어 넘어뜨린다.
+<br><br>
+
+<<link [[다음|Fishing Beach Rescue Flirt Sex]]>><<set $sexstart to 1>><<set $phase to false>><</link>>
+
+
+:: Fishing Beach Rescue Flirt Sex
+<<if $location isnot "beach">><<location "beach">><</if>>
+<<if $sexstart is 1>>
+	<<set $sexstart to 0>>
+	<<consensual>>
+	<<set $consensual to 1>>
+	<<neutral 1>>
+	<<set $enemyno to 1>>
+	<<maninit>>
+	<<set $enemytrust += 100>>
+<</if>>
+
+<<effects>>
+<<effectsman>>
+<<man>>
+<<if $phase>><<audience>><</if>>
+<<stateman>>
+<br><br>
+
+<<actionsman>>
+
+<<if _combatend>>
+	<span id="next"><<link [[다음|Fishing Beach Rescue Flirt Sex End]]>><</link>></span>
+<<else>>
+	<span id="next"><<link [[다음|Fishing Beach Rescue Flirt Sex]]>><</link>></span>
+<</if>>
+
+
+:: Fishing Beach Rescue Flirt Sex End
+<<effects>>
+<<saveNPC 0 "campfire_temp">>
+<<if $enemyarousal gte $enemyarousalmax>>
+	<<ejaculation>>
+	<<He>>【은는】 팔꿈치로 몸을 지탱하며, 함박웃음을 지은 채 당신을 바라본다. "원하면 수건 가져다줄 수 있는데."
+	<br><br>
+	<<endcombat>>
+	<<loadNPC 0 "campfire_temp">>
+	<<clearNPC "campfire_temp">>
+	<<person1>>
+	<<clotheson>>
+	<<link [[수건을 받는다|Fishing Beach Rescue Towel Retrieve Post Sex]]>><</link>>
+	<br>
+	<<link [[거절한다|Fishing Beach Rescue Towel Decline]]>><<set $phase to 1>><</link>>
+	<<if hasSexStat("exhibitionism", 5)>>
+		<br>
+		<<link [[<<him>>【와과】 함께 캠프파이어로 걸어간다|Fishing Beach Rescue Towel Flaunt]]>><</link>><<exhibitionist5>>
+	<</if>>
+<<elseif $finish is 1>>
+	당신은 숨을 고르며 <<him>>에게서 몸을 떼어낸다.
+	<br><br>
+
+	<<He>>【은는】 약간 아쉬운 듯한 미소를 지으며 당신을 바라본다. "원하면 수건 가져다줄 수 있는데," <<he>>【이가】 말한다.
+	<br><br>
+	<<endcombat>>
+	<<loadNPC 0 "campfire_temp">>
+	<<clearNPC "campfire_temp">>
+	<<person1>>
+	<<clotheson>>
+	<<link [[수건을 받는다|Fishing Beach Rescue Towel Retrieve Post Sex]]>><<pass 5>><</link>>
+	<br>
+	<<link [[거절한다|Fishing Beach Rescue Towel Decline]]>><<set $phase to 1>><</link>>
+	<<if hasSexStat("exhibitionism", 5)>>
+		<br>
+		<<link [[<<him>>【와과】 함께 캠프파이어로 걸어간다|Fishing Beach Rescue Towel Flaunt]]>><</link>><<exhibitionist5>>
+	<</if>>
+	
+<<elseif $enemyhealth lte 0>>
+	<<He>>【은는】 비틀거리며 물러선다. "미안해, 내가..." <<He>>【은는】 말을 흐린다. <<He>>【은는】 옷을 추스르더니 캠프파이어 쪽으로 돌아간다.
+
+	<br><br>
+	<<endcombat>>
+	<<clotheson>>
+	<<set $cool -= 3>>
+	<<link [[다시 낚시한다|Fishing Beach Wait]]>><<endevent>><</link>>
+	<br>
+	<<link [[떠난다|Beach]]>><<endevent>><<set $eventskip to 1>><</link>>
+<</if>>
+
+
+:: Fishing Beach Rescue Towel Retrieve Post Sex
+<<effects>>
+
+<<He>>【은는】 해변 위쪽으로 걸어간다. 잠시 뒤, 그곳에 도착하자 캠프파이어 쪽에서 환호성이 터져 나오는 소리가 들린다. 잠시 후 <<he>>【이가】 수건을 손에 쥐고 가볍게 뛰어 돌아온다.
+<br><br>
+
+"자," 수건을 건네주며 <<he>>【이가】 말한다. "캠프파이어 쪽으로 와서 좀 몸 녹일래?"
+<br><br>
+
+<<towelup>>
+
+<<link [[수락한다|Fishing Beach Rescue Towel Retrieve Post Sex Campfire]]>><</link>>
+<br>
+<<link [[떠난다|Fishing Beach Rescue Towel Retrieve Post Sex Bye]]>><</link>>
+
+
+:: Fishing Beach Rescue Towel Flaunt
+<<effects>>
+<<fameexhibitionism 25>>
+
+당신은 <<person>>【와과】 함께 캠프파이어로 걸어간다. 밤바람에 당신의 <<lewdness>>【이가】 고스란히 드러나 있다. 당신이 다가가자 캠프파이어 주변의 무리가 조용해지며, 그들 중 누구도 시선을 숨기려 하지 않는다. 누군가 휘파람을 분다.
+<br><br>
+
+<<person>>【은는】 가방을 뒤져 수건을 꺼내어 당신에게 건네준다.
+<br><br>
+
+<<link [[캠프파이어에 남는다|Beach Party]]>><<endevent>><<towelup>><</link>>
+<br>
+<<if hasSexStat("exhibitionism", 5)>>
+	<<link [[수건 없이 그대로 앉는다|Fishing Beach Rescue Towel Flaunt Sit]]>><</link>><<exhibitionist5>>
+	<br>
+<</if>>
+<<link [[떠난다|Beach]]>><<endevent>><<set $eventskip to 1>><</link>>
+
+
+:: Fishing Beach Rescue Towel Flaunt Sit
+<<effects>>
+<<fameexhibitionism 30>>
+
+당신은 고개를 저어 보인다. <<He>>【은는】 수건을 잠시 더 들고 있다가 이내 내린다.
+<br><br>
+
+당신은 모닥불가에 자리를 잡고 앉는다. 고스란히 드러난 당신의 <<lewdness>>【이가】 완전히 눈에 띈다. 잠시 침묵이 흐른 뒤, 무리 중 한 명이 엉덩이를 슥 밀며 당신이 앉을자리를 만들어 준다.
+<br><br>
+
+<<link [[다음|Beach Party]]>><<endevent>><</link>>
+
+
+:: Fishing Beach Rescue Towel Retrieve Post Sex Campfire
+<<effects>>
+<<He>>【은는】 당신을 이끌고 해변 위쪽으로 올라간다. 도착하자 친구들 몇 명이  싱글벙글 웃고 있고, 누군가 엉덩이를 움직여 자리를 비켜준다. 그 <<person>>【이가】 자리에 앉자 누군가가 장난스레 툭 친다.
+<br><br>
+
+<<link [[다음|Beach Party]]>><</link>>
+
+
+:: Fishing Beach Rescue Towel Retrieve Post Sex Bye
+<<effects>>
+"그래, 조심히 가," <<personsimple>>【이가】 말한다. <<He>>【은는】 잠시 당신을 지켜보다가 캠프파이어 쪽으로 돌아간다. 자리에 앉자마자 친구 중 한 명이 장난스럽게 <<his>> 뒤통수를 툭 친다.
+<br><br>
+
+<<link [[다음|Beach]]>><<set $eventskip to 1>><</link>>
+
+
+:: Fishing Beach Rescue Towel Retrieve
+<<effects>>
+<<He>>【은는】 고개를 끄덕이더니 캠프파이어가 있는 해변 위쪽으로 가벼운 조깅으로 올라간다. 잠시 후 <<he>>【이가】 수건을 손에 쥐고 돌아온다.
+<br><br>
+
+"자," 수건을 건네주며 <<he>>【이가】 말한다. <<if $cool gte 40>>"캠프파이어 쪽으로 와서 좀 몸 녹이지 그래."<<else>>"행운을 빌어."<</if>>
+<br><br>
+
+<<towelup>>
+
+<<if hasSexStat("promiscuity", 2) and !$daily.fishing.fishingTowelEventPhase>>
+	<<link [[감사의 의미로 <<him>>에게 입맞춘다|Fishing Beach Rescue Towel Retrieve Kiss]]>><</link>><<promiscuous2>>
+	<br>
+<</if>>
+<<if $cool gte 40>>
+	<<link [[캠프파이어 무리에 합류한다|Beach Party]]>><<endevent>><</link>>
+	<br>
+<</if>>
+<<link [[떠난다|Fishing Beach Rescue Towel Retrieve Leave]]>><<endevent>><</link>>
+
+
+:: Fishing Beach Rescue Towel Retrieve Leave
+<<effects>>
+<<if $speech_attitude is "meek">>
+	"수건 감사해요," 당신이 조용히 말하며 몸에 수건을 두른 채 돌아섭다.
+<<elseif $speech_attitude is "bratty">>
+	"됐어," 당신이 말하며 대답도 기다리지 않고 해변을 따라 걸어가며 수건을 몸에 두른다.
+<<else>>
+	"고마워," 당신이 말하며 자리를 떠나며 수건을 몸에 두른다.
+<</if>>
+<br><br>
+
+<<He>>【은는】 어깨를 으쓱하더니 다시 캠프파이어가 있는 해변 위쪽으로 걸어간다.
+<br><br>
+
+<<link [[다음|Beach]]>><<set $eventskip to 1>><</link>>
+
+
+:: Fishing Beach Rescue Towel Retrieve Kiss
+<<effects>>
+<<if $speech_attitude is "meek">>
+	"고마워요," 당신이 조용히 말하며 <<him>>의 뺨에 가볍게 입을 맞춘다.
+<<elseif $speech_attitude is "bratty">>
+	"그 정도는 받을 자격 있지," 당신이 말하며 <<him>>의 뺨에 입을 맞춘다.
+<<else>>
+	"구해준 보답이야," 당신이 말하며 <<him>>의 뺨에 입을 맞춘다.
+<</if>>
+<<He>>【은는】 그대로 굳어버린다. 잠시 정적이 흐른 뒤, 캠프파이어 쪽에서 누군가 환호를 내지르고 나머지가 폭소를 터뜨린다.
+<br><br>
+
+<<He>>【은는】 목을 가신다. "그러니까, 어." <<He>>【은는】 캠프파이어 쪽을 힐끗 돌아본다. 그곳에서는 친구 중 한 명이 열정적으로 고개를 끄덕이는 모습이 희미하게 보인다. "너 정말..." <<He>>【은는】 말을 흐리더니 얼굴을 붉힌다. "원하면 불가로 와서 좀 녹여도 돼."
+<br><br>
+
+<<if hasSexStat("promiscuity", 3)>>
+	<<link [[더 나아간다|Fishing Beach Rescue Towel Retrieve Kiss Further]]>>
+		/* The persons friends at the campfire are cheering for you, and like you for doing this. So you shouldn't be assaulted at the campfire today */
+		<<set $daily.fishing.safeFromBeachCampfireDanger to true>>
+	<</link>><<promiscuous3>>
+	<br>
+<<else>>
+	<br>
+	<<insufficientStat "promiscuity" "더 진도를 나가기엔">>
+<</if>>
+<<link [[다가간다|Fishing Beach Rescue Towel Retrieve Kiss Campfire]]>><</link>>
+<br>
+<<link [[떠난다|Fishing Beach Rescue Towel Retrieve Kiss Leave]]>><</link>>
+
+
+:: Fishing Beach Rescue Towel Retrieve Kiss Further
+<<effects>>
+당신은 몸을 앞으로 숙여 이번에는 더 깊게 <<him>>에게 입을 맞춘다. <<He>>【은는】 잠시 멈칫하더니, 이내 몸을 숙여 당신의 허리를 손으로 감싼다.
+<br><br>
+
+<<if hasSexStat("exhibitionism", 5)>>
+	<<link [[<<him>>【을를】 모래사장에 밀어 넘어뜨린다|Fishing Beach Rescue Flirt Public]]>><</link>><<exhibitionist5>>
+	<br>
+<</if>>
+<<link [[해변 아래쪽으로 이동한다|Fishing Beach Rescue Flirt Private]]>><</link>>
+
+
+:: Fishing Beach Rescue Towel Retrieve Kiss Campfire
+<<effects>>
+당신은 함께 해변 위쪽으로 걸어간다. 도착하자 친구들 몇 명이 싱글벙글 웃고 있고, 누군가 엉덩이를 움직여 앉을자리를 비켜준다.
+<br><br>
+
+<<link [[다음|Beach Party]]>><<endevent>><</link>>
+
+
+:: Fishing Beach Rescue Towel Retrieve Kiss Leave
+<<effects>>
+"이만 가봐야겠어," 당신이 말한다.
+<br><br>
+
+"그래." <<He>>【은는】 뒷머리를 긁적인다. "조심히 가."
+<br><br>
+
+<<link [[떠난다|Beach]]>><<endevent>><<set $eventskip to 1>><</link>>
+
+
+:: Fishing Beach Tentacles Escape Wet Wait
+<<effects>>
+상대는 가까이 다가올수록 속도를 줄이며, 흠뻑 젖은 당신의 몰골을 살펴본다.
+<br><br>
+
+<<if dangerEvent()>>
+	<<link [[다음|Fishing Beach Tentacles Escape Wet Wait Unsafe]]>><</link>>
+<<else>>
+	"괜찮아?" <<He>>【은는】 몇 발자국 떨어진 곳에 멈춰 서서, 모닥불 쪽을 힐끗 돌아본다. "일어나는 거 다 봤어. 설마... 하곤 했는데." <<He>>【은는】 말을 흐린다.
+	<br><br>
+
+	<<link [[다음|Fishing Beach Tentacles Escape Wet Stranger]]>><</link>>
+<</if>>
+
+
+:: Fishing Beach Tentacles Escape Wet Wait Unsafe
+<<effects>>
+"이거 꽤 난처한 꼴이 됐네. 여기가 누드 비치가 아니란 건 알지?" <<he>>【이가】 웃으며 말한다. "모닥불가에 여분 수건이 있긴 한데, 가져다주는 대가로 나도 작은 보상쯤은 받아야겠지? 무릎 꿇어."
+<br><br>
+
+<<if hasSexStat("promiscuity", 4)>>
+	<<link [[무릎을 꿇는다|Fishing Beach Tentacles Escape Wet Wait Unsafe Sex]]>><<set $sexstart to 1>><</link>><<promiscuous4>>
+	<br>
+<</if>>
+<<link [[마지못해 따른다|Fishing Beach Tentacles Escape Wet Wait Unsafe Sex]]>><<set $molestationstart to 1>><<stress 6>><<trauma 6>><</link>><<gstress>><<gtrauma>>
+<br>
+<<link [[거절한다|Fishing Beach Tentacles Escape Wet Wait Unsafe Decline]]>><</link>>
+
+
+:: Fishing Beach Tentacles Escape Wet Wait Unsafe Sex
+<<if $location isnot "beach">><<location "beach">><</if>>
+<<if $sexstart is 1>>
+	<<set $sexstart to 0>>
+	<<consensual>>
+	<<set $consensual to 1>>
+	<<neutral 1>>
+	<<set $enemyno to 1>>
+	<<maninit>>
+	<<set $enemytrust += 100>>
+	<<npcoral>>
+	<<set $NPCList[0].lefthand to "hair">>
+	<<set $head to "grappled">>
+	"좋아," <<he>>【이가】 다가오며 말한다.
+<<elseif $molestationstart is 1>>
+	<<set $molestationstart to 0>>
+	<<controlloss>>
+	<<violence 1>>
+	<<neutral 1>>
+	<<molested>>
+	<<set $enemyno to 1>>
+	<<maninit>>
+	<<npcoral>>
+	<<set $NPCList[0].lefthand to "hair">>
+	<<set $head to "grappled">>
+	당신은 무릎을 꿇는다. <<His>> 손이 당신의 머리카락을 움켜쥔다. "똑똑하네," <<he>>【이가】 덤덤하게 말한다.
+<</if>>
+
+<<effects>>
+<<effectsman>>
+<<man 1>>
+<<stateman>>
+<br><br>
+
+<<actionsman>>
+
+<<if _combatend>>
+	<span id="next"><<link [[다음|Fishing Beach Tentacles Escape Wet Wait Unsafe Sex Finish]]>><</link>></span>
+<<else>>
+	<span id="next"><<link [[다음|Fishing Beach Tentacles Escape Wet Wait Unsafe Sex]]>><</link>></span>
+<</if>>
+
+
+:: Fishing Beach Tentacles Escape Wet Wait Unsafe Sex Finish
+<<effects>>
+<<if $enemyarousal gte $enemyarousalmax>>
+	<<ejaculation>>
+	<<He>>【은는】 천천히 숨을 내쉬며 한 걸음 물러선다. "고마워," <<he>>【이가】 씩 웃으며 말한다. <<He>>【은는】 캠프파이어 쪽을 힐끗 바라본다. "잠깐만 있어봐." <<He>>【은는】 몸을 돌려 해변 위쪽으로 뛰어 올라간다.
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+	<<link [[다음|Fishing Beach Tentacles Escape Wet Wait Unsafe Sex Finish Towel]]>><<pass 5>><</link>>
+<<elseif $finish is 1>>
+	<<He>>【은는】 몸을 뺀다. "좋아," <<he>>【이가】 말한다. "그 꼴로 돌아다니던가. 난 안 도와줄 테니까." <<He>>【은는】 몸을 돌려 캠프파이어 쪽으로 걸어간다.
+	<br><br>
+
+	<<tearful>> 당신은 비틀거리며 일어선다.
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+	<<link [[다음|Fishing Beach Wait]]>><<endevent>><</link>>
+<<elseif $enemyhealth lte 0>>
+	<<He>>【은는】 숨을 고르며 비틀거리며 물러선다. "너 진짜 미쳤구나," <<he>>【이가】 말하고는 몸을 돌려 캠프파이어 쪽으로 향한다.
+	<br><br>
+
+	<<tearful>> 당신은 비틀거리며 일어선다.
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+	<<link [[다음|Fishing Beach Wait]]>><<endevent>><</link>>
+<</if>>
+
+
+:: Fishing Beach Tentacles Escape Wet Wait Unsafe Sex Finish Towel
+<<effects>>
+<<towelup>>
+
+당신은 <<he>>【이가】 해변 위쪽으로 뛰어 올라가는 모습을 지켜본다. 도착하자 무리에서 환호성이 터져 나오고, 친구 중 한 명이 손을 뻗어 하이파이브를 해준다.
+<br><br>
+
+잠시 후 <<he>>【은는】 수건을 들고 가볍게 뛰어 돌아와 툭 던지듯 건네준다. "행운을 빌어."
+<br><br>
+
+<<link [[다음|Fishing Beach Wait]]>><<endevent>><</link>>
+
+
+:: Fishing Beach Tentacles Escape Wet Wait Unsafe Decline
+<<effects>>
+<<if dangerEvent()>>
+	<<He>>【은는】 인상을 쓴다. "틀렸어." <<he>>【이가】 당신에게 한 걸음 다가온다.
+	<br><br>
+
+	<<link [[다음|Fishing Beach Tentacles Escape Wet Wait Unsafe Assault]]>><<set $molestationstart to 1>><</link>>
+<<else>>
+	<<He>>【은는】 어깨를 으쓱한다. "마음대로 해." <<he>>【이가】 손을 뻗어 당신의 <<bottom>>【을를】 찰싹 때리고는, 몸을 돌려 캠프파이어 쪽으로 걸어간다. "행운을 빌어."
+	<br><br>
+
+	<<link [[다음|Fishing Beach Wait]]>><<endevent>><</link>>
+<</if>>
+
+
+:: Fishing Beach Tentacles Escape Wet Wait Unsafe Assault
+<<if $molestationstart is 1>>
+	<<set $molestationstart to 0>>
+	<<controlloss>>
+	<<violence 1>>
+	<<neutral 1>>
+	<<molested>>
+	<<set $enemyno to 1>>
+	<<maninit>>
+<</if>>
+
+<<effects>>
+<<effectsman>>
+<<man>>
+<<stateman>>
+<br><br>
+
+<<actionsman>>
+
+<<if _combatend>>
+	<span id="next"><<link [[다음|Fishing Beach Tentacles Escape Wet Wait Unsafe Assault Finish]]>><</link>></span>
+<<else>>
+	<span id="next"><<link [[다음|Fishing Beach Tentacles Escape Wet Wait Unsafe Assault]]>><</link>></span>
+<</if>>
+
+
+:: Fishing Beach Tentacles Escape Wet Wait Unsafe Assault Finish
+<<effects>>
+<<if $enemyarousal gte $enemyarousalmax>>
+	<<ejaculation>>
+	<br><br>
+
+	<<tearful>> 당신은 온몸을 떨며 일어선다. <<He>>【은는】 옷을 추스르더니 아무 말 없이 캠프파이어 쪽으로 돌아간다.
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+	<<link [[다음|Fishing Beach Wait]]>><<endevent>><</link>>
+<<elseif $enemyhealth lte 0>>
+	<<He>>【은는】 숨을 고르며 비틀거리며 물러선다. 더 이상 아무 말도 하지 않은 채 몸을 돌어 캠프파이어 쪽으로 걸어간다.
+	<br><br>
+
+	<<tearful>> 당신은 숨을 고른다.
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+	<<link [[다음|Fishing Beach Wait]]>><<endevent>><</link>>
+<</if>>
+
+
+:: Fishing Beach Tentacles Escape Wet Run
+<<effects>>
+당신은 해변을 따라 질주한다.
+<br><br>
+
+<<if $athleticsSuccess>>
+	<span class="green">잠시 후, 뒤에서 들리던 발소리가 느려지더니 멈춘다.</span> 모닥불이 아득한 불빛으로 보일 때까지 계속 달리다가, 멈춰 서서 숨을 고른다.
+	<br><br>
+
+	<<link [[다음|Beach]]>><<endevent>><<set $eventskip to 1>><</link>>
+<<elseif !dangerEvent()>>
+	<span class="green">발소리는 쫓아오지 않는다.</span> 모닥불이 한참 뒤로 멀어질 때까지 앞만 보고 걸으며 속도를 줄인다.
+	<br><br>
+
+	<<link [[다음|Beach]]>><<endevent>><<set $eventskip to 1>><</link>>
+<<else>>
+	도망치려 하지만, <span class="red"><<personsimple>>【이가】 더 빠르다.</span> <<His>> 손이 당신의 팔을 움켜잡고 바닥으로 내팽개친다.
+	<br><br>
+
+	<<link [[다음|Beach Exhibit Molestation]]>><<set $phase to 0>><<set $molestationstart to 1>><</link>>
+<</if>>
+
+
+:: Fishing Beach Tentacles Escape Wet Stranger
+<<effects>>
+당신은 여전히 떨면서 젖은 옷을 더 단단히 여민다.
+<<if $speech_attitude is "meek">>
+	"와주셔서 감사해요," 당신이 조용히 말한다.
+<<elseif $speech_attitude is "bratty">>
+	"조금만 더 일찍 오지 그랬어," 당신이 말한다.
+<<else>>
+	"확인해 줘서 고마워," 당신이 간신히 말한다.
+<</if>>
+<br><br>
+
+<<if $exposed gte 1>>
+	<<if $uncomfortable.nude or !hasSexStat("exhibitionism", 3)>>
+		당신은 스스로 팔을 감싸 안으며, 자신이 얼마나 노출되어 있는지 뒤늦게 깨닫는다.<<stress 2>><<gstress>><<fameexhibitionism 5>>
+	<<else>>
+		이 모든 상황에도 불구하고, 이렇게 노출되었다는 사실에 짜릿함을 느낀다.<<arousal 20>><<garousal>><<fameexhibitionism 10>>
+	<</if>>
+	<br><br>
+
+	<<He>>【은는】 한 발자국 물러서더니, 당신의 <<lewdness>>【을를】 힐끗 보곤 뺨을 붉히며 황급히 시선을 돌린다. "그러니까, 어." <<He>>【은는】 캠프파이어 쪽을 힐끗 보더니 다시 당신을 본다. "너 정말..." 말을 흐린다. 캠프파이어 쪽에서는 친구들이 쥐 죽은 듯 조용해졌다가, 그중 한 명이 무언가를 소리친다. 무리에서 폭소가 터져 나오고, 어둠 속에서도 <<his>> 얼굴이 시뻘겋게 달아오르는 것이 보인다.
+	<br><br>
+
+	"캠프파이어 쪽에 여분의 수건이 있어," <<he>>【이가】 더듬거리며 말한다. "원하면 내가 가져다줄게."
+	<br><br>
+
+	<<if hasSexStat("promiscuity", 2)>>
+		<<link [[감사의 의미로 <<him>>에게 입맞춘다|Fishing Beach Rescue Flirt Kiss]]>><</link>><<promiscuous2>>
+		<br>
+	<<else>>
+		<<insufficientStat "promiscuity" "감사의 의미로 입맞추기엔">>
+		<br>
+	<</if>>
+	<<link [[수건을 받는다|Fishing Beach Rescue Towel Retrieve]]>><</link>>
+	<<if hasSexStat("exhibitionism", 5)>>
+		<br>
+		<<link [[<<him>>【와과】 함께 캠프파이어로 걸어간다|Fishing Beach Rescue Towel Flaunt]]>><</link>><<exhibitionist5>>
+	<<else>>
+		<br>
+		<<insufficientStat "exhibitionism" "노출한 상태로 캠프파이어로 가기엔">>
+	<</if>>
+	<br>
+	<<link [[거절한다|Fishing Beach Rescue Towel Decline]]>><<set $phase to 0>><</link>>
+
+<<else>>
+	<<He>>【은는】 여전히 숨을 고르며 한 발자국 물러선다.
+	<<if $cool gte 40>>
+		"그래, 당연하지." <<He>>【은는】 캠프파이어 쪽을 힐끗 보더니 다시 당신을 본다. "이리 와서 우리랑 같이 앉아. 좀 몸을 녹이고 가."
+		<br><br>
+
+		<<link [[다시 낚시한다|Fishing Beach Wait]]>><<endevent>><</link>>
+		<br>
+		<<link [[그들과 합류한다|Beach Party]]>><<endevent>><</link>>
+		<br>
+		<<link [[떠난다|Beach]]>><<endevent>><<set $eventskip to 1>><</link>>
+	<<else>>
+		"알았어, 무사해서 다행이네." <<He>>【은는】 캠프파이어 쪽을 다시 힐끗 보더니 그쪽으로 걸어간다.
+		<br><br>
+
+		<<link [[다시 낚시한다|Fishing Beach Wait]]>><<endevent>><</link>>
+		<br>
+		<<link [[떠난다|Beach]]>><<endevent>><<set $eventskip to 1>><</link>>
+	<</if>>
+<</if>>

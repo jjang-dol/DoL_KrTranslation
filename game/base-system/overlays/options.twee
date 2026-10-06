@@ -1,0 +1,839 @@
+/*
+IMPORTANT:
+	When adding variables to the options menu, state variables must use the $options object.
+	Otherwise changes won't be applied when options overlay is closed. See updateOptions().
+ */
+
+:: Options Overlay [widget]
+<<widget "setupOptions">>
+	<<set _optionsRefresh to false>>
+	<<script>>
+		settingsDisableElement();
+		window.Theme.initControl();
+		onInputChanged(() => {
+			if(!T.optionsRefresh) T.optionsRefresh = true;
+			if(T.globalThemeDefaults) Wikifier.wikifyEval("<<setFont true>>");
+		});
+	<</script>>
+<</widget>>
+
+<<widget "optionsgeneral">>
+	<<setupOptions>>
+	<<set _globalGeneralDefaults to JSON.parse(localStorage.getItem("dolDefaultGeneralSettings"))>>
+	<<if !_globalGeneralDefaults>>
+		<<set _globalGeneralDefaults to {}>>
+	<</if>>
+	<<if !_globalThemeDefaults>>
+		<<set _globalThemeDefaults to {}>>
+	<</if>>
+	<<if $debug is 1>>
+		/*<label><<checkbox "$notifyUpdate" false true autocheck>> Notify when there's a new game update available</label>
+		<br>*/
+		/*<<link "Check for updates">>
+			<<run checkNewVersion()>>
+		<</link>>
+		<br><br>*/
+	<</if>>
+	<div class="settingsGrid">
+		<div>
+			<<button "현재 설정을 기본값으로 저장">>
+				<<set _toSaveDefaults to {}>>
+				<<if $options.general>><<set _toSaveDefaults.general to $options.general>><</if>>
+				<<if $options.dateFormat>><<set _toSaveDefaults.dateFormat to $options.dateFormat>><</if>>
+				<<if $options.fahrenheit>><<set _toSaveDefaults.fahrenheit to $options.fahrenheit>><</if>>
+				<<if $options.timestyle>><<set _toSaveDefaults.timestyle to $options.timestyle>><</if>>
+				<<if $options.mapMovement>><<set _toSaveDefaults.mapMovement to $options.mapMovement>><</if>>
+				<<if $options.mapLegacy>><<set _toSaveDefaults.mapLegacy to $options.mapLegacy>><</if>>
+				<<if $options.mapMarkers>><<set _toSaveDefaults.mapMarkers to $options.mapMarkers>><</if>>
+				<<if $options.mapTop>><<set _toSaveDefaults.mapTop to $options.mapTop>><</if>>
+				<<if $options.closeButtonMobile>><<set _toSaveDefaults.closeButtonMobile to $options.closeButtonMobile>><</if>>
+				<<if $options.passageCount>><<set _toSaveDefaults.passageCount to $options.passageCount>><</if>>
+				<<if $options.playtime>><<set _toSaveDefaults.playtime to $options.playtime>><</if>>
+				<<if $options.neverNudeMenus>><<set _toSaveDefaults.neverNudeMenus to $options.neverNudeMenus>><</if>>
+				<<if $options.autosaveDisabled>><<set _toSaveDefaults.autosaveDisabled to $options.autosaveDisabled>><</if>>
+				<<if $options.numberify_enabled>><<set _toSaveDefaults.numberify_enabled to $options.numberify_enabled>><</if>>
+				<<if $options.clothingReplacementWarning>><<set _toSaveDefaults.clothingReplacementWarning to $options.clothingReplacementWarning>><</if>>
+				<<run localStorage.setItem("dolDefaultGeneralSettings",JSON.stringify(_toSaveDefaults))>>
+				<<replace #customOverlayContent>><<optionsgeneral>><</replace>>
+			<</button>>
+			<<button "저장된 기본값 삭제">>
+				<<run localStorage.removeItem("dolDefaultGeneralSettings")>>
+			<</button>>
+		</div>
+	</div>
+	<div class="settingsGrid">
+		<div class="settingsHeader options"><span class="gold">일반</span></div>
+		<div class="settingsToggleItem">
+			<label>
+				<<checkbox "$options.neverNudeMenus" false true autocheck>>
+				메뉴에서 플레이어의 알몸 숨기기
+			</label>
+		</div>
+		<div class="settingsToggleItem">
+			<label data-disabledif="V.ironmanmode===true">
+				<<checkbox "$options.autosaveDisabled" false true autocheck>> 잠잘 때 자동 저장 비활성화
+			</label>
+		</div>
+		<div class="settingsToggleItem">
+			<span class="gold">날짜 형식:</span><<optionsThemeDefault "dateFormat">>
+			<br>
+			<label class="en-GB"><<radiobutton "$options.dateFormat" "en-GB" autocheck>> dd/mm/yyyy</label> |
+			<label class="en-US"><<radiobutton "$options.dateFormat" "en-US" autocheck>> mm/dd/yyyy</label> |
+			<label class="zh-CN"><<radiobutton "$options.dateFormat" "zh-CN" autocheck>> yyyy/mm/dd</label>
+		</div>
+		<div class="settingsToggleItem">
+			<span class="gold">온도 형식:</span><<optionsThemeDefault "fahrenheit">>
+			<br>
+			<label><<checkbox "$options.fahrenheit" false true autocheck>> 온도 단위로 화씨(F) 사용</label>
+		</div>
+		<div class="settingsToggleItem">
+			<label data-disabledif="!StartConfig.enableLinkNumberify">
+				<<checkbox "$options.numberify_enabled" 0 1 autocheck>> 번호가 매겨진 링크 네비게이션 활성화
+			</label>
+			<mouse class="tooltip-small linkBlue">(?)<span>키보드로 네비게이션을 할 수 있게 합니다.</span></mouse>
+		</div>
+		<div class="settingsToggleItem">
+			기상 후 옷차림 메뉴 스타일:
+			<<listbox "$options.listboxOutfitsEnabled" autoselect>>
+				<<option "라디오 버튼" false>>
+				<<option "리스트 박스" true>>
+			<</listbox>>
+		</div>
+		<div class="settingsToggleItem">
+			<label>
+				<<checkbox "$options.clothingReplacementWarning" false true autocheck>>
+				의류 교체 경고 활성화
+			</label>
+		</div>
+	</div>
+	<hr>
+	<div class="settingsGrid">
+		<div class="settingsHeader options">사이드바</div>
+		<div class="settingsToggleItem">
+			<span class="gold">시간 형식:</span>
+			<br>
+			<label><<radiobutton "$options.timestyle" "military" autocheck>> 24시간제</label> |
+			<label><<radiobutton "$options.timestyle" "ampm" autocheck>> 12시간제</label>
+		</div>
+		<div class="settingsToggleItem">
+			<span class="gold">콘돔 표시:</span>
+			<br>
+			<label><<radiovar "$options.condomsDisplay" "standard">><<updatesidebarimg>><</radiovar>> 표준</label> |
+			<label><<radiovar "$options.condomsDisplay" "none">><<updatesidebarimg>><</radiovar>> 숨김</label>
+		</div>
+		<div class="settingsToggleItem">
+			<span class="gold">후추 스프레이 표시:</span>
+			<br>
+			<label><<radiovar "$options.pepperSprayDisplay" "sprays">><<updatesidebarimg>><</radiovar>> 표준</label> |
+			<label><<radiovar "$options.pepperSprayDisplay" "compact">><<updatesidebarimg>><</radiovar>> 컴팩트</label> |
+			<label><<radiovar "$options.pepperSprayDisplay" "none">><<updatesidebarimg>><</radiovar>> 숨김</label>
+		</div>
+		<div class="settingsToggleItem">
+			<label><<checkbox "$options.tipdisable" "t" "f" autocheck>> 사이드바에 힌트 및 팁 표시 활성화</label>
+		</div>
+		<div class="settingsToggleItem">
+			<label><<checkbox "$options.debugdisable" "t" "f" autocheck>> 추가 에러 메시지 활성화</label>
+		</div>
+		<div class="settingsToggleItem">
+			사이드바가 닫혀 있을 때 스탯 표시:
+			<<listbox "$options.sidebarStats" autoselect>>
+				<<option "비활성화" "disabled">>
+				<<option "제한됨" "limited">>
+				<<option "모두 표시" "all">>
+			<</listbox>>
+			<div class="mobile-rec gold">모바일에서는 이 기능을 켜두는 것이 좋습니다!</div>
+		</div>
+		<div class="settingsToggleItem">
+			사이드바가 닫혀 있을 때 시계 표시:
+			<<listbox "$options.sidebarTime" autoselect>>
+				<<option "비활성화" "disabled">>
+				<<option "위" "top">>
+				<<option "아래" "bottom">>
+			<</listbox>>
+			<div class="mobile-rec gold">모바일에서는 이 기능을 켜두는 것이 좋습니다!</div>
+		</div>
+		<div class="settingsToggleItem">
+			<label><<checkbox "$options.clothingCaption" false true autocheck>> 사이드바에 옷차림 설명 표시</label>
+			<span class="tooltip-anchor linkBlue" tooltip="비활성화해도 아바타 위에 마우스를 올리면 설명이 툴팁으로 표시됩니다.">(?)</span>
+		</div>
+		<div class="settingsToggleItem">
+			<label><<checkbox "$options.showCaptionText" false true autocheck>> 사이드바에 캡션 텍스트 표시</label>
+		</div>
+		<div class="settingsToggleItem">
+			<label><<checkbox "$options.showSidebarEffects" false true autocheck>> 플레이어 캔버스 주변에 효과 표시</label>
+			<span class="tooltip-anchor linkBlue" tooltip="<span class='blue'>강우량, 수중 기포 등이 포함됩니다. 사이드바의 온도계를 클릭하면 일시적으로 숨겨 플레이어 캐릭터의 사진을 더 쉽게 찍을 수 있습니다!</span>">(?)</span>
+		</div>
+		<div class="settingsToggleItem">
+			<span class="gold">미끼 선택 방식:</span>
+			<br>
+			<label><<radiobutton "$options.fishingBaitSelection" "sidebar" autocheck>> 사이드바</label> |
+			<label><<radiobutton "$options.fishingBaitSelection" "dropdown" autocheck>> 드롭다운</label>
+		</div>
+	</div>
+	<hr>
+	<div class="settingsGrid">
+		<div class="settingsHeader options">전투</div>
+		<div class="settingsToggleItem">
+			대상을 "자신"으로 지정:
+			<label><<radiobutton "$options.targetYourself" false autocheck>> 비활성화</label> |
+			<label><<radiobutton "$options.targetYourself" true autocheck>> 활성화</label>
+		</div>
+		<div class="settingsToggleItem">
+			<label>
+				<<checkbox "$options.scrollRemember" false true autocheck>>
+				전투 중 스크롤 위치 복구
+			</label>
+		</div>
+		<div class="settingsToggleItemWide">
+			전투 조작계:
+			<<listbox "$options.combatControls" autoselect>>
+				<<option "라디오 버튼" "radio">>
+				<<option "라디오 버튼 (세로열)" "columnRadio">>
+				<<option "리스트 (너비 제한 없음)" "lists">>
+				<<option "리스트 (너비 제한 있음)" "limitedLists">>
+			<</listbox>>
+		</div>
+	</div>
+
+	<<if $map isnot undefined>>
+		<hr>
+		<div class="settingsGrid">
+			<div class="settingsHeader options">지도</div>
+			<div class="settingsToggleItem">
+				<label data-target="images"><<checkbox "$options.mapMovement" false true autocheck>> 지도 아이콘을 클릭/터치하여 지도 이동 활성화</label>
+			</div>
+			<div class="settingsToggleItem">
+				<label data-target="images" data-disabledif="V.options.images===0"><<checkbox "$options.mapLegacy" false true autocheck>> SVG 지도 비활성화. 마을 지도가 보이지 않을 경우 켜주세요.</label>
+			</div>
+			<div class="settingsToggleItem">
+				<label data-target="['images', 'maplegacy]" data-disabledif="V.options.images===0||V.options.mapLegacy"><<checkbox "$options.mapMarkers" false true autocheck>> 지도에 클릭 가능한 영역 표시</label>
+			</div>
+			<div class="settingsToggleItem">
+				<label data-target="images"><<checkbox "$options.mapTop" false true autocheck>> 지도 링크 위로 지도 위치 올리기</label>
+			</div>
+		</div>
+	<</if>>
+	<hr>
+	<div class="settingsGrid">
+		<div class="settingsHeader options">오버레이</div>
+		<div class="settingsToggleItemWide">
+			<span class="gold">오버레이 메뉴의 닫기 버튼 위치:</span>
+			<span class="tooltip-anchor linkBlue" tooltip="다음에 오버레이를 열 때 적용됩니다.">(?)</span>
+			<br>
+			<label><<radiobutton "$options.closeButtonMobile" false autocheck>> 표준</label> |
+			<label><<radiobutton "$options.closeButtonMobile" true autocheck>> 모바일 (좌측)</label>
+		</div>
+	</div>
+	<hr>
+	<div class="settingsGrid">
+		<div class="settingsHeader options">추가 정보</div>
+		<div class="settingsToggleItem">
+			<span class="gold">화면 우측 상단에 패시지 수 표시:</span>
+			<br>
+			<label><<radiobutton "$options.passageCount" "disabled" autocheck>> 비활성</label>
+			<br>
+			<label><<radiobutton "$options.passageCount" "changes" autocheck>> 패시지 이동 횟수</label>
+			<span class="tooltip-anchor linkBlue" tooltip="새 패시지로 이동한 총 횟수입니다. 대부분 링크 클릭으로 증가합니다. 설정 같은 패시지는 제외됩니다. 0.3.12.X 이하 버전에서는 추적되지 않습니다.">(?)</span>
+			<br>
+			<label><<radiobutton "$options.passageCount" "total" autocheck>> 총 패시지 수</label>
+			<span class="tooltip-anchor linkBlue" tooltip="새 패시지가 로드된 총 횟수입니다. 대부분 링크 클릭으로 증가합니다. 설정 같은 패시지는 제외됩니다. 0.3.12.X 이하 버전에서는 추적되지 않습니다.">(?)</span>
+		</div>
+		<div class="settingsToggleItem">
+			<span class="gold">화면 우측 상단에 플레이 타임 표시:</span>
+			<span class="tooltip-anchor linkBlue" tooltip="h:mm:ss 형식으로 표시됩니다. 게임을 몇 시간 동안 켜둔 채 저장하면 그 시간도 기록됩니다. 이를 피하려면 플레이를 끝내기 전에 저장하고, 다시 시작할 때 그 세이브를 불러오세요. 0.3.13.X 이하 버전에서는 추적되지 않습니다.">(?)</span>
+			<br>
+			<label><<radiobutton "$options.playtime" false autocheck>> 비활성</label>
+			<br>
+			<label><<radiobutton "$options.playtime" true autocheck>> 활성</label>
+		</div>
+	</div>
+
+	<<if $passage isnot "Start">>
+		<br>
+		<<button "게임 재시작">>
+			<<script>>
+				SugarCube.UI.restart();
+			<</script>>
+		<</button>>
+	<</if>>
+<</widget>>
+
+<<widget "optionstheme">>
+	<<setupOptions>>
+	<<set _globalThemeDefaults to JSON.parse(localStorage.getItem("dolDefaultThemeSettings"))>>
+	<<if !_globalThemeDefaults>>
+		<<set _globalThemeDefaults to {}>>
+	<</if>>
+	<div class="settingsGrid">
+		<div>
+			<<button "현재 설정을 기본값으로 저장">>
+				<<set _toSaveDefaults to {}>>
+				<<if $options.theme>><<set _toSaveDefaults.theme to $options.theme>><</if>>
+				<<if $options.passageMaxWidth>><<set _toSaveDefaults.passageMaxWidth to $options.passageMaxWidth>><</if>>
+				<<if $options.passageLineHeight>><<set _toSaveDefaults.passageLineHeight to $options.passageLineHeight>><</if>>
+				<<if $options.overlayLineHeight>><<set _toSaveDefaults.overlayLineHeight to $options.overlayLineHeight>><</if>>
+				<<if $options.sidebarLineHeight>><<set _toSaveDefaults.sidebarLineHeight to $options.sidebarLineHeight>><</if>>
+				<<if $options.passageFontSize>><<set _toSaveDefaults.passageFontSize to $options.passageFontSize>><</if>>
+				<<if $options.overlayFontSize>><<set _toSaveDefaults.overlayFontSize to $options.overlayFontSize>><</if>>
+				<<if $options.sidebarFontSize>><<set _toSaveDefaults.sidebarFontSize to $options.sidebarFontSize>><</if>>
+				<<if $options.font>><<set _toSaveDefaults.font to $options.font>><</if>>
+				<<run localStorage.setItem("dolDefaultThemeSettings",JSON.stringify(_toSaveDefaults))>>
+				<<replace #customOverlayContent>><<optionstheme>><</replace>>
+			<</button>>
+			<<button "저장된 기본값 삭제">>
+				<<run localStorage.removeItem("dolDefaultThemeSettings")>>
+			<</button>>
+		</div>
+	</div>
+	<div class="settingsGrid">
+		<div class="settingsHeader options">테마<<optionsThemeDefault "theme">></div>
+		<div class="settingsToggleItemWide">
+			<span class="gold">스타일:</span>
+			<label><input type="radio" name="theme" value="system-default" /> 기본값</label> |
+			<label><input type="radio" name="theme" value="dark" /> 다크</label> |
+			<label><input type="radio" name="theme" value="arctic" /> 노르드</label> |
+			<label><input type="radio" name="theme" value="zen" /> 젠번</label> |
+			<label><input type="radio" name="theme" value="monokai" /> 모노카이</label> |
+			<label><input type="radio" name="theme" value="storm" /> 스톰</label> |
+			<label><input type="radio" name="theme" value="latte" /> 캣푸친 라떼</label> |
+			<label><input type="radio" name="theme" value="frappe" /> 캣푸친 프라페</label> |
+			<label><input type="radio" name="theme" value="macchiato" /> 캣푸친 마키아토</label> |
+			<label><input type="radio" name="theme" value="mocha" /> 캣푸친 모카</label> |
+			<label><input type="radio" name="theme" value="sea" /> 바다</label>
+			<div class="small-description">선택한 스타일은 현재 '기본' 옵션으로 저장될 수 없지만, 새로운 세이브로 인계됩니다.</div>
+		</div>
+	</div>
+	<hr>
+
+	<div class="settingsGrid">
+		<div class="settingsHeader options">줄 간격</div>
+		<div class="settingsToggleItem">
+			패시지:
+			<<listbox "$options.passageLineHeight" autoselect>>
+				<<option "기본값" undefined>>
+				<<option "1" 1>>
+				<<option "1.25" 1.25>>
+				<<option "1.5" 1.5>>
+				<<option "1.75" 1.75>>
+				<<option "2" 2>>
+			<</listbox>>
+			<<optionsThemeDefault "passageLineHeight">>
+		</div>
+		<div class="settingsToggleItem">
+			오버레이:
+			<<listbox "$options.overlayLineHeight" autoselect>>
+				<<option "기본값" undefined>>
+				<<option "1" 1>>
+				<<option "1.25" 1.25>>
+				<<option "1.5" 1.5>>
+				<<option "1.75" 1.75>>
+				<<option "2" 2>>
+			<</listbox>>
+			<<optionsThemeDefault "overlayLineHeight">>
+		</div>
+		<div class="settingsToggleItemWide">
+			사이드바:
+			<<listbox "$options.sidebarLineHeight" autoselect>>
+				<<option "기본값" undefined>>
+				<<option "1" 1>>
+				<<option "1.25" 1.25>>
+				<<option "1.5" 1.5>>
+				<<option "1.75" 1.75>>
+				<<option "2" 2>>
+			<</listbox>>
+			<<optionsThemeDefault "sidebarLineHeight">>
+		</div>
+	</div>
+	<hr>
+
+	<div class="settingsGrid">
+		<div class="settingsHeader options">글꼴 크기</div>
+		<div class="settingsToggleItem">
+			패시지:
+			<<listbox "$options.passageFontSize" autoselect>>
+				<<option "기본값" undefined>>
+				<<option "10px" 10>>
+				<<option "12px" 12>>
+				<<option "14px" 14>>
+				<<option "16px" 16>>
+				<<option "18px" 18>>
+				<<option "20px" 20>>
+			<</listbox>>
+			<<optionsThemeDefault "passageFontSize">>
+		</div>
+		<div class="settingsToggleItem">
+			<mouse class="tooltip">오버레이<span class="blue">기본값은 패시지 글꼴 크기와 동일합니다.</span></mouse>:
+			<<listbox "$options.overlayFontSize" autoselect>>
+				<<option "기본값" undefined>>
+				<<option "10px" 10>>
+				<<option "12px" 12>>
+				<<option "14px" 14>>
+				<<option "16px" 16>>
+				<<option "18px" 18>>
+				<<option "20px" 20>>
+			<</listbox>>
+			<<optionsThemeDefault "overlayFontSize">>
+		</div>
+		<div class="settingsToggleItemWide">
+			사이드바:
+			<<listbox "$options.sidebarFontSize" autoselect>>
+				<<option "기본값" undefined>>
+				<<option "12px" 12>>
+				<<option "14px" 14>>
+				<<option "16px" 16>>
+				<<option "18px" 18>>
+				<<option "20px" 20>>
+			<</listbox>>
+			<<optionsThemeDefault "sidebarFontSize">>
+		</div>
+	</div>
+	<hr>
+
+	<div class="settingsGrid">
+		<div class="settingsHeader options">글꼴 스타일</div>
+		<div class="settingsToggleItemWide">
+			<<optionsThemeDefault "font">>
+			<label><<radiobutton "$options.font" "" `$options.font is undefined ? 'checked' : 'autocheck'`>> 시스템 기본값 사용</label>
+			<br>
+			<span class="gold">산세리프:</span>
+			<label class="Arial"><<radiobutton "$options.font" "Arial" autocheck>> Arial</label> |
+			<label class="Verdana"><<radiobutton "$options.font" "Verdana" autocheck>> Verdana</label>
+			<br>
+			<span class="gold">세리프:</span>
+			<label class="TimesNewRoman"><<radiobutton "$options.font" "TimesNewRoman" autocheck>> Times New Roman</label> |
+			<label class="Georgia"><<radiobutton "$options.font" "Georgia" autocheck>> Georgia</label> |
+			<label class="Garamond"><<radiobutton "$options.font" "Garamond" autocheck>> Garamond</label>
+			<br>
+			<span class="gold">모노스페이스:</span>
+			<label class="CourierNew"><<radiobutton "$options.font" "CourierNew" autocheck>> Courier New</label> |
+			<label class="LucidaConsole"><<radiobutton "$options.font" "LucidaConsole" autocheck>> Lucida Console</label> |
+			<label class="Monaco"><<radiobutton "$options.font" "Monaco" autocheck>> Monaco</label>
+			<br>
+			<span class="gold">접근성:</span>
+			<label class="OpenDyslexicMono"><<radiobutton "$options.font" "OpenDyslexicMono" autocheck>> OpenDyslexic Mono</label> |
+			<label class="ComicSans"><<radiobutton "$options.font" "ComicSans" autocheck>> Comic Sans</label> |
+			<label class="Lexend"><<radiobutton "$options.font" "Lexend" autocheck>> Lexend</label>
+		</div>
+	</div>
+	<hr>
+
+	<div class="settingsGrid">
+		<div class="settingsHeader options">텍스트 애니메이션</div>
+		<div class="settingsToggleItemWide">
+			<label data-target="options.textAnimsAll">
+				<<checkbox "$options.textAnimsAll" false true autocheck { onToggle: t => {
+					$("#prevDrunk").replaceWith(Wikifier.wikifyEval('<span id="prevDrunk" @class="basicDrunkCss(3)">취기 흔들림</span>'));
+					$("#prevHeat").replaceWith(Wikifier.wikifyEval('<span id="prevHeat" @class="basicJitterCss()">발정기/러트 떨림</span>'));
+					$("#prevHypno").replaceWith(Wikifier.wikifyEval('<span id="prevHypno"><<hypnosisText "최면 나선">></span>'));
+				}}>>
+				모든 텍스트 애니메이션을 비활성화하려면 체크를 해제하세요
+			</label>
+			<br>
+			<<checkbox "$options.textAnimsDrunk" false true autocheck { onToggle: t => {
+				$("#prevDrunk").replaceWith(Wikifier.wikifyEval('<span id="prevDrunk" @class="basicDrunkCss(3)">취기 흔들림</span>'));
+			}}>>
+			<span id="prevDrunk" @class="basicDrunkCss(3)">취기 흔들림</span>
+			<br>
+			<<checkbox "$options.textAnimsHeat" false true autocheck { onToggle: t => {
+				$("#prevHeat").replaceWith(Wikifier.wikifyEval('<span id="prevHeat" @class="basicJitterCss()">발정기/러트 떨림</span>'));
+			}}>>
+			<span id="prevHeat" @class="basicJitterCss()">발정기/러트 떨림</span>
+			<br>
+			<<checkbox "$options.textAnimsHypno" false true autocheck { onToggle: t => {
+				$("#prevHypno").replaceWith(Wikifier.wikifyEval('<span id="prevHypno"><<hypnosisText "최면 나선">></span>'));
+			}}>>
+			<span id="prevHypno"><<hypnosisText "최면 나선">></span>
+		</div>
+	</div>
+<</widget>>
+
+<<widget "optionsThemeDefault">>
+	<<if _args[0]>>
+		<span @id="'optionsThemeDefault-' + _args[0]">
+			<<if _globalThemeDefaults[_args[0]]>> 기본값: (<<print _globalThemeDefaults[_args[0]]>>)
+			<<elseif _globalGeneralDefaults[_args[0]]>> 기본값: (<<print _globalGeneralDefaults[_args[0]]>>)
+			<</if>>
+		</span>
+	<</if>>
+<</widget>>
+
+<<widget "optionsperformance">>
+	<<setupOptions>>
+	<<if StartConfig.enableImages is true>>
+		<div class="settingsGrid">
+			<div class="settingsHeader options">이미지</div>
+			<div class="settingsToggleItem">
+				<label><<checkbox "$options.images" 0 1 autocheck>> 이미지 활성화</label>
+				<span class="tooltip-anchor linkBlue" tooltip="<span class='linkBlue'>오래된 안드로이드 기기에서는 이미지가 제대로 불러와지지 않을 수 있습니다.</span>">(?)</span>
+			</div>
+			<div class="settingsToggleItem">
+				<label data-target="options.images" data-disabledif="V.options.images===0">
+					<<checkbox "$options.combatImages" 0 1 autocheck>> 전투 이미지 활성화
+				</label>
+			</div>
+
+			<div class="settingsToggleItem">
+				<label data-target="options.images" data-disabledif="V.options.images===0"><<checkbox "$options.silhouetteEnabled" false true autocheck>> NPC 실루엣 활성화</label>
+			</div>
+		</div>
+		<hr>
+		<div class="settingsGrid">
+			<div class="settingsHeader options">렌더링</div>
+			<div class="settingsToggleItem">
+				<label data-target="options.images" data-disabledif="V.options.images===0"><<checkbox "$options.weatherUpdate" false true autocheck>> 사이드바 날씨 렌더러 사용</label>
+			</div>
+			<div class="settingsToggleItem">
+				<label data-target='["options.images", "weatherupdate"]' data-disabledif="V.options.images===0||V.options.weatherUpdate===false"><<checkbox "$options.reflections" false true autocheck>> 물 반사 렌더링
+				</label>
+				<span class="tooltip-anchor linkBlue" tooltip="<span class='linkBlue'>오래된 기기에서는 성능 문제가 발생할 수 있습니다.</span>">(?)</span>
+			</div>
+			<div class="description">변경 사항을 적용하려면 옵션 메뉴를 닫으십시오.</div>
+		</div>
+		<span class="gold">애니메이션</span>
+		<div class="settingsGrid">
+			<div class="settingsToggleItem">
+				<label data-target="options.images" data-disabledif="V.options.images===0">
+					<<checkbox "$options.sidebarAnimations" false true autocheck>> 사이드바 캐릭터 애니메이션
+				</label>
+			</div>
+			<div class="settingsToggleItem">
+				<label data-target='["options.images", "sidebaranimations"]' data-disabledif="V.options.images===0||V.options.sidebarAnimations===false">
+					<<checkbox "$options.blinkingEnabled" false true autocheck>> 눈 깜빡임 애니메이션
+				</label>
+			</div>
+			<div class="settingsToggleItem">
+				<label data-target="images" data-disabledif="V.options.images===0||V.options.combatImages===0">
+					<<checkbox "$options.combatAnimations" false true autocheck>> 전투 애니메이션
+				</label>
+				<span class="tooltip-anchor linkBlue" tooltip="<span class='linkBlue'>비활성화하면 전투 중 성능이 향상될 수 있습니다.</span>">(?)</span>
+			</div>
+			<<if $eyelidTEST is true>>
+				<div class="settingsToggleItem">
+					<label data-target='["options.images", "sidebaranimations"]' data-disabledif="V.options.images===0||V.options.sidebarAnimations===false">
+						<<checkbox "$options.halfClosedEnabled" false true autocheck>> 반쯤 감은 눈 그래픽 활성화
+					</label>
+				</div>
+				<div class="description">
+					흥분도가 높을 때 사이드바의 눈꺼풀을 반쯤 감은 모습으로 그립니다.
+				</div>
+			<</if>>
+		</div>
+		<hr>
+		<div>
+			<div class="settingsGrid" data-target='["images", "characterLightEnabled"]' data-disabledif="V.options.images===0||V.options.characterLightEnabled===false" oninput='Renderer.refresh(Renderer.locateModel("lighting", "sidebar"));'>
+				<div class="settingsHeader options">캐릭터 조명</div>
+				<div class="settingsToggleItem">
+					<label>
+						스포트라이트<br>
+						<<numberslider "$options.lightSpotlight" $options.lightSpotlight 0 1 0.05>>
+					</label>
+				</div>
+				<div class="settingsToggleItem">
+					<label>
+						그라데이션<br>
+						<<numberslider "$options.lightGradient" $options.lightGradient 0 1 0.05>>
+					</label>
+				</div>
+				<div class="settingsToggleItem">
+					<label>
+						발광<br>
+						<<numberslider "$options.lightGlow" $options.lightGlow 0 1 0.05>>
+					</label>
+				</div>
+				<div class="settingsToggleItem">
+					<label>
+						평면<br>
+						<<numberslider "$options.lightFlat" $options.lightFlat 0 1 0.05>>
+					</label>
+				</div>
+				<div class="settingsToggleItem">
+					<label>
+						색상 요소<br>
+						<<numberslider "$options.lightTFColor" $options.lightTFColor 0 1 0.05>>
+						<span class="description">천사/악마 변신 필요</span>
+					</label>
+				</div>
+			</div>
+			<div style="margin-left: 10px" onchange="new Wikifier(null, '<<updatesidebarimg>>')">
+				<label data-target="options.images" data-disabledif="V.options.images===0">
+					<<checkbox "$options.characterLightEnabled" false true autocheck>> 캐릭터 조명 활성화
+				</label>
+			</div>
+		</div>
+		<hr>
+		<div>
+			<div class="settingsGrid" data-target='["images", "combatImages", "combatLightEnabled"]' data-disabledif="V.options.images===0||!V.options.combatImages||V.options.characterLightEnabled===false" oninput='Renderer.refresh(Renderer.locateModel("lighting", "combat-lighting"));Renderer.refresh(Renderer.locateModel("lighting", "combat-lighting-demo"));'>
+				<div class="settingsHeader options">전투 시각 효과</div>
+				<div class="settingsToggleItem d-flex justify-content-center lighting-demo-container">
+					<div id="combatLightingDemo"><<setupCombatLightingDemo>></div>
+					<div id="combatLightingToggle" onchange="new Wikifier(null, '<<updateCombatLightingDemo #combatLightingDemo>>')">
+						<label data-target='["images", "combatImages"]' data-disabledif="V.options.images===0||!V.options.combatImages">
+							<<checkbox "$options.combatLightEnabled" false true autocheck>> 전투 조명 활성화
+						</label>
+					</div>
+				</div>
+				<div class="settingsToggleItem d-flex justify-content-center boob-demo-container">
+					<div id="closeBreastDemo"><<setupBreastjobDemo>></div>
+					<div id="closeBreastToggle" onchange="new Wikifier(null, '<<replace #closeBreastDemo>><<setupBreastjobDemo>><</replace>>')">
+						<label data-target='["images", "combatImages"]' data-disabledif="V.options.images===0||!V.options.combatImages">
+							<<checkbox "$options.topdownBreastjob" false true autocheck>> 하향식 파이즈리 활성화 (큰 가슴 전용)
+						</label>
+					</div>
+				</div>
+				<div class="settingsToggleItem">
+					<label>
+						Y 오프셋<br>
+						<<numberslider "$options.combatLightOffsetY" $options.combatLightOffsetY 0 128 1>>
+					</label>
+				</div>
+				<div class="settingsToggleItem">
+					<label>
+						스포트라이트 강도<br>
+						<<numberslider "$options.combatLightSpotlight" $options.combatLightSpotlight 0 1 0.05>>
+					</label>
+				</div>
+				<div class="settingsToggleItem">
+					<label>
+						스포트라이트 너비<br>
+						<<numberslider "$options.combatLightSpotlightX" $options.combatLightSpotlightX 0 128 1>>
+					</label>
+				</div>
+				<div class="settingsToggleItem">
+					<label>
+						스포트라이트 높이<br>
+						<<numberslider "$options.combatLightSpotlightY" $options.combatLightSpotlightY 0 48 1>>
+					</label>
+				</div>
+				<div class="settingsToggleItem">
+					<label>
+						그라데이션<br>
+						<<numberslider "$options.combatLightGradient" $options.combatLightGradient 0 1 0.05>>
+					</label>
+				</div>
+				<div class="settingsToggleItem">
+					<label>
+						발광<br>
+						<<numberslider "$options.combatLightGlow" $options.combatLightGlow 0 1 0.05>>
+					</label>
+				</div>
+				<div class="settingsToggleItem">
+					<label>
+						평면<br>
+						<<numberslider "$options.combatLightFlat" $options.combatLightFlat 0 1 0.05>>
+					</label>
+				</div>
+				<div class="settingsToggleItem">
+					<label>
+						색상 요소<br>
+						<<numberslider "$options.combatLightTFColor" $options.combatLightTFColor 0 1 0.05>>
+						<span class="description">천사/악마 변신 필요</span>
+					</label>
+				</div>
+			</div>
+		</div>
+	<<else>>
+		<br>
+		이미지 비활성화됨
+	<</if>>
+	<hr>
+	<div class="settingsGrid">
+		<div class="settingsHeader options">히스토리 깊이</div>
+		<div class="settingsToggleItem">
+			N-1 이전의 히스토리로 되돌아가기를 활성화합니다. 버그를 보고하거나 선택을 되돌릴 때 유용합니다.
+			<hr>
+			<label>
+				<<checkbox "$options.historyControls" false true autocheck>> 사이드바에 히스토리 컨트롤 표시
+			</label>
+		</div>
+		<div class="settingsToggleItem">
+			<span class="gold">메모리에 저장된 상태:</span>
+			<<numberslider "$options.maxStates" `$options.maxStates gt 20 ? 20 : $options.maxStates` 1 20 1 $ironmanmode>>
+			<br><br>
+		</div>
+	</div>
+<</widget>>
+
+<<widget "setupCombatLightingDemo">>
+	<<run Renderer.refresh(Renderer.locateModel("lighting", "combat-lighting-demo"))>>
+	<<selectmodel "lighting" "combat-lighting-demo">>
+	<<configureCombatLighting>>
+	<<if $passage isnot "Start">>
+		<<rendermodel "lighting position-absolute z-hidden">>
+		<<selectmodel "combatMainPc" "combatMainDemo">>
+		<<rendermodel "combatMainPc">>
+	<<else>>
+		<<rendermodel "lighting z-hidden">>
+	<</if>>
+<</widget>>
+
+<<widget "setupBreastjobDemo">>
+	<<run Renderer.refresh(Renderer.locateModel("combatCloseDemo", "combat-boob-demo"))>>
+	<<set T.breastjobDemo to true>>
+	<<selectmodel "combatCloseDemo" "combat-boob-demo">>
+	<<if $passage isnot "Start">>
+		<<selectmodel "combatCloseDemo" "combatCloseDemo">>
+		<<if $options.sidebarAnimations isnot false>>
+			<<animatemodel "combatCloseDemo">>
+		<<else>>
+			<<rendermodel "combatCloseDemo">>
+		<</if>>
+	<<else>>
+		<<rendermodel "combatCloseDemo z-hidden">>
+	<</if>>
+<</widget>>
+
+<<widget "updateCombatLightingDemo">>
+	<<if elementExists(_args[0])>>
+		<<replace _args[0]>><<setupCombatLightingDemo>><</replace>>
+	<</if>>
+<</widget>>
+
+<<widget "optionsadvanced">>
+	<<setupOptions>>
+	<div class="settingsGrid">
+		<div class="settingsHeader options">고급 설정</div>
+		<div class="settingsToggleItem">
+			<label>
+				<<checkbox "$options.numpad" false true autocheck>>
+				숫자 키패드 활성화
+			</label>
+			<span class="tooltip-anchor linkBlue" tooltip="<span class='linkBlue'>번역 소프트웨어 때문에 링크가 깨지는 모바일 환경에서 유용합니다.</span>">(?)</span>
+		</div>
+		<div class="settingsToggleItem">
+			<label>
+				<<checkbox "$options.useNarrowMarket" false true autocheck>>
+				시장 인벤토리의 "좁은 화면" 버전 사용
+			</label>
+		</div>
+		<div class="settingsToggleItem">
+			<label><<checkbox "$options.showDebugRenderer" false true autocheck>> 렌더러 디버거 활성화</label>
+		</div>
+		<<if $debug is 1 or $options.showCombatTools>>
+			<div class="settingsToggleItem">
+				<label><<checkbox "$options.showCombatTools" false true autocheck>> 전투 도구 활성화</label>
+			</div>
+		<</if>>
+		<div class="settingsToggleItem">
+			<label onclick="setTimeout(() => {toggleConfirmDialogUponTabClose();}, 100)">
+				<<checkbox "$options.confirmDialogUponTabClose" false true autocheck>>
+				탭을 닫을 때 확인 대화창 표시
+			</label>
+		</div>
+	</div>
+	<hr>
+	<div class="settingsGrid">
+		<div class="settingsHeader options">게임 화면 확대</div>
+		<div class="settingsToggleItemWide">
+			<span class="gold">확대 크기:</span>
+			<span class="tooltip-anchor linkBlue" tooltip-width="460" tooltip="<span class='linkBlue'>게임 요소와 텍스트의 크기를 조절할 수 있습니다.</span><br><br><span class='red'>
+						이 설정은 주의해서 사용하세요! 변경된 화면에 만족할 때만 저장하세요. 게임을 다시 로드하면 해당 저장 파일에서 마지막으로 사용된 값으로 재설정됩니다.
+						기기 및 브라우저에 따라 설정이 완전히 깨지거나 예기치 않은 결과가 발생할 수 있습니다.
+					</span>">(?)</span>
+			<br>
+			<span class="description red">일부 브라우저에서는 지원되지 않음</span>
+			<br>
+			<<numberslider "$options.zoom" $options.zoom 50 200 1>>
+			<br><br>
+			<input type="button" value="설정" onclick='zoom()'/>
+			<input type="button" value="초기화" onclick='zoom(100)'/>
+		</div>
+	</div>
+<</widget>>
+
+<<widget "optionsinformation">>
+	<div class="p-2 text-align-center">
+		<h3>관련자</h3>
+
+		<div class="m-2">
+			<span class="gold">제작자: </span><span>Vrelnir</span>
+		</div>
+		<div class="m-2">
+			<span class="gold">전직 개발자: </span><span>PurityGuy</span>
+		</div>
+	</div>
+	<div class="p-2 text-align-center">
+		<h3>유용한 자료들</h3>
+
+		<<linkinformation>>
+
+		<div class="m-2">
+			<p class="gold m-0">비공식 위키</p>
+			[[degreesoflewdity.miraheze.org|"https://degreesoflewdity.miraheze.org/wiki/Main_Page"]]
+		</div>
+	</div>
+<</widget>>
+
+<<widget "setFont">>
+	<<set _globalThemeDefaults to JSON.parse(localStorage.getItem("dolDefaultThemeSettings"))>>
+	<<if !_globalThemeDefaults>>
+		<<set _globalThemeDefaults to {}>>
+	<</if>>
+	<<removeclass "#passages" "passageMaxWidth50">>
+	<<removeclass "#passages" "passageMaxWidth55">>
+	<<removeclass "#passages" "passageMaxWidth60">>
+	<<removeclass "#passages" "passageMaxWidth65">>
+	<<removeclass "#passages" "passageMaxWidth70">>
+	<<removeclass "#passages" "passageMaxWidth75">>
+	<<if $options.passageMaxWidth>><<addclass "#passages" `"passageMaxWidth" + $options.passageMaxWidth`>><</if>>
+
+	<<removeclass "#passages" "fontSize10">>
+	<<removeclass "#passages" "fontSize12">>
+	<<removeclass "#passages" "fontSize14">>
+	<<removeclass "#passages" "fontSize16">>
+	<<removeclass "#passages" "fontSize18">>
+	<<removeclass "#passages" "fontSize20">>
+	<<if $options.passageFontSize>><<addclass "#passages" `"fontSize" + $options.passageFontSize`>><</if>>
+
+	<<removeclass "#story-caption" "fontSize12">>
+	<<removeclass "#story-caption" "fontSize14">>
+	<<removeclass "#story-caption" "fontSize16">>
+	<<removeclass "#story-caption" "fontSize18">>
+	<<removeclass "#story-caption" "fontSize20">>
+	<<if $options.sidebarFontSize>><<addclass "#story-caption" `"fontSize" + $options.sidebarFontSize`>><</if>>
+
+	<<if _args[0]>><!--For elements that are not sugarcube specific and wont be loaded when the widget is normally called-->
+		<<removeclass "#customOverlay" "fontSize10">>
+		<<removeclass "#customOverlay" "fontSize12">>
+		<<removeclass "#customOverlay" "fontSize14">>
+		<<removeclass "#customOverlay" "fontSize16">>
+		<<removeclass "#customOverlay" "fontSize18">>
+		<<removeclass "#customOverlay" "fontSize20">>
+		<<if $options.overlayFontSize>><<addclass "#customOverlay" `"fontSize" + $options.overlayFontSize`>><</if>>
+	<</if>>
+
+	<<removeclass "#passages" "lineHeight1">>
+	<<removeclass "#passages" "lineHeight125">>
+	<<removeclass "#passages" "lineHeight15">>
+	<<removeclass "#passages" "lineHeight175">>
+	<<removeclass "#passages" "lineHeight2">>
+	<<if $options.passageLineHeight>><<addclass "#passages" `"lineHeight" + $options.passageLineHeight.toString().replace('.','')`>><</if>>
+
+	<<removeclass "#story-caption" "lineHeight1">>
+	<<removeclass "#story-caption" "lineHeight125">>
+	<<removeclass "#story-caption" "lineHeight15">>
+	<<removeclass "#story-caption" "lineHeight175">>
+	<<removeclass "#story-caption" "lineHeight2">>
+	<<if $options.sidebarLineHeight>><<addclass "#story-caption" `"lineHeight" + $options.sidebarLineHeight.toString().replace('.','')`>><</if>>
+
+	<<if _args[0]>>
+		<<removeclass "#customOverlay" "lineHeight1">>
+		<<removeclass "#customOverlay" "lineHeight125">>
+		<<removeclass "#customOverlay" "lineHeight15">>
+		<<removeclass "#customOverlay" "lineHeight175">>
+		<<removeclass "#customOverlay" "lineHeight2">>
+		<<if $options.overlayLineHeight>><<addclass "#customOverlay" `"lineHeight" + $options.overlayLineHeight.toString().replace('.','')`>><</if>>
+	<</if>>
+
+	<<removeclass "html" "Arial">>
+	<<removeclass "html" "Verdana">>
+	<<removeclass "html" "TimesNewRoman">>
+	<<removeclass "html" "Georgia">>
+	<<removeclass "html" "Garamond">>
+	<<removeclass "html" "CourierNew">>
+	<<removeclass "html" "LucidaConsole">>
+	<<removeclass "html" "Monaco">>
+	<<removeclass "html" "ComicSans">>
+	<<removeclass "html" "OpenDyslexicMono">>
+	<<removeclass "html" "Lexend">>
+	<<if $options.font>><<addclass "html" $options.font>><</if>> <!--Adding to the body would remove it on changing passage-->
+<</widget>>

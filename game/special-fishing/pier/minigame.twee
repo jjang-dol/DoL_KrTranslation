@@ -1,0 +1,86 @@
+:: Fishing Pier Minigame Loop
+<<effects>>
+<<set _fishingMinigameState to fishingMinigameState()>>
+<<if _fishingMinigameState is "start">>
+	<<fishingMinigameStartText>>
+	<<fishingMinigameUi $fishingMinigame.fishDistance $fishingMinigame.fishAction $fishingMinigame.armFatigue>>
+	<br>
+	<<fishingMinigameFishStatus>>
+	<br><br>
+	<<fishingPierMinigameLinks>>
+
+<<elseif _fishingMinigameState is "caught">>
+	<<onFishCaught>>
+	<<fishingCatchFishText $fishingHookedFish>>
+	<br><br><br>
+
+	<<fishingMinigameResultUi 0 "caught">>
+	<<run fishingMinigameEnd()>>
+	<br><br>
+
+	<<include "Fishing Pier Catch">>
+<<elseif _fishingMinigameState is "fighting">>
+	<<wearActiveFishingRodProp>>
+	<<fishingMinigameTurnResult>>
+	<br>
+	<<fishingMinigameArmFatigue>>
+	<br><br>
+
+	<<debugFishingMinigameInfo>>
+	<<fishingMinigameUi $fishingMinigame.fishDistance $fishingMinigame.fishAction $fishingMinigame.armFatigue>>
+	<br>
+	<<fishingMinigameFishStatus>>
+	<br><br>
+
+	<<fishingPierMinigameLinks>>
+<<elseif _fishingMinigameState is "fishTooFar">>
+	<<if $rng gte 80>>
+		<<include "Fishing Pier Pulled In">>
+	<<else>>
+		<<include "Fishing Pier Fish Too Far">>
+	<</if>>
+<<elseif _fishingMinigameState is "lineSnapped">>
+	<<include "Fishing Pier Snapped">>
+<<else>>
+	<<error { message: "Fishing Pier Minigame Loop: unexpected outcome \"" + _fishingMinigameState + "\"" }>>
+<</if>>
+
+:: Widgets Fishing Pier Minigame [widget]
+<<widget "fishingPierMinigameLinks">>
+	<<if $fishingMinigame.fishAction === "run" or $fishingMinigame.fishAction === "thrash">>
+		<<link [[낚싯줄 감기|Fishing Pier Minigame Loop]]>>
+			<<fishingMinigameAthleticsCheck "reel">>
+			<<run fishingMinigameResolveTurn("reel")>>
+		<</link>><<fishingMinigameAthleticsCheck "reel">>
+		<br>
+		<<link [[팽팽하게 버티기|Fishing Pier Minigame Loop]]>>
+			<<fishingMinigameAthleticsCheck "hold">>
+			<<run fishingMinigameResolveTurn("hold")>>
+		<</link>><<fishingMinigameAthleticsCheck "hold">>
+	<<else>>
+		<<link [[낚싯줄 감기|Fishing Pier Minigame Loop]]>>
+			<<run fishingMinigameResolveTurn("reel")>>
+		<</link>>
+		<br>
+		<<link [[팽팽하게 버티기|Fishing Pier Minigame Loop]]>>
+			<<run fishingMinigameResolveTurn("hold")>>
+		<</link>>
+	<</if>>
+	<br>
+	<<link [[줄을 느슨하게 풀기|Fishing Pier Minigame Loop]]>>
+		<<run fishingMinigameResolveTurn("slack")>>
+	<</link>>
+	<br>
+	<<link [[줄 끊기|Fishing Pier Cut]]>><</link>>
+
+	<<if V.debug === 1>>
+		<br><br>
+		디버그
+		<br>
+		<<link [[줄 끊김|Fishing Pier Snapped]]>><</link>>
+		<br>
+		<<link [[물고기 놓침|Fishing Pier Fish Too Far]]>><</link>>
+		<br>
+		<<link [[물에 끌려감|Fishing Pier Pulled In]]>><</link>>
+	<</if>>
+<</widget>>

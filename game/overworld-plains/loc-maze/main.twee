@@ -1,0 +1,1160 @@
+:: Maze Intro Explain
+<<effects>>
+
+"뱀의 미로군요." 당신이 말한다. "누가 지었는지는 아무도 모르지만, 수 세기 전 도둑들이 은신처로 사용했다고 해요. 덫을 많이 남겨뒀다고들 하죠. 위험하다고 알려져 있고, 현존하는 기억으로는 아무도 중심부까지 가본 적이 없다고 해요."
+<br><br>
+<<person>>【은는】 당신이 말하는 동안 눈살을 찌푸리며 한 걸음 물러선다. "당신처럼 어린 사람이 알 거라고는 생각 못 했는데, 그래, 요점은 파악했군."
+<br><br>
+<<He>>【은는】 <<his>> 삽을 들어 올린다. "그냥 이야기가 아니야. 위험해." <<he>>【이가】 잠시 멈춘다. "그리고 내가 뭔가를 봤어. 밤에 기어 들어왔다 나가는 걸. 웃어도 좋지만, 그런 공포는 느껴본 적이 없어."
+<br><br>
+
+<<He>>【은는】 길을 무시하고 언덕을 내려가 주변 나무들 속으로 사라진다.
+<br><br>
+
+<span class="gold">이제 농장에서 미로에 접근할 수 있습니다.</span>
+<br><br>
+
+<<link [[다음|Farmland]]>><<set $eventskip to 1>><<endevent>><</link>>
+<br>
+
+:: Maze Intro Guess
+<<effects>>
+
+"오래된 성인가요?" 당신이 말한다. "황야에 있는 유명한 성처럼요."
+<br><br>
+
+<<person>>【은는】 <<his>> 고개를 젓는다. "요즘 학교에서는 아무것도 안 가르치는군. 뱀의 미로야. 수 세기 전 도둑들이 은신처로 사용했고, 여기에 덫을 남겨뒀지. 이야기가 사실이라면 전리품도 말이야. 아무도 중심부까지 가서 확인해 본 적은 없지만."
+<br><br>
+
+<<He>>【은는】 <<his>> 삽을 들어 올렸다가, 눈살을 찌푸린다. "도전하라는 뜻은 아니었어. 위험해." <<he>>【이가】 잠시 멈춘다. "그리고 내가 뭔가를 봤어. 밤에 기어 들어왔다 나가는 걸. 웃어도 좋지만, 그런 공포는 느껴본 적이 없어."
+<br><br>
+
+<<He>>【은는】 길을 무시하고 언덕을 내려가 주변 나무들 속으로 사라진다.
+<br><br>
+
+<span class="gold">이제 농장에서 미로에 접근할 수 있습니다.</span>
+<br><br>
+
+<<link [[다음|Farmland]]>><<set $eventskip to 1>><<endevent>><</link>>
+<br>
+
+:: Maze Intro Shake
+<<effects>>
+
+당신은 고개를 젓는다.
+<br><br>
+
+<<person>>【이가】 웃는다. "요즘 학교에서는 아무것도 안 가르치는군. 뱀의 미로야. 수 세기 전 도둑들이 은신처로 사용했고, 여기에 덫을 남겨뒀지. 이야기가 사실이라면 전리품도 말이야. 아무도 중심부까지 가서 확인해 본 적은 없지만."
+<br><br>
+
+<<He>>【은는】 <<his>> 삽을 들어 올렸다가, 눈살을 찌푸린다. "도전하라는 뜻은 아니었어. 위험해." <<he>>【이가】 잠시 멈춘다. "그리고 내가 뭔가를 봤어. 밤에 기어 들어왔다 나가는 걸. 웃어도 좋지만, 그런 공포는 느껴본 적이 없어."
+<br><br>
+
+<<He>>【은는】 길을 무시하고 언덕을 내려가 주변 나무들 속으로 사라진다.
+<br><br>
+
+<span class="gold">이제 농장에서 미로에 접근할 수 있습니다.</span>
+<br><br>
+
+<<link [[다음|Farmland]]>><<set $eventskip to 1>><<endevent>><</link>>
+<br>
+
+:: Maze Intro Key
+<<effects>>
+
+<<if $farmland_maze_found is true>>
+	당신은 변태의 다락방에서 찾은 열쇠에 맞는 문을 발견한다. 뱀의 미로로 이어진다. 당신 같은 기술을 가진 사람에게 열쇠는 필요 없지만, 편리하긴 하다.<<lstress>><<stress -6>>
+	<br><br>
+	아마도 미로 안 어딘가에서 이 열쇠를 사용할 수 있을 것이다.
+	<br><br>
+
+	<<link [[다음|Farmland]]>><</link>>
+	<br>
+<<else>>
+	<<set $farmland_maze_found to true>>
+	변태가 알려준 방향을 따라가니, 높은 돌담에 문이 하나 있고 그 위 돌에는 뱀이 새겨져 있다. 그 너머에는 높은 천장이 있고 구멍이 가득하다. 깨진 타일이 바닥을 덮고 있다. 열쇠가 맞는다.
+	<br><br>
+	<<generate1>><<person1>>
+	"이곳을 찾는 사람은 많지 않은데." <<personssimple>> 목소리가 들린다. 돌아보니, 범인이 삽에 기대어 서 있다. "이게 뭔지 알아?"
+	<br><br>
+
+	<<if $historytrait gte 4>>
+		<span class="green">윈터가 그것에 대해 지루하게 설명하던 것이 기억나는 것 같다.</span>
+		<br><br>
+		<<link [[아는 것을 말한다|Maze Intro Explain]]>><</link>>
+		<br>
+	<<else>>
+		<<link [[추측한다|Maze Intro Guess]]>><</link>>
+		<br>
+	<</if>>
+	<<link [[고개를 젓는다|Maze Intro Shake]]>><</link>>
+	<br>
+<</if>>
+
+:: Maze Turn
+<<effects>>
+
+<<if $willpowerSuccess>>
+	<span class="green">당신은 돌아보고 싶은 충동을 참는다.</span>
+	<<if $monster is 1>>
+		쉬익 하는 웃음소리가 들리더니, 그 존재가 사라진다.
+		<br><br>
+	<<else>>
+		웃음소리 같은 쉬익 소리가 들리더니, 그 존재가 사라진다.
+		<br><br>
+	<</if>>
+
+	<<link [[다음|$maze_passage]]>><<set $eventskip to 1>><</link>>
+	<br>
+<<else>>
+	심장이 더 빨리 뛴다. 등 뒤에 무언가가 있고, 점점 가까워지고 있다. 공포가 당신을 덮친다. <span class="red">당신은 위협에 맞서기 위해 돌아선다.</span>
+	<br><br>
+	<<if $monster is 1>>
+		날카로운 노란 눈 한 쌍이 당신을 맞이하며, 당신의 시선을 사로잡는다. <span class="red">움직일 수 없다!</span> 눈동자조차 움직이지 않지만, 주변 시야로 <<if $NPCList[0].gender is "m">>남자<<else>>여자<</if>>의 벌거벗은 가슴이 보인다. <<bhis>> 피부는 허리에서 비늘로 변하고, 다리 대신 뱀의 꼬리가 있다.
+		<br><br>
+		"경고했잖아." <<bhe>>【이가】 말한다. 갈라진 혀가 <<bhis>> 입에서 튀어나와 당신 앞의 공기를 맛본다. "이제 널 어떻게 할까?" <<bHe>>【은는】 당신 주위를 미끄러지듯 돌며, 몸통은 시야 밖으로 사라진다. 당신은 여전히 움직일 수 없다. <<bHe>>【은는】 당신의 반대편에 다시 나타나 당신의 몸을 살피고는, 다시 한번 당신 주위를 미끄러지듯 돈다. 그리고 또다시. <<bHe>>【은는】 당신을 휘감으며, 매번 더 조여온다.
+		<br><br>
+
+	<<else>>
+		한 쌍의 노란 눈이 당신을 맞이하며, 당신의 시선을 사로잡는다. <span class="red">움직일 수 없다!</span> 눈동자조차 움직이지 않는다. 거대한 뱀이 당신을 노려보고 있고, 그 긴 몸은 시야 밖으로 뻗어 있다.
+		<br><br>
+		<<bHe>>【은는】 당신 주위를 미끄러지듯 돌며, 몸통은 시야 밖으로 사라진다. 당신은 여전히 움직일 수 없다. <<bHe>>【은는】 당신의 반대편에 다시 나타나 당신의 몸을 살피고는, 다시 한번 당신 주위를 미끄러지듯 돈다. 그리고 또다시. <<bHe>>【은는】 당신을 휘감으며, 매번 더 조여온다.
+		<br><br>
+	<</if>>
+	<<link [[다음|Maze Petrified]]>><</link>>
+	<br>
+<</if>>
+
+:: Maze Petrified
+<<effects>>
+
+<<if $maze_protection is true>>
+	<<bHis>> 비늘이 양동이 밑에서 찾은 약병을 건드린다. 안의 액체가 격렬하게 끓어오르며 용기가 떨린다. 코르크 마개가 공중으로 날아가고, 파란 증기가 흘러나온다.
+	<br><br>
+	<<if $monster is 1>>
+		쉬익 소리와 함께, 생물의 코일이 느슨해진다. "그거 어디서 찾았지?" <<bhe>>【이가】 묻는다. 당신은 대답할 수 없지만, <<bhe>>【은는】 증기가 <<bhis>> 얼굴에 닿을 때까지 기다릴 기세다. <<bHe>>【은는】 <<bhis>> 입을 막고 황급히 미끄러져 달아난다.
+		<br><br>
+
+		당신은 균형을 잃고 넘어지지만, 이끼 뭉치가 당신을 받쳐준다.
+		<br><br>
+	<<else>>
+		쉬익 소리와 함께, 뱀의 코일이 느슨해지고, 황급히 미끄러져 달아난다. 당신은 균형을 잃고 넘어지지만, 이끼 뭉치가 당신을 받쳐준다.
+		<br><br>
+	<</if>>
+
+	증기가 땅 위를 맴돈다. 블루베리 냄새가 난다. 움직임이 돌아오면서 근육이 꿈틀거리고, 당신은 일어선다.
+	<br><br>
+
+	<<link [[다음|$maze_passage]]>><<endevent>><<set $eventskip to 1>><</link>>
+	<br>
+<<else>>
+	<<pass 10>>
+	<<if $monster is 1>>
+		그 생물은 당신을 자랑스럽게 한번 쳐다보더니, 꼬리로 당신을 감싼 채 미로를 미끄러져 나아간다. 당신은 덜컹거리며 다른 석상들의 모습과 열린 하늘을 언뜻 본다.
+		<br><br>
+		<<bHe>>【은는】 속도를 높인다. "널 갖고 싶은 유혹이 들지만," <<bhe>>【이가】 말한다. "너에게서 위험한 냄새가 나." <<bHe>>【은는】 근처 나무들 속으로 계속 들어가, 몇 분 후 길가에 나타난다.
+		<<pass 3>>
+		<br><br>
+		<<bHe>>【은는】 당신을 길가에 세워두고, 뒤로 미끄러져 당신을 관찰한다. <<bHe>>【은는】 당신을 돌려보고, 관찰하고, 마치 자세를 잡아주듯 다시 돌려본다.
+		<br><br>
+		"인간들이 좋은 집을 줄 거야." <<bHis>> 머리가 자동차 엔진 소리가 나는 방향으로 휙 돌아간다. <<bHe>>【은는】 당신을 마지막으로 한번 보고, 나무들 속으로 다시 미끄러져 들어간다.
+		<br><br>
+
+	<<else>>
+		뱀은 꼬리로 당신을 감싼 채 미로를 미끄러져 나아간다. 당신은 덜컹거리며 다른 석상들의 모습과 열린 하늘을 언뜻 본다.
+		<br><br>
+
+		<<bHe>>【은는】 속도를 높여 근처 나무들 속으로 계속 들어가, 몇 분 후 길가에 나타난다.
+		<<pass 3>>
+		<br><br>
+		<<bHe>>【은는】 당신을 길가에 세워두고, 뒤로 미끄러져 당신을 관찰한다. <<bHe>>【은는】 당신을 돌려보고, 관찰하고, 마치 자세를 잡아주듯 다시 돌려본다.
+		<br><br>
+		<<bHis>> 머리가 자동차 엔진 소리가 나는 방향으로 휙 돌아간다. <<bHe>>【은는】 당신을 마지막으로 한번 보고, 나무들 속으로 다시 미끄러져 들어간다.
+		<br><br>
+	<</if>>
+<</if>>
+
+<<link [[다음|Petrified]]>><<endevent>><<maze_end>><</link>>
+<br>
+
+:: Maze Entrance
+<<set $outside to 0>><<effects>>
+
+당신은 뱀의 미로로 들어간다. 담쟁이덩굴로 뒤덮인 높은 벽이 당신을 둘러싸고, 깨진 타일이 땅에 흩어져 있다. 이곳의 가치 있는 것들은 오래전에 모두 가져갔겠지만, 아마도 더 깊은 곳에는 무언가 남아있을지도 모른다.
+<br><br>
+복도에서 왼쪽과 오른쪽으로 갈라지는 갈림길에 다다른다. 앞에는 이상한 자물쇠로 잠긴 문도 있다. 그 옆 벽에는 붉은색으로 쓰인 작은 메시지가 있다.
+<br><br>
+<span class="red">뒤돌아보지 마시오.</span>
+<br><br>
+<<if $weekly.maze.bucket is undefined>>
+	<<if $farmland_maze_key gte 2>>
+		<<icon "maze-key.png">>
+	<<else>>
+		<<icon "maze-lock.png">>
+	<</if>>
+	<<link [[문 열기|Maze Lock]]>><</link>>
+	<br>
+<</if>>
+<<mazeIcon "left">><<link [[왼쪽으로 간다 (0:01)|Maze 0]]>><<pass 1>><</link>>
+<br>
+<<mazeIcon "right">><<link [[오른쪽으로 간다 (0:01)|Maze 1]]>><<pass 1>><</link>>
+<br>
+
+:: Maze Lock
+<<effects>>
+
+<<if $farmland_maze_key gte 2 and currentSkillValue('skulduggery') gte 600>>
+	당신은 도무스 가 다락방에서 찾은 열쇠를 넣는다. 맞지만, 절반만 돌아간다. 장치 내부를 들여다본다. 시간이 지나면서 내부가 변형되었다.
+	<br><br>
+	벽에서 담쟁이덩굴을 좀 떼어내 열쇠 주위에 감아 변형된 부분을 보완한다. 다시 시도한다. <span class="green">딸깍하며 열린다.</span>
+	<br><br>
+
+	<<link [[다음|Maze Bucket]]>><</link>>
+	<br>
+<<elseif $farmland_maze_key gte 2>>
+	당신은 도무스 가 다락방에서 찾은 열쇠를 넣는다. 맞지만, 절반만 돌아간다. 장치 내부를 들여다보지만, 문제를 파악할 수 없다. 이걸 열려면 더 많은 속임수 경험이 필요할 것이다.
+	<br><br>
+	<<mazeIcon "left">><<link [[왼쪽으로 간다 (0:01)|Maze 0]]>><<pass 1>><</link>>
+	<br>
+	<<mazeIcon "right">><<link [[오른쪽으로 간다 (0:01)|Maze 1]]>><<pass 1>><</link>>
+	<br>
+<<elseif currentSkillValue('skulduggery') gte 600>>
+	자물쇠를 만지작거린다. 부식이 상당히 진행된 상태다. 밀어보지만, 재질이 너무 튼튼하다. 새것이었을 때는 딸 수 있었을 텐데. 열쇠가 필요하지만, 지금쯤이면 멀리 있을 수도 있다.
+	<br><br>
+	<<mazeIcon "left">><<link [[왼쪽으로 간다 (0:01)|Maze 0]]>><<pass 1>><</link>>
+	<br>
+	<<mazeIcon "right">><<link [[오른쪽으로 간다 (0:01)|Maze 1]]>><<pass 1>><</link>>
+	<br>
+<<else>>
+	자물쇠를 부수려고 문을 흔들어보지만, 소용없다. 이걸 열려면 속임수 경험이 필요하고, 어쩌면 그 이상이 필요할 것이다.
+	<br><br>
+	<<mazeIcon "left">><<link [[왼쪽으로 간다 (0:01)|Maze 0]]>><<pass 1>><</link>>
+	<br>
+	<<mazeIcon "right">><<link [[오른쪽으로 간다 (0:01)|Maze 1]]>><<pass 1>><</link>>
+	<br>
+<</if>>
+
+:: Maze Bucket
+<<effects>>
+
+문 너머에는 작은 안뜰이 있다. 적어도 지붕이 있었던 흔적은 없다. 구석, 고대 떡갈나무 밑동에 뒤집힌 양동이가 놓여 있다.
+<br><br>
+
+<<antiqueicon "bucket">><<link [[양동이 가져가기|Maze Bucket 2]]>><<set $antiquemoney += 200>><<museumAntiqueStatus "antiquebucket" "found">><<set $weekly.maze.bucket to 1>><</link>>
+<br>
+<<mazeIcon "leave-left">><<link [[나가서 입구 왼쪽으로 간다 (0:01)|Maze 0]]>><<pass 1>><</link>>
+<br>
+<<mazeIcon "leave-right">><<link [[나가서 입구 오른쪽으로 간다 (0:01)|Maze 1]]>><<pass 1>><</link>>
+<br>
+
+:: Maze Bucket 2
+<<effects>>
+
+<<if $hallucinations gte 2 and $settings.tentaclesEnabled>>
+	양동이를 들어 올린다. <span class="pink">꿈틀거리는 촉수 덩어리가 나타난다.</span> 그것들이 당신을 감싼다.
+	<br><br>
+
+	<<link [[다음|Maze Bucket Tentacles]]>><<set $molestationstart to 1>><</link>>
+	<br>
+<<else>>
+	양동이를 들어 올린다. 작고 어두운 형체가 밑에서 튀어나와 풀 속으로 사라진다.<<gstress>><<stress 6>>
+	<br><br>
+	양동이를 살펴본다. 고대 유물처럼 보인다. 손잡이와 내부는 심하게 사용된 흔적이 있다. 이렇게 오래 살아남았다는 게 놀랍다. 아마 박물관에서 관심을 가질 것이다.
+	<br><br>
+
+	입구로 돌아간다.
+	<br><br>
+
+	<<mazeIcon "left">><<link [[왼쪽으로 간다 (0:01)|Maze 0]]>><<pass 1>><</link>>
+	<br>
+	<<mazeIcon "right">><<link [[오른쪽으로 간다 (0:01)|Maze 1]]>><<pass 1>><</link>>
+	<br>
+<</if>>
+
+
+:: Maze Bucket Tentacles
+<<effects>>
+
+
+<<if $molestationstart is 1>>
+	<<set $molestationstart to 0>>
+	<<set $combat to 1>>
+	<<set $enemytype to "tentacles">>
+	<<molested>>
+	<<controlloss>>
+
+	<<tentaclestart 5 15>>
+
+<</if>>
+
+<<statetentacles>>
+
+
+<<effects>>
+<<effectstentacles>>
+<<tentacles>>
+<<actionstentacles>>
+
+<<if $tentacles.active lte ($tentacles.max / 2)>>
+	<span id="next"><<link [[다음|Maze Bucket Tentacles Finish]]>><</link>></span><<nexttext>>
+<<else>>
+	<span id="next"><<link [[다음|Maze Bucket Tentacles]]>><</link>></span><<nexttext>>
+<</if>>
+
+:: Maze Bucket Tentacles Finish
+<<effects>>
+
+촉수들이 양동이 안으로 움츠러들더니, 작은 생물이 나타나 키 큰 풀 속으로 쏜살같이 사라진다.
+<br><br>
+
+<<tearful>> 당신은 양동이를 살펴본다. 고대 유물처럼 보인다. 손잡이와 내부는 심하게 사용된 흔적이 있다. 이렇게 오래 살아남았다는 게 놀랍다. 다른 생물의 흔적은 없다. 아마 박물관에서 관심을 가질 것이다.
+<br><br>
+
+<<clotheson>>
+<<endcombat>>
+<<loadNPC 0 "basilisk">>
+
+입구로 돌아간다.
+<br><br>
+
+<<mazeIcon "left">><<link [[왼쪽으로 간다 (0:01)|Maze 0]]>><<pass 1>><</link>>
+<br>
+<<mazeIcon "right">><<link [[오른쪽으로 간다 (0:01)|Maze 1]]>><<pass 1>><</link>>
+<br>
+<br>
+
+:: Maze 0
+<<effects>>
+
+왼쪽으로 돌아, 미로 같은 복도를 계속 통과한다.
+<br><br>
+
+양쪽에 벽감이 있고, 나체의 조각상들이 놓여 있다. 그들의 <<if $hallucinations gte 2>>사실적인 <</if>>얼굴은 공포로 일그러져 있다.
+<br><br>
+
+바닥이 미끄러워진다. 벽은 얇고 미끈한 점액으로 덮여 있다. 또 다른 갈림길에 다다른다.
+<br><br>
+
+<<mazeIcon "left">><<link [[왼쪽으로 가기 (0:01)|Maze 0 0]]>><<pass 1>><</link>>
+<br>
+<<mazeIcon "right">><<link [[오른쪽으로 가기 (0:01)|Maze 0 1]]>><<pass 1>><</link>>
+<br>
+
+
+:: Maze 1
+<<effects>>
+
+오른쪽으로 돌아, 미로 같은 복도를 계속 통과한다. 벽에 구멍들이 나타나는데, 마치 벽돌이 빠진 것 같다. 만약 그렇다면, 그 벽돌들은 어디에도 보이지 않는다.
+<br><br>
+구멍 중 하나를 들여다본다. 여러 쌍의 노란 눈이 당신을 쳐다본다. 쉬익 소리가 들린다.<<gstress>><<stress 6>>
+<br><br>
+
+복도가 앞에서 갈라진다.
+<br><br>
+
+<<mazeIcon "left">><<link [[왼쪽으로 가기 (0:01)|Maze 1 0]]>><<pass 1>><</link>>
+<br>
+<<mazeIcon "right">><<link [[오른쪽으로 가기 (0:01)|Maze 1 1]]>><<pass 1>><</link>>
+<br>
+
+:: Maze 0 0
+<<effects>>
+
+왼쪽으로 돈다. 두꺼워지는 점액 위를 느리고 꾸준한 발걸음으로 걷는다.
+<br><br>
+
+<<if $eventskip isnot 1>>
+	<<maze_basilisk>>
+<<else>>
+	천장에 틈이 있다. 그 틈으로 슬라임이 스며 나와, 뚝뚝 떨어져 바닥을 적신다.
+	<br><br>
+	<<if $hallucinations gte 2 and $settings.slimesEnabled>>
+		<<if $rng gte 51>>
+			점액 한 방울이 당신의 어깨에 떨어진다. 고개를 들어보니, 천장에서 슬라임이 떨어지는 것이 보인다.
+
+			<<dancedifficulty 1 1000 true>>
+			<<if $danceSuccess>>
+				<span class="green">당신은 옆으로 튀어,</span> 떨어지는 것을 피한다. 두 마리가 더 뒤따라 떨어져 꿈틀거리며 다가온다.
+				<br><br>
+			<<else>>
+				<span class="red">당신이 피하기도 전에 그것이 가슴에 떨어진다.</span> 당신을 뒤로 넘어뜨린다. 두 마리가 더 뒤따라 떨어져 꿈틀거리며 다가온다.
+				<br><br>
+			<</if>>
+		<<else>>
+			슬라임 한 방울이 당신 앞 바닥에 떨어진다. 세 마리의 슬라임이 천장에서 떨어져 당신을 향해 다가온다.
+			<br><br>
+		<</if>>
+		<<link [[다음|Maze 0 0 Slime]]>><<set $struggle_start to 1>><</link>>
+		<br>
+	<<else>>
+		<<if $rng gte 51>>
+			슬라임 한 방울이 당신의 어깨에 떨어진다. 고개를 들어보니, 천장에서 커다란 점액 덩어리가 떨어지는 것이 보인다.
+			<<dancedifficulty 1 1000 true>>
+			<<if $danceSuccess>>
+				<span class="green">당신은 옆으로 튀어,</span> 바닥에 철퍽하고 떨어지는 것을 피한다. 복도를 계속 통과한다.<<outergoo>>
+				<br><br>
+			<<else>>
+				<span class="red">당신이 피하기도 전에 그것이 당신 위로 떨어진다.</span> 당신을 뒤로 넘어뜨리고 끈적한 액체로 뒤덮는다.
+				<br><br>
+				간신히 바닥에서 몸을 떼고 계속 나아간다.
+				<br><br>
+			<</if>>
+		<<else>>
+			슬라임 한 방울이 앞 바닥에 떨어진다. 고개를 들어보니, 커다란 덩어리가 그 뒤를 따라 떨어진다. 당신은 그것을 피해 복도를 계속 통과한다.
+			<br><br>
+		<</if>>
+		<<mazeIcon "left">><<link [[왼쪽으로 가기 (0:01)|Maze 0 0 0]]>><<pass 1>><</link>>
+		<br>
+		<<mazeIcon "right">><<link [[오른쪽으로 간다 (0:01)|Maze 0 0 1]]>><<pass 1>><</link>>
+		<br>
+	<</if>>
+<</if>>
+<<set $eventskip to 0>>
+
+:: Maze 0 0 Slime
+<<effects>>
+
+<<if $struggle_start is 1>>
+	<<struggle_init>>
+	<<set $struggle.creature to "slime">>
+	<<struggle_creatures 3 2>>/*How many creatures will be involved, and their health.*/
+	<<set $combat to 1>>
+	<<controlloss>>
+	<<violence 1>>
+	<<molested>>
+	<<set $struggle.chest.creature to "slime">><<set $chestuse to "struggle">><<set $cheststate to "struggle">><<set $struggle.enemy[0].location to "chest">>
+	<<unset $struggle_start>>
+<</if>>
+
+<<struggle>>
+
+
+
+<<if $struggle.done gte $struggle.number>>
+	<span id="next"><<link [[다음|Maze 0 0 Slime End]]>><</link>></span>
+	<br>
+<<else>>
+	<span id="next"><<link [[다음|Maze 0 0 Slime]]>><</link>></span>
+	<br>
+<</if>>
+
+:: Maze 0 0 Slime End
+<<effects>>
+
+슬라임들이 땅의 틈새로 꿈틀거리며 사라진다. <<tearful>> 당신은 일어선다.
+<br><br>
+
+<<clotheson>>
+<<endcombat>>
+<<loadNPC 0 "basilisk">>
+
+<<mazeIcon "left">><<link [[왼쪽으로 가기 (0:01)|Maze 0 0 0]]>><<pass 1>><</link>>
+<br>
+<<mazeIcon "right">><<link [[오른쪽으로 간다 (0:01)|Maze 0 0 1]]>><<pass 1>><</link>>
+<br>
+
+
+:: Maze 0 1
+<<effects>>
+
+오른쪽으로 돈다. 두꺼워지는 점액 위에서 발을 헛디디지 않도록 조심한다.
+<br><br>
+<<if $eventskip isnot 1>>
+	<<maze_basilisk>>
+<<else>>
+	앞 복도가 어둠으로 가득 차 있다. 천장이 다른 곳보다 상태가 좋아 빛이 들어오지 않는 것일 수도 있지만, 잘 보이지 않아 알 수 없다.
+	<br><br>
+
+	<<link [[조심스럽게 계속하기 (0:30)|Maze 0 1 Care]]>><<pass 30>><</link>>
+	<br>
+	<<link [[서둘러 통과하기 (0:01)|Maze 0 1 Rush]]>><<pass 1>><</link>>
+	<br>
+
+<</if>>
+<<set $eventskip to 0>>
+
+:: Maze 0 1 Care
+<<effects>>
+
+당신은 잠시 어둠 속을 응시하며 눈이 적응하기를 기다린다. 복도는 약간 미끄러운 것을 제외하면 평범하게 이어지는 것 같지만, 저 앞 바닥에 더 어두운 부분이 보인다.
+<br><br>
+
+발로 툭 건드려 본다. 부서진 바닥재 틈새로 난 구멍이다. 구멍을 건너뛰고 차분하게 발걸음을 옮기며 나아간다.
+<br><br>
+
+앞쪽에 빛이 비치며 또 다른 갈림길이 나타난다.
+<br><br>
+
+<<mazeIcon "left">><<link [[왼쪽으로 간다 (0:01)|Maze 0 1 0]]>><<pass 1>><</link>>
+<br>
+<<mazeIcon "right">><<link [[오른쪽으로 간다 (0:01)|Maze 0 1 1]]>><<pass 1>><</link>>
+<br>
+
+
+:: Maze 0 1 Rush
+<<effects>>
+
+미끄러운 바닥을 가로질러 앞으로 나아간다. 눈은 곧 어둠에 익숙해질 것이다.
+<br><br>
+
+<<if $rng gte 51>>
+	당신은 문제없이 미끄러져 나아가다, 저 앞에 빛이 보이고 또 다른 갈림길이 나타나는 것을 본다.
+	<br><br>
+
+	<<mazeIcon "left">><<link [[왼쪽으로 간다 (0:01)|Maze 0 1 0]]>><<pass 1>><</link>>
+	<br>
+	<<mazeIcon "right">><<link [[오른쪽으로 간다 (0:01)|Maze 0 1 1]]>><<pass 1>><</link>>
+	<br>
+<<else>>
+	몇 걸음 뒤, <span class="red">당신의 발이 바닥을 딛지 못한다.</span> 떨어지면서 위장이 철렁하고, 당신은 팔을 뻗는다. 손가락 끝으로 부서지고 삐걱거리는 바닥 널빤지를 붙잡는 동안, 당신의 몸은 심연 속으로 매달린다.
+	<br><br>
+
+	<<link [[기어오른다!|Maze 0 1 Climb]]>><</link>><<athleticsdifficulty 1 1000>>
+	<br>
+	<<link [[떨어진다|Maze 0 1 Fall]]>><</link>>
+	<br>
+
+<</if>>
+
+
+:: Maze 0 1 Climb
+<<effects>>
+
+<<if $athleticsSuccess>>
+	<span class="green">널빤지가 부서지기 전에 몸을 끌어올려 안전한 곳으로 올라온다.</span> 그리고 어둠 속을 계속 나아간다. 모퉁이를 돌자 멀리서 빛이 보이고, 또 다른 갈림길이 나타난다.
+	<br><br>
+	<<mazeIcon "left">><<link [[왼쪽으로 간다 (0:01)|Maze 0 1 0]]>><<pass 1>><</link>>
+	<br>
+	<<mazeIcon "right">><<link [[오른쪽으로 간다 (0:01)|Maze 0 1 1]]>><<pass 1>><</link>>
+	<br>
+<<else>>
+	몸을 들어 올리려 하지만, <span class="red">바닥 널빤지가 부서진다.</span> 당신은 어둠 속으로 떨어진다.
+	<br><br>
+
+	<<link [[다음|Farmland Dungeon Wake]]>><<maze_end>><</link>>
+	<br>
+<</if>>
+
+:: Maze 0 1 Fall
+<<effects>>
+
+손을 놓고, 어둠 속으로 떨어진다.
+<br><br>
+
+<<link [[다음|Farmland Dungeon Wake]]>><<maze_end>><</link>>
+<br>
+
+:: Maze 1 0
+<<effects>>
+
+왼쪽으로 돌아 복도를 계속 나아간다.
+<br><br>
+
+<<if $eventskip isnot 1>>
+	<<maze_basilisk>>
+<<else>>
+	<<if $settings.bestialityEnabled>>
+		벽이 안쪽으로 기울어져 복도가 너무 좁아져서, 몸을 옆으로 돌려 비집고 들어가야 한다. 절반쯤 갔을 때 양쪽에서 뱀들이 나타난다. 뱀들이 당신의 가슴을 감싸고 <<breasts>> 부분을 조인다.<<garousal>><<arousal 600>><<gstress>><<stress 6>>
+		<br><br>
+
+		<<link [[빠르게 움직인다|Maze 1 0 Speed]]>><</link>>
+		<br>
+		<<link [[뱀들을 후려쳐 쫓아낸다|Maze 1 0 Whack]]>><</link>>
+		<br>
+	<<else>>
+		벽이 안쪽으로 기울어져 복도가 너무 좁아져서, 몸을 옆으로 돌려 비집고 들어가야 한다. 절반쯤 갔을 때 양쪽에서 손들이 나타난다. 손들이 당신의 <<breasts>> 부분을 더듬고 조인다.<<garousal>><<arousal 600>><<gstress>><<stress 6>>
+		<br><br>
+
+		<<link [[빠르게 움직인다|Maze 1 0 Speed]]>><</link>>
+		<br>
+		<<link [[손들을 후려쳐 쫓아낸다|Maze 1 0 Whack]]>><</link>>
+		<br>
+	<</if>>
+<</if>>
+<<set $eventskip to 0>>
+
+:: Maze 1 0 Speed
+<<effects>>
+
+<<if $settings.bestialityEnabled>>
+	뱀들이 계속해서 당신을 더듬는 동안 최대한 빨리 움직인다.
+	<<if $exposed lte 1>>
+		그것들이 당신의 옷을 잡고 팔다리를 구속하려 하지만, 당신은 뿌리칠 수 있다.
+	<<else>>
+		그것들이 당신의 팔다리를 감싸 구속하려 하지만, 당신은 뿌리칠 수 있다.
+	<</if>>
+	반대편으로 빠져나온다.<<ggarousal>><<arousal 1200>>
+<<else>>
+	손들이 계속해서 당신을 더듬는 동안 최대한 빨리 움직인다.
+	<<if $exposed lte 1>>
+		그것들이 당신의 옷을 잡고 팔다리를 구속하려 하지만, 당신은 뿌리칠 수 있다.
+	<<else>>
+		그것들이 당신의 팔다리를 잡고 구속하려 하지만, 당신은 뿌리칠 수 있다.
+	<</if>>
+	반대편으로 빠져나온다.<<ggarousal>><<arousal 1200>>
+<</if>>
+<<set $worn.lower.integrity -= 10>>
+<<set $worn.upper.integrity -= 10>>
+<<set $worn.under_lower.integrity -= 10>>
+<<set $worn.under_upper.integrity -= 10>>
+<br><br>
+
+
+<<mazeIcon "left">><<link [[왼쪽으로 간다 (0:01)|Maze 1 0 0]]>><<pass 1>><</link>>
+<br>
+<<mazeIcon "right">><<link [[오른쪽으로 간다 (0:01)|Maze 1 0 1]]>><<pass 1>><</link>>
+<br>
+
+:: Maze 1 0 Whack
+<<effects>>
+
+<<if $settings.bestialityEnabled>>
+	이렇게 좁은 공간에서 움직이기는 어렵지만, 당신은 해치에서 나오는 뱀들을 후려쳐 쫓아낸다. 수가 너무 많아 몇 마리가 빠져나와 당신 주위를 휘감지만, 당신은 그것들을 쳐내고 반대편으로 빠져나온다.<<garousal>><<arousal 600>><<gpain>><<pain 4>>
+	<br><br>
+<<else>>
+	이렇게 좁은 공간에서 움직이기는 어렵지만, 당신은 해치에서 나오는 손들을 후려쳐 쫓아낸다. 수가 너무 많아 몇 개가 빠져나와 당신을 더듬고 꼬집지만, 당신은 그것들을 쳐내고 반대편으로 빠져나온다.<<garousal>><<arousal 600>><<gpain>><<pain 4>>
+	<br><br>
+<</if>>
+
+<<mazeIcon "left">><<link [[왼쪽으로 간다 (0:01)|Maze 1 0 0]]>><<pass 1>><</link>>
+<br>
+<<mazeIcon "right">><<link [[오른쪽으로 간다 (0:01)|Maze 1 0 1]]>><<pass 1>><</link>>
+<br>
+
+:: Maze 1 1
+<<effects>>오른쪽으로 돌아 미로 같은 복도를 계속 나아간다.
+<br><br>
+<<if $eventskip isnot 1>>
+	<<maze_basilisk>>
+<<else>>
+	앞쪽 복도가 물에 잠겨 있고, 물의 무게 때문인지 기울어져 있다. 헤엄쳐서 건너야 할 것이다.
+	<br><br>
+	<<if $worn.upper.name isnot "naked" or $worn.lower.name isnot "naked" or $worn.under_upper.name isnot "naked" or $worn.under_lower.name isnot "naked">>
+		<<link [[옷을 벗어 머리 위로 들고 간다|Maze 1 1 Strip]]>><<clothesstrip>><</link>><<swimmingdifficulty 1 1000>>
+		<br>
+	<</if>>
+	<<link [[헤엄쳐 건넌다|Maze 1 1 Swim]]>><</link>>
+	<br>
+<</if>>
+<<set $eventskip to 0>>
+
+:: Maze 1 1 Swim
+차가운 물속으로 걸어 들어가 몸을 밀어내고 헤엄친다.
+<br><br>
+
+<<water>><<waterbr 2>><<effects>>
+
+<<if $settings.bestialityEnabled>>
+	석조 구조물의 구멍에서 뱀들이 나타나지만, 당신은 그것들을 따돌릴 수 있다.
+	<br><br>
+<<else>>
+	물 아래에서 해치가 열리고 손들이 뻗어 나와 당신을 더듬지만, 당신은 그것들의 손아귀에서 벗어날 수 있다.
+	<br><br>
+<</if>>
+
+<<if $wolfgirl gte 6>>
+	물에서 나와 몸에서 물기를 털어낸다.
+<<else>>
+	물에서 나온다.
+<</if>>
+앞에 또 다른 갈림길이 있다.
+<br><br>
+
+<<mazeIcon "left">><<link [[왼쪽으로 간다 (0:01)|Maze 1 1 0]]>><<pass 1>><</link>>
+<br>
+<<mazeIcon "right">><<link [[오른쪽으로 간다 (0:01)|Maze 1 1 1]]>><<pass 1>><</link>>
+<br>
+
+:: Maze 1 1 Strip
+옷을 벗어 머리 위로 들고 차가운 물속으로 걸어 들어간다. 발과 한쪽 팔로 헤엄치고, 다른 팔로는 옷이 젖지 않게 한다.
+<br><br>
+
+<<waterbr 2>><<effects>>
+
+<<if $settings.bestialityEnabled>>
+	석조 구조물 안의 구멍에서 뱀들이 나타난다.
+	<<if $swimmingSuccess>>
+		한쪽 팔을 쓰고 있음에도, <span class="green">당신은 그것들의 손이 닿지 않는 곳으로 움직일 수 있다.</span>
+		<br><br>
+		<<if $wolfgirl gte 6>>
+			물에서 나와 몸에서 물기를 털어낸다.
+		<<else>>
+			물에서 나온다.
+		<</if>>
+		앞에 또 다른 갈림길이 있다.
+
+		<br><br>
+		<<mazeIcon "left">><<link [[왼쪽으로 간다 (0:01)|Maze 1 1 0]]>><<clotheson>><<pass 1>><</link>>
+		<br>
+		<<mazeIcon "right">><<link [[오른쪽으로 간다 (0:01)|Maze 1 1 1]]>><<clotheson>><<pass 1>><</link>>
+		<br>
+	<<else>>
+		그것들의 손이 닿지 않는 곳으로 움직이려 하지만, <span class="red">그것들이 너무 빠르다.</span> 뱀들을 밀어내고 차내려 하지만, 수가 너무 많다. 그것들이 당신의 드러난 몸을 휘감고, 조이고, 희롱하며, 당신의 옷을 물속으로 끌어당긴다.<<ggarousal>><<arousal 1200>><<gstress>><<stress 6>>
+		<br><br>
+		옷을 주워들고 물웅덩이에서 빠져나온다. 앞에 또 다른 갈림길이 있다.
+		<br><br>
+		<<mazeIcon "left">><<link [[왼쪽으로 간다 (0:01)|Maze 1 1 0]]>><<clotheson>><<water>><<pass 1>><</link>>
+		<br>
+		<<mazeIcon "right">><<link [[오른쪽으로 간다 (0:01)|Maze 1 1 1]]>><<clotheson>><<water>><<pass 1>><</link>>
+		<br>
+	<</if>>
+<<else>>
+	복도 양옆으로 해치가 열리고 손들이 뻗어 나온다.
+	<<if $swimmingSuccess>>
+		한쪽 팔을 쓰고 있음에도, <span class="green">당신은 그것들의 손이 닿지 않는 곳으로 움직일 수 있다.</span>
+		<br><br>
+		<<if $wolfgirl gte 6>>
+			물에서 나와 몸에서 물기를 털어낸다.
+		<<else>>
+			물에서 나온다.
+		<</if>>
+		앞에 또 다른 갈림길이 있다.
+
+		<br><br>
+		<<mazeIcon "left">><<link [[왼쪽으로 간다 (0:01)|Maze 1 1 0]]>><<clotheson>><<pass 1>><</link>>
+		<br>
+		<<mazeIcon "right">><<link [[오른쪽으로 간다 (0:01)|Maze 1 1 1]]>><<clotheson>><<pass 1>><</link>>
+		<br>
+	<<else>>
+		그것들의 손이 닿지 않는 곳으로 움직이려 하지만, 물에 미묘한 흐름이 있다. 복도 한쪽의 손들을 밀어내자, <span class="red">반대편의 손들에게 붙잡히고 만다.</span>
+		<br><br>
+		손들을 밀어내고 차내려 하지만, 수가 너무 많다. 그것들이 당신의 드러난 몸을 더듬고 희롱하며, 당신의 옷을 물속으로 떨어뜨리게 만든다.<<ggarousal>><<arousal 1200>><<gstress>><<stress 6>>
+		<br><br>
+		옷을 주워들고 물에서 나온다. 앞에 또 다른 갈림길이 있다.
+		<br><br>
+		<<mazeIcon "left">><<link [[왼쪽으로 간다 (0:01)|Maze 1 1 0]]>><<clotheson>><<water>><<pass 1>><</link>>
+		<br>
+		<<mazeIcon "right">><<link [[오른쪽으로 간다 (0:01)|Maze 1 1 1]]>><<clotheson>><<water>><<pass 1>><</link>>
+		<br>
+	<</if>>
+<</if>>
+
+
+
+:: Maze 0 0 0
+<<effects>>
+
+왼쪽으로 돌아 미로를 계속 나아간다.
+<br><br>
+
+<<if $eventskip isnot 1>>
+	<<maze_basilisk>>
+<<else>>
+	점액 막이 길을 막고 있다. 속이 비칠 정도로 얇다. 손을 넣어 찢어낸다. 일부가 손에 달라붙었지만, 계속 나아간다.<<bodyliquid "rightarm" "goo">>
+	<br><br>
+	<<link [[다음|Maze Snuffer]]>><</link>>
+	<br>
+<</if>>
+<<set $eventskip to 0>>
+
+:: Maze 0 0 1
+<<effects>>
+오른쪽으로 돌아 미로를 계속 나아간다.
+<br><br>
+
+<<if $eventskip isnot 1>>
+	<<maze_basilisk>>
+<<else>>
+	바닥의 점액이 더 두꺼워져, 이제는 길을 미끄럽게 만드는 정도가 아니다. 발을 뗄 때마다 질척이는 소리가 난다. 평범하게 걷는 것보다 발을 앞으로 미끄러뜨리는 것이 더 편하다.<<gstress>><<stress 6>>
+	<br><br>
+
+	<<link [[다음|Maze Snuffer]]>><</link>>
+	<br>
+<</if>>
+<<set $eventskip to 0>>
+
+:: Maze 0 1 0
+<<effects>>
+왼쪽으로 돌아 미로를 계속 나아간다.
+<br><br>
+<<if $eventskip isnot 1>>
+	<<maze_basilisk>>
+<<else>>
+	복도는 어둠에 잠겨 있다. 저 위에서 무언가 살아있는 것이 빛을 가리고 있는 듯, 질척이는 움직임이 들린다.<<gstress>><<stress 6>>
+	<br><br>
+
+	<<link [[다음|Maze Horn]]>><</link>>
+	<br>
+<</if>>
+<<set $eventskip to 0>>
+
+:: Maze 0 1 1
+<<effects>>
+오른쪽으로 돌아 미로를 계속 나아간다.
+<br><br>
+<<if $eventskip isnot 1>>
+	<<maze_basilisk>>
+<<else>>
+	외풍이 느껴진다. 앞쪽 벽에 틈이 있는데, 들여다볼 수 있을 만큼 넓다. 그 너머는 칠흑 같은 어둠이다. 누군가 지켜보는 듯한 느낌을 무시하려 애쓴다.<<gstress>><<stress 6>>
+	<br><br>
+
+	<<link [[다음|Maze Horn]]>><</link>>
+	<br>
+<</if>>
+<<set $eventskip to 0>>
+
+:: Maze 1 0 0
+<<effects>>
+
+왼쪽으로 돌아 미로를 계속 나아간다.
+<br><br>
+
+<<if $eventskip isnot 1>>
+	<<maze_basilisk>>
+<<else>>
+	석조 구조물의 구멍에서 뱀들이 나타나, 머리를 일제히 움직인다. 당신이 그들 사이를 지나는 동안에도 계속 당신 쪽을 향하고 있다.<<gstress>><<stress 6>>
+	<br><br>
+
+	<<link [[다음|Maze Manacle]]>><</link>>
+	<br>
+<</if>>
+<<set $eventskip to 0>>
+
+:: Maze 1 0 1
+<<effects>>
+
+오른쪽으로 돌아 미로를 계속 나아간다.
+<br><br>
+<<if $eventskip isnot 1>>
+	<<maze_basilisk>>
+<<else>>
+	거대하고 깨진 거울이 벽에 기대어 있다. 때는 반사된 모습을 가리고 있다. 보이는 것은 어딘가 잘못된 것처럼 보인다. 당신은 시선을 돌린다.<<gstress>><<stress 6>>
+	<br><br>
+
+	<<link [[다음|Maze Manacle]]>><</link>>
+	<br>
+<</if>>
+<<set $eventskip to 0>>
+
+:: Maze 1 1 0
+<<effects>>
+왼쪽으로 돌아 미로를 계속 나아간다.
+<br><br>
+<<if $eventskip isnot 1>>
+	<<maze_basilisk>>
+<<else>>
+	벽에는 나무 상자들이 높이 쌓여 있다. 무언가가 안에서부터 부수고 나온 것 같다.<<gstress>><<stress 6>>
+	<br><br>
+
+	<<link [[다음|Maze Whip]]>><</link>>
+	<br>
+<</if>>
+<<set $eventskip to 0>>
+
+:: Maze 1 1 1
+<<effects>>
+오른쪽으로 돌아 미로를 계속 나아간다.
+<br><br>
+<<if $eventskip isnot 1>>
+	<<maze_basilisk>>
+<<else>>
+	천장이 아래로 기울어져 땅에 가까워져서, 그 아래로 기어가야 한다. 위에서 삐걱거리고 끙끙거리는 소리가 들리는데, 마치 엄청난 무게가 천장을 무너뜨릴 것만 같다.<<gstress>><<stress 6>>
+	<br><br>
+
+	당신은 문제없이 반대편으로 빠져나온다.
+	<br><br>
+
+	<<link [[다음|Maze Whip]]>><</link>>
+	<br>
+<</if>>
+<<set $eventskip to 0>>
+
+:: Maze Smash
+<<effects>>
+
+약해 보이는 널빤지를 잡고 잡아당겨 본다.
+<<if $physiqueSuccess>>
+	<span class="green">널빤지가 빠진다.</span> 다음 널빤지로, 그리고 또 다음 널빤지로 옮겨간다. 마지막 몇 개를 발로 차서, 통과할 수 있을 만큼 큰 틈을 만든다.
+	<br><br>
+
+	반대편에는 또 다른 복도가 있다. 이곳과 매우 비슷해 보이지만, 적어도 여정을 단축했다.
+	<br><br>
+	<<rng 8>>
+
+	<<if $rng gte 8>>
+		<<link [[다음|Maze 0 0 1]]>><</link>>
+		<br>
+	<<elseif $rng gte 7>>
+		<<link [[다음|Maze 0 1 0]]>><</link>>
+		<br>
+	<<elseif $rng gte 6>>
+		<<link [[다음|Maze 1 0 0]]>><</link>>
+		<br>
+	<<elseif $rng gte 5>>
+		<<link [[다음|Maze 0 1 1]]>><</link>>
+		<br>
+	<<elseif $rng gte 4>>
+		<<link [[다음|Maze 0 1 0]]>><</link>>
+		<br>
+	<<elseif $rng gte 3>>
+		<<link [[다음|Maze 1 1 1]]>><</link>>
+		<br>
+	<<elseif $rng gte 2>>
+		<<link [[다음|Maze 1 1 0]]>><</link>>
+		<br>
+	<<else>>
+		<<link [[다음|Maze 1 0 1]]>><</link>>
+		<br>
+	<</if>>
+<<else>>
+	잡아당겨 보지만, <span class="red">전혀 느슨해지지 않는다.</span> 근육이 약간 쑤신다.<<gpain>><<pain 4>>
+	<br><br>
+
+	<<mazeIcon "left">><<link [[왼쪽으로 간다 (0:01)|Maze 0]]>><<pass 1>><</link>>
+	<br>
+	<<mazeIcon "right">><<link [[오른쪽으로 간다 (0:01)|Maze 1]]>><<pass 1>><</link>>
+	<br>
+<</if>>
+
+
+:: Maze Horn
+<<effects>>
+
+복도는 넓은 방으로 이어진다. 중앙에는 미노타우로스 조각상이 엎드려 있고, 뿔 대신 부러진 그루터기가 있으며, 옆에는 대리석 발목이 아직 붙어 있는 받침대가 있다.
+<br><br>
+<<if $weekly.maze.horn is undefined>>
+	<<wearProp "antique horn">>
+	조각상 아래를 들여다보니 부러진 뿔 중 하나가 보인다. 복잡한 은으로 십자 무늬가 새겨져 있고 작은 보석이 박힌 상아다. 다른 쪽 뿔은 없지만, 하나만으로도 꽤 값어치가 있을 것이다. 박물관에서 관심을 가질 만하다.
+	<br><br>
+
+	<<antiqueicon "horn-2">><<link [[뿔을 가지고 계속 진행한다|Maze 0 End]]>><<set $antiquemoney += 400>><<museumAntiqueStatus "antiquehorn2" "found">><<set $weekly.maze.horn to 1>><</link>>
+	<br>
+	<<getouticon>><<link [[내버려 둔다|Maze 0 End]]>><</link>>
+	<br>
+<<else>>
+	<<link [[계속 진행한다|Maze 0 End]]>><</link>>
+	<br>
+<</if>>
+
+:: Maze Snuffer
+<<effects>>
+
+벽이 어두워지고, 오래전에 꺼진 불꽃에 그을려 있다. 재가 바닥을 덮고 있다. 벽 안에서 작은 쥐가 이리저리 뛰어다니는 듯한 소리가 들린다.
+<br><br>
+
+<<if $weekly.maze.snuffer is undefined>>
+	<<wearProp "antique snuffer">>
+	발이 재 아래의 단단한 물체를 찬다. 작고 구부러진 막대 위에 종 모양의 금속 컵이 달려 있다. 오래된 횃불 끄개로, 이 피해를 일으킨 불을 끄기에는 너무 작다. 이렇게 오래된 도구는 박물관에 있어야 한다.
+	<br><br>
+	<<antiqueicon "snuffer">><<link [[횃불 끄개를 가지고 계속 진행한다|Maze 0 End]]>><<set $antiquemoney += 200>><<museumAntiqueStatus "antiquesnuffer" "found">><<set $weekly.maze.snuffer to 1>><</link>>
+	<br>
+	<<getouticon>><<link [[내버려 둔다|Maze 0 End]]>><</link>>
+	<br>
+<<else>>
+	<<link [[계속 진행한다|Maze 0 End]]>><</link>>
+	<br>
+<</if>>
+
+:: Maze Manacle
+<<effects>>
+
+길은 나선형으로 땅속으로 내려가 넓은 방으로 이어진다. 낮은 천장에는 녹슨 사슬이 매달려 있고, 부서진 나무 가구가 바닥에 널려 있다.
+<br><br>
+
+<<if $weekly.maze.silver_manacle is undefined>>
+	잔해 속에서 다른 것들보다 덜 변색된 금속 빛이 보인다. 은으로 된 족쇄다. 손상되었지만 박물관에 넘기면 값어치가 있을 것이다.
+	<br><br>
+	<<antiqueicon "silver-manacle">><<link [[은 족쇄를 가지고 계속 진행한다|Maze 0 End]]>><<set $antiquemoney += 400>><<museumAntiqueStatus "antiquesilvermanacle" "found">><<set $weekly.maze.silver_manacle to 1>><</link>>
+	<br>
+	<<getouticon>><<link [[내버려 둔다|Maze 0 End]]>><</link>>
+	<br>
+<<else>>
+	<<link [[계속 진행한다|Maze 0 End]]>><</link>>
+	<br>
+<</if>>
+
+:: Maze Whip
+<<effects>>
+
+산들바람이 느껴진다. 복도는 미로의 가장자리로 이어지고, 벽의 큰 틈새로 바깥세상이 보인다. 당신은 높은 곳에 있다. 몇 층 높이다. 미로를 둘러싼 나무 너머로, 언덕에 점점이 흩어져 있는 많은 농장과 멀리 움직이는 차가 보인다.
+<br><br>
+
+<<if $weekly.maze.whip is undefined>>
+	<<wearProp "whip" "khaki">>
+	저 앞에서 무언가 바람에 춤추는 것이 보인다. 벽에 고정된 채찍으로, 길이가 펼쳐져 바람에 나부끼고 있다. 채찍에 맞지 않도록 피하고, 간신히 떼어낸다. 고대 유물처럼 보인다. 박물관에 있어야 할 물건이다.
+	<br><br>
+	<<antiqueicon "whip">><<link [[채찍을 가지고 계속 진행한다|Maze 0 End]]>><<set $antiquemoney += 200>><<museumAntiqueStatus "antiquewhip" "found">><<set $weekly.maze.whip to 1>><</link>>
+	<br>
+	<<getouticon>><<link [[내버려 둔다|Maze 0 End]]>><</link>>
+	<br>
+<<else>>
+	<<link [[계속 진행한다|Maze 0 End]]>><</link>>
+	<br>
+<</if>>
+
+:: Maze 0 End
+<<effects>>
+
+<<if $eventskip isnot 1>>
+	<<maze_basilisk>>
+<<else>>
+	밖으로 나온다. 당신은 여전히 미로 안에 있으며, 단지의 한 구역과 다른 구역을 연결하는 통로 위에 있다. 통로 양쪽에는 허리 높이의 낡은 벽이 늘어서 있다. 그 너머는 깎아지른 듯한 위험한 낭떠러지다.
+	<br><br>
+
+	미끄러지지 않도록 조심하고 부서진 석조물의 많은 틈을 피하며 건너간다.
+	<br><br>
+
+	<<link [[다음|Maze Painting]]>><</link>>
+	<br>
+<</if>>
+<<set $eventskip to 0>>
+
+:: Maze 1 End
+<<effects>>
+
+<<if $eventskip isnot 1>>
+	<<maze_basilisk>>
+<<else>>
+	밖으로 나온다. 당신은 여전히 미로 안에 있으며, 무성하게 자란 정원에 있다. 몇몇 강인하고 가시 많은 식물들이 다른 모든 식물들을 압도했다. 그들 사이로 붉은 꽃들이 피어 있는데, 마치 핏자국 같다.
+	<br><br>
+	나뭇가지 아래로 몸을 숙이고 다른 가지 위로 기어오르며, 걸리지 않고 통과한다.
+	<br><br>
+
+	<<link [[다음|Maze Painting]]>><</link>>
+	<br>
+<</if>>
+<<set $eventskip to 0>>
+
+:: Maze Painting
+<<effects>>
+
+<<if $museumAntiques.paintings.paintingsnake is "notFound">>
+	거대한 두 기둥이 받치고 있는 지붕 아래에 도착한다. 그 사이에는 계단이 그림으로 이어져 있고, 높은 창문에서 들어오는 빛줄기가 그림을 비추고 있다.
+	<br><br>
+
+	그림은 오래되었다. 아름다운 여인이 뱀의 허물에서 기어 나오는 모습을 묘사하고 있는데, 마치 방금 전까지 자신의 피부였던 것처럼 보인다. 그녀는 알 한 무더기를 가슴에 안고 울고 있다. 액자는 복잡하게 조각되어 있으며, 자신의 꼬리를 먹는 뱀 모양이다.
+	<br><br>
+	액자 일부에는 불에 탄 자국과 약간의 물 손상이 있다. 주 캔버스에는 큰 베인 자국이 있다.
+	<br><br>
+
+	그럼에도 불구하고 놀라울 정도로 잘 보존되어 있다. 박물관에서 관심을 가질 만하다.
+	<br><br>
+
+	<<museumPaintingGet "paintingsnake">>
+
+	<<link [[다음|Maze Painting 2]]>><</link>>
+	<br>
+<<else>>
+	미로의 끝에 도착한다. 두 기둥 사이의 벽에 묻은 때에, 당신이 떼어낸 그림 모양의 빈 공간이 있다.
+	<br><br>
+	계속 나아가 무너진 석조물을 미끄러져 내려가 미로 밖의 부드러운 잔디밭에 착지한다.
+	<br><br>
+
+	<<link [[다음|Farmland]]>><<maze_end>><<set $eventskip to 1>><</link>>
+	<br>
+<</if>>
+
+:: Maze Painting 2
+<<effects>>
+
+방구석 벽에 밖으로 통하는 구멍이 있다. 당신은 높은 곳에 있다. 무너진 석조물을 따라 간신히 내려온다. 일방통행 출구다. 위에서 웃음소리 같은 쉭쉭거리는 소리가 들리지만, 바람 소리일 수도 있다.
+<br><br>
+
+<<link [[다음|Farmland]]>><<maze_end>><<set $eventskip to 1>><</link>>
+<br>
+
+:: Maze Leave
+<<effects>>
+
+미로를 통해 발걸음을 되짚어 밖으로 나온다. 여정이 훨씬 짧게 느껴졌다.
+<br><br>
+
+<<link [[다음|Farmland Manors]]>><</link>>
+<br>
+
+:: Maze Slime Escape
+<<effects>>
+
+당신은 잇달아 모퉁이를 돌며, <span class="green">슬라임의 질척이는 소리를 멀리 뒤로한다.</span>
+<br><br>
+
+<<link [[다음|Maze Painting]]>><</link>>
+<br>
+
+:: Maze Slime Deadend
+<<effects>>
+
+모퉁이를 돌고 또 돌지만, <span class="red">막다른 길에 다다른다.</span> 왔던 길로 되돌아가려 하지만, 슬라임이 이미 당신을 따라잡았다. 당신은 갇혔다.
+<br><br>
+
+슬라임이 질척이며 다가오며, 여전히 그 거대한 몸으로 복도를 채우고 있다.
+<br><br>
+
+<<link [[다음|Maze Vore]]>><<set $molestationstart to 1>><</link>>
+<br>
+
+:: Maze Vore
+<<set $outside to 1>><<effects>>
+<<if $molestationstart is 1>>
+	<<set $molestationstart to 0>>
+	<<set $combat to 1>>
+	<<molested>>
+	<<controlloss>>
+
+	<<if $settings.tentaclesEnabled>>
+		<<set $enemytype to "tentacles">>
+		<<tentaclestart 2 15>>
+		<<set $voretentacles to 1>>
+	<<else>>
+		<<set $enemytype to "vore">>
+		<<set $voretentacles to 0>>
+	<</if>>
+
+	<<set $vorestage to 1>>
+	<<set $vorecreature to "giant slime">>
+	<<set $vorestrength to 1>><<set $position to "doggy">>
+	<<resetLastOptions>>
+	<<getCombatDefaultsType>>
+<</if>>
+
+<<if $settings.tentaclesEnabled and $enemytype is "tentacles">>
+	<<voreeffects>><<effectstentacles>>
+	<<vore>><<tentacles>>
+	<<statetentacles>>
+	<br><br>
+	<<actionsvorentacles>>
+<<else>>
+	<<voreeffects>>
+	<<vore>>
+	<<voreactions>>
+<</if>>
+
+<<if $stress gte $stressmax>>
+	<span id="next"><<link [[다음|Maze Vore Finish]]>><</link>></span><<nexttext>>
+<<elseif $vorestage lte 0>>
+	<span id="next"><<link [[다음|Maze Vore Finish]]>><</link>></span><<nexttext>>
+<<elseif $vorestomach gte 5>>
+	<span id="next"><<link [[다음|Maze Vore Finish]]>><</link>></span><<nexttext>>
+<<else>>
+	<span id="next"><<link [[다음|Maze Vore]]>><</link>></span><<nexttext>>
+<</if>>
+
+:: Maze Vore Finish
+<<effects>>
+<<if $stress gte $stressmax or $vorestomach gte 5>>
+	모든 것이 너무 벅차다. 당신은 정신을 잃는다.
+	<br><br>
+	<<if $upperoff isnot 0>>
+		<<upperruined>>
+	<</if>>
+	<<if $loweroff isnot 0>>
+		<<lowerruined>>
+	<</if>>
+	<<if $underloweroff isnot 0>>
+		<<underlowerruined>>
+	<</if>>
+	<<if $underupperoff isnot 0>>
+		<<underupperruined>>
+	<</if>>
+	<<endcombat>>
+	<<link [[다음|Farmland Dungeon Wake]]>><<maze_end>><</link>>
+	<br>
+<<else>>
+	<<tearful>> 당신은 그 생물에게서 몸을 떼어낸다. 몸부림치는 동안 그것이 방향을 틀어, 당신은 복도로 도망칠 수 있게 되었다.
+	<br><br>
+	<<clotheson>>
+	<<endcombat>>
+	<<loadNPC 0 "basilisk">>
+	<<link [[다음|Maze Painting]]>><</link>>
+	<br>
+<</if>>

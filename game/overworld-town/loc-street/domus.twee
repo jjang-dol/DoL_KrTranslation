@@ -1,0 +1,353 @@
+:: Domus Street
+
+<<set $outside to 1>><<set $location to "town">><<effects>><<set $bus to "domus">><<getTarget true>>
+당신은 도무스 가에 있다. 고아원이 이곳에 있다. 거리는 비슷하게 생긴 작은 집들로 가득하다.
+<<if Time.dayState is "day">>
+	<<if Weather.precipitation is "rain">>
+		사람들은 비를 피해 빠르게 걷고 있다.
+	<<elseif Weather.isFreezing>>
+		사람들은 추위를 피해 빠르게 걷고 있다.
+	<<else>>
+		사람들은 정원을 가꾸거나 거리를 따라 각자의 볼일을 보고 있다.
+	<</if>>
+<<elseif Time.dayState is "dawn">>
+	<<if Weather.precipitation is "rain">>
+		거리는 분주하다. 사람들은 비옷을 입거나 우산을 든 채 출근하고 있다.
+	<<elseif Weather.isFreezing>>
+		거리는 분주하다. 사람들은 추위에 대비해 두툼하게 껴입고 출근하고 있다.
+	<<else>>
+		거리는 분주하다. 사람들이 출근하고 있다.
+	<</if>>
+<<elseif Time.dayState is "dusk">>
+	<<if Weather.precipitation is "rain">>
+		사람들은 비를 피해 서둘러 집으로 돌아가고 있다.
+	<<elseif Weather.isFreezing>>
+		사람들은 추위를 피해 서둘러 집으로 돌아가고 있다.
+	<<else>>
+		사람들은 긴 하루를 마치고 피곤한 몸을 이끌고 집으로 돌아가고 있다.
+	<</if>>
+<<else>>
+	<<if Weather.precipitation is "rain">>
+		거리는 어둡고, 후두둑 떨어지는 빗소리에 흠뻑 젖어 있다.
+	<<elseif Weather.isFreezing>>
+		거리는 어둡고, 눈 속에서 고요하다.
+	<<else>>
+		거리는 어둡고, 가끔 들리는 엔진 소리를 제외하면 고요하다.
+	<</if>>
+<</if>>
+<<if $halloween is 1>>
+	잭오랜턴, 해골, 거미가 집들을 장식하고 있다.
+<</if>>
+<<if Weather.isSnow>>
+	정원에는 눈사람이 서 있다.
+<</if>>
+<<streeteffects>>
+<br><br>
+<<if $exposed gte 1>>
+	<<exhibitionism "street">>
+<</if>>
+<<if $arousal gte $arousalmax>>
+	<<orgasmstreet>>
+<</if>>
+<<if $tutorial is 0 and $debug is 0>><<set $tutorial to 1>>
+	<<generate1>><<person1>>고아원을 나서다가 지나가던 <<person>>【와과】 부딪친다. <<He>>【은는】 비틀거리며 물러서더니 화난 얼굴로 당신을 쳐다보지만, 당신을 보자 <<his>> 분노는 욕정으로 바뀐다. "이번 주에 본 것 중에 제일 귀엽네! 이리 와."
+	<br><br>
+	<<link [[다음|Tutorial]]>><<set $molestationstart to 1>><<set $tutorialExit to "Domus Street">><</link>>
+<<else>>
+	<<if $stress gte $stressmax and !$possessed>>
+		<<passoutstreet>>
+	<<else>>
+
+		<<if $halloween is 1 and Time.monthDay is 31 and Time.hour gte 19 and C.npc.Whitney.state isnot "dungeon" and C.npc.Whitney.init is 1 and $halloween_whitney_proposed isnot 1 and $halloween_kylar_whitney isnot 1 and !$possessed>>
+			<<set $halloween_whitney_proposed to 1>>
+			<<halloweenwhitney>>
+		<<elseif $averyDismissalScene and $averyDismissalSceneWait isnot 1 and Time.weekDay is 7 and Time.hour is 20>>
+			<<loadNPC 0 avery_sidepiece>><<person1>>
+			<<if $averyDismissalScene is 1>>
+				고아원 밖에 서 있는 <<person>>【을를】 본다. <<He>>【은는】
+				<<if $pronoun is "f">>
+					화려한 드레스를 입고 있다. <<He>>【은는】 힐에 익숙해지려는 듯 서성인다.
+				<<else>>
+					날렵한 정장을 입고 있다. <<He>>【은는】 서성이고 있는데, 긴장을 풀려는 것처럼 보인다.
+				<</if>>
+				<span class = "blue">이제 <<him>>【을를】 알아볼 수 있습니다. <<Hes>> 에이버리의 새 데이트 상대입니다.</span>
+				<br><br>
+				때마침 익숙한 차가 근처에 멈춰서는 것이 보인다.
+				그 <<personsimple>>【은는】 신이 나서 차로 다가간다<<if $pronoun is "f">>, 그러다 거의 넘어질 뻔한다<</if>>.
+				<<he>>【이가】 차에 올라타면서 에이버리의 입술에 가볍게 입 맞추는 것이 보인다. 문이 닫히고, 새로운 커플은 차를 타고 떠난다.
+			<<else>>
+				<<person>>【와과】 부딪친다. "오! 죄송해요!" <<He>>【은는】 당신을 훑어보며 황급히 사과한다. <<He>>【은는】 당신을 알아본 듯 미소를 짓는다.
+				"아! 마주쳐서 다행이네요. 에이버리에 대해 경고해 준 것에 대해 고맙다는 말을 못 했어요." <span class = "blue">이제 <<him>>【을를】 알아볼 수 있습니다. <<Hes>> 에이버리가 당신 대신 만나려 했던 그 <<personsimple>>【이】입니다.</span>
+				<br><br>
+				"재밌네요, 그날 당신이 경고해주지 않았다면, 지금쯤 <<nnpc_him "Avery">>【와과】 데이트하고 있었을 거예요. 정말 큰일 날 뻔한 걸 막아줬어요."
+				<<He>>【은는】 갑자기 당신을 껴안는다.
+				<br><br>
+				"정말 고마워요. 고아원에서 또 봐요!" <<stress -6>><<lstress>>
+			<</if>>
+			<<unset $averyDismissalScene>>
+			<<clearNPC avery_sidepiece>>
+			<br><br>
+			<<endevent>>
+			<<destinationeventend>>
+
+		<<elseif $adultshopgrandopening is true and $adultshopopeningevent is undefined and Time.hour gte 6 and Time.hour lte 20>>
+			<<set $adultshopopeningevent to true>>
+			<<generate1>><<person1>>
+			"실례합니다," 오른쪽에서 목소리가 들린다. <<person>>【이】다. <<He>>【은는】 전단지를 내민다. 위쪽에는 '시리스의 성인용품점'이라고 쓰여 있고, 그 아래에는 여러 섹스 토이가 그려져 있다.
+			<br><br>
+			"<span class="gold">오늘 하루만 그랜드 오프닝 이벤트를 진행하고 있습니다.</span> <<ampm 21 00>>까지 영업합니다. 꼭 와주시길 바랍니다."
+			<br><br>
+
+			<<He>>【은는】 길을 건너 다른 보행자에게 전단지를 나눠준다.
+			<br><br>
+			<<endevent>>
+			<<destinationeventend>>
+		<<elseif C.npc.Gwylan.state is "active" and !isGwylanAbsent() and !$gwylan_cafe_walk_refused and !$daily.gwylan.cafe and !$daily.gwylan.cafeOfferDeclined and !$daily.gwylan.cafeSkip and !$daily.gwylan.SchoolDropOff and !["reunion", "badEndReady"].includes(statusCheck("Gwylan")) and !(between($chef_state, 7, 8) and $chef_rework lte 30) and Time.schoolDay and Time.hour is 7 and $exposed lte 0 and ($gwylan.sea + ($gwylanTalked.count("fox_mask") * 20) + ($gwylanTalked.count("dark_pendant") * 20) gte 40)>>
+			<<run statusCheck("Gwylan")>><<npc Gwylan>><<person1>>
+			<<set $daily.gwylan.SchoolDropOff to true>>
+			<<if ["Orphanage", "Bedroom", "Bathroom"].includes($passagePrev)>>
+				고아원 밖으로 나서자,
+			<<else>>
+				고아원을 지나치자,
+			<</if>>
+			<<if !$gwylanSeen.includes("cafe_walk")>>
+				길 건너편에서 익숙한 목소리가 당신을 부르는 것이 들린다. 그윌란이다.
+				<br><br>
+
+				<<He>>【은는】 길을 건너온다. "좋은 아침, <<pcpetname "Gwylan">>. 아침 먹으러 가던 길이었는데, 혹시 같이 갈래? 괜찮으면 나중에 학교까지 데려다줄 수도 있고."
+
+				<<if !$gwylanSeen.includes("cafe")>>
+					<<set $gwylanSeen.pushUnique("cafe")>>
+					<br><br>
+					당신이 약간 혼란스러워하는 표정을 짓자 그윌란이 알아챈다. "아, 이런! 내가 말한 적 없나. 난 매일 아침 카페에 가서 밥 먹어. 일종의 습관이야. 하지만 습관은 시간이 지나면 꽤 지루해지기 마련이고, 난 너랑 있는 게 정말 즐거워."
+				<</if>>
+				<<if $worn.neck.name is "familiar collar" and $worn.neck.cursed is 1 or $gwylanSeen.includes("petplay") and $worn.neck.type.includes("leash")>>
+					<<set _magicLeash to true>>
+					당신은 목줄이 당겨지는 것을 느낀다. <<if $worn.neck.name is "familiar collar">>그윌란의 손에 빛나는 목줄이 나타난다.<<else>>아래를 내려다보니 그윌란이 당신의 목줄을 잡고 있다.<</if>> "그래서 어때, <<pcpetname "Gwylan" "my">>. 산책하고 싶지, 그렇지?" <<he>>【이가】 부드럽게 말한다.
+				<<else>>
+					<<He>>【은는】 미소 짓는다. "그래서 어때?"
+				<</if>>
+			<<else>>
+				그윌란이 당신을 기다리고 있는 것을 발견한다. <<He>>【이가】 손을 흔들어 당신을 부른다. "<<print either("좋은 아침", "화창한 아침이네", "만나서 반가워", "안녕", "거기 있었구나")>>, <<pcpetname "Gwylan">>. 잘 잤어?"
+				<br><br>
+
+				<<if $worn.neck.name is "familiar collar" and $worn.neck.cursed is 1 or $gwylanSeen.includes("petplay") and $worn.neck.type.includes("leash")>>
+					<<set _magicLeash to true>>
+					당신은 목줄이 당겨지는 것을 느낀다. <<if $worn.neck.name is "familiar collar">>그윌란의 손에 빛나는 목줄이 나타난다.<<else>>아래를 내려다보니 그윌란이 당신의 목줄을 잡고 있다.<</if>> "내가 가장 좋아하는 <<pcpetname "Gwylan" "simple">>【은는】 아침 산책하고 싶어? 난 카페 가는 길인데, 네가 같이 와주면 정말 기쁠 거야." <<He>>【이가】 미소 지으며 당신의 귀 뒤를 긁어준다.
+				<<else>>
+					<<He>>【은는】 미소 짓는다. "아침 먹으러 가는 길이야. 같이 갈래?"
+				<</if>>
+			<</if>>
+			<br><br>
+
+			<<cafeicon>><<link [[그윌란과 함께 걷는다 (0:05)|Gwylan Walk Cafe Solo]]>><<pass 5>><<set $phase to 0>><<set $daily.gwylan.cafe to true>><</link>>
+			<br>
+			<<refuseicon>><<link [[제안을 거절한다|Gwylan Walk Cafe Solo]]>><<set $phase to 1>><<set $daily.gwylan.cafeOfferDeclined to true>><</link>>
+			<br>
+		<<elseif C.npc.Avery.state is "active" and !$avery_injury and !$daily.averySchoolDropOff and Time.schoolDay and Time.hour is 7 and $exposed lte 0 and ["upper", "lower", "handheld"].some(part => $worn[part].type.includes("school")) and !$avery_mansion and (!$robinaverybeat or C.npc.Avery.rage lte 40) and ((C.npc.Avery.love gte random(20, 100) and ($rng gte 51 or Weather.precipitation isnot "none")) or (C.npc.Avery.love gte 20 and Time.weekDay is 2) or (C.npc.Avery.rage is 0 and $dateCount.Avery is 0 and !$averyRejected.dropOff))>>
+			<<npc "Avery">><<person1>>
+			<<set $daily.averySchoolDropOff to true>>
+			<<if !$weekly.averyRejected.dropOff>>
+				<<set $weekly.averyRejected.dropOff to 0>>
+			<</if>>
+			<<if !$averyRejected.dropOff>>
+				<<set $averyRejected.dropOff to 0>>
+			<</if>>
+			<<set $phase2 to 0>>
+
+			<<if $averySeen.includes("schoolDropOff")>>
+				에이버리의 차가 당신 옆에 멈춰 선다. 창문이 내려가자 출근 준비를 마친 에이버리가 보인다. "좋은 아침입니다, <<pcpetname "Avery">>." <<he>>【이가】 말하며 차 문을 연다. "타요.
+				<<if $averyRejected.dropOff gt 1 and random(1,2) is 2>>
+					<<if Weather.precipitation isnot "none">>
+						<<= Weather.precipitation is "rain" ? "비" : "눈">>【을를】 맞으며 걸어가는 것보단 낫겠죠."
+					<<elseif Weather.isFreezing>>
+						"추위 속에서 걸어가는 것보단 낫겠죠."
+					<<else>>
+						"혼자서 걸어가는 것보단 낫겠죠."
+					<</if>>
+				<<else>>
+					<<if Weather.precipitation isnot "none">>
+						<<if Weather.precipitation is "rain">>
+							<<= either("흠뻑 젖기","다 젖기")>> 전에 타요.<<if $averyragerevealed is 1>> 내 시트에 물 묻히기 싫으니까요.<</if>>"
+						<<else>>
+							그리고 타기 전에 신발에 묻은 눈은 털어요.<<if $averyragerevealed is 1>> 내 차에 눈 들어오는 거 싫으니까요.<</if>>"
+						<</if>>
+					<<else>>
+						<<= either(`이번엔 차가 안 막혔으면 좋겠네요`, `오늘은 길이 그렇게 안 막히길 바라요`)>>."
+					<</if>>
+				<</if>>
+			<<else>>
+				<<if $dateCount.Avery is 0 and C.npc.Avery.rage is 0 and !$averyRejected.dropOff>>
+					<<set $phase2 to 1>>
+					비싼 차 한 대가 당신 옆에 멈춰 선다. 창문이 내려가자 <<= $pronoun is "m" ? "정장을" : "단정한 드레스를">> 입은 <<personsimple>>【이가】 보인다. 에이버리다. 그 <<personsimple>>【은는】
+					<<if $averySeen.some(event => ["meetPark", "meetStreet"].includes(event))>>
+						<<if $averySeen.includes("meetPark")>>
+							공원에서 만났던 사람으로,
+						<<else>>
+							거리에서 당신을 도와주고
+						<</if>>
+						<<if $averySeen.includes("meetCafe")>>
+							카페로 데려다주었던 사람이다.
+						<<else>>
+							카페에 데려다주겠다고 제안했던 사람이다.
+						<</if>>
+					<<else>>
+						며칠 전에 만났던 사람이다.
+					<</if>>
+					"좋은 아침입니다, <<pcpetname "Avery">>." <<he>>【이가】 당신을 위아래로 훑어보며 말한다. "다시 만나서 반갑군요."
+					<br><br>
+					"학교 가는 길입니까?" <<he>>【이가】 묻는다. 하지만 당신이 대답하기도 전에 차 문이 열리는 소리가 들린다. "내가 태워다 주죠. 앞자리에 앉아요."
+				<<else>>
+					<<set $averySeen.pushUnique("schoolDropOff")>>
+					익숙한 차가 당신 옆에 멈춰 선다. 창문이 내려가자
+					<<if $averywalkintro is 1>>
+						출근 준비를 마친 에이버리가 보인다.
+						<<if $robinaverybeat is 1>>
+							"좋은 아침입니다." <<he>>【이가】
+							<<if C.npc.Avery.rage gte 30>>
+								제대로 감추지 못한 악의가 담긴 <<his>> 목소리로 인사한다. "오늘은 당신의 작은 경비견을 두고 왔나 보군요. 혹시 먹여주는 손이라도 물었습니까?" <<he>>【이가】 경멸적인 콧방귀를 뀌며 쏘아붙인다. "있잖아요, 당신이 어울리는 부류가 어떤 놈들인지 잘 살펴보는 게 좋을 겁니다, <<pcpetname "Avery">>. <<nnpc_him "Robin">> 같은 버릇없는 꼬맹이 때문에 건드려선 안 될 적을 만들면 곤란하잖아요."
+							<<elseif C.npc.Avery.rage gte 20>>
+								참을성 없는 <<his>> 말투로 인사한다. "오늘은 그 꼬맹이가 <<nnpc_his "Robin">> 알아서 학교에 가도록 놔뒀나 보군요?" <<He>>【이가】 코웃음 친다. "잘했습니다. 난 당신이 그런 애들보다 더 나은 부류와 어울리길 바라니까요, <<pcpetname "Avery">>."
+							<<else>>
+								애써 무표정한 <<his>> 얼굴로 인사한다. "오늘은 당신의... 친구가 같이 있지 않군요." 로빈을 언급하자 <<his>> 눈썹이 눈에 띄게 꿈틀거리지만, <<he>>【은는】 간신히 평정을 유지한다. "<<nnpc_him "Robin">>에게 앞으로 조심하라고 알려줬길 바랍니다. <<nnpc_his "Robin">> 자신을 위해서 말이죠."
+							<</if>>
+							<br><br>
+							<<He>>【은는】 또 다른 갑작스러운 방해를 예상하는 듯 잠시 주위를 살피더니 말을 이어간다. "어쨌든, 이런 마을에서 혼자 걷는 건 안전하지 않습니다<<if $allure gte (6000 * $settings.allureModifier)>>, 당신도 잘 알겠지만요<</if>>."
+							<br><br>
+							차 문이 열리는 소리가 들리고, <<his>> 눈이 가늘어진다. "타요. <<= C.npc.Avery.rage gte 20 ? "당신 자신을 위해서 하는 말입니다" : "그게 당신에게 이로울 겁니다">>." <<He>>【은는】 당신에게 <<= either(`냉소적인`,`경멸적인`,`불쾌한`,`오만한`)>> 미소를 지으며 덧붙인다. "이번에는 특별히 내 옆 앞자리에 앉게 해줄게요."
+						<<else>>
+							"좋은 아침입니다, <<pcpetname "Avery">>." <<he>>【이가】 잠시 주위를 둘러본 후 당신을 보며 말한다. "오늘은 친구가 같이 없나 보군요. 혼자 걷는 건 안전하지 않습니다, 알죠?"
+							<br><br>
+							차 문이 열리는 소리가 들린다. "타요, 태워줄게요. 이번엔 앞자리에 앉아도 좋습니다."
+						<</if>>
+					<<else>>
+						<<set $phase2 to ($averyschoolpickupintro is 1 ? 2 : 3)>>
+						<<= $pronoun is "m" ? "정장을" : "단정한 드레스를">> 입은 <<personsimple>>. 에이버리다. "좋은 아침입니다, <<pcpetname "Avery">>." <<he>>【이가】 당신을 위아래로 훑어보며 말한다. "마침 출근하는 길에 당신을 봤습니다. 혼자 걷는 건 안전하지 않아요, 알죠."
+						<br><br>
+						차 문이 열리는 소리가 들린다. "타요. 태워다 줄게요."
+					<</if>>
+				<</if>>
+			<</if>>
+			<br><br>
+
+			<<getinicon>><<link [[탄다 (0:10)|Avery School Drop Off Accept]]>><<pass 10>><</link>>
+			<br>
+			<<refuseicon>><<link [[거절한다|Avery School Drop Off Decline]]>><</link>>
+			<br>
+		<<elseif (dangerEvent() or $eventforced) and $eventskip is 0>>
+			<<eventsstreet>>
+		<<else>>
+			<<if $options.mapTop is true>>
+				<<map "domus">>
+				<br>
+			<</if>>
+
+			<<if $avery_valentines and $avery_valentines.invite and !$avery_valentines.done and Time.monthName is "February" and Time.monthDay is 14 and Time.hour gte 20 and !$avery_mansion>>
+				에이버리가 <<nnpc_his "Avery">> 차 옆에서 당신을 기다리고 있다.
+				<br>
+				<<icon "avery-car.png">><<link [[발렌타인 데이트|Avery Valentines]]>><</link>>
+				<br><br>
+			<<elseif $averydate is 1 and Time.hour is 20 and $averydatedone isnot 1 and !$avery_mansion>>
+				에이버리가 <<nnpc_his "Avery">> 차 옆에서 당신을 기다리고 있다.
+				<br>
+				<<icon "avery-car.png">><<link [[데이트 (1:20)|Avery Date]]>><</link>>
+				<br><br>
+			<</if>>
+			<<if Time.hour is 20 and $avery_card_gift and C.npc.Avery.state is "dismissed" and !$avery_fate>>
+				에이버리가 <<nnpc_his "Avery">> 차에 기댄 채 누군가를 기다리고 있다.
+				<br>
+				<<icon "avery-car.png">><<link [[카드를 건넨다|Avery Card]]>><</link>>
+				<br><br>
+			<</if>>
+
+			주요 장소
+			<br>
+			<<homeicon>><<link [[집으로 가기 (0:01)|Orphanage]]>><<pass 1>><</link>>
+			<br>
+			<<if Time.dayState is "night">>
+				<<dooricon "domus">><<link [[집 중 한 곳으로 접근한다 (0:02)|Domus House Lock]]>><<pass 2>><</link>>
+				<br>
+			<<elseif $exposed lte 0>>
+				<<dooricon "domus">><<link [[집 중 한 곳의 문을 두드린다 (0:02)|Domus House Knock]]>><<pass 2>><</link>>
+				<br>
+			<</if>>
+			<<if $demon gte 6 and Time.dayState is "night" and hasSexStat("promiscuity", 2)>>
+				<<tficon "demon">><<link [[창문으로 기어 들어간다 (0:30)|Domus Window]]>><<pass 30>><</link>><<demon>>
+				<br>
+			<</if>>
+			<<if $exposed gte 2 and Time.dayState isnot "night" and hasSexStat("exhibitionism", 5)>>
+				<<dooricon "domus">><<link [[옷을 구걸한다 (0:02)|Domus House Nude]]>><<pass 2>><</link>><<exhibitionist5>>
+				<br>
+			<</if>>
+			<<if $exposed gte 1 and Time.dayState isnot "night">>
+			<<else>>
+				<<add_link "이동<br>">><<hideDisplay>>
+				<<barb>>
+				<<danube>>
+				<<if $exposed lte 0>>
+					<<buswait>>
+				<</if>>
+				<<loiter>>
+				<br>
+			<</if>>
+			<<add_link "<br>우회로<br>">><<hideDisplay>>
+			<<residential>>
+			<<stormdrain>>
+
+			<<displayLinks>>
+			<<if $options.mapTop isnot true>>
+				<br>
+				<<map "domus">>
+			<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+<<set $eventskip to 0>>
+
+:: Domus Alley
+<<set $location to "alley">>
+
+<<streetSoloStalk>>
+
+:: Sneaky Picnic
+<<effects>>
+
+긴 갈색 머리의 소녀가 길가 벤치에 앉아 있다. 무릎 위에는 바구니를, 한 손에는 찻잔을 들고 있다. 당신이 다가가자 그녀가 미소 짓는다.
+<br><br>
+
+"안녕하세요," 그녀가 말한다. "신경 쓰지 마세요. 전 그냥 누군가를 기다리는 중이에요. 곧 아주 큰 곤경에 처할 사람을요." 그녀는 잠시 말을 멈춘다. "시간이 지나면 만나게 될 것 같지만, 원하신다면 일찍 소개해 드릴 수도 있어요. 모험을 즐기는 편이라면 말이죠."
+<br><br>
+
+<<link [[새로운 에이버리 장면 테스트하기|Sneaky Picnic Test]]>><</link>> (아직 이 시점에 도달하지 않았다면 에이버리의 스토리가 영구적으로 진행됩니다.)
+<br>
+<<link [[거절한다|Sneaky Picnic Decline]]>><</link>>
+<br>
+
+:: Sneaky Picnic Test
+<<effects>>
+
+<<if !$worn.upper.type.includes("formal") or !$worn.lower.type.includes("formal")>>
+	"역할에 맞게 옷을 입어야 할 거예요," 소녀가 말한다. "자." 그녀는 바구니 안의 촉수에게서 옷 한 뭉치를 받아 당신에게 던진다. "자, 됐네요!"
+	<<if $player.gender_appearance is "f">>
+		<<upperwear "evening gown">>
+	<<else>>
+		<<upperwear "tuxedo jacket">><<lowerwear "tuxedo trousers">>
+	<</if>>
+	<br><br>
+<</if>>
+<<set $avery_location to 3>>
+
+<<npc Avery>><<person1>>"저기 <<he>>【이가】 오네요!" 소녀가 말하며 바구니에서 신문을 꺼내 그 뒤로 숨는다. "행운을 빌어요!"
+<br><br>
+
+<<link [[다음|Avery Date]]>><<endevent>><</link>>
+<br>
+
+:: Sneaky Picnic Decline
+<<effects>>
+
+소녀가 다시 미소 짓는다. "알겠어요. 즐거운 하루 보내시길 바라요." 그녀는 치즈 샌드위치를 한 입 베어 문다.
+<br><br>
+
+<<link [[다음|Domus Street]]>><<set $eventskip to 1>><</link>>
+<br>

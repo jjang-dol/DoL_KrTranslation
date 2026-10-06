@@ -1,0 +1,671 @@
+:: Widgets Beach [widget]
+<<widget "beachday1">>
+	<<generatey1>>뒤에서 누군가의 발소리가 들린다. 당신이 뒤돌아보는 찰나 <<person1>><<person>>【이가】 당신에게 달려든다. <<He>>【은는】 모래밭에 당신을 때려 눕히곤 당신의 옷을 벗기려 든다!
+	<br><br>
+	<<link [[다음|Beach Day Molestation]]>><<set $molestationstart to 1>><<set $eventskip to 1>><</link>>
+<</widget>>
+
+<<widget "beachday2">>
+	<<outfitChecks>>
+	<<beastNEWinit 1 dog>>
+	누군가 당신의 _bottom.name【을를】 확 잡아당기는 게 느껴진다. 어깨너머로 돌아보니, <<bhis>> 이빨로 당신의 옷을 물고 있는 작은 <<beasttype>>【이가】 보인다.
+
+	<<if _bottom.integrity lte 20>>
+		<<set _bottom.integrity -= 20>>
+		당신은 그 짐승의 주둥이에서 옷을 억지로 빼내려 애쓰지만, 당신의 _bottom.name【이가】 몸에서 찢겨 나간다!
+		<<if !_bottomUnder>>
+			<<beasttype>>【은는】 도망가버리고, 당신은 당신의 <<genitals>>【이가】 만천하에 드러난 채 굴욕감을 느끼며 홀로 남겨진다.
+			<<gtrauma>><<trauma 1>><<stress 1>><<gstress>>
+		<<else>>
+			<<beasttype>>【은는】 도망가버리고, 당신은 당신의 _bottomUnder.name【이가】 만천하에 드러난 채 굴욕감을 느끼며 홀로 남겨진다.
+			<<stress 1>><<gstress>>
+		<</if>>
+		<br><br>
+		<<integritycheck>><<trauma 6>>
+	<<else>>
+		당신은 가까스로 <<bhis>> 주둥이에서 옷을 빼내지만, 이 난리통에 옷이 좀 해어졌다.
+	<</if>>
+	<br><br>
+	<<destinationBeach "다음">><<set $eventskip to 1>><<endevent>><</destinationBeach>>
+<</widget>>
+
+<<widget "beachday3">>
+	<<generate1>><<set $NPCList[0].virginity.penile to false>><<set $NPCList[0].virginity.vaginal to false>><<person1>><<person>>【이가】 당신을 쳐다보는 게 보인다. <<He>>【은는】 저만치에서 모래놀이를 하는 <<his>> 아이들과 함께 여기 온 것 같다. 당신과 눈이 마주치자 <<He>>【은는】 시선을 돌려버린다.
+	<br><br>
+
+	<<link [[접근한다|Beach Day Encounter]]>><<set $phase to 0>><</link>>
+	<br>
+	<<destinationBeach "외면한다">><<set $eventskip to 1>><<endevent>><</destinationBeach>>
+	<br>
+<</widget>>
+
+<<widget "beachday4">>
+	바다에서 돌풍이 불어와, 당신의 피부를 기분 좋게 어루만진다.
+	<<lstress>><<stress -2>>
+	<br><br>
+
+	<<if setup.clothes.lower[clothesIndex('lower', $worn.lower)].skirt is 1 and $worn.under_lower?.type.includes("lower_covering")>>
+		바람에 당신의 치마가 훌렁 뒤집히지만, $worn.under_lower.name【이가】 당신의 존엄성을 지켜준다.
+		<br><br>
+
+		<<destinationBeach "다음">><<set $eventskip to 1>><</destinationBeach>>
+	<<elseif setup.clothes.lower[clothesIndex('lower', $worn.lower)].skirt is 1>>
+		/* variables */
+		<<set _helpless to pcAreArmsBound("both")>>
+		<<set _trauma_gain to 0>>
+		<<set _arousal_gain to 0>>
+
+		/* event */
+		그 바람에 당신의 치마가 펄럭이며 뒤집어져 당신의
+		<<if $worn.under_lower.type.includes("naked")>>
+			<<set _arousal_gain += 200>>
+			<<set _trauma_gain += .5>>
+			<<genitals>>
+		<<else>>
+			<<set _arousal_gain += 100>>
+			$worn.under_lower.name
+		<</if>>해변 한가운데에 노출시킨다.
+
+		<<if _helpless>>
+			<<set _arousal_gain += 100>>
+			<<set _trauma_gain += 1>>
+			포박당한 채 무력해진 당신은, 마침내 바람이 잦아들어 치맛단이 다시 제자리로 돌아갈 때까지 당신의 노출을 가지고 노는 바람을 견뎌내는 것 말고는 아무것도 할 수 없다.
+		<</if>>
+		<<if random(0, 10) gte 5>>
+			<<print [
+			"갑작스러운 낄낄거리는 웃음소리에 당신이 고개를 돌려 구경꾼을 마주본다.",
+			"갑작스러운 낄낄거리는 웃음소리가 당신의 주의를 끈다.",
+			"충격에 빠져 헐떡이는 한 구경꾼이 당신의 주의를 끈다.",
+			"낄낄대는 한 구경꾼이 당신의 주의를 끈다.",
+			"충격에 빠져 헐떡이는 무리가 당신의 주의를 끈다.",
+			"낄낄거리는 사람들의 무리가 당신의 주의를 끈다."
+			].pluck()>>
+			<<fameexhibitionism 1>>
+
+			<<if random(0, 10) gte 7>>
+				<<endevent>>
+				<span class="pink">
+					당신은 자신을 향해 있는 휴대폰을 발견하고, 그들이 아마도 촬영하고 있었을 거란 사실을 깨닫는다.
+				</span>
+				<<fameexhibitionism 5 "vid">>
+				<<set _trauma_gain += 2>>
+				<<set _arousal_gain += 100>>
+			<<else>>
+				그들이 전부 봤음이 틀림없다.
+				<<set _trauma_gain += 1>>
+				<<set _arousal_gain += 50>>
+			<</if>>
+		<</if>>
+
+		<<if $uncomfortable.nude and hasSexStat("exhibitionism", 5) and _trauma_gain>>
+			당신은 그런 공공장소에서 속살을 노출했다는 생각에 끔찍하게 속이 뒤틀리며, 구겨진 체면을 조금이나마 회복해 보려 그 일에 대해 잊으려 애쓴다.
+			<<set _trauma_gain += 1>>
+		<<else>>
+			당신은 이런 공공장소에서 몸을 노출했다는 생각에 아랫배가 흥분으로 찌릿하게 달아오르며, 겉으로는 체면을 챙기는 척하면서 그 감각을 온전히 만끽할 수밖에 없다.
+			<<set _arousal_gain += 50>>
+		<</if>>
+
+		/* stats application */
+		<<if _arousal_gain>>
+			<<garousal>><<arousal _arousal_gain>>
+		<</if>>
+		<<if _trauma_gain and $uncomfortable.nude>>
+			<<gtrauma>><<trauma _trauma_gain>>
+		<</if>>
+
+		/* choices */
+		<br><br>
+		<<if _helpless>>
+			<<link [[다음|Beach]]>><<set $eventskip to 1>><</link>>
+		<<else>>
+			<<link [[치마를 눌러 내리려 한다|Beach Skirt Flare Stop]]>><</link>>
+			<<if hasSexStat("exhibitionism", 3) and !$worn.under_lower.type.includes("naked")>>
+				<br>
+				<<link [[그냥 둔다|Beach Skirt Flare Allow]]>><</link>><<exhibitionist2>>
+			<<elseif hasSexStat("exhibitionism", 4)>>
+				<br>
+				<<link [[그냥 둔다|Beach Skirt Flare Allow]]>><</link>><<exhibitionist4>>
+			<</if>>
+		<</if>>
+
+		/* cleanup */
+		<<unset _helpless>>
+		<<unset _arousal_gain>>
+		<<unset _trauma_gain>>
+	<<else>>
+		<<destinationBeach "다음">><<set $eventskip to 1>><</destinationBeach>>
+	<</if>>
+<</widget>>
+
+<<widget "beachday5">>
+	당신이 해안가를 걷고 있을 때 등 뒤에서 소란스러운 소리가 들린다. 어깨너머로 돌아보자, 당신의 반 친구 몇 명이 당신을 향해 달려오는 게 보인다.
+	<br><br>
+	<<link [[멈춰서 기다린다|Beach Day Classmates]]>><<set $phase to 0>><</link>><br>
+	<<link [[도망친다|Beach Day Classmates]]>><<set $phase to 1>><</link>><<athleticsdifficulty 1 800>>
+<</widget>>
+
+<<widget "beachday6">>
+	<<if setup.clothes.lower[clothesIndex('lower', $worn.lower)].skirt isnot 1 and !$worn.lower.type.includes("naked")>>
+	<<generatey1>><<person1>>
+	당신이 해안가를 거닐고 있을 때 <<person>>【이가】 당신의 허리띠를 잡아당겨 당신의 <<bottom>>【을를】 노출시킨다. 당신이 반응하기도 전에, <<he>>【은는】 모래가 가득 든 커다란 양동이를 당신의 <<if $worn.under_lower.name is "naked" or $worn.under_lower.one_piece is 1>>$worn.lower.name<<else>>$worn.under_lower.name<</if>> 안으로 부어 버린다. <<He>>【은는】 아마 다른 장난 칠 희생양을 찾아다니기 위해, 당신의 엉덩이를 철썩 때리고 도망친다.
+	<br><br>
+	당신은 최선을 다해 옷 안에서 모래를 털어낸다. 그럼에도 필연적으로 일부는 엉덩이 골 사이에 끼어 살갗을 쓸리게 하고 거슬리게 만든다. <<gpain>><<gstress>><<pain 1>><<stress 2>>
+	<br><br>
+	<<destinationBeach "다음">><<endevent>><<set $eventskip to 1>><</destinationBeach>>
+<<else>>
+	바다에서 돌풍이 불어와, 당신의 피부를 기분 좋게 어루만진다.
+	<<lstress>><<stress -2>>
+	<br><br>
+	<<destinationBeach "다음">><<set $eventskip to 1>><</destinationBeach>>
+<</if>>
+<</widget>>
+
+<<widget "beachnight1">>
+	<<beastNEWinit 1 dog>>
+	<<if $monster is 1>>
+		어둠 속에서 <<beasttype>>【이가】 나타난다. 더부룩하게 털이 자란 <<bhis>> 몸이 야만적인 분위기를 풍긴다. <<bHe>>【은는】 <<bhis>> 송곳니를 드러내며, <span class="red">굶주림으로 번뜩이는 눈</span>으로 당신을 쳐다본다.
+	<<else>>
+		야생동물 같은 <<beasttype>>【이가】 이빨을 드러내고 굶주림으로 번뜩이는 눈을 한 채 어둠 속에서 나타난다.
+	<</if>>
+	<br><br>
+	<!-- Modified for Beast People -->
+	<<if $monster is 1 or $settings.bestialityEnabled>>
+		<<link [[다음|Beach Night Dog]]>><<set $eventskip to 1>><<set $molestationstart to 1>><</link>>
+		<br>
+	<<else>>
+		당신은 간신히 도망치지만, 상처를 입고 만다.<<beastescape>>
+		<br><br>
+		<<destinationBeach "다음">><<endevent>><<set $eventskip to 1>><</destinationBeach>>
+	<</if>>
+<</widget>>
+
+<<widget "beachnight2">>
+	<<generate1>>사방이 너무 어두워서, 모래 위에 누워있던 <<person1>><<person>>【이가】 당신의 발목을 붙잡아 바닥으로 넘어뜨릴 때까지 눈치채지 못했다.
+	<br><br>
+	<<link [[다음|Beach Night Molestation]]>><<set $molestationstart to 1>><</link>>
+<</widget>>
+
+<<widget "beachex1">>
+	<<generatey1>>한 <<person1>><<person>>【이가】 불안해 보이는 당신을 발견하고는 소리친다, <<catcalllewd>> 그 소리에 고개를 돌린 다른 사람들에 의해 당신은 순식간에 시선의 중심이 된다.
+	<<if $panicattacks gte 1>>
+		당신은 압도적인 불안감에 휩싸인다. 이성적인 생각을 잃은 채 조롱 섞인 웃음소리에 쫓기며 무리에게서 달아나는 것 말고는 아무것도 할 수 없다.
+		<<fameexhibitionism 30>><<gstress>><<gtrauma>><<stress 6>><<trauma 6>>
+		<br><br>
+		공포심이 사그라졌을 때 즈음, 당신은 탈의실 안쪽 벽에 털썩 주저앉아 있는 자신을 발견한다.
+		<br><br>
+		<<link [[탈의실|Changing Room]]>><<endevent>><</link>>
+	<<else>>
+		<<gstress>><<gtrauma>><<stress 6>><<trauma 6>>
+		<br><br>
+		<<link [[탈의실|Beach Exhibition]]>><<set $phase to 0>><</link>>
+		<br>
+		<<link [[도움을 청한다|Beach Exhibition]]>><<set $phase to 1>><</link>>
+	<</if>>
+<</widget>>
+
+<<widget "beachex2">>
+	<<generatey1>><<person1>><<person>>【이가】 이 위태로운 상태의 당신을 발견하곤 <<his>> 친구들을 부른다. 당신은 순식간에 포위된다. <<person>>【이가】 말한다. "여기 누드 비치 아닌 거 알지? 경찰에 신고해야 할 거 같은데." <<he>>【이가】 마치 큰 소리를 지르려는 듯 숨을 크게 들이켜자 당신은 곤경에 빠진 자신에게 시선이 더 몰릴 거란 예상에 몸을 움츠린다. 하지만 그 대신, <<he>>【와과】 <<his>> 친구들은 조소 섞인 웃음을 터뜨린다. "아니면, 내가 옷 같은 걸 줘서 도와줄 수도 있고. 당연히, 공짜는 아니지. 무릎 꿇어."
+	<<fameexhibitionism 20>>
+	<br><br>
+	<<if hasSexStat("promiscuity", 3)>>
+		<<link [[따른다|Beach Exhibit Molestation]]>><<set $phase to 1>><<set $sexstart to 1>><</link>><<promiscuous3>>
+		<br>
+	<<elseif $uncomfortable.prostituting is false>>
+		<<set _desperateaction to 2>>
+		<<link [[마지못해 따른다|Beach Exhibit Molestation]]>><<set $desperateaction to _desperateaction>><<set $phase to 1>><<set $sexstart to 1>><</link>><<promiscuous3>>
+		<br>
+	<</if>>
+	<<link [[거부한다|Beach Exhibit Molestation]]>><<set $phase to 0>><<set $molestationstart to 1>><</link>>
+	<br>
+<</widget>>
+
+<<widget "removebeachlower">><<silently>>
+	<<if _args[0] is 1>>
+		<<set $_pulltense to "고">>
+	<<elseif _args[0] is 2>>
+		<<set $_pulltense to "며">>
+	<<else>>
+		<<set $_pulltense to "고">>
+	<</if>>
+
+	/* This should include cases for every lower clothing in the types Town, Beach, Warm,
+	schoolSwim, and Cold. Essentially, everything an NPC on the beach can be wearing,
+	according to the "Beach" case for the widget "generateNPCClothes" */
+	<<switch $NPCList[$index].clothes.lower.name>>
+		<<case "shorts" "trousers" "tracksuit bottoms" "slacks" "jeans" "khakis" "swim shorts" "board shorts" "boyshorts" "jorts" "sweatpants" "school swim shorts">>
+			<<set $_text_output to "<<his>> $NPCList[$index].clothes.lower.name【을를】 끌어내리$_pulltense">>
+		<<case "bikini bottoms" "microkini bottoms" "school swimsuit bottoms">>
+			<<set $_text_output to "<<his>> $NPCList[$index].clothes.lower.name【을를】 옆으로 젖히$_pulltense">>
+		<<case "sundress skirt" "skirt" "miniskirt">>
+			<<set $_text_output to "<<his>> $NPCList[$index].clothes.lower.name【을를】 걷어 올리$_pulltense">>
+		<<default>>
+			<<if $pronoun is "f">>
+				<<set $_text_output to "<<his>> 비키니 하의를 옆으로 젖히$_pulltense">>
+			<<else>>
+				<<set $_text_output to "<<his>> 반바지를 끌어내리$_pulltense">>
+			<</if>>
+	<</switch>>
+<</silently>><<print $_text_output>><</widget>>
+
+<<widget "removesbeachlower">>
+	<<removebeachlower 1>>
+<</widget>>
+
+<<widget "removingbeachlower">>
+	<<removebeachlower 2>>
+<</widget>>
+
+<<widget "asktomeasurephallus">>
+	<<if $speech_attitude is "meek">>
+		<<set $_requestA to [
+			"이런 부탁을 한다는 게 어색하게 느껴진다.",
+			"말을 꺼내기도 전에 얼굴이 붉어지는 게 느껴진다.",
+			"이런 부탁을 하면서 <<him>>【을를】 똑바로 쳐다볼 수가 없다."
+		]>>
+		<<set $_requestB to [
+			"\"ㅎ-혹시 이 줄자로 <<personpenis>> 길이 좀 재봐도 될까요?\" 당신은 묻는다.",
+			"\"ㅈ-제가 이 줄자로 당신의 <<personpenis>>【을를】 재봐도 괜찮을까요?\" 당신은 묻는다.",
+			"\"ㄱ-괜찮으시다면 이 줄자로 당신의 <<personpenis>> 길이를 좀 재도 될까요?\" 당신은 묻는다."
+		]>>
+		<<set $_requestC to [
+			"\"과학 프로젝트 중이라서요.\"",
+			"\"제 과학 프로젝트에 필요해서요.\"",
+			"\"과학 프로젝트에 데이터가 필요해서요.\""
+		]>>
+
+		<<print either($_requestA)>> <<print either($_requestB)>> <<print either($_requestC)>>
+	<<elseif $speech_attitude is "bratty">>
+		<<set $_requestA to [
+			"\"당신의 <<personpenis>> 길이를 좀 잴게요,\" 당신은 말한다.",
+			"\"당신의 <<personpenis>> 길이를 잴 겁니다,\" 당신은 말한다.",
+			"\"<<personpenis>> 치수를 재볼래요?\" 당신이 묻는다."
+		]>>
+		<<set $_requestB to [
+			"\"과학을 위해서요.\"",
+			"\"과학 프로젝트에 데이터가 필요해서요.\"",
+			"\"물론 과학적인 목적을 위해서죠.\""
+		]>>
+
+		<<print either($_requestA)>> <<print either($_requestB)>>
+	<<else>>
+		<<set $_requestA to [
+			"\"안녕하세요,\" 당신은 말한다.",
+			"\"실례합니다,\" 당신은 말한다.",
+			"\"안녕하세요,\" 당신은 가볍게 손을 흔들며 말한다."
+		]>>
+		<<set $_requestB to [
+			"\"과학 프로젝트를 위해 당신의 <<personpenis>> 길이를 재봐도 될까요?\"",
+			"\"당신의 <<personpenis>> 길이를 재게 해주실 수 있나요? 과학 프로젝트를 하고 있어서요.\"",
+			"\"학교에서 과학 프로젝트를 하고 있어요. 이 줄자로 당신의 <<personpenis>> 길이를 재봐도 될까요?\""
+		]>>
+
+		<<print either($_requestA)>> <<print either($_requestB)>>
+	<</if>>
+	<<promiscuity3>>
+<</widget>>
+
+<<widget "receivephallusdata">>
+	<<set $sciencephallus += 1>>
+	<<if $NPCList[$index].penis isnot "none">>
+		<<set $sciencephalluspenis += 1>>
+	<<else>>
+		<<set $sciencephallusclit += 1>>
+	<</if>>
+	<span class="gold">측정한 <<personpenis>> 치수는 방이나 학교 도서관에서 프로젝트에 추가할 수 있습니다.</span>
+<</widget>>
+
+:: Widgets Events Beach [widget]
+/* TODO: replace with eventpool */
+<<widget "eventsbeach">>
+	<<set $dangerevent to random(1, 100)>>
+	<<if Time.dayState is "night">>
+		<<if $dangerevent lte 15>>
+			<<beachnight1>>
+		<<elseif $dangerevent lte 30>>
+			<<beachnight2>>
+		<<elseif $dangerevent lte 100>>
+			<<beachday4>>
+		<</if>>
+	<<elseif $exposed gte 1>>
+		<<if $dangerevent lte 80>>
+			<<beachex1>>
+		<<elseif $dangerevent lte 100>>
+			<<beachex2>>
+		<</if>>
+	<<else>>
+		<<if $dangerevent lte 10>>
+			<<beachday1>>
+		<<elseif $dangerevent lte 20 and !$worn.lower.type.includes("naked")>>
+			<<beachday2>>
+		<<elseif $dangerevent lte 50>>
+			<<beachday3>>
+		<<elseif $dangerevent lte 70>>
+			<<beachday4>>
+		<<elseif $dangerevent lte 90>>
+			<<beachday5>>
+		<<elseif $dangerevent lte 100>>
+			<<beachday6>>
+		<</if>>
+	<</if>>
+<</widget>>
+
+<<widget "eventsbeachphallus">>
+	<<cleareventpool>><<rng>>
+	<<generate1>><<person1>>당신은 노출이 심한 수영복을 입은 사람이나, 아니면 당신의 부탁을 들어줄 만해 보이는 사람을 찾아 해변을 훑어본다.
+	<br><br>
+	/* Note: This conditional is intended to be identical to the conditional that gatekeeps the [Find participant for phallus project] link in :: Beach */
+	<<if $scienceproject is "ongoing" and $sciencephallusknown is 1 and $sciencephallus lt 10 and Time.dayState isnot "night" and Weather.precipitation is "none" and $exposed lte 0>>
+		<<addinlineevent "beach_phallus_flex">>
+			<<generatep2>>당신은 <<person2>><<person>>에게 잘 보이려고 <<his>> 몸을 과시하는 <<person>>【을를】 발견한다. 영 통하지 않는 눈치다.
+			<br><br>
+			<<person1>>
+			<<socialiseicon "ask">><<link [[<<personpenis>>【을를】 재봐도 되냐고 묻는다|Beach Phallus Flex]]>><</link>><<promiscuous3>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "beach_phallus_pair">>
+			<<generatep2>>손을 잡고 있는 <<fullGroup>>【이가】 보인다.
+			<br><br>
+			<<person1>>
+			<<socialiseicon "ask">><<link [[<<personpenis>>【을를】 재봐도 되냐고 묻는다|Beach Phallus Pair]]>><</link>><<promiscuous3>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "beach_phallus_beggar">>
+			이 무리 저 무리와 사람들을 오가며 돈을 구걸하는 <<person>>【이가】 보인다.
+			<br><br>
+			<<socialiseicon "ask">><<link [[<<personpenis>>【을를】 재봐도 되냐고 묻는다|Beach Phallus Beggar]]>><</link>><<promiscuous3>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "beach_phallus_shy">>
+			모래사장에 홀로 앉아 있는 <<person>>【이가】 보인다.
+			<br><br>
+			<<socialiseicon "ask">><<link [[<<personpenis>>【을를】 재봐도 되냐고 묻는다|Beach Phallus Shy]]>><</link>><<promiscuous3>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "beach_phallus_scan">>
+			한 손으로 햇빛을 가리며 해변을 훑어보고 있는 <<person>>【이가】 보인다.
+			<br><br>
+			<<socialiseicon "ask">><<link [[<<personpenis>>【을를】 재봐도 되냐고 묻는다|Beach Phallus Scan]]>><</link>><<promiscuous3>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "beach_phallus_insecurity">>
+			군중들로부터 약간 떨어져서, 혼자 앉아 있는 <<person>>【이가】 보인다.
+			<br><br>
+			<<socialiseicon "ask">><<link [[<<personpenis>>【을를】 재봐도 되냐고 묻는다|Beach Phallus Insecurity]]>><</link>><<promiscuous3>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "beach_phallus_confidence">>
+			피크닉 테이블에 느긋하게 앉아 있는 <<person>>【이가】 보인다.
+			<br><br>
+			<<socialiseicon "ask">><<link [[<<personpenis>>【을를】 재봐도 되냐고 묻는다|Beach Phallus Confidence]]>><</link>><<promiscuous3>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "beach_phallus_horizon">>
+			발목까지 오는 파도 속에 서서 지평선을 응시하고 있는 <<person>>【이가】 보인다.
+			<br><br>
+			<<socialiseicon "ask">><<link [[<<personpenis>>【을를】 재봐도 되냐고 묻는다|Beach Phallus Horizon]]>><</link>><<promiscuous3>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "beach_phallus_wading">>
+			<<npcClothesType $NPCList[$index] "beach">>
+			얕은 물에서 등을 대고 물에 떠 있는 <<person>>【이가】 보인다.
+			<br><br>
+			<<socialiseicon "ask">><<link [[<<personpenis>>【을를】 재봐도 되냐고 묻는다|Beach Phallus Wading]]>><</link>><<promiscuous3>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "beach_phallus_birdwatcher">>
+			절벽 중 한 곳에 서 있는 <<person>>【이가】 보인다.
+			<br><br>
+			<<socialiseicon "ask">><<link [[<<personpenis>>【을를】 재봐도 되냐고 묻는다|Beach Phallus Birdwatcher]]>><</link>><<promiscuous3>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "beach_phallus_prude">>
+			혼자 앉아 바람을 즐기는 듯한 <<person>>【이가】 보인다.
+			<br><br>
+			<<socialiseicon "ask">><<link [[<<personpenis>>【을를】 재봐도 되냐고 묻는다|Beach Phallus Prude]]>><</link>><<promiscuous3>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "beach_phallus_old">>
+			해변을 따라 산책하고 있는 나이든 <<personsimple>>【이가】 보인다.
+			<br><br>
+			<<socialiseicon "ask">><<link [[<<personpenis>>【을를】 재봐도 되냐고 묻는다|Beach Phallus Old]]>><</link>><<promiscuous3>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "beach_phallus_dog">>
+			/* SevenSeriousShadows: Okay, so what I'm doing here is a little convoluted, so let me explain.
+			To generate a beast, you either need <<beastNEWinit>> which REQUIRES there to be no existing NPCs generated,
+			or you use <<generateBEAST>> to do it how you would normally use a <<generate2>>, <<generate3>>, etc..
+
+			If you use <<beastNEWinit>> and then generate any humans afterwards, any <<bhim>>, <<bhis>>, etc. calls will
+			break, because they use $enemyno index to target the correct beast NPC. If there are humans, that index is now
+			suddenly pointing at the wrong beast or (as in this case) at a human. On the other hand, if you have humans
+			already generated and then use <<generateBEAST>>, then any <<beasttype>> calls will break, since <<beasttype>>
+			assumes all beasts are generated at $NPCList[0], which in this case they are not.
+
+			The conclusion is that if you try to generate a human-beast hybrid scene, either <<bhim>> or <<beasttype>> will
+			break, unavoidably. This, to use a technical term, is fucking annoying.
+
+			You can use <<bhim 0-5>> and <<beasttype 0>> as needed to get around each error, but that's not the main issue
+			in this scene. My issue is that I want the PC to fuck the beast and NOT the humans, which mean the beast needs
+			to be in $NPCList[0]. So I either have to use <<beastNEWinit>>, or I need to use <<saveNPC>> and <<loadNPC>> to
+			perform musical chairs with the $NPCList when it comes time to fuck the beast.
+
+			Since I use far more <<beasttype>> calls than <<bhim>> calls and have no love for musical chairs, I've decided
+			that I'll let <<bhim>> be broken in this scene, and just use <<bhim 0>> as required. Until this gets reworked,
+			this is my best option.
+
+			So in case you were wondering what ungodly crimes against code I'm doing with Beach Phallus Dog, now you know. */
+
+			<<clearnpc>><<beastNEWinit 1 dog>><<generate2>>
+			<<person2>>해변을 따라 <<his>> <<beasttype>>【와과】 산책하고 있는 <<person>>【이가】 보인다.
+			<br><br>
+			<<socialiseicon "ask">><<link [[<<personpenis>>【을를】 재봐도 되냐고 묻는다|Beach Phallus Dog]]>><</link>><<promiscuous3>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "beach_phallus_masturbator">>
+			모래사장에 비스듬히 누워 반쯤 가려진 채로 있는 <<person>>【이가】 보인다.
+			<br><br>
+			<<socialiseicon "ask">><<link [[<<personpenis>>【을를】 재봐도 되냐고 묻는다|Beach Phallus Masturbator]]>><</link>><<promiscuous3>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "beach_phallus_jogger">>
+			<<npcClothesName $NPCList[$index] "townTrack">>
+			해변을 따라 조깅하고 있는 트레이닝복 차림의 <<person>>【이가】 보인다.
+			<br><br>
+			<<socialiseicon "ask">><<link [[<<personpenis>>【을를】 재봐도 되냐고 묻는다|Beach Phallus Jogger]]>><</link>><<promiscuous3>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "beach_phallus_blogger">>
+			<<clearnpc>><<generatey1>>
+			바다를 등지고 해변에서 셀카를 찍고 있는 <<person1>><<person>>【이가】 보인다.
+			<br><br>
+			<<socialiseicon "ask">><<link [[<<personpenis>>【을를】 재봐도 되냐고 묻는다|Beach Phallus Blogger]]>><</link>><<promiscuous3>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "beach_phallus_friends">>
+			<<generate2>>
+			파라솔 밑에서 수다를 떨고 있는 <<fullGroup>>【이가】 보인다.
+			<br><br>
+			<<person1>>
+			<<socialiseicon "ask">><<link [[<<personpenis>>【을를】 재봐도 되냐고 묻는다|Beach Phallus Friends]]>><</link>><<promiscuous3>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "beach_phallus_drinker">>
+			벤치에 앉아 맥주병을 홀짝이고 있는 <<person>>【이가】 보인다.
+			<br><br>
+			<<socialiseicon "ask">><<link [[<<personpenis>>【을를】 재봐도 되냐고 묻는다|Beach Phallus Drinker]]>><</link>><<promiscuous3>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "beach_phallus_police">>
+			<<clearnpc>><<generatePolice 1>>
+			경찰 제복을 입고 근처를 어슬렁거리는 <<person1>><<person>>【이가】 보인다.
+			<br><br>
+			<<person1>>
+			<<socialiseicon "ask">><<link [[<<personpenis>>【을를】 재봐도 되냐고 묻는다|Beach Phallus Police]]>><</link>><<promiscuous3>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "beach_phallus_swimmer">>
+			<<npcClothesType $NPCList[$index] "beach">>
+			해안 가까이에서 해변과 평행하게 수영하고 있는 <<person>>【이가】 보인다.
+			<br><br>
+			<<socialiseicon "ask">><<link [[<<personpenis>>【을를】 재봐도 되냐고 묻는다|Beach Phallus Swimmer]]>><</link>><<promiscuous3>>
+			<br>
+		<</addinlineevent>>
+
+		<<runeventpool>>
+		<<investigateicon>><<link [[다른 사람을 찾는다 (0:15)|Beach Phallus]]>><<endevent>><<pass 15>><</link>>
+		<br>
+	<<else>>
+		접근할 만한 사람이 보이지 않는다.
+		<br><br>
+	<</if>>
+	<<getouticon>><<link [[그만둔다|Beach]]>><<pass 10>><<endevent>><</link>>
+	<br>
+<</widget>>
+
+:: Widgets Passout Beach [widget]
+<<widget "passoutbeach">>
+	<<if isPregnancyEnding()>>
+		<<if $location is "beach">>
+			<<pregnancyPassout "beach">>
+		<<else>>
+			<<pregnancyPassout "sea">>
+		<</if>>
+	<<else>>
+		<<link [[모든 것이 어둠에 잠긴다...|Passout Beach]]>><</link>>
+	<</if>>
+<</widget>>
+
+:: Widgets Beach Strip Events [widget]
+<<widget "beach_strip_events">>
+	<<cleareventpool>>
+	<<if $cool gte 160>>
+		<<addinlineevent "beach_strip_group_1" 0.5>>
+			<<generate1>><<person1>>
+			<<fameexhibitionism 10>>
+
+			물장구를 치고 있을 때, 당신 또래의 한 무리가 당신을 빤히 쳐다보는 것을 알아차린다. 그들의 이름은 모르지만, 학교에서 본 얼굴들이다. 당신은 해변에 특이한 성기를 가진 알몸의 <<girl>><<if $player.penisExist and $player.vaginaExist>> <<schoolrep herm 1>><</if>>【이가】 있다는 이야기가 금방 퍼질 거라고 짐작한다.
+			<br><br>
+
+			한 <<person>>【이가】 당신에게 소리친다. 구조대원이다. "옷을 좀 입으셔야겠습니다," <<he>>【이가】 말한다. "여기는 누드 비치가 아닙니다."
+			<br><br>
+
+			당신이 대답하기도 전에, 학생 무리가 수영복을 벗어 던지고 물을 향해 뛰어가는 모습이 보인다.
+			<br><br>
+
+			"정말 그렇게 생각하세요?" 당신이 말한다.
+			<br><br>
+
+			구조대원은 뒤를 돌아보고 벌거벗은 급우들이 물속으로 들어가는 것을 본다. <<He>>【은는】 혼란스러워하며 쳐다보다 무력하게 호루라기를 분다. 모두가 <<him>>【을를】 무시한다. 머지않아 해변의 다른 사람들도 일광욕을 하려고 수영복을 벗는다. 결국 구조대원은 포기하고 <<his>> 초소로 돌아간다.
+			<br><br>
+
+			<<link [[다음|Beach Strip Group 2]]>><<endevent>><</link>>
+		<</addinlineevent>>
+		<<addinlineevent "beach_strip_party_1" 0.7>>
+			<<fameexhibitionism 10>>
+
+			당신은 해변에서 완전히 발가벗은 채, 모두에게 모든 것을 드러내고 있다. 수십 번의 환호, 휘파람, 그리고 몇몇 화난 외침도 들었다. 대부분은 벌거벗은 당신의 몸을 대놓고 구경하는 것에 만족한다.
+			<br><br>
+
+			한 <<generatey1>><<person1>><<person>>【이가】 <<his>> 친구들과 이야기를 나누며 당신을 가리키는 것을 본다. 그들은 다 같이 모여 맥주와 스낵을 나누고 있다. 마침내, 그 <<person1>><<person>>【이가】 일어나 당신을 향해 걸어온다.
+			<br><br>
+
+			"안녕," 몇 피트 거리에 왔을 때 <<he>>【이가】 말한다.
+			<br><br>
+
+			"안녕," 당신은 자신을 가리고 싶은 충동을 억누르며 대답한다. 해변에 있는 모든 사람에게 자랑스럽게 몸을 뽐내고 있었지만, 누군가 다가오니 의식되는 건 어쩔 수 없다.
+			<br><br>
+
+			"너 꽤 쿨해 보이네," <<he>>【이가】 말한다. "우리랑 같이 맥주랑 음식 좀 먹지 않을래?"
+			<br><br>
+
+			당신은 <<him>>【을를】 지나쳐 <<his>> 친구들을 바라본다. 그들은 모두 기대에 찬 눈으로 당신을 보고 있다. 그들 중 누구에게 악의가 있는지 당신은 알 수 없다.
+			<br><br>
+
+			<<link [[동의한다 (0:10)|Beach Strip Party Agree 1]]>><<pass 10>><</link>>
+			<<if !playerBellyVisible() and !(playerIsPregnant() and playerAwareTheyArePregnant())>>
+				<<gdrunk>>
+			<</if>>
+			<br>
+			<<link [[거절한다|Beach Strip Party Decline]]>><</link>>
+		<</addinlineevent>>
+	<</if>>
+	<<addinlineevent "beach_strip_lifeguard" 0.7>>
+		호루라기 소리가 허공을 찌른다. 고개를 돌려보니 한 구조대원이 당신을 향해 달려오고 있다.
+
+		<<generate1>><<person1>>
+
+		<<He>>【은는】 당신 앞에 멈춰 서지만, 눈길은 피한다. "죄송하지만 몸을 가려주셔야겠습니다. 여긴 누드 비치가 아니니까요."
+		<br><br>
+
+		<<link [[따른다|Beach Strip Comply]]>><</link>>
+		<br>
+		<<link [[거부한다 (1:00)|Beach Strip Refuse]]>><<stress -12>><<trauma -6>><<crimeUp 50 "exposure">><<pass 1 hour>><</link>><<crime "exposure">><<ltrauma>><<lstress>>
+		<br>
+		<<if hasSexStat("promiscuity", 2)>>
+		<<link [[유혹한다|Beach Strip Seduce]]>><</link>><<promiscuous2>>
+		<br>
+		<</if>>
+	<</addinlineevent>>
+	<<addinlineevent "beach_strip_camera" 0.7>>
+		당신은 모래사장을 거닐며 파도에 물장구를 친다. 햇살이 맨살에 부드럽고 따뜻하게 느껴진다.
+		<br><br>
+		<<generate1>><<person1>>
+		조금 한적한 해변 쪽에서, 비싸 보이는 카메라를 준비하느라 서두르는 한 <<person>> 근처를 지나게 된다.
+
+		<br><br>
+		<<if $uncomfortable.nude is true>>
+			<<link [[우회한다|Beach Strip End]]>><</link>>
+			<br>
+		<</if>>
+		<<link [[지나친다|Beach Strip Camera Snap]]>><<set $phase to 0>><</link>>
+		<br>
+		<<if $uncomfortable.nude is false>>
+			<<link [[멈춰서 포즈를 취한다|Beach Strip Camera Snap]]>><<set $phase to 1>><</link>><<exhibitionist5>>
+			<br>
+			<<if $arousal gte $arousalmax / 2>>
+				<<link [[멈춰서 야한 포즈를 취한다|Beach Strip Camera Snap]]>><<set $phase to 2>><</link>><<exhibitionist5>><<promiscuous1>>
+			<br>
+			<</if>>
+		<</if>>
+	<</addinlineevent>>
+	<<addinlineevent "beach_strip_next" 0.7>>
+		<<location "beach">><<effects>>
+		당신은 모래사장을 뛰어가며 파도를 가른다. 햇살이 맨살에 따스하고 부드럽다. 하지만 얼마 후 바람이 거세지면서 추위로 몸이 떨린다. 일단 옷을 입기로 한다. 내일도 날은 있으니까.
+		<br><br>
+		<<endevent>>
+		<<if $rng % 2 == 0>>
+			<<link [[다음|Beach]]>><<clotheson>><</link>>
+		<<else>>
+			<<link [[다음|Beach Clothes Stolen 1]]>><</link>>
+		<</if>>
+		<br>
+	<</addinlineevent>>
+	<<runeventpool>>
+<</widget>>
+<<widget "destinationBeach" container>>
+	<<set _linkText to _args[0] ?? "Next">>
+	<<if $bus is "fishingBeach">>
+		<<link [[_linkText|Fishing Beach Wait]]>><<= _contents>><</link>>
+	<<else>>
+		<<link [[_linkText|Beach]]>><<= _contents>><</link>>
+	<</if>>
+<</widget>>

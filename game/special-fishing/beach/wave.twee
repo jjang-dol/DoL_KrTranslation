@@ -1,0 +1,19 @@
+:: Fishing Beach Wave
+<<if $rng gte 80>>
+	<<wetLower 120>>
+	<<effects>>
+
+	<<if $worn.lower.type.includes("naked")>>
+		큰 파도가 예상보다 더 멀리 해변 위로 밀려와, 벌거벗은 두 다리에 차갑게 부서진다.
+	<<else>>
+		큰 파도가 예상보다 더 멀리 해변 위로 밀려와, 다리 주위로 부서지며 당신의 $worn.lower.name【을를】 흠뻑 적신다.
+	<</if>>
+<<else>>
+	<<wetAll>>
+	<<effects>>
+
+	큰 파도가 해변으로 거세게 밀려와 피할 새도 없이 당신을 덮치며 온몸을 흠뻑 적신다.
+<</if>>
+<br><br>
+
+<<link [[다음|Fishing Beach Wait]]>><</link>>

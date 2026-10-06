@@ -1,0 +1,885 @@
+:: Connudatus Street
+
+<<set $outside to 1>><<set $location to "town">><<effects>><<set $bus to "connudatus">><<getTarget true>>
+당신은 콘누다투스 가에 있다. 수많은 클럽과 바, 레스토랑이 있어 밤에는 마을에서 가장 활기찬 장소다. 낮에는 다양한 상품을 파는 행상인들이 거리에 줄지어 있다.
+<<if Time.dayState is "day">>
+	<<if Weather.precipitation is "rain">>
+		쇼핑객들이 지붕이 있는 가판대 주위로 모여든다.
+	<<elseif Weather.isFreezing>>
+		거리는 추위에 대비해 두툼하게 껴입은 쇼핑객들로 붐빈다.
+	<<else>>
+		거리는 쇼핑객들로 붐빈다.
+	<</if>>
+<<elseif Time.dayState is "dawn">>
+	<<if Weather.precipitation is "rain">>
+		상인들이 비를 피하기 위해 서둘러 지붕을 올리며 가판대를 설치하고 있다.
+	<<elseif Weather.isFreezing>>
+		두툼하게 껴입은 상인들이 가판대를 설치하고 있다.
+	<<else>>
+		상인들이 가판대를 설치하고 있다.
+	<</if>>
+<<elseif Time.dayState is "dusk">>
+	<<if Weather.precipitation is "rain">>
+		상인들이 비를 피하기 위해 서둘러 가판대를 철거하고 있다.
+	<<elseif Weather.isFreezing>>
+		상인들이 추위를 피하고 싶은 마음에 서둘러 가판대를 철거하고 있다.
+	<<else>>
+		상인들이 가판대를 철거하고 있다. 레스토랑은 만원이다.
+	<</if>>
+<<elseif Time.dayState is "night">>
+	<<if Weather.precipitation is "rain">>
+		비에도 아랑곳하지 않고 밤문화가 한창이다.
+	<<elseif Weather.isFreezing>>
+		추위에도 아랑곳하지 않고 밤문화가 한창이다.
+	<<else>>
+		밤문화가 한창이다. 머리 위로 네온사인이 빛난다.
+	<</if>>
+<</if>>
+<<streeteffects>>
+<br><br>
+
+<<if $exposed gte 1>>
+	<<if $exposed is 1 and $connudatus_stripped gte 1>>
+		거리의 절반 정도가 당신이 시작한 유행에 따라 속옷 차림으로 벗었다. 당신의 옷차림은 별다를 게 없다.
+		<br><br>
+	<<else>>
+		<<exhibitionism "street">>
+	<</if>>
+<</if>>
+<<if $arousal gte $arousalmax>>
+	<<orgasmstreet>>
+<</if>>
+<<if currentSkillValue('skulduggery') gte 200 and $skulduggeryDintro isnot 1>>
+	<<set $skulduggeryDintro to 1>>
+	사회의 규칙을 어겨본 경험 덕분에 거리를 새로운 시각으로 바라볼 수 있게 된다. 수많은 사람들이 귀중품을 가까이, 그리고 허술하게 지니고 있다. <span class="gold">이제 콘누다투스 가에서 사람들의 돈을 훔칠 수 있습니다.</span>
+	<br><br>
+<</if>>
+<<if $stress gte $stressmax and !$possessed>>
+	<<passoutstreet>>
+<<elseif $bartend_info is 1 and !$possessed>>
+	<<set $bartend_info to 2>>
+	<<generate1>><<person1>>
+	"이봐, <<girl>>." 클럽 옆에서 목소리가 들린다. <<person>>【이가】 벽에 기대어 있다. "데릴이 널 기다리라고 했어. 곧 곤란한 일이 생길 테니 집까지 바래다줄 사람이 필요할 거라더군."
+	<br><br>
+
+	<<link [[받아들인다 (0:15)|Connudatus VIP Walk]]>><<pass 15>><</link>>
+	<br>
+	<<link [[거절한다|Connudatus VIP Refuse]]>><</link>>
+	<br>
+<<elseif $per_npc.bartend and !$possessed>>
+	<<loadNPC 0 bartend>><<person1>>
+	<<if $rng gte 81>>
+		<<generate2>><<generate3>>
+		어둠 속에서 세 명의 인영이 나타나 당신의 길을 막는다. 그중 한 명이 가로등 불빛 아래로 걸어 나온다. <span class="red">클럽에서 당신을 괴롭혔던 그 <<person>>【이】다.</span>
+		<br><br>
+		"이해가 안 가네." <<he>>【이가】 으르렁거린다. "너 같은 쓰레기가 감히 날 거부해? 네 분수를 똑똑히 알게 해 주지. 가르치는 걸 도와줄 친구들도 데려왔거든." <<He>>【이가】 당신에게 달려든다.
+		<br><br>
+	<<elseif $rng gte 51>>
+		<<generate2>>
+		어둠 속에서 두 명의 인영이 나타나 당신의 길을 막는다. 그중 한 명이 가로등 불빛 아래로 걸어 나온다. <span class="red">클럽에서 당신을 괴롭혔던 그 <<person>>【이】다.</span>
+		<br><br>
+		"이해가 안 가네." <<he>>【이가】 으르렁거린다. "너 같은 쓰레기가 감히 날 거부해? 네 분수를 똑똑히 알게 해 주지. 가르치는 걸 도와줄 친구도 데려왔거든." <<He>>【이가】 당신에게 달려든다.
+		<br><br>
+	<<else>>
+		어둠 속에서 한 인영이 나타나 당신의 길을 막는다. <<He>>【이가】 가로등 불빛 아래로 걸어 나온다. <span class="red">클럽에서 당신을 괴롭혔던 그 <<person>>【이】다.</span>
+		<br><br>
+
+		"이해가 안 가네." <<he>>【이가】 으르렁거린다. "너 같은 쓰레기가 감히 날 거부해? 네 분수를 똑똑히 알게 해 주지." <<He>>【이가】 당신에게 달려든다.
+		<br><br>
+	<</if>>
+	<<link [[다음|Connudatus VIP Rape]]>><<set $molestationstart to 1>><</link>>
+	<br>
+<<elseif $brothel_rivalry is undefined and C.npc.Darryl.love gte 10 and !$possessed>>
+
+	차가 당신 앞에서 끼익 소리를 내며 멈춘다. 문이 활짝 열리고, <span class="pink">한 쌍의 억센 팔이 당신을 차 안으로 끌어당긴다.</span>
+	<br><br>
+
+	<<link [[다음|Connudatus Briar Abduct]]>><<set $brothel_rivalry to 1>><<set $brothel_rivalry_timer to 7>><</link>>
+	<br>
+
+<<elseif $rng gte 96 and Time.dayState is "day" and $eventskip isnot 1>>
+	<<generatey1>><<person1>>
+	시장에서 소란과 함께 고함이 터져 나온다. 한 노점상이 방금 <<person>>【을를】 붙잡았다.
+	<<if $rng % 2 == 0>>당신이 고아원에서 본 적 있는 사람이다.<<set $phase to 0>>
+	<<else>>당신이 학교에서 본 적 있는 사람이다.<<set $phase to 10>>
+	<</if>> 그리고 <<him>>에게 불같이 화를 내며 소리치고 있다.
+	<br><br>
+	<<link [[도우려 해본다 (0:05)|Market Street Urchin Help]]>><<pass 5>><</link>>
+	<br>
+	<<link [[무시한다|Connudatus Street]]>><<set $eventskip to 1>><<endevent>><</link>>
+	<br>
+<<elseif $rng gte 91 and Time.dayState isnot "night" and !$daily.fruitSell>>
+	<<set _pool to Object.keys(setup.foodstuff).filter(k => setup.foodstuff[k].tending and (setup.foodstuff[k].category is "fruit" and !setup.foodstuff[k].food?.tags?.includes("aphrodisiac")))>>
+	<<set $streetFruit to _pool.random()>>
+	<<set $daily.fruitSell to true>>
+
+	<<generate1>><<person1>>"거기 너! <<if $worn.upper isnot "naked">>그 <<= $worn.upper.colour ? setup.colourName($worn.upper.colour) : " ">> $worn.upper.name 입은 녀석!<</if>> 이리 와서 좀 도와줘!" 시장 근처에서 누군가 부르는 소리가 들린다.
+	<br><br>
+
+	돌아보니 한 <<person>>【이가】 당신을 향해 손을 흔들고 있다. <<his>> 다른 손에는 <<recipe_name $streetFruit plural>> 한 자루가 들려 있고, 발치에는 다른 농산물이 든 가방이 놓여 있다.
+	<br><br>
+
+	<<link [[다가간다|Fruit Street See]]>><</link>>
+	<br>
+	<<link [[떠난다|Fruit Street Leave]]>><</link>>
+	<br>
+<<else>>
+
+	<<if (dangerEvent() or $eventforced) and $eventskip is 0>>
+		<<eventsstreet>>
+	<<else>>
+		<<if $options.mapTop is true>>
+			<<map "connudatus">>
+			<br>
+		<</if>>
+		주요 장소
+		<br>
+		<<if Time.dayState isnot "dawn" and Time.dayState isnot "day">>
+			<<if $exposed gte 1 and $stripclubintro is 1>>
+				<<stripclubicon>><<link [[스트립 클럽 (0:02)|Strip Club Exposed]]>><<pass 2>><</link>>
+				<br>
+			<<elseif $exposed lte 0>>
+				<<stripclubicon>><<link [[스트립 클럽 (0:02)|Strip Club]]>><<pass 2>><</link>>
+				<br>
+			<</if>>
+		<</if>>
+		<<if Time.dayState isnot "dusk" and Time.dayState isnot "night" and Time.hour isnot 6>>
+			<<stripclubicon>><<link [[스트립 클럽 (0:01)|Strip Club Lock]]>><<pass 1>><</link>>
+			<br>
+		<<elseif Time.hour is 6>>
+			<<stripclubicon>><span class="blue">사람들이 클럽을 떠나고 있다.</span> 문 닫을 시간인 것 같다.
+			<br>
+		<</if>>
+		<<if $skulduggeryDintro is 1 and $exposed lte 0>>
+			<<crimeicon "mark">><<link [[먹잇감을 찾는다 (0:20)|Connudatus Street Thievery]]>><<pass 20>><<crimeUp 1 "petty">><</link>><<crime "petty">>
+			<br>
+		<</if>>
+		<<if Time.dayState is "dawn" and $exposed lte 0 and $daily.stallRented isnot 1>>
+			<<if $worn.face.type.includes("gag") and pcAreArmsBound("both")>>
+				<<stallicon>><span class="blue">재갈이 물려 있고 양팔이 묶인 상태에서는 가판대를 빌릴 수 없습니다.</span>
+				<br>
+			<<elseif $worn.face.type.includes("gag")>>
+				<<stallicon>><span class="blue">재갈이 물려 있는 동안에는 가판대를 빌릴 수 없습니다.</span>
+				<br>
+			<<elseif pcAreArmsBound("both")>>
+				<<stallicon>><span class="blue">양팔이 묶여 있는 동안에는 가판대를 빌릴 수 없습니다.</span>
+				<br>
+			<<elseif $money gte 1500>>
+				<<stallicon>><<link [[가판대를 대여한다 (0:20 £15)|Stall Rent]]>><</link>>
+				<br>
+			<<else>>
+				<<stallicon>><span class="blue">돈이 있다면 여기서 가판대를 빌릴 수 있습니다.</span>
+				<br>
+			<</if>>
+		<<elseif $daily.stallRented is 1 and Time.dayState isnot "night" and $exposed lte 0>>
+			<<if $worn.face.type.includes("gag") and pcAreArmsBound("both")>>
+				<<stallicon>><span class="blue">재갈이 물려 있고 양팔이 묶인 상태에서는 가판대를 볼 수 없습니다.</span>
+				<br>
+			<<elseif $worn.face.type.includes("gag")>>
+				<<stallicon>><span class="blue">재갈이 물려 있는 동안에는 가판대를 볼 수 없습니다.</span>
+				<br>
+			<<elseif pcAreArmsBound("both")>>
+				<<stallicon>><span class="blue">양팔이 묶여 있는 동안에는 가판대를 볼 수 없습니다.</span>
+				<br>
+			<<else>>
+				<<stallicon "open">><<link [[가판대를 관리한다 (0:20)|Stall]]>><<pass 20>><</link>>
+				<br>
+			<</if>>
+		<</if>>
+		<<if Time.hour gte 6 and Time.hour lte 20 and $exposed lte 0>>
+			<<stallicon "open">><<link [[시장을 둘러본다 (0:30)|Connudatus Markets]]>><<pass 30>><</link>>
+			<br>
+		<</if>>
+		<<if Time.dayState is "night" and $exposed gte 2 and hasSexStat("exhibitionism", 4) and $daily.ex.connudatus isnot 1>>
+			<<ind>><<link [[알몸 질주 (0:05)|Streak Naked]]>><<pass 5>><<set $daily.ex.connudatus to 1>><</link>><<exhibitionist4>>
+			<br>
+		<<elseif Time.dayState is "night" and $exposed gte 1 and hasSexStat("exhibitionism", 2) and $daily.ex.connudatus isnot 1>>
+			<<ind>><<link [[속옷 질주 (0:05)|Streak Undies]]>><<pass 5>><<set $daily.ex.connudatus to 1>><</link>><<exhibitionist2>>
+			<br>
+		<</if>>
+		<br>
+		<<if $exposed gte 1 and Time.dayState isnot "night">>
+		<<else>>
+			<<add_link "이동<br>">><<hideDisplay>>
+			<<barb>>
+			<<danube>>
+			<<cliff>>
+			<<wolf>>
+			<<if $exposed lte 0>>
+				<<buswait>>
+			<</if>>
+			<<loiter>>
+		<</if>>
+		<<add_link "<br>우회로<br>">><<hideDisplay>>
+		<<residential>>
+		<<commercial>>
+		<<stormdrain>>
+		<<displayLinks>>
+		<<if $options.mapTop isnot true>>
+			<br>
+			<<map "connudatus">>
+		<</if>>
+	<</if>>
+<</if>>
+<<set $eventskip to 0>>
+
+:: Connudatus VIP Rape
+<<if $molestationstart is 1>>
+	<<set $molestationstart to 0>>
+	<<controlloss>>
+	<<violence 1>>
+	<<neutral 1>>
+	<<molested>>
+	<<maninit>>
+	<<if Time.dayState isnot "night">><<enable_rescue>><</if>>
+<</if>>
+
+<<effects>>
+<<effectsman>>
+<<alarmstate>>
+<<man>>
+<<stateman>>
+<br><br>
+<<actionsman>>
+
+<<if _combatend>>
+	<span id="next"><<link [[다음|Connudatus VIP Rape Finish]]>><</link>></span><<nexttext>>
+<<else>>
+	<span id="next"><<link [[다음|Connudatus VIP Rape]]>><</link>></span><<nexttext>>
+<</if>>
+
+:: Connudatus VIP Rape Finish
+<<effects>>
+<<if $enemyarousal gte $enemyarousalmax>>
+	<<ejaculation>>
+	<<if $pain gte 100 and $willpowerpain is 0>>
+		"아직 안 끝났어, 이 걸레야." <<person1>><<person>>【이가】 <<his>> 코트 안으로 손을 뻗으며 말한다. <span class="red"><<He>>【은는】 재갈과 눈가리개를 꺼낸다.</span> 당신은 너무 다쳐서 저항할 수 없었고, <<he>>【은는】 당신의 입에 재갈을 억지로 물리고 머리에 둘러 묶는다. 아무것도 보이지 않는다. 이어서 <<he>>【은는】 당신의 팔을 등 뒤로 당겨 묶어버린다.
+		<<facewear "gag and blindfold">>
+		<<bind>>
+		<br><br>
+
+		"재밌게 놀아." <<he>>【이가】 웃으며 당신을 거리로 밀쳐낸다. <<he>>【이가】 멀어지는 소리가 들린다.
+		<br><br>
+
+		<<tearful>> 당신은 정신을 차리려고 애쓴다.
+		<br><br>
+
+		<<blindfoldintro>>
+
+		<<clotheson>>
+		<<endcombat>>
+		<<clearNPC bartend>>
+		<<set $eventskip to 1>>
+		<<destinationbondage>>
+
+	<<else>>
+		"아직 안 끝났어, 이 걸레야." <<person>>【이가】 <<his>> 코트 안으로 손을 뻗으며 말한다. <span class="red"><<He>>【은는】 재갈과 눈가리개를 꺼낸다.</span> <<He>>【은는】 당신의 입에 재갈을 억지로 물리려 하지만, <span class="green">당신은 몸을 숙여 간신히 피한다.</span>
+		<br><br>
+
+		<<tearful>> 당신은 안전한 곳으로 도망친다.
+		<br><br>
+
+		<<clotheson>>
+		<<endcombat>>
+		<<clearNPC bartend>>
+		<<destinationeventend>>
+	<</if>>
+<<elseif $enemyhealth lte 0>>
+
+	<<person1>><<person>>【은는】 발을 헛디뎌 거리로 넘어진다. 바로 그때 차 한 대가 다가온다. 차는 <<him>>【을를】 피하기 위해 방향을 틀다가 가로등과 충돌한다.
+	<br><br>
+
+	격분한 운전자가 차에서 내려 <<person>>에게 소리친다. <<tearful>> 당신은 이 기회를 틈타 안전한 곳으로 도망친다.
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+	<<clearNPC bartend>>
+	<<destinationeventend>>
+
+<<else>>
+	<<set $rescued += 1>>
+
+	차 한 대가 멈춰 서고, <<generate4>><<person4>><<person>>【이가】 내린다. "그 <<girl>>【을를】 내버려 둬." <<he>>【이가】 말한다. "안 그러면 맞을 줄 알아."
+	<br><br>
+	<<person1>><<person>>【은는】 분노에 차 <<person4>><<person>>【을를】 노려본다. "네가 뭔데 지랄이야?" <<he>>【이가】 당신을 놓아주고 그쪽으로 걸어가며 말한다.
+	<br><br>
+
+	<<tearful>> 당신은 이들이 소리치며 싸우는 틈을 타 안전한 곳으로 도망친다.
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+	<<clearNPC bartend>>
+	<<destinationeventend>>
+
+<</if>>
+
+:: Connudatus VIP Refuse
+<<effects>>
+
+<<He>>【은는】 어깨를 으쓱한다. "마음대로." <<he>>【이가】 말한다. "조심해서 가라고." <<He>>【은는】 담배를 밟아 끄고는 걸어간다.
+<br><br>
+<<endevent>>
+<<destinationeventend>>
+
+:: Connudatus VIP Walk
+<<effects>>
+
+<<person>>【이가】 담배를 밟아 끄고 걷기 시작한다. "고아원에 살지, 맞나?"
+<br><br>
+
+<<if $rng gte 51 and $per_npc.bartend>>
+	<<loadNPC 1 bartend>>
+	콘누다투스 가의 끝에 다다랐을 때, 어둠 속에서 한 인물이 나타나 당신의 길을 막는다. 아까 당신을 괴롭혔던 <<person2>><<person>>【이】다.
+	<br><br>
+	<<person1>><<person>>【이가】 당신 사이에 끼어들어 팔짱을 낀다. <<person2>><<person>>【은는】 그 자리에서 멈춘다. <<He>>【은는】 <<person1>><<person>>【을를】 노려보지만, 싸움을 거는 건 좋지 않다고 생각한다. <<person2>><<He>>【은는】 어둠 속으로 슬그머니 사라진다.
+	<br><br>
+	"아마 저놈을 볼 일은 이제 없을 거야." <<person1>><<person>>【이가】 말한다. "그래도 안전을 위해 같이 있어 줄게."
+	<br><br>
+	남은 여정은 별일 없이 지나간다. <<person1>><<person>>【은는】 걸음이 빠르지만, 고아원의 정확한 위치를 몰라서 결국 당신이 앞장서게 된다. <<He>>【은는】 당신을 고아원 건물 바로 앞까지 바래다주고 작별 인사를 한다.
+	<br><br>
+
+<<else>>
+	여정은 별일 없이 지나간다. <<He>>【은는】 걸음이 빠르지만, 고아원의 정확한 위치를 몰라서 결국 당신이 앞장서게 된다. <<He>>【은는】 당신을 고아원 건물 바로 앞까지 바래다주고 작별 인사를 한다.
+	<br><br>
+<</if>>
+
+<<endevent>>
+<<if $per_npc.bartend>>
+<<clearNPC bartend>>
+<</if>>
+
+<<link [[다음|Orphanage]]>><</link>>
+<br>
+
+:: Connudatus Briar Abduct
+<<set $outside to 0>><<effects>>
+<<npc Briar>><<generate2>><<generate3>><<person1>>
+<<pass 5>>
+당신이 정신을 차리기도 전에 차가 덜컹거리며 움직인다. "자기." 익숙한 목소리가 들린다. 브라이어다. <<He>>【은는】 맞은편에 앉아 있다. 당신의 양옆에는 <<person2>><<person>>【와과】 <<person3>><<person>>【이가】 앉아 있다.
+<br><br>
+
+"내... 사업 파트너인 데릴을 만났다고 들었어." <<person1>>브라이어가 말을 잇는다. <<He>>【은는】 세 좌석에 걸쳐 길게 누워 있다. "난 <<nnpc_him "Darryl">> 걱정이 돼. 부탁 하나만 들어줄 수 있을까? <<nnpc_him "Darryl">> 주변 사람들을 좀 지켜봐 줘. 경비원이나, 손님들 같은 부류 말이야. 그러면 내 마음이 좀 놓일 것 같아."
+<br><br>
+
+차가 멈춰 선다. 당신은 도무스 가에 있다. <<person2>><<person>>【이가】 문을 연다. "여기가 자기 집이야? 아늑하네. 좋은
+<<if Time.dayState is "day">>
+	하루 보내."
+<<elseif Time.dayState is "night">>
+	"밤 보내."
+<<elseif Time.dayState is "dusk">>
+	"저녁 보내."
+<<else>>
+	"아침 보내."
+<</if>>
+<br><br>
+
+당신이 차에서 내리자, 차는 멀어진다.
+<br><br>
+
+<<link [[다음|Domus Street]]>><<endevent>><</link>>
+
+:: Connudatus Markets
+<<effects>><<set $location to "market">>
+
+<<if dangerEvent(1, 14000)>>
+	<<connudatusMarketsLewdEvents>>
+<<elseif $rng gte 51>>
+	<<connudatusMarketsStatusEvents>>
+<<else>>
+	<<connudatusMarketsProductsEvents>>
+<</if>>
+
+:: Connudatus Markets Hook Up
+<<effects>>
+
+<<if $phase is 1>>
+	그 변태에게 역겨움을 느낀 당신은 좌판을 떠나 계속 걷기로 한다. 당신이 떠날 때도 <<person1>><<person>>【은는】 여전히 쳐다보지만, 다른 행동은 하지 않는다.<<gstress>><<gtrauma>><<garousal>><<stress 6>><<trauma 3>><<arousal 600>>
+	<br><br>
+
+	<<link [[다음|Connudatus Street]]>><<pass 15>><<endevent>><</link>>
+ 
+<<elseif $phase is "fall">>
+    당신은 물러나려다가, 실수로 당신의 머리카락을 밟는다.
+    <<if $danceSuccess>>
+        화려하게 빙그르르 돌며, <span class="green">당신은 균형을 되찾고</span> 변태에게서 옆으로 비켜선다.
+        <br><br>
+        당신이 제 갈 길을 가자 <<person1>><<person>>【은는】 멍하니 서 있다.
+        <br><br>
+
+        <<link [[다음|Connudatus Street]]>><<pass 15>><<endevent>><</link>>
+    <<else>>
+        <span class="red">당신은 <<bottom>>【으로로】 넘어졌다.</span> 당신의 얼굴이 당혹감으로 붉어진다. <<person1>><<person>>【은는】 그 틈을 타 당신의 얼굴을 <<his>> 사타구니에 밀어붙인다.
+        <br><br>
+
+        <<link [[다음|Connudatus Street Fall Rape]]>><<set $molestationstart to 1>><</link>>
+    <</if>>
+<<else>>
+    당신은 <<personsimple>>【을를】 무시하는 척하면서도, 가볍게 엉덩이를 흔들어 <<his>> 손에 비벼댄다. <<He>>【은는】 눈치를 채고 노골적으로 당신을 더듬기 시작한다.<<garousal>><<arousal 600>>
+    <br><br>
+
+	"너 꽤 음란한 <<girl>>【이】구나, 안 그래? 나랑 같이 가서 서로에 대해 좀 더 알아가는 건 어때?"
+	<br><br>
+
+	<<link [[동의한다|Connudatus Markets Hook Up Sex]]>><<set $sexstart to 1>><</link>>
+	<br>
+	<<link [[거절한다|Connudatus Markets Hook Up Decline]]>><</link>>
+
+<</if>>
+
+:: Connudatus Markets Hook Up Sex
+<<if $sexstart is 1>>
+	<<set $sexstart to 0>>
+	<<consensual>>
+	<<set $consensual to 1>>
+	<<neutral 1>>
+	<<maninit>>
+	<<set $enemytrust += 200>>
+	두 사람은 붐비는 시장에서 벗어나 근처 골목으로 들어간다. "호텔 방은 아니지만, 상관없지?" <<person1>><<person>>【이가】 말하며, <<his>> 손은 이미 당신의 몸을 더듬고 있다.
+<</if>>
+
+<<effects>>
+<<effectsman>>
+<<man>>
+<<stateman>>
+<br><br>
+<<actionsman>>
+
+<<if _combatend>>
+	<span id="next"><<link [[다음|Connudatus Markets Hook Up Sex Finish]]>><</link>></span><<nexttext>>
+<<else>>
+	<span id="next"><<link [[다음|Connudatus Markets Hook Up Sex]]>><</link>></span><<nexttext>>
+<</if>>
+
+:: Connudatus Markets Hook Up Sex Finish
+<<effects>>
+
+<<if $enemyarousal gte $enemyarousalmax>>
+	<<ejaculation>>
+	<<if $consensual>>
+		"기꺼이 대주는 걸레를 찾다니 운이 좋군." <<person1>><<person>>【이가】 말하며, 두 사람은 옷을 정돈한다. "고마워, <<girl>>. 다음에 또 봤으면 좋겠네." <<he>>【은는】 떠나기 전에 덧붙인다.
+	<<else>>
+		"반항하면 이렇게 되는 거야, 이 <<bitch>>【아야】." <<person1>><<person>>【이가】 <<his>> 옷을 정돈하며 말한다. "다음엔 더 조심하는 게 좋을 거야." <<he>>【은는】 덧붙이고는 골목을 떠난다.
+	<</if>>
+<<elseif $enemyhealth lte 0>>
+	마지막으로 힘껏 밀쳐내자, 당신은 <<person1>><<persons>> 손아귀에서 벗어나 골목에서 도망친다. <<He>>【은는】 붐비는 거리까지는 따라오지 않을 것이다.
+<<else>>
+	<<He>>【은는】 당신에게서 몸을 떼며, "멍청한 내숭쟁이 같으니."라고 숨을 헐떡이며 중얼거린 후, 옷을 다시 입고 뒤도 돌아보지 않고 골목을 떠난다.
+<</if>>
+<br><br>
+
+<<clotheson>>
+<<tearful>> 당신은 거리로 다시 걸어 나간다.
+<br><br>
+<<endcombat>>
+
+<<link [[다음|Connudatus Street]]>><<pass 15>><<endevent>><</link>>
+
+:: Connudatus Markets Hook Up Decline
+<<effects>>
+
+<<person1>><<person>>【이가】 코웃음을 치며 <<his>> 손을 뗀다.
+<br><br>
+
+"씨발년. 사람 꼬셔놓고 그냥 가버리면 다인 줄 알아? 몸조심하는 게 좋을 거야." <<he>>【이가】 떠나기 전에 말한다.<<gstress>><<gtrauma>><<stress 6>><<trauma 3>>
+<br><br>
+
+<<link [[다음|Connudatus Street]]>><<pass 15>><<endevent>><</link>>
+
+:: Connudatus Street Fall Rape
+<<if $molestationstart is 1>>
+	"아주 적극적이군, 안 그래?" <<person1>><<person>>【은는】 <<his>> <<print $NPCList[0].clothes.lower.name>>【와과】 속옷을 끌어내린다. "그럼 당장 시작하자고."
+	<<set $molestationstart to 0>>
+	<<controlloss>>
+	<<violence 1>>
+	<<neutral 1>>
+	<<molested>>
+	<<maninit>>
+	<<set $enemytrust -= 50>>
+	<<npcoral>> /*Target oral*/
+<</if>>
+
+<<effects>>
+<<effectsman>>
+<<man>>
+<<audience>>
+<<stateman>>
+<br><br>
+<<actionsman>>
+
+<<if _combatend>>
+	<span id="next"><<link [[다음|Connudatus Street Fall Rape Finish]]>><</link>></span><<nexttext>>
+<<else>>
+	<span id="next"><<link [[다음|Connudatus Street Fall Rape]]>><</link>></span><<nexttext>>
+<</if>>
+
+:: Connudatus Street Fall Rape Finish
+<<effects>>
+
+<<if $enemyarousal gte $enemyarousalmax>>
+	<<ejaculation>><<set $rapestat += 1>><<famerape 1>>
+	"고맙다, <<bitch>>." <<person1>><<person>>【이가】 옷을 추스르며 말한다. "다음번엔 좀 더 조심하는 게 좋을 거야." <<he>>【이가】 덧붙이고는 떠난다.
+<<elseif $enemyhealth lte 0>>
+	당신은 마지막 힘을 다해 밀쳐내고 <<person1>><<persons>> 손아귀에서 간신히 벗어나, 그 자리에서 도망친다.
+<</if>>
+<br><br>
+
+<<clotheson>>
+<<tearful>> 당신은 제 갈 길을 간다.
+<br><br>
+<<endcombat>>
+
+<<link [[다음|Connudatus Street]]>><<pass 15>><<endevent>><</link>>
+
+:: Fruit Street See
+<<effects>>
+
+당신은 <<he>>【이가】 무엇을 원하는지 알아보기로 한다.
+<br><br>
+
+당신이 다가오는 것을 본 그 <<personsimple>>【은는】 손을 내리고 <<recipe_name $streetFruit plural>> 자루를 내민다.
+<br><br>
+
+"아, 살았다. 시장에서 실수로 이 <<recipe_name $streetFruit plural>> 한 자루를 더 샀는데, 이러다간 우리 <<spouse>>한테 맞아 죽겠어요! 제발 이것 좀 받아 가줘요, 지금까지 아무도 안 받으려고 해서."
+<br><br>
+
+<<link [[받아들인다|Fruit Street See Accept]]>><</link>>
+<br>
+<<link [[거절한다|Fruit Street See Refuse]]>><</link>>
+<br>
+
+:: Fruit Street Leave
+<<effects>>
+
+당신은 정중히 거절하고 자리를 뜨기로 한다. 과일을 든 낯선 사람이 원하는 게 무엇이든 굳이 알고 싶지 않다.
+<br><br>
+
+<<unset $streetFruit>>
+<<link [[다음|Connudatus Street]]>><<set $eventskip to 1>><<endevent>><</link>>
+<br>
+
+
+:: Fruit Street See Accept
+<<effects>>
+당신은 불쌍한 <<person1>><<personsimple>>【을를】 돕기로 하고 <<recipe_name $streetFruit plural>> 자루를 받아든다. 
+<br><br>
+
+<<if $fame.rape gte 200>>
+	<<if $rng gte 71>>
+		"사실은 말이지—" <<He>>【이가】 손이 닿지 않도록 자루를 홱 거둬들인다. "이거 비싸게 주고 산 거란 말이지. 당신도 나한테 대가를 치르는 게 공평하지 않겠어?"
+		<br><br>
+
+		<<He>>【은는】 당신이 손쓸 틈도 없이 손목을 틀어쥐고 근처 골목길 쪽으로 잡아끈다.
+		<br><br>
+
+		<<if hasSexStat("promiscuity", 4)>>
+			<<link [[받아들인다|Fruit Street See Accept Sex]]>><<set $sexstart to 1>><</link>>
+			<br>
+		<</if>>
+		<<link [[몸을 비틀어 빼낸다|Fruit Street Struggle]]>><</link>><<physiquedifficulty 1 15000>>
+		<br>
+	<<else>>
+		"아, 고마워요! 정말 고마워요!" <<he>>【이가】 어깨의 짐을 한결 덜어낸 표정으로 말하며 과일을 건넨다. <<tending_pick $streetFruit>>
+		<br><br>
+
+		어찌 됐든 <<him>>에게 도움을 준 것 같다.<<stress -3>><<llstress>>
+		<br><br>
+		<<unset $streetFruit>>
+		<<link [[다음|Connudatus Street]]>><<set $eventskip to 1>><<endevent>><</link>>
+		<br>
+	<</if>>
+<<else>>
+	"아, 고마워요! 정말 고마워요!" <<he>>【이가】 어깨의 짐을 한결 덜어낸 표정으로 말하며 과일을 건넨다. <<tending_pick $streetFruit>>
+	<br><br>
+
+	어찌 됐든 <<him>>에게 도움을 준 것 같다.<<stress -3>><<llstress>>
+	<br><br>
+	<<unset $streetFruit>>
+	<<link [[다음|Connudatus Street]]>><<set $eventskip to 1>><<endevent>><</link>>
+	<br>
+<</if>>
+
+:: Fruit Street See Refuse
+<<effects>>
+
+당신 역시 거절한다. 상황이 어딘가 너무 미심쩍다. 당신은 몸을 돌려 떠나려 한다,
+
+<<if $fame.rape gte 200>>
+	<<if $rng gte 71>>
+		그러나 발을 떼기도 전에 그 <<personsimple>>【이가】 당신의 손목을 낚아챈다. <<pain 1>><<gpain>>
+		<br><br>
+
+		"젠장. 적당히 둘러댔어야 했는데. 이리 와, 씹창년아."
+		<br><br>
+
+		<<link [[다음|Fruit Street See Refuse Rape]]>><<set $molestationstart to 1>><</link>>
+		<br>
+	<<else>>
+		그 <<personsimple>>의 애원을 무시한 채로.
+		<br><br>
+		<<unset $streetFruit>>
+		<<link [[다음|Connudatus Street]]>><<set $eventskip to 1>><<endevent>><</link>>
+		<br>
+	<</if>>
+<<else>>
+	그 <<personsimple>>의 애원을 무시한 채로.
+	<br><br>
+	<<unset $streetFruit>>
+	<<link [[다음|Connudatus Street]]>><<set $eventskip to 1>><<endevent>><</link>>
+	<br>
+<</if>>
+
+:: Fruit Street See Accept Sex
+<<if $sexstart is 1>>
+	<<set $sexstart to 0>>
+	<<consensual>>
+	<<set $consensual to 1>>
+	<<neutral 1>>
+	<<maninit>>
+	<<set $enemytrust += 100>>
+	당신과 그 <<person>>【은는】 은밀한 곳을 찾아 근처 골목으로 들어간다.
+	<<promiscuity2>>
+<</if>>
+
+<<effects>>
+<<effectsman>>
+<<man>>
+<<stateman>>
+<br><br>
+<<actionsman>>
+
+<<if _combatend>>
+	<span id="next"><<link [[다음|Fruit Street See Accept Sex Finish]]>><</link>></span><<nexttext>>
+<<else>>
+	<span id="next"><<link [[다음|Fruit Street See Accept Sex]]>><</link>></span><<nexttext>>
+<</if>>
+
+:: Fruit Street See Accept Sex Finish
+<<effects>>
+<<if $enemyhealth lte 0>>
+	"씨발! 좆같은 년이, 합의된 거 아니었어?!"
+	<br><br>
+
+	<<He>>【은는】 다친 부위를 감싸 쥐며 힘없이 <<recipe_name $streetFruit plural>> 자루를 당신에게 내던진다.
+	<br><br>
+
+	"가져가라 가져가. 네까짓 게 받을 자격이 있어서 주는 건 아냐. 너한테 두들겨 맞고 우리 <<spouse>>한테까지 털리긴 싫으니까." <<He>>【은는】 몸을 부르르 떨며 걸어간다. <<tearful>> 당신은 비틀거리며 몸을 일으킨다. <<tending_pick $streetFruit>>
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+<<elseif $enemyarousal gte $enemyarousalmax>>
+	<<ejaculation>>
+	"고맙다, <<girl>>【아야】," <<he>>【이가】 말하며 <<recipe_name $streetFruit plural>> 자루를 당신에게 건넨다.
+	<br><br>
+
+	"그, 그래도 어... 혹시라도 우리 <<spouse>>【을를】 보거든 내가 이랬다는 말은 절대 하지 마라." <<tending_pick $streetFruit>>
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+<<elseif $finish is 1>>
+	"거 참 아쉽게 됐네, 그래도 거래는 거래니까," <<he>>【이가】 마지못해 말하며 <<recipe_name $streetFruit plural>>【을를】 건넨다.
+	<<tending_pick $streetFruit>>
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+<<elseif $alarm is 1 or $rescue is 1>>
+
+	<<set $rescued += 1>>
+	당신의 비명에 몇 마리의 들개가 반응해 기척을 살피러 다가온다.
+	<br><br>
+
+	그 <<personsimple>>【은는】 잠시 굳어 있더니, 황급히 당신에게서 떨어져 골목 밖으로 줄행랑을 친다. 개들을 몹시 무서워하는 모양이다.
+	<br><br>
+
+	<<He>>【은는】 들고 있던 <<recipe_name $streetFruit plural>> 자루마저 떨어뜨리고 갔다. 동물들과 마주쳐서 좋을 건 없으니, 당신은 과일을 챙겨 서둘러 자리를 뜬다. <<tearful>> 당신은 비틀거리며 몸을 일으킨다.
+	<<tending_pick $streetFruit>>
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+<<else>>
+	그 <<person>>【은는】 <<recipe_name $streetFruit plural>> 자루를 당신에게 내던진다.
+	<br><br>
+
+	"자. 너랑 시간 낭비하면서 집에 늦을 여유는 없거든," <<he>>【이가】 말하며 몸을 돌려 골목길에 당신을 남겨둔 채 떠나버린다.
+	<<tending_pick $streetFruit>>
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+<</if>>
+<<unset $streetFruit>>
+<<link [[다음|Connudatus Street]]>><<set $eventskip to 1>><<endevent>><</link>>
+<br>
+
+:: Fruit Street See Accept Rape
+<<if $molestationstart is 1>>
+	<<set $molestationstart to 0>>
+	<<controlloss>>
+	<<violence 1>>
+	<<neutral 1>>
+	<<molested>>
+	<<maninit>>
+	<<enable_rescue>>
+<</if>>
+
+<<effects>>
+<<effectsman>>
+<<alarmstate>>
+<<man>>
+<<stateman>>
+<br><br>
+<<actionsman>>
+
+<<if _combatend>>
+	<span id="next"><<link [[다음|Fruit Street See Accept Rape Finish]]>><</link>></span><<nexttext>>
+<<else>>
+	<span id="next"><<link [[다음|Fruit Street See Accept Rape]]>><</link>></span><<nexttext>>
+<</if>>
+
+:: Fruit Street See Accept Rape Finish
+<<effects>>
+
+<<if $enemyhealth lte 0>>
+	"씨발, 왜 맨날 다 이따위야..." <<he>>【이가】 고통에 몸을 웅크리며 잇새로 중얼거린다.
+	<br><br>
+
+	그 <<person>>의 손에서 자루가 힘없이 미끄러져 떨어진다. <<He>>【은는】 그걸 주울까 고민하는 눈치더니, 이내 얼굴을 찌푸린다.
+	<br><br>
+
+	"그딴 빌어먹을 것들— 다 가져가 버려. 내가 알 바 아니니까." <<He>>【은는】 위협적인 척 굴어보려 하지만, 꼴이 말이 아니다. <<tearful>> 당신은 비틀거리며 몸을 일으킨다.
+	<<tending_pick $streetFruit>>
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+<<elseif $enemyarousal gte $enemyarousalmax>>
+	<<ejaculation>>
+	"고맙다, <<girl>>【아야】," <<he>>【이가】 말하며 <<recipe_name $streetFruit plural>> 자루를 당신에게 건넨다.
+	<br><br>
+
+	"그, 그래도 어... 혹시라도 <<spouse>>【을를】 보거든 내가 이랬다는 말은 절대 하지 마라." <<tearful>> 당신은 비틀거리며 몸을 일으킨다.
+	<<tending_pick $streetFruit>>
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+<<elseif $alarm is 1 and $rescue is 1>>
+	<<set $rescued += 1>>
+	당신의 비명에 몇 마리의 들개가 반응해 기척을 살피러 다가온다.
+	<br><br>
+
+	그 <<personsimple>>【은는】 잠시 굳어 있더니, 황급히 당신에게서 떨어져 골목 밖으로 줄행랑을 친다. 개들을 몹시 무서워하는 모양이다.
+	<br><br>
+
+	<<He>>【은는】 들고 있던 <<recipe_name $streetFruit plural>> 자루마저 떨어뜨리고 갔다. 동물들과 마주쳐서 좋을 건 없으니, 당신은 그것을 챙겨 서둘러 자리를 뜬다. <<tearful>> 당신은 비틀거리며 몸을 일으킨다.
+	<<tending_pick $streetFruit>>
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+<<else>>
+	그 <<person>>【은는】 볼일이 끝났다는 듯 <<recipe_name $streetFruit plural>> 자루를 당신에게 내던지고 몸을 돌린다. <<tearful>> 당신은 비틀거리며 몸을 일으킨다.
+	<<tending_pick $streetFruit>>
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+<</if>>
+<<unset $streetFruit>>
+<<link [[다음|Connudatus Street]]>><<set $eventskip to 1>><<endevent>><</link>>
+<br>
+
+:: Fruit Street Struggle
+<<effects>>
+
+<<if $physiqueSuccess>>
+	당신은 가까스로 그 <<personsimple>>의 손아귀에서 벗어난다. 다행히도 <<he>>【은는】 쫓아오지 않는다.
+	<br><br>
+	<<unset $streetFruit>>
+	<<link [[다음|Connudatus Street]]>><<set $eventskip to 1>><<endevent>><</link>>
+	<br>
+<<else>>
+	당신은 몸을 비틀어 빠져나오려 하지만, <span class="red">실패한다</span>. "어딜 가려고 그래? 날 돕겠다고 동의해놓고선."
+	<br><br>
+	<<link [[다음|Fruit Street See Refuse Rape]]>><<set $molestationstart to 1>><</link>>
+	<br>
+<</if>>
+
+:: Fruit Street See Refuse Rape
+<<if $molestationstart is 1>>
+	<<set $molestationstart to 0>>
+	<<controlloss>>
+	<<violence 1>>
+	<<neutral 1>>
+	<<molested>>
+	<<maninit>><<set $enemytrust -= 40>><<set $enemyanger += 30>>
+	<<enable_rescue>>
+<</if>>
+
+<<effects>>
+<<effectsman>>
+<<alarmstate>>
+<<man>>
+<<stateman>>
+<br><br>
+<<actionsman>>
+
+<<if _combatend>>
+	<span id="next"><<link [[다음|Fruit Street See Refuse Rape Finish]]>><</link>></span><<nexttext>>
+<<else>>
+	<span id="next"><<link [[다음|Fruit Street See Refuse Rape]]>><</link>></span><<nexttext>>
+<</if>>
+
+:: Fruit Street See Refuse Rape Finish
+<<effects>>
+<<if $enemyhealth lte 0>>
+	"씨발, 왜 맨날 다 이따위야..." <<he>>【이가】 고통에 몸을 웅크리며 잇새로 중얼거린다.
+	<br><br>
+
+	그 <<person>>의 손에서 자루가 힘없이 미끄러져 떨어진다. <<He>>【은는】 그걸 주울까 고민하는 눈치더니, 이내 얼굴을 찌푸린다.
+	<br><br>
+
+	"그딴 빌어먹을 것들— 다 가져가 버려. 내가 알 바 아니니까." <<He>>【은는】 위협적인 척 굴어보려 하지만, 꼴이 말이 아니다. <<tearful>> 당신은 비틀거리며 몸을 일으킨다.
+	<<tending_pick $streetFruit>>
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+<<elseif $enemyarousal gte $enemyarousalmax>>
+	<<ejaculation>>
+	"자," <<he>>【이가】 <<recipe_name $streetFruit plural>> 자루를 당신에게 내던지며 말한다. "집에 가져갈 수 없다는 말이 거짓말은 아니었거든." <<tearful>> 당신은 기운을 차린다.
+	<<tending_pick $streetFruit>>
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+<<elseif $alarm is 1 and $rescue is 1>>
+	<<set $rescued += 1>>
+	당신의 비명에 몇 마리의 들개가 반응해 기척을 살피러 다가온다.
+	<br><br>
+
+	그 <<personsimple>>【은는】 잠시 굳어 있더니, 황급히 당신에게서 떨어져 골목 밖으로 줄행랑을 친다. 개들을 몹시 무서워하는 모양이다.
+	<br><br>
+
+	<<He>>【은는】 들고 있던 <<recipe_name $streetFruit plural>> 자루마저 떨어뜨리고 갔다. 동물들과 마주쳐서 좋을 건 없으니, 당신은 그것을 챙겨 서둘러 자리를 뜬다. <<tearful>> 당신은 비틀거리며 몸을 일으킨다.
+	<<tending_pick $streetFruit>>
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+<<else>>
+	그 <<person>>【은는】 볼일이 끝났다는 듯 <<recipe_name $streetFruit plural>> 자루를 당신에게 내던지고 몸을 돌린다. <<tearful>> 당신은 비틀거리며 몸을 일으킨다.
+	<<tending_pick $streetFruit>>
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+<</if>>
+
+<<unset $streetFruit>>
+<<link [[다음|Connudatus Street]]>><<set $eventskip to 1>><<endevent>><</link>>

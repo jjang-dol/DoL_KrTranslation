@@ -1,0 +1,181 @@
+/* twine-user-script: kr_display_postrender.js */
+
+/*
+ * 화면번역 후처리: 화면에 렌더된 영어 단어를 window.KR.dict(kr_dict.js) 기준으로 한글로 치환한다.
+ * - 사전의 모든 키로 정규식 하나를 만들어(대소문자 무시, 영문/숫자/_ 경계 기준, 긴 키 우선) 텍스트 노드를 치환한다.
+ * - 대상 영역은 #passages, #ui-bar, #sidebar, #stats, #ui-dialog(-body). script/style/input/textarea/code/pre는 건너뛴다.
+ * - 속성(title, alt 등)은 번역하지 않으므로 툴팁류는 출력부에서 직접 한글로 바꿔야 한다.
+ * - 제공: window.KR.lookup(text), window.KR.translateVisibleText(root). 실행 시점은 kr_josa_postrender.js가 관리한다.
+ */
+(function () {
+    "use strict";
+
+    window.KR = window.KR || {};
+
+    function escapeRegExp(str) {
+        return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    let _cachedDisplayMap = null;
+    let _cachedDictKeyCount = 0;
+
+    function buildDisplayMap() {
+        const originalDict = window.KR.dict || {};
+        const keys = Object.keys(originalDict);
+        if (_cachedDisplayMap && keys.length === _cachedDictKeyCount) return _cachedDisplayMap;
+        _cachedDictKeyCount = keys.length;
+
+        const lowerDict = {};
+        for (const k of keys) {
+            const lowerK = k.toLowerCase();
+            const val = originalDict[k];
+
+            // 1. 원본 소문자 키 저장
+            lowerDict[lowerK] = val;
+
+            // 2. 키에 언더바, 공백, 하이픈이 있다면 대표 변형 4가지를 미리 만들어 저장
+            if (lowerK.includes('_') || lowerK.includes(' ') || lowerK.includes('-')) {
+                lowerDict[lowerK.replace(/[ _-]/g, ' ')] = val;  // strap on horse cock
+                lowerDict[lowerK.replace(/[ _-]/g, '_')] = val;  // strap_on_horse_cock
+                lowerDict[lowerK.replace(/[ _-]/g, '-')] = val;  // strap-on-horse-cock
+                lowerDict[lowerK.replace(/[ _-]/g, '')] = val;   // straponhorsecock
+            }
+        }
+        _cachedDisplayMap = lowerDict;
+        return lowerDict;
+    }
+
+    // Exact-match lookup (case-insensitive) into the same normalized dictionary
+    // used for on-screen translation. Returns the Korean string if a match is
+    // found, otherwise undefined. Used e.g. by the clothing shop search box so
+    // it can match against Korean item names even though the underlying data
+    // (item.name) stays in English.
+    window.KR.lookup = function lookup(text) {
+        if (!text) return undefined;
+        const dict = buildDisplayMap();
+        return dict[String(text).toLowerCase()];
+    };
+
+    let _cachedRegex = null;
+    let _cachedKeyCount = 0;
+
+    function makeRegex(dict) {
+        const keys = Object.keys(dict).filter(Boolean);
+        if (keys.length === _cachedKeyCount && _cachedRegex) return _cachedRegex;
+        _cachedKeyCount = keys.length;
+
+        keys.sort((a, b) => b.length - a.length);
+
+        if (!keys.length) return null;
+
+        _cachedRegex = new RegExp("(^|[^A-Za-z0-9_])(" + keys.map(escapeRegExp).join("|") + ")(?=$|[^A-Za-z0-9_])", "gi");
+        return _cachedRegex;
+    }
+
+    function shouldSkipTextNode(node) {
+        const p = node.parentNode;
+        if (!p) return true;
+
+        if (p.closest?.([
+            "script",
+            "style",
+            "textarea",
+            "input",
+            "code",
+            "pre",
+            "tw-storydata",
+            "tw-passagedata",
+            "tw-tag"
+        ].join(","))) {
+            return true;
+        }
+
+        return false;
+    }
+
+    // 이 6개 컨테이너는 세션 내내 안 바뀌는 고정 UI 뼈대이므로 캐시해서
+    // translateVisibleText가 호출될 때마다(꽤 자주 호출됨) getElementById를
+    // 반복하지 않도록 한다. 혹시 연결이 끊긴 경우에만 다시 조회.
+    let _cachedAllowedRoots = null;
+
+    function getAllowedRoots() {
+        if (_cachedAllowedRoots && _cachedAllowedRoots.every(el => el.isConnected)) {
+            return _cachedAllowedRoots;
+        }
+
+        _cachedAllowedRoots = [
+            document.getElementById("passages"),
+            document.getElementById("ui-bar"),
+            document.getElementById("sidebar"),
+            document.getElementById("stats"),
+            document.getElementById("ui-dialog"),
+            document.getElementById("ui-dialog-body")
+        ].filter(Boolean);
+
+        return _cachedAllowedRoots;
+    }
+
+    window.KR.translateVisibleText = function translateVisibleText(root, allowDetached = false) {
+        if (!root || typeof setup === "undefined") return;
+
+        const allowedRoots = getAllowedRoots();
+
+        if (!allowDetached && !allowedRoots.length) return;
+
+        let safeRoot = root;
+
+        if (
+            root === document ||
+            root === document.body ||
+            root === document.documentElement ||
+            root.nodeType === Node.DOCUMENT_NODE
+        ) {
+            safeRoot = document.getElementById("passages");
+            if (!safeRoot) return;
+        }
+
+        if (
+            !allowDetached &&
+            !allowedRoots.some(allowed => safeRoot === allowed || allowed.contains(safeRoot))
+        ) {
+            return;
+        }
+
+        const dict = buildDisplayMap();
+        const regex = makeRegex(dict);
+        if (!regex) return;
+        regex.lastIndex = 0;
+
+        // 인접한 텍스트 노드들을 하나로 병합하여 조합 단어 인식이 가능하게 함
+        safeRoot.normalize();
+
+        const walker = document.createTreeWalker(
+            safeRoot,
+            NodeFilter.SHOW_TEXT,
+            {
+                acceptNode(node) {
+                    if (shouldSkipTextNode(node)) return NodeFilter.FILTER_REJECT;
+                    if (!node.nodeValue || !/[A-Za-z]/.test(node.nodeValue)) {
+                        return NodeFilter.FILTER_REJECT;
+                    }
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+            }
+        );
+
+        const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+
+        for (const node of nodes) {
+            const oldText = node.nodeValue;
+            const newText = oldText.replace(regex, function (_, prefix, key) {
+                const lowerKey = key.toLowerCase();
+                return prefix + (dict[lowerKey] ?? key);
+            });
+
+            if (newText !== oldText) {
+                node.nodeValue = newText;
+            }
+        }
+    };
+})();

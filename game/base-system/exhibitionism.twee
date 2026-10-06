@@ -1,0 +1,890 @@
+:: Widgets Exhibitionism [widget]
+<<widget "exhibitionism1">>
+	<<exhibitionismN 1>>
+<</widget>>
+
+<<widget "exhibitionism2">>
+	<<exhibitionismN 2>>
+<</widget>>
+
+<<widget "exhibitionism3">>
+	<<exhibitionismN 3>>
+<</widget>>
+
+<<widget "exhibitionism4">>
+	<<exhibitionismN 4>>
+<</widget>>
+
+<<widget "exhibitionism5">>
+	<<exhibitionismN 5>>
+<</widget>>
+
+<<widget "exhibitionism6">>
+	<<exhibitionismN 6>>
+<</widget>>
+
+<<widget "exhibitionismN">>
+	<<set $_n to _args[0]>>
+	<<set $_scaledExhibitionismMax to 20 * $_n>>
+	<<if $desperateaction is 1>>
+		역겨운 기분이 들지만, 베일리가 당신에게 저지를 일보다는 낫다.
+	<<elseif $desperateaction is 2>>
+		역겨운 기분이 들지만, 다른 대안보다는 낫다.
+	<<elseif typeof $desperateaction is "string">>
+		역겨운 기분이 든다. <<print $desperateaction>>.
+	<<else>>
+		<<if $control lt $controlmax>>
+			<<if $_n is 6>>
+				그런 광기 어린 타락 행위는 <span class="green">당신의 통제력을 완전히 회복시키지만</span>, <span class="red">정신에는 타격을 입힌다</span>.
+			<<elseif $exhibitionism lt $_scaledExhibitionismMax>>
+				그런 음란한 행위는 당신을 흥분시키고, 당분간 <span class="green">통제력과 자존감을 회복시켜 준다</span>.
+			<<else>>
+				그런 음란한 행위는 당신을 흥분시키지만, 머리 위를 짓누르는 먹구름을 걷어내지는 못한다. <span class="pink">뭔가 더 극단적인 행동을 해야 한다.</span>
+			<</if>>
+		<<else>>
+			<<if $_n is 6>>
+				당신은 이미 스스로를 통제하고 있다고 느낀다. <span class="red">이런 광기 어린 타락 행위도 헛수고처럼 느껴져 만족감을 얻지 못한다</span>.
+			<<elseif $exhibitionism lt $_scaledExhibitionismMax>>
+				당신은 이미 스스로를 통제하고 있다고 느끼지만, 그런 음란한 행위는 당신을 <span class="green">진정시키고</span> 흥분시킨다.
+			<<else>>
+				당신은 이미 스스로를 통제하고 있다고 느낀다. 그 행위는 <span class="pink">진정시키기에는 너무 시시하지만</span>, 그래도 흥분되기는 한다.
+			<</if>>
+		<</if>>
+		<<if !hasSexStat("exhibitionism", $_n, false) and $drunk gte 1>>
+			<<if $_n is 6>>
+				<span @class="'red ' + basicDrunkCss()">머리가 몽롱하고 붕 뜨는 기분이다. 나중에 이 일을 기억하지 못하기를 바란다.</span>
+			<<else>>
+				<span @class="'blue ' + basicDrunkCss()">알코올이 수치심을 무디게 만들자 몸이 붕 뜬 것 같다.</span>
+			<</if>>
+		<</if>>
+	<</if>>
+
+	<!-- separating the code from the written text -->
+	<<if $desperateaction is 1 or $desperateaction is 2 or typeof $desperateaction is "string">>
+		<<control `$_n * -10`>>
+		<<switch $_n>>
+			<<case 1>><<lcontrol>>
+			<<case 2>><<llcontrol>>
+			<<case 3>><<llcontrol>>
+			<<case 4>><<llcontrol>>
+			<<case 5>><<lllcontrol>>
+		<</switch>>
+		<<gtrauma>><<trauma $_n>>
+	<<else>>
+		<<if $_n is 6>>
+			<<set $exhibitionism += 2>>
+			<<if $control lt $controlmax>>
+				<<control $controlmax>>
+				<<gggcontrol>>
+			<</if>>
+			<<trauma 40>>
+			<<ggtrauma>>
+		<<elseif $exhibitionism lt $_scaledExhibitionismMax>>
+			<<set $exhibitionism += 2>>
+			<<if $control lt $controlmax>>
+				<<ggcontrol>>
+			<</if>>
+			<<control 25>>
+			<<stress $_n -300>>
+			<<combattrauma `$_n * -30`>>
+			<<ltrauma>>
+			<<lstress>>
+		<<else>>
+			<<if V.daily["exhibitionismStress" + $_n] isnot 1 and $statFreeze isnot true>>
+				<<set V.daily["exhibitionismStress" + $_n] to 1>><<lstress>><<stress $_n -100>>
+			<</if>>
+		<</if>>
+		<<arousal `$_n * 100`>><<garousal>>
+	<</if>>
+	<<set $exhibitionism to Math.clamp($exhibitionism, 0, 100)>>
+	<<earSlimeSeenActions "exhibitionism" $_n>>
+	<br><br>
+	<<unset $desperateaction>>
+<</widget>>
+
+<<widget "exhibitionism">>
+	<<if _args[0] is "street">>
+		<<if $uncomfortable.nude is false>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<arousal 20>>
+					당신은 거의 벗다시피 한 차림으로 공공 도로에 서 있다! 차가운 밤공기가 맨살을 스친다. 주변에는 아무도 없는 것 같지만, 그게 언제까지 갈지 모른다.
+					<br><br>
+					당신은 헐벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+					그림자 속에 붙어 있으면 거의 눈에 띄지 않을 정도로 충분히 어둡다. 아니면 거리를 완전히 피할 수도 있다. 노출되는 느낌은 덜하겠지만, 어둠 속에는 무언가 불길한 기운이 있다.
+					<br><br>
+				<<else>>
+					<<arousal 40>>
+					당신은 거의 벗다시피 한 차림으로 공공 도로에 서 있다! 당신은 당장 사람들의 눈을 피하기 위해 주차된 차 뒤에 숨는다.
+					<br><br>
+					당신은 헐벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<arousal 40>>
+					당신은 완전히 알몸으로 공공 도로에 서 있다! 차가운 밤공기가 맨살을 스친다. 주변에는 아무도 없는 것 같지만, 그게 언제까지 갈지 모른다.
+					<br><br>
+					당신은 발가벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+					그림자 속에 붙어 있으면 거의 눈에 띄지 않을 정도로 충분히 어둡다. 아니면 거리를 완전히 피할 수도 있다. 노출되는 느낌은 덜하겠지만, 어둠 속에는 무언가 불길한 기운이 있다.
+					<br><br>
+				<<else>>
+					<<arousal 80>>
+					당신은 발가벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<arousal 20>>
+					당신은 거의 벗다시피 한 차림으로 공공 도로에 서 있다! 차가운 밤공기가 맨살을 스친다. 주변에는 아무도 없는 것 같지만, 그게 언제까지 갈지 모른다.
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 헐벗은 몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+					그림자 속에 붙어 있으면 거의 눈에 띄지 않을 정도로 충분히 어둡다. 아니면 거리를 완전히 피할 수도 있다. 노출되는 느낌은 덜하겠지만, 어둠 속에는 무언가 불길한 기운이 있다.
+					<br><br>
+				<<else>>
+					<<arousal 10>>
+					당신은 거의 벗다시피 한 차림으로 공공 도로에 서 있다! 당신은 당장 사람들의 눈을 피하기 위해 주차된 차 뒤에 숨는다.
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 헐벗은 몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<arousal 10>>
+					당신은 완전히 알몸으로 공공 도로에 서 있다! 차가운 밤공기가 맨살을 스친다. 주변에는 아무도 없는 것 같지만, 그게 언제까지 갈지 모른다.
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+					그림자 속에 붙어 있으면 거의 눈에 띄지 않을 정도로 충분히 어둡다. 아니면 거리를 완전히 피할 수도 있다. 노출되는 느낌은 덜하겠지만, 어둠 속에는 무언가 불길한 기운이 있다.
+					<br><br>
+				<<else>>
+					<<arousal 5>>
+					당신은 거의 벗다시피 한 차림으로 공공 도로에 서 있다! 당신은 당장 사람들의 눈을 피하기 위해 주차된 차 뒤에 숨는다.
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<elseif _args[0] is "alley">>
+		<<if $uncomfortable.nude is false>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<arousal 20>>
+					당신은 거의 벗다시피 한 차림으로 공공 골목에 서 있다! 차가운 밤공기가 맨살을 스친다. 주변에는 아무도 없는 것 같지만, 그게 언제까지 갈지 모른다.
+					<br><br>
+					당신은 헐벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<<else>>
+					<<arousal 40>>
+					당신은 거의 벗다시피 한 차림으로 공공 골목에 서 있다.
+					<br><br>
+					당신은 헐벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<arousal 40>>
+					당신은 은밀한 부위를 드러낸 채 공공 골목에 서 있다! 차가운 밤공기가 맨살을 스친다. 주변에는 아무도 없는 것 같지만, 그게 언제까지 갈지 모른다.
+					<br><br>
+					당신은 발가벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<<else>>
+					<<arousal 80>>
+					당신은 은밀한 부위를 드러낸 채 공공 골목에 서 있다!
+					<br><br>
+					당신은 발가벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<arousal 20>>
+					당신은 거의 벗다시피 한 차림으로 공공 골목에 서 있다! 차가운 밤공기가 맨살을 스친다. 주변에는 아무도 없는 것 같지만, 그게 언제까지 갈지 모른다.
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 헐벗은 몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<<else>>
+					<<arousal 10>>
+					당신은 거의 벗다시피 한 차림으로 공공 골목에 서 있다.
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 헐벗은 몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<arousal 10>>
+					당신은 은밀한 부위를 드러낸 채 공공 골목에 서 있다! 차가운 밤공기가 맨살을 스친다. 주변에는 아무도 없는 것 같지만, 그게 언제까지 갈지 모른다.
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<<else>>
+					<<arousal 5>>
+					당신은 은밀한 부위를 드러낸 채 공공 골목에 서 있다!
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<elseif _args[0] is "park">>
+		<<if $uncomfortable.nude is false>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<arousal 20>>
+					당신은 수풀 옆에 서서 당장이라도 숨을 준비를 하고 있다. 차가운 밤공기가 맨살을 스친다.
+					<br><br>
+					당신은 헐벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<<else>>.<</if>>
+					<br><br>
+				<<else>>
+					<<arousal 40>>
+					당신은 수풀 뒤에 숨어, 공원을 이용하는 사람들의 눈을 피하고 있다. 조심한다면 초목 뒤에 숨어 계속 몸을 숨길 수 있을지도 모른다.
+					<br><br>
+					당신은 헐벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<<else>>.<</if>>
+					<br><br>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<arousal 40>>
+					당신은 수풀 옆에 서서 당장이라도 숨을 준비를 하고 있다. 차가운 밤공기가 맨살을 스친다.
+					<br><br>
+					당신은 발가벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<<else>>.<</if>>
+					<br><br>
+				<<else>>
+					<<arousal 80>>
+					당신은 수풀 뒤에 숨어, 공원을 이용하는 사람들의 눈을 피하고 있다. 조심한다면 초목 뒤에 숨어 계속 몸을 숨길 수 있을지도 모른다.
+					<br><br>
+					당신은 발가벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<<else>>.<</if>>
+					<br><br>
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<arousal 20>>
+					당신은 수풀 뒤에 숨어 있다. 차가운 밤공기가 맨살을 스친다. 밤에는 공원이 대체로 텅 비어 있어 다행이지만, 그 때문에 당신이 더 눈에 띌지도 모른다.
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 헐벗은 몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<<else>>
+					<<arousal 10>>
+					당신은 수풀 뒤에 숨어 있다. 조심한다면 초목 뒤에 숨어 계속 몸을 숨길 수 있을지도 모른다. 당신은 아무도 눈치채지 못하기를 바라지만, 그게 언제까지 갈지 모른다.
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 헐벗은 몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<arousal 10>>
+					당신은 수풀 뒤에 숨어 있다. 차가운 밤공기가 맨살을 스친다. 밤에는 공원이 대체로 텅 비어 있어 다행이지만, 그 때문에 당신이 더 눈에 띌지도 모른다.
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<<else>>
+					<<arousal 5>>
+					당신은 수풀 뒤에 숨어 있다. 조심한다면 초목 뒤에 숨어 계속 몸을 숨길 수 있을지도 모른다. 당신은 아무도 눈치채지 못하기를 바라지만, 그게 언제까지 갈지 모른다.
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<elseif _args[0] is "roof">>
+		<<if $uncomfortable.nude is false>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<arousal 20>>
+					<br><br>
+					당신은 헐벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<<else>>
+					<<arousal 40>>
+					<br><br>
+					당신은 헐벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<arousal 40>>
+					<br><br>
+					당신은 발가벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<<else>>
+					<<arousal 80>>
+					<br><br>
+					당신은 발가벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<arousal 20>>
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 헐벗은 몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<<else>>
+					<<arousal 10>>
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 헐벗은 몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<arousal 10>>
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<<else>>
+					<<arousal 5>>
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<elseif _args[0] is "garden">>
+		<<if $uncomfortable.nude is false>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<arousal 20>>
+					<br><br>
+					당신은 헐벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<<else>>
+					<<arousal 40>>
+					<br><br>
+					당신은 헐벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<arousal 40>>
+					<br><br>
+					당신은 발가벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<<else>>
+					<<arousal 80>>
+					<br><br>
+					당신은 발가벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<arousal 20>>
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 헐벗은 몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<<else>>
+					<<arousal 10>>
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 헐벗은 몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<arousal 10>>
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<<else>>
+					<<arousal 5>>
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<elseif _args[0] is "building">>
+		<<if $uncomfortable.nude is false>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<arousal 20>>
+					<br><br>
+					당신은 헐벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<<else>>
+					<<arousal 40>>
+					<br><br>
+					당신은 헐벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<arousal 40>>
+					<br><br>
+					당신은 발가벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<<else>>
+					<<arousal 80>>
+					<br><br>
+					당신은 발가벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<arousal 20>>
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 헐벗은 몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<<else>><<arousal 10>>
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 헐벗은 몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<arousal 10>>
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<<else>>
+					<<arousal 5>>
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<elseif _args[0] is "classroom">>
+		<<if $uncomfortable.nude is false>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<arousal 20>>
+					<br><br>
+					당신은 헐벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<<else>>
+					<<arousal 40>>
+					<br><br>
+					당신은 헐벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<arousal 40>>
+					<br><br>
+					당신은 발가벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<<else>>
+					<<arousal 80>>
+					<br><br>
+					당신은 발가벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<arousal 20>>
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 헐벗은 몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<<else>>
+					<<arousal 10>>
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 헐벗은 몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<arousal 10>>
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<<else>>
+					<<arousal 5>>
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<elseif _args[0] is "beach">>
+		<<if $uncomfortable.nude is false>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<arousal 20>>
+					당신은 혼자이지만, 이처럼 음란한 차림으로 있는 것은 짜릿한 만큼이나 두렵다.
+					<br><br>
+					당신은 헐벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<<else>>
+					<<arousal 40>>
+					해변이라 할지라도 당신의 헐벗은 상태는 너무 지나치다. 당신은 방풍막 뒤에 숨는다.
+					<br><br>
+					당신은 헐벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<arousal 40>>
+					당신은 혼자이지만, 이처럼 음란한 차림으로 있는 것은 짜릿한 만큼이나 두렵다.
+					<br><br>
+					당신은 발가벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<<else>>
+					<<arousal 80>>
+					당신은 대낮에 완전히 노출되었다! 다행히 당신의 몸을 숨길 수 있을 만큼 방풍막이 충분히 있다.
+					<br><br>
+					당신은 발가벗은 몸을 가리지 않으면 훨씬 더 강해질 흥분감을 느낀다<<if pcAreArmsBound("both")>>. 물론 두 팔이 등 뒤로 묶여 있어 가리고 싶어도 가릴 수 없지만 말이다<</if>>.
+					<br><br>
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<arousal 20>>
+					당신은 혼자이지만, 이처럼 음란한 차림으로 있는 것은 짜릿한 만큼이나 두렵다.
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 헐벗은 몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<<else>>
+					<<arousal 10>>
+					당신은 이곳에서조차도 너무 음란한 차림이다! 흥분과 공포가 동시에 밀려온다. 몸을 낮추면 해변에 흩어져 있는 수많은 방풍막을 이용해 몸을 숨길 수 있을지도 모른다.
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 헐벗은 몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<arousal 10>>
+					당신은 혼자이지만, 이처럼 음란한 차림으로 있는 것은 짜릿한 만큼이나 두렵다.
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<<else>>
+					<<arousal 5>>
+					당신은 대낮에 차마 말할 수 없는 은밀한 부위를 드러내고 있다! 이건 좋지 않다, 전혀 좋지 않다! 어쩌면 몸을 낮춰 해변에 흩어져 있는 수많은 방풍막을 이용해 당신의 나체를 가릴 수 있을지도 모른다.
+					<br><br>
+					당신은 노출된 상태에 극심한 당혹감을 느낀다<<if pcAreArmsBound("both")>>. 하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.<<else>>. 최대한 몸을 가린다.<</if>>
+					<br><br>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<elseif _args[0] is "beachFishing">>
+		<<if $uncomfortable.nude is false>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<if isPlayerFishingAlone()>>
+						옷을 제대로 걸치지 않은 채 홀로 어둠 속에 있다는 사실에 짜릿함을 느낀다. <<arousal 2>>
+					<<else>>
+						해변에 다른 사람들이 가까이 있는데 이렇게 옷을 제대로 안 갖춰 입고 있다는 사실에 짜릿함을 느낀다. <<arousal 2>>
+					<</if>>
+				<<else>>
+					이렇게 많은 사람들에게 둘러싸인 채 이런 차림으로 서 있다는 사실에 짜릿함을 느낀다. <<arousal 4>>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<if isPlayerFishingAlone()>>
+						어둠 속에서도, 완전히 노출된 채 이곳 해변에 서 있다는 사실이 짜릿한 전율을 안겨준다. <<arousal 4>>
+					<<else>>
+						어둠 속에서도, 다른 사람들이 가까이 있는데 완전히 노출된 채 서 있다는 사실이 짜릿한 전율을 안겨준다. <<arousal 4>>
+					<</if>>
+				<<else>>
+					이렇게 많은 사람들에게 둘러싸인 채 완전히 노출되어 있다는 사실에 흥분이 밀려온다. <<arousal 6>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<if isPlayerFishingAlone()>>
+						어둠 속에서도 이런 차림이라는 게 의식되어 부끄럽다. <<arousal 2>>
+					<<else>>
+						가까이 누군가 있으니, 어둠도 노출되어 있다는 부끄러움을 별로 덜어주지 못한다. <<arousal 2>>
+					<</if>>
+				<<else>>
+					이렇게 많은 사람들에게 둘러싸여 얼마나 노출되어 있는지 뼈저리게 의식하며, 낚싯줄에서 눈을 떼지 않는다. <<arousal 1>>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<if isPlayerFishingAlone()>>
+						이렇게 노출된 상태에서는 어둠도 별 위안이 되지 못한다. <<arousal 1>>
+					<<else>>
+						다른 사람들이 가까이 있는 채로 노출되어 있으니, 어둠도 불편함을 전혀 덜어주지 못한다. <<arousal 1>>
+					<</if>>
+				<<else>>
+					이렇게 많은 사람들에게 둘러싸인 채 드러난 피부에 스치는 바람을 느끼자 부끄러움에 뺨이 화끈거린다. <<arousal 1>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<elseif _args[0] is "pierFishing">>
+		<<if $uncomfortable.nude is false>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<if isPlayerFishingAlone()>>
+						옷을 제대로 걸치지 않은 채 홀로 어둠 속에 있다는 사실에 짜릿함을 느낀다. <<arousal 2>>
+					<<else>>
+						부두에 다른 사람들이 가까이 있는데 이렇게 옷을 제대로 안 갖춰 입고 있다는 사실에 짜릿함을 느낀다. <<arousal 2>>
+					<</if>>
+				<<else>>
+					이렇게 많은 사람들에게 둘러싸인 채 이런 차림으로 서 있다는 사실에 짜릿함을 느낀다. <<arousal 4>>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<if isPlayerFishingAlone()>>
+						어둠 속에서도, 완전히 노출된 채 이곳 부두에 서 있다는 사실이 짜릿한 전율을 안겨준다. <<arousal 4>>
+					<<else>>
+						어둠 속에서도, 다른 사람들이 가까이 있는데 완전히 노출된 채 서 있다는 사실이 짜릿한 전율을 안겨준다. <<arousal 4>>
+					<</if>>
+				<<else>>
+					이렇게 많은 사람들에게 둘러싸인 채 완전히 노출되어 있다는 사실에 흥분이 밀려온다. <<arousal 6>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<if isPlayerFishingAlone()>>
+						어둠 속에서도 이런 차림이라는 게 의식되어 부끄럽다. <<arousal 2>>
+					<<else>>
+						가까이 누군가 있으니, 어둠도 노출되어 있다는 부끄러움을 별로 덜어주지 못한다. <<arousal 2>>
+					<</if>>
+				<<else>>
+					이렇게 많은 사람들에게 둘러싸여 얼마나 노출되어 있는지 뼈저리게 의식하며, 낚싯줄에서 눈을 떼지 않는다. <<arousal 1>>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<if isPlayerFishingAlone()>>
+						이렇게 노출된 상태에서는 어둠도 별 위안이 되지 못한다. <<arousal 1>>
+					<<else>>
+						다른 사람들이 가까이 있는 채로 노출되어 있으니, 어둠도 불편함을 전혀 덜어주지 못한다. <<arousal 1>>
+					<</if>>
+				<<else>>
+					이렇게 많은 사람들에게 둘러싸인 채 드러난 피부에 스치는 바람을 느끼자 부끄러움에 뺨이 화끈거린다. <<arousal 1>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<elseif _args[0] is "moorFishing">>
+		<<if $uncomfortable.nude is false>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<if isPlayerFishingAlone()>>
+						옷을 제대로 걸치지 않은 채 홀로 어둠 속에 있다는 사실에 짜릿함을 느낀다. <<arousal 2>>
+					<<else>>
+						황야에 다른 사람들이 가까이 있는데 이렇게 옷을 제대로 안 갖춰 입고 있다는 사실에 짜릿함을 느낀다. <<arousal 2>>
+					<</if>>
+				<<else>>
+					<<if isPlayerFishingAlone()>>
+						이렇게 옷을 제대로 안 갖춰 입은 채 야외에 있다는 짜릿함이 황야의 바람 속에서도 몸을 데워준다. <<arousal 4>>
+					<<else>>
+						다른 사람들이 곁에 있는데 이런 차림으로 서 있다는 사실에 짜릿함을 느낀다. <<arousal 4>>
+					<</if>>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<if isPlayerFishingAlone()>>
+						어둠 속에서도, 완전히 노출된 채 이곳 황야에 서 있다는 사실이 짜릿한 전율을 안겨준다. <<arousal 4>>
+					<<else>>
+						어둠 속에서도, 다른 사람들이 가까이 있는데 완전히 노출된 채 서 있다는 사실이 짜릿한 전율을 안겨준다. <<arousal 4>>
+					<</if>>
+				<<else>>
+					<<if isPlayerFishingAlone()>>
+						완전히 노출되어 있다는 사실에 흥분이 밀려온다. <<arousal 6>>
+					<<else>>
+						다른 사람들이 곁에 있는데 완전히 노출되어 있다는 사실에 흥분이 밀려온다. <<arousal 6>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					<<if isPlayerFishingAlone()>>
+						어둠 속에서도 이런 차림이라는 게 의식되어 부끄럽다. <<arousal 2>>
+					<<else>>
+						가까이 누군가 있으니, 어둠도 노출되어 있다는 부끄러움을 별로 덜어주지 못한다. <<arousal 2>>
+					<</if>>
+				<<else>>
+					<<if isPlayerFishingAlone()>>
+						탁 트인 황야에서 얼마나 노출되어 있는지 뼈저리게 의식하며, 낚싯줄에서 눈을 떼지 않는다. <<arousal 1>>
+					<<else>>
+						황야에 혼자가 아니라는 것과 자신이 얼마나 노출되어 있는지를 뼈저리게 의식하며, 낚싯줄에서 눈을 떼지 않는다. <<arousal 1>>
+					<</if>>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					<<if isPlayerFishingAlone()>>
+						이렇게 노출된 상태에서는 어둠도 별 위안이 되지 못한다. <<arousal 1>>
+					<<else>>
+						다른 사람들이 가까이 있는 채로 노출되어 있으니, 어둠도 불편함을 전혀 덜어주지 못한다. <<arousal 1>>
+					<</if>>
+				<<else>>
+					<<if isPlayerFishingAlone()>>
+						드러난 피부에 스치는 바람을 느끼자 부끄러움에 뺨이 화끈거린다. <<arousal 1>>
+					<<else>>
+						드러난 피부에 스치는 바람과 다른 사람들의 시선을 동시에 느끼자 부끄러움에 뺨이 화끈거린다. <<arousal 1>>
+					<</if>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<elseif _args[0] is "forestLakeFishing">>
+		<<if $uncomfortable.nude is false>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					옷을 제대로 걸치지 않은 채 홀로 어둠 속에 있다는 사실에 짜릿함을 느낀다. <<arousal 2>>
+				<<else>>
+					이렇게 옷을 제대로 안 갖춰 입은 채 야외에 있다는 짜릿함이 서늘한 공기 속에서도 몸을 데워준다. <<arousal 4>>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					어둠 속에서도, 완전히 노출된 채 이곳 호숫가에 서 있다는 사실이 짜릿한 전율을 안겨준다. <<arousal 4>>
+				<<else>>
+					완전히 노출되어 있다는 사실에 흥분이 밀려온다. <<arousal 8>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					어둠 속에서도 이런 차림이라는 게 의식되어 부끄럽다. <<arousal 2>>
+				<<else>>
+					호숫가에서 얼마나 노출되어 있는지 뼈저리게 의식하며, 낚싯줄에서 눈을 떼지 않는다. <<arousal 1>>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					이렇게 노출된 상태에서는 어둠도 별 위안이 되지 못한다. <<arousal 1>>
+				<<else>>
+					드러난 피부에 스치는 서늘한 공기를 느끼자 부끄러움에 뺨이 화끈거린다. <<arousal 1>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<elseif _args[0] is "coastPathFishing">>
+		<<if $uncomfortable.nude is false>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					옷을 제대로 걸치지 않은 채 홀로 어둠 속에 있다는 사실에 짜릿함을 느낀다. <<arousal 2>>
+				<<else>>
+					이렇게 옷을 제대로 안 갖춰 입은 채 야외에 있다는 짜릿함이 바람 속에서도 몸을 데워준다. <<arousal 4>>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					어둠 속에서도, 완전히 노출된 채 이곳 절벽 길에 서 있다는 사실이 짜릿한 전율을 안겨준다. <<arousal 4>>
+				<<else>>
+					완전히 노출되어 있다는 사실에 흥분이 밀려온다. <<arousal 8>>
+				<</if>>
+			<</if>>
+		<<else>>
+			<<if $exposed is 1>>
+				<<if Weather.dayState is "night">>
+					어둠 속에서도 이런 차림이라는 게 의식되어 부끄럽다. <<arousal 2>>
+				<<else>>
+					절벽 길에서 얼마나 노출되어 있는지 뼈저리게 의식하며, 낚싯줄에서 눈을 떼지 않는다. <<arousal 1>>
+				<</if>>
+			<<elseif $exposed is 2>>
+				<<if Weather.dayState is "night">>
+					이렇게 노출된 상태에서는 어둠도 별 위안이 되지 못한다. <<arousal 1>>
+				<<else>>
+					드러난 피부에 스치는 바람을 느끼자 부끄러움에 뺨이 화끈거린다. <<arousal 1>>
+				<</if>>
+			<</if>>
+		<</if>>
+	<<else>>
+		버그 - "exhibitionism" 위젯에 누락되었거나 오타가 난 위치가 있습니다<br><br>
+	<</if>>
+<</widget>>
+
+<<widget "exhibitionismgarden">>
+	당신은 정원 헛간 뒤에 숨어 있다.
+	<<if $exposed is 1>>
+		<<arousal 20>>
+	<<elseif $exposed is 2>>
+		<<arousal 50>>
+	<</if>>
+	<<if Weather.dayState is "night">>
+		차가운 밤공기가 맨살을 스친다.
+	<</if>>
+	아무에게도 들키지 않고 침실에 무사히 도착할 수 있기를 바란다.
+	<br><br>
+	당신은 노출된 상태에 극심한 당혹감을 느낀다
+	<<if pcAreArmsBound("both")>>
+		하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.
+	<<else>>
+		그래서 최대한 몸을 가린다.
+	<</if>>
+	<br><br>
+<</widget>>
+
+<<widget "exhibitionismroof">>
+	<<if $exposed is 1>>
+		<<arousal 20>>
+	<<elseif $exposed is 2>>
+		<<arousal 50>>
+	<</if>>
+	<<if Weather.dayState is "night">>
+		서늘한 밤바람에 몸이 떨린다.
+	<</if>>
+	아무도 없는데도, 뻥 뚫린 야외라 그 어느 때보다 더 노출된 기분이다.
+	<br><br>
+	당신은 노출된 상태에 극심한 당혹감을 느낀다
+	<<if pcAreArmsBound("both")>>
+		하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.
+	<<else>>
+		그래서 최대한 몸을 가린다.
+	<</if>>
+	<br><br>
+<</widget>>
+
+<<widget "exhibitionismbuilding">>
+	<<if $exposed is 1>>
+		<<arousal 20>>
+		<<if Weather.dayState is "night">>
+			당신은 혼자이지만, 이처럼 음란한 차림으로 있는 것은 짜릿한 만큼이나 두렵다.
+			<br><br>
+			당신은 노출된 상태에 극심한 당혹감을 느낀다
+			<<if pcAreArmsBound("both")>>
+				하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.
+			<<else>>
+				그래서 최대한 몸을 가린다.
+			<</if>>
+			<br><br>
+		<<else>>
+			당신은 공공장소에서 음란한 차림으로 있다! 당신은 흥분과 공포를 동시에 느낀다.
+			<br><br>
+			당신은 또한 노출된 상태에 극심한 당혹감을 느낀다
+			<<if pcAreArmsBound("both")>>
+				하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.
+			<<else>>
+				그래서 최대한 몸을 가린다.
+			<</if>>
+			<br><br>
+		<</if>>
+	<<elseif $exposed is 2>>
+		<<arousal 50>>
+		<<if Weather.dayState is "night">>
+			당신은 혼자이지만, 이처럼 음란한 차림으로 있는 것은 짜릿한 만큼이나 두렵다.
+			<br><br>
+			당신은 노출된 상태에 극심한 당혹감을 느낀다
+			<<if pcAreArmsBound("both")>>
+				하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.
+			<<else>>
+				그래서 최대한 몸을 가린다.
+			<</if>>
+			<br><br>
+		<<else>>
+			당신은 차마 말할 수 없는 은밀한 부위를 드러내고 공공장소에 있다! 당신은 흥분과 공포를 동시에 느낀다.
+			<br><br>
+			당신은 또한 노출된 상태에 극심한 당혹감을 느낀다
+			<<if pcAreArmsBound("both")>>
+				하지만 팔이 묶여 있어 알몸을 가리기 위해 할 수 있는 일이 아무것도 없다.
+			<<else>>
+				그래서 최대한 몸을 가린다.
+			<</if>>
+			<br><br>
+		<</if>>
+	<</if>>
+<</widget>>
+
+<<widget "exhibitionclassroom">>
+	<<if $exposed gte 1>>
+		방 안엔 혼자뿐이지만, 늘 사람들로 북적이는 이곳에 무방비하게 노출되어 있다는 사실이 당신을 취약하게 만들고 <<nudity>>【을를】 의식하게 한다.<<print _nudityExtra>>
+		<br><br>
+	<</if>>
+<</widget>>

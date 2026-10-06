@@ -1,0 +1,737 @@
+:: Widgets Ejaculation-PLANT [widget]
+<<widget "ejaculation-plant">>
+	<<set $ejaculating to 1>>
+	<!-- Changing rows to future-proof the code: from $NPCList[0] to $NPCList[_nn], _nn being the main ejaculation loop handler -->
+
+	<<if $consensual is 1>>
+		<<set _nectar to "넥타르">>
+		<<set _Nectar to "넥타르">>
+		<<set _fizzyNectar to "거품이 알어난 넥타르">>
+	<<else>>
+		<<set _nectar to "원치 않는 넥타르">>
+		<<set _Nectar to "원치 않는 넥타르">>
+		<<set _fizzyNectar to "거품이 일어나는 원치 않는 넥타르">>
+	<</if>>
+
+	<!-- Female PLANT -->
+	<<if $NPCList[_nn].vagina isnot "none" and $NPCList[_nn].penis is "none">>
+		<<if $NPCList[_nn].vagina is "mouthentrance" or $NPCList[_nn].vagina is "mouth" or $NPCList[_nn].vagina is "mouthimminent">>
+			<<switch random(1, 5)>>
+				<<case 1 2>>
+					<<He>>【은는】 허벅지를 떨며 오르가즘을 느끼고, 신음하며 허리를 움직여 <<his>> 사타구니를 당신의 얼굴에 문지른다.
+				<<case 3 4>>
+					<<He>>【이가】 절정에 달하자, <<his>> 홍조가 짙어지고 몸이 경련한다.
+				<<case 5>>
+					<<He>>【은는】 비명을 지르며, 한 손으로 당신의 머리를 감싸 안고 <<his>> 클리토리스를 당신의 얼굴에 문지른다.
+			<</switch>>
+			_Nectar가 입 안으로 흘러 들어온다. <span class="purple">톡 쏘는 맛이 나고,</span> 머리가 빙빙 돈다.
+			<<faceejacstat>><<ejacstat>><<set $hygiene += 500>><<nectarfed 20>>
+		<<elseif $NPCList[_nn].vagina is "leftarm" or $NPCList[_nn].vagina is "rightarm">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 한 손으로 당신의 팔을, 다른 한 손으로는 뒤통수를 움켜쥐고 당신의 손 위에서 경련하며 당신의 입 안으로 신음한다.
+			<<else>>
+				<<switch random(1, 5)>>
+					<<case 1 2>>
+						<<He>>【은는】 몸이 경련하며 한숨을 내쉬고, <<his>> 허벅지가 당신의 머리에 닿아 떨린다.
+					<<case 3 4>>
+						<<He>>【이가】 당신의 손에 대고 절정에 달하자, <<his>> 홍조가 짙어지고 입이 벌어진다.
+					<<case 5>>
+						<<He>>【은는】 신음하며 당신의 손에 넥타르를 뿌린다. <<He>>【은는】 짓궂은 표정을 지으며, _nectar가 가득한 당신의 손을 입 안으로 밀어 넣는다. <span class="purple">톡 쏘는 맛이 나고,</span> 머리가 빙빙 돈다. "잡았다."
+						<<nectarfed 8>>
+				<</switch>>
+			<</if>>
+		<<elseif $NPCList[_nn].vagina is "feet">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 절정에 달해 당신의 발을 감싸고 경련하며 당신의 입 안으로 신음한다.
+			<<else>>
+				<<switch random(1, 5)>>
+					<<case 1 2>>
+						<<He>>【은는】 신음하며 절정에 달해 당신의 발목을 움켜쥔다. "인간을 과소평가했던 것 같네. 있는 걸로 어떻게 해야 하는지 잘 아는구나!"
+					<<case 3 4>>
+						<<He>>【은는】 당신의 발에 대고 절정에 달해 <<his>> <<print window.KR.getBreastSizeKr($NPCList[_nn].breastsdesc)>>【을를】 움켜쥔다. "대부분의 식물은 밟히는 걸 좋아하지 않는데. 내가 예외인가 봐!"
+					<<case 5>>
+						<<He>>【은는】 절정에 달해 비명을 질러, 당신을 거의 뛰어오르게 만든다. <<His>> 넥타르가 당신의 발 위로 흐른다.
+				<</switch>>
+			<</if>>
+			<<feetejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "feet" "nectar">>
+		<<elseif $NPCList[_nn].vagina is "vagina" and playerChastity("vagina")>>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 절정에 달해 당신의 $worn.genitals.name에 몸을 비비며 당신의 입 안으로 신음한다.
+			<<else>>
+				<<He>>【은는】 당신의 $worn.genitals.name에 대고 절정에 달해 비명을 지른다. "금속은 싫어," <<he>>【은는】 실망한 듯 아래를 내려다보며 헐떡인다.
+			<</if>>
+		<<elseif $NPCList[_nn].vagina is "vagina">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<if random(1)>>
+					<<He>>【은는】 다리를 떨며 당신의 입 안으로 비명을 지른다.
+				<<else>>
+					<<He>>【은는】 열정적으로 서로의 보지를 비비며, 당신의 입 안으로 신음한다.
+				<</if>>
+			<<else>>
+				<<switch random(1, 5)>>
+					<<case 1 2>>
+						<<He>>【은는】 서로의 보지를 비비는 동안 절정에 달해 쾌감에 찬 신음을 흘린다.
+					<<case 3 4>>
+						<<He>>【은는】 몸을 떨며 당신의 다리에 <<his>> 다리를 감싼다. "와," <<he>>【은는】 낄낄거린다. "덩굴이 왜 필요하겠어?"
+					<<case 5>>
+						<<He>>【은는】 당신의 <<pussy>>에 대고 절정에 달해 신음하며 다리를 떤다.
+				<</switch>>
+			<</if>>
+		<<elseif $NPCList[_nn].vagina is "othermouth">>
+			<<switch random(1, 5)>>
+				<<case 1 2>>
+					<<He>>【은는】 쾌감에 몸을 떨며 절정에 달해 당신의 사타구니에 숨을 내뱉는다. "맛있어," <<he>>【은는】 속삭인다.
+				<<case 3 4>>
+					<<He>>【은는】 당신의 사타구니에 대고 떨며 절정에 달해 탐욕스럽게 당신의 애액을 핥아먹는다.
+				<<case 5>>
+					<<He>>【은는】 두 손으로 허벅지를 강하게 누르며 절정에 달해 당신의 사타구니에 대고 비명을 지른다.
+			<</switch>>
+		<<elseif $NPCList[_nn].vagina is "facesit">>
+			<<switch random(1,5)>>
+				<<case 1 2>>
+					<<He>>【은는】 신음하며 <<his>> 사타구니를 당신의 얼굴에 비비고, 오르가즘에 달해 몸을 떤다.
+				<<case 3 4>>
+					<<He>>【은는】 당신의 얼굴 위에서 불규칙하게 움직이기 시작하고, 절정에 달해 통제력을 잃고 당신의 입에 물을 뿜는다.
+				<<case 5>>
+					<<He>>【은는】 오르가즘의 순간에 당신의 얼굴을 짓누르며 헐떡이고 몸을 떤다.
+			<</switch>>
+			_Nectar가 당신의 얼굴 전체에 뿌려지고, 일부는 입 안으로 흘러 들어온다. <span class="purple">톡 쏘는 맛이 나고,</span> 머리가 빙빙 돈다.
+			<<faceejacstat>><<ejacstat>><<set $hygiene += 500>><<nectarfed 20>><<bodyliquid "face" "nectar">>
+		<<elseif $NPCList[_nn].vagina is "facesitanal">>
+			<<switch random(1,5)>>
+				<<case 1 2>>
+					<<He>>【은는】 신음하며 <<his>> 엉덩이를 당신의 입에 문지르고, 오르가즘에 달해 몸을 떤다.
+				<<case 3 4>>
+					<<He>>【은는】 리드미컬하게 당신에게 <<his>> 엉덩이를 누르기 시작하고, 떨리는 절정을 향해 가면서 속도를 높인다.
+				<<case 5>>
+					<<He>>【은는】 오르가즘의 순간에 당신의 얼굴을 짓누르며 헐떡이고 몸을 떤다.
+			<</switch>>
+			<<his>> 보지에서 _Nectar가 당신의 얼굴 전체에 뿌려진다.
+			<<faceejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "face" "nectar">>
+		<<elseif $NPCList[_nn].vagina is "otheranus">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<if random(1)>>
+					<<He>>【은는】 당신의 <<penis>>에 몸을 밀어붙이며 당신의 입 안으로 헐떡인다.
+				<<else>>
+					<<He>>【은는】 두 팔로 당신의 목을, 두 다리로 허리를 감고 절정에 달해 당신의 입 안으로 신음한다.
+				<</if>>
+			<<else>>
+				<<switch random(1, 5)>>
+					<<case 1 2>>
+						<<He>>【은는】 절정에 달해 떨며 당신을 향해 엉덩이를 밀어붙이고 마지막 신음을 내뱉는다.
+					<<case 3 4>>
+						<<He>>【은는】 당신의 <<penis>>에 대고 떨며 절정에 달해 신음하고 최대한 깊이 몸을 비빈다.
+					<<case 5>>
+						<<He>>【은는】 절정에 달해 당신의 사타구니를 들이받으며 낄낄거린다. "평소 쓰던 구멍은 아니지만, 존나 기분 좋네."
+				<</switch>>
+			<</if>>
+			<<thighejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "thigh" "nectar">>
+		<<elseif $NPCList[_nn].vagina is "penis">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<if random(1)>>
+					<<He>>【은는】 당신의 <<penis>>【을를】 감싸고 몸을 떨며 당신에게 밀어붙인다. "덩굴보다 훨씬 낫네," <<he>>【은는】 당신의 입 안으로 속삭인다.
+				<<else>>
+					<<He>>【은는】 두 팔로 당신의 목을, 두 다리로 허리를 감고 절정에 달해 당신의 입 안으로 신음한다.
+				<</if>>
+			<<else>>
+				<<switch random(1, 5)>>
+					<<case 1 2>>
+						<<He>>【은는】 절정에 달해 당신의 어깨를 감싸 안고, <<his>> 보지를 당신의 <<penis>>에 강하게 밀어붙인다. "네 자지는 날 위해 만들어졌어," <<he>>【은는】 속삭인다.
+					<<case 3 4>>
+						<<He>>【은는】 절정에 달해 한숨을 쉬며 당신의 눈을 응시한다. "널 여기 두고 매일 이러고 싶어."
+					<<case 5>>
+						<<He>>【은는】 비명을 지르며 절정에 달해 <<his>> 골반으로 당신의 <<penis>>【을를】 내리치고 온몸을 떤다.
+				<</switch>>
+			<</if>>
+		<<elseif ($NPCList[_nn].vagina is "penisimminent" or $NPCList[_nn].vagina is "penisentrance" or $NPCList[_nn].vagina is "otheranusfrot" or $NPCList[_nn].vagina is "otheranusentrance") and playerChastity("penis")>>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 절정에 달해 당신의 $worn.genitals.name에 몸을 비비며 당신의 입 안으로 신음한다.
+			<<else>>
+				<<He>>【은는】 당신의 $worn.genitals.name에 대고 절정에 달해 비명을 지른다. "금속은 싫어," <<he>>【은는】 실망한 듯 아래를 내려다보며 헐떡인다.
+			<</if>>
+		<<elseif $NPCList[_nn].vagina is "penisimminent" or $NPCList[_nn].vagina is "penisentrance" or $NPCList[_nn].vagina is "otheranusfrot" or $NPCList[_nn].vagina is "otheranusentrance">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 절정에 달해 당신의 입 안으로 신음하지만, <<he>>【이가】 찡그리는 것을 느낄 수 있다. "박고 싶었는데," <<he>>【은는】 실망감에 중얼거린다.
+			<<else>>
+				<<He>>【은는】 당신의 <<penisSimple>> 끝에서 절정에 달해 신음한다. "박고 싶었는데," <<he>>【은는】 실망한 듯 아래를 내려다보며 헐떡인다.
+			<</if>>
+		<<elseif $NPCList[_nn].vagina is "frot">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 <<his>> 클리토리스를 당신의 <<penis>>에 문지르고 당신의 입 안으로 신음하며 몸을 떤다.
+			<<else>>
+				<<He>>【은는】 절정에 달해 <<his>> 클리토리스를 당신의 <<penis>>에 강하게 문지르며 당신의 자지에 사정한다. "여전히 네가 박아줬으면 좋겠지만," <<he>>【은는】 말한다, "그래도 좋았어."
+			<</if>>
+			<<ejacstat>><<set $hygiene += 500>><<bodyliquid "penis" "nectar">>
+		<<elseif $NPCList[_nn].mouth is "penis">>
+			<<switch random(1, 5)>>
+				<<case 1 2>>
+					<<He>>【은는】 당신이 <<his>> 입에 박는 동안 당신의 허벅지를 잡고 절정에 달한다. <<He>>【은는】 황홀한 미소를 지으며 몸을 뺀다.
+				<<case 3 4>>
+					<<He>>【은는】 절정에 달할 때 안정을 위해 당신의 허벅지를 붙잡고, 끝날 때까지 <<his>> 입술이 당신의 <<penis>>에 밀착된 상태를 유지한다.
+				<<case 5>>
+					<<He>>【은는】 쾌감에 비명을 지르며 당신의 <<penis>>【을를】 <<his>> 목구멍 깊숙이 꽂아 넣는다. 오르가즘이 지나간 후, <<he>>【은는】 당신의 자지를 샅샅이 핥는다.
+			<</switch>>
+			당신의 <<penis>>【은는】 넥타르로 끈적해진다.
+			<<bodyliquid "penis" "nectar">>
+		<<elseif $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+			<<switch random(1, 5)>>
+				<<case 1 2>>
+					<<He>>【은는】 당신의 목에 두 팔을 감고 입술을 짓이기며 당신의 입 안으로 신음한다.
+				<<case 3 4>>
+					<<He>>【은는】 절정에 달해 당신의 입 안으로 비명을 지른 후, 숨을 헐떡이며 물러난다. "내가 해본 최고의 키스야," <<he>>【은는】 속삭인다.
+				<<case 5>>
+					<<He>>【은는】 절정에 달해 당신의 얼굴을 붙잡고 키스한다. 오르가즘이 지나가자, <<he>>【은는】 당신의 얼굴 전체에 키스를 퍼부으며 달콤한 시럽 같은 넥타르를 당신의 얼굴에 남긴다.
+					<<set $hygiene += 500>><<bodyliquid "face" "nectar">>
+			<</switch>>
+		<<elseif $NPCList[_nn].chest is "mouth" or $NPCList[_nn].chest is "mouthentrance" and $NPCList[_nn].pronoun is "f">>
+			<<switch random(1, 5)>>
+				<<case 1 2>>
+					<<He>>【은는】 당신을 내려다보며 미소를 지으며 절정에 달해 한숨을 쉰다. "원하는 만큼 마셔. 더 이상 생각할 수 없을 때까지."
+				<<case 3 4>>
+					<<He>>【은는】 쾌감에 신음하며 당신을 <<his>> 가슴에 안는다. "내가 막지 않게 해," <<he>>【은는】 다정하게 말한다. "원하는 만큼 해."
+				<<case 5>>
+					<<He>>【은는】 당신의 머리를 잡고 <<his>> <<print window.KR.getBreastSizeKr($NPCList[_nn].breastsdesc)>> 쪽으로 끌어당겨 당신의 얼굴에 _nectar를 뿜어낸다.
+					<<set $hygiene += 500>><<bodyliquid "face" "nectar">>
+			<</switch>>
+		<<elseif $NPCList[_nn].vagina is "lefthand" or $NPCList[_nn].vagina is "righthand">>
+			<<switch random(1, 5)>>
+				<<case 1 2>>
+					<<He>>【은는】 절정에 달해 한숨을 쉬며 뒤로 넘어지고 <<his>> 눈 위로 팔을 얹는다.
+				<<case 3 4>>
+					<<He>>【이가】 절정에 달하자 <<his>> <<print window.KR.getBreastSizeKr($NPCList[_nn].breastsdesc)>>【이가】 흔들리며 신음한다.
+				<<case 5>>
+					<<He>>【은는】 비명을 지르며 절정에 달하고, 넥타르가 <<his>> 허벅지를 타고 흘러내린다. <<He>>【은는】 손가락으로 조금 떠내어 장난기 가득한 미소를 지은 뒤, 당신의 얼굴에 튕긴다. "이제 너도 나처럼 엉망이네!"
+					<<faceejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "face" "nectar">>
+				<</switch>>
+		<<else>>
+			<<He>>【은는】 오르가즘의 황홀경 속에서 경련한다.
+		<</if>>
+	<<else>>
+
+	<!-- Male PLANT -->
+		<<if $NPCList[_nn].penis is "idle">>
+			<<He>>【은는】 <<his>> <<print window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>에서 바닥으로 넥타르를 뿜어내며 신음한다.
+		<<elseif $NPCList[_nn].penis is "thighs">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 당신의 입 안으로 신음하고, <<his>> 페니스가 당신의 허벅지에 넥타르를 뿜어내자 몸을 떤다.
+			<<else>>
+				<<switch random(1, 5)>>
+					<<case 1 2>>
+						<<He>>【은는】 절정에 달해 몸을 떤다. <<He>>【은는】 <<his>> <<print window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【을를】 빼내어 당신의 허벅지 뒤쪽에 사정한다.
+					<<case 3 4>>
+						<<He>>【은는】 절정에 달해 당신의 허벅지를 움켜쥐고 격렬하게 박으며, 당신의 다리 위로 넥타르를 뿌린다.
+					<<case 5>>
+						<<He>>【은는】 신음하며 절정에 달해 막대한 양을 사정하여 당신의 허벅지와 배 위로 넥타르를 흩뿌린다.
+						<<tummyejacstat>><<bodyliquid "tummy" "nectar">>
+				<</switch>>
+				<<thighejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "thigh" "nectar">>
+			<</if>>
+		<<elseif $NPCList[_nn].penis is "vaginaentrance" and playerChastity("vagina")>>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 절정에 달해 당신의 $worn.genitals.name에 몸을 밀어붙이며 당신의 입 안으로 신음한다.
+			<<else>>
+				<<He>>【은는】 당신의 $worn.genitals.name에 대고 절정에 달해 비명을 지른다. 당신의 허벅지를 타고 넥타르가 흘러내린다. "금속은 싫어," <<he>>【은는】 실망한 듯 아래를 내려다보며 헐떡인다.
+			<</if>>
+			<<vaginalentranceejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "vaginaoutside" "nectar">><<bodyliquid "thigh" "nectar">>
+		<<elseif $NPCList[_nn].penis is "vaginaentrance">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 당신에게 몸을 기대고 <<his>> 입술을 당신의 입술에 짓이기며, 당신의 보지 앞부분에 끈적한 넥타르를 사정한다.
+			<<else>>
+				<<switch random(1, 5)>>
+					<<case 1 2>>
+						<<He>>【은는】 한 손으로 당신의 골반을 단단히 잡고 다른 한 손으로 <<his>> <<print window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【을를】 쥔 채, 당신의 <<pussy>>에 사정한다. 넥타르가 당신을 덮고 다리 주위에 고인다.
+					<<case 3 4>>
+						<<He>>【은는】 꺅 하는 소리와 함께 <<his>> <<print window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【을를】 문지르며 당신의 <<pussy>>에 사정하여, 끈적한 넥타르 줄기가 당신의 씹을 타고 흘러내리게 한다.
+					<<case 5>>
+						<<He>>【은는】 신음하며 <<his>> <<print window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【을를】 문지르며 절정에 달해, 당신의 <<pussy>>【와과】 <<bottom>>에 끈적한 넥타르 줄기를 뿌린다.
+						<<bottomejacstat>><<set $hygiene += 500>><<bodyliquid "bottom" "nectar">>
+				<</switch>>
+				<<vaginalentranceejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "vaginaoutside" "nectar">>
+			<</if>>
+		<<elseif $NPCList[_nn].penis is "vaginaimminent" and playerChastity("vagina")>>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 절정에 달해 당신의 $worn.genitals.name에 몸을 밀어붙이며 당신의 입 안으로 신음한다.
+			<<else>>
+				<<He>>【은는】 당신의 $worn.genitals.name에 대고 절정에 달해 비명을 지른다. 당신의 허벅지를 타고 넥타르가 흘러내린다. "금속은 싫어," <<he>>【은는】 실망한 듯 아래를 내려다보며 헐떡인다.
+			<</if>>
+		<<elseif $NPCList[_nn].penis is "vaginaimminent">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 속도를 높여 당신에게 삽입하려 하지만, 미처 넣기도 전에 오르가즘에 달해 무너진다. <<He>>【은는】 당신의 입 안으로 실망스러운 신음을 내뱉는다.
+			<<else>>
+				<<switch random(1, 5)>>
+					<<case 1 2>>
+						<<He>>【은는】 당신의 <<pussy>>에 삽입하기도 전에 절정에 달해, 당신의 음순 위로 사정한다. 당신의 아래로 넥타르가 뚝뚝 떨어져 웅덩이를 이룬다. "제기랄! 좀 더 빨리 했어야 했는데."
+					<<case 3 4>>
+						<<He>>【은는】 미처 삽입하기도 전에 당신의 <<pussy>>에 사정하여, 끈적한 넥타르 줄기가 당신의 음순을 타고 흘러내리게 한다. "아, 진짜!" <<he>>【은는】 투덜거린다. "다시 하면 안 돼?"
+					<<case 5>>
+						<<He>>【은는】 신음하며 <<his>> <<print window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【을를】 문지르며 절정에 달해, 당신의 <<pussy>>【와과】 <<bottom>>에 끈적한 넥타르 줄기를 뿌린다. "네 안에 싸고 싶었는데. 엉망으로 만들기나 했네."
+						<<bottomejacstat>><<set $hygiene += 500>><<bodyliquid "bottom" "nectar">>
+				<</switch>>
+				<<vaginalentranceejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "vaginaoutside" "nectar">>
+			<</if>>
+		<<elseif $NPCList[_nn].penis is "vagina">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<switch $NPCList[_nn].penissize>>
+					<<case 4>>
+						<<He>>【은는】 절정에 달해 당신의 사타구니에 몸을 밀어붙이며 경련하고, <<his>> <<print window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【은는】 끈적한 넥타르의 파도를 <<if canImpregnateParasite("vagina")>><span class="red">다른 무언가와 함께 </span><</if>>당신의 <<pussy>> 깊숙이 뿜어낸다. "덩굴보다 훨씬 낫네," <<he>>【은는】 당신의 입 안으로 속삭인다.
+						<<vaginalejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "vagina" "nectar">>
+						/* ToDo: Pregnancy, figure out how plantpeople interact with pregnancy */
+						<<vaginalentranceejacstat>><<set $hygiene += 500>><<bodyliquid "vaginaoutside" "nectar">>
+						<<thighejacstat>><<set $hygiene += 500>><<bodyliquid "thigh" "nectar">>
+						<<impregnateParasite "vine" 400 "vagina">><<fertiliseParasites "vagina">>
+					<<case 1>>
+						<<He>>【은는】 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>에서 당신의 <<pussy>> 안으로 넥타르가 찔끔 흘러나오자 신음한다. 당신은 <<his>> 입 안으로 킥킥 웃는다. "시끄러워," <<he>>【은는】 당신의 입 안으로 중얼거린다. "웃지 마."
+					<<default>>
+						<<if random(1)>>
+							<<He>>【은는】 절정에 달해 당신의 입 안으로 꺅 소리를 내고, <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【은는】 당신의 <<pussy>> 안으로 넥타르를 뿜어낸다.
+						<<else>>
+							<<He>>【은는】 절정에 달해 몸을 떨며, 당신의 <<pussy>> 안으로 넥타르 줄기를 쏟아낸다. <<He>>【은는】 당신에게서 몸을 떼고 <<his>> 입술을 핥는다. "너 내가 가져도 돼?"
+						<</if>>
+						<<vaginalejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "vagina" "nectar">>
+						/* ToDo: Pregnancy, figure out how plantpeople interact with pregnancy */
+				<</switch>>
+			<<else>>
+				<<switch $NPCList[_nn].penissize>>
+					<<case 4>>
+						<<He>>【은는】 절정에 달해 당신의 사타구니에 몸을 밀어붙이며 경련하고, <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【은는】 끈적한 넥타르의 파도를 <<if canImpregnateParasite("vagina")>><span class="red">다른 무언가와 함께 </span><</if>>당신의 <<pussy>> 깊숙이 뿜어낸다. "덩굴보다 훨씬 낫네," <<he>>【은는】 당신의 귓가에 속삭인다.
+						<<vaginalejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "vagina" "nectar">>
+						/* ToDo: Pregnancy, figure out how plantpeople interact with pregnancy */
+						<<vaginalentranceejacstat>><<set $hygiene += 500>><<bodyliquid "vaginaoutside" "nectar">>
+						<<thighejacstat>><<set $hygiene += 500>><<bodyliquid "thigh" "nectar">>
+						<<impregnateParasite "vine" 400 "vagina">><<fertiliseParasites "vagina">>
+					<<case 1>>
+						<<He>>【은는】 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>에서 당신의 <<pussy>> 안으로 넥타르가 찔끔 흘러나오자 신음한다. 당신은 웃음을 참는다. "시끄러워," <<he>>【은는】 중얼거린다. "나-나한텐 덩굴이 있다고, 알았어? 웃지 마."
+					<<default>>
+						<<switch random(1, 5)>>
+							<<case 1 2>>
+								<<He>>【은는】 신음하며 당신의 <<pussy>> 깊숙이 몸을 찌르며 절정에 달해, <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【을를】 당신의 자궁에 밀착시킨다. 넥타르가 몸 안을 채우자 따뜻함이 느껴진다.
+							<<case 3 4>>
+								<<He>>【은는】 절정에 달해 당신의 어깨를 붙잡고 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>> 위로 당신을 더 깊이 끌어당긴다. 당신의 <<pussy>>에 넥타르가 가득 차올라, 숨이 멎을 듯하다.
+							<<case 5>>
+								<<He>>【은는】 꺅 소리를 내며 마지막으로 당신의 <<pussy>>에 강하게 찔러넣고, 자궁 안으로 넥타르를 뿜어낸다. "너 내가 가져도 돼? 우리 매일 이거 할 수 있잖아."
+						<</switch>>
+						<<vaginalejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "vagina" "nectar">>
+						/* ToDo: Pregnancy, figure out how plantpeople interact with pregnancy */
+				<</switch>>
+			<</if>>
+		<<elseif $NPCList[_nn].penis is "cheeks">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 절정에 달해 당신의 입 안으로 신음하며, 당신의 <<bottom>>에 넥타르를 뿜어낸다.
+			<<else>>
+				<<switch random(1, 5)>>
+					<<case 1 2>>
+						<<He>>【은는】 절정에 달해 몸을 떨며, <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【을를】 엉덩이 사이에서 빼내어 당신의 <<bottom>>에 사정한다.
+					<<case 3 4>>
+						<<He>>【은는】 당신의 엉덩이를 붙잡고 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【을를】 당신의 <<bottom>>에 밀어붙인 채 엉덩이 골 사이에 사정한다.
+					<<case 5>>
+						<<He>>【은는】 엉덩이를 꽉 맞잡고 신음하며 절정에 달해, 막대한 양을 쏟아내어 당신의 <<bottom>>【을를】 뒤덮고 아래에 웅덩이를 만든다.
+						<<set $hygiene += 500>><<bodyliquid "bottom" "nectar">>
+				<</switch>>
+			<</if>>
+			<<bottomejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "bottom" "nectar">>
+		<<elseif $NPCList[_nn].penis is "anusentrance" and playerChastity("anus")>>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 절정에 달해 당신의 입 안으로 꺅 소리를 내고, 페니스 끝이 항문 보호대에 부딪힌다.
+			<<else>>
+				<<He>>【은는】 신음하며 당신의 <<bottom>>에 사정한다. "이거 언젠간 떼어낼 수 있으면 좋겠네," <<he>>【은는】 항문 보호대를 쿡쿡 찌르며 중얼거린다. "불쌍한 <<girl>> 같으니."
+			<</if>>
+		<<elseif $NPCList[_nn].penis is "anusentrance">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 당신에게 몸을 기대로 <<his>> 입술을 당신의 입술에 짓이기며, 당신의 <<bottom>>에 끈적한 넥타르를 사정한다.
+			<<else>>
+				<<switch random(1, 5)>>
+				<<case 1 2>>
+					<<He>>【은는】 한 손으로는 엉덩이를 잡고 다른 한 손으로는 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【을를】 쥔 채 당신의 <<bottom>>에 사정한다. 넥타르가 뚝뚝 떨어져 아래에 웅덩이를 만든다.
+				<<case 3 4>>
+					<<He>>【은는】 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【을를】 문지르며 당신의 <<bottom>>에 사정하여, 따뜻한 넥타르가 엉덩이를 타고 흘러내리게 한다. <<He>>【은는】 장난스럽게 당신의 <<bottom>>【을를】 툭툭 친다.
+				<<case 5>>
+					<<He>>【은는】 신음하며 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【을를】 문지르며 절정에 달해, 당신의 <<bottom>>에 끈적한 넥타르 줄기를 뿜어낸다. 넥타르가 아래에 웅덩이를 이룬다.
+					<<set $hygiene += 500>><<bodyliquid "bottom" "nectar">>
+				<</switch>>
+				<<bottomejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "bottom" "nectar">>
+			<</if>>
+		<<elseif $NPCList[_nn].penis is "anusimminent" and playerChastity("anus")>>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 절정에 달해 당신의 입 안으로 꺅 소리를 내고, 페니스 끝이 항문 보호대에 부딪힌다.
+			<<else>>
+				<<He>>【은는】 신음하며 당신의 <<bottom>>에 사정한다. "이거 언젠간 떼어낼 수 있으면 좋겠네," <<he>>【은는】 항문 보호대를 쿡쿡 찌르며 중얼거린다. "불쌍한 <<girl>> 같으니."
+			<</if>>
+		<<elseif $NPCList[_nn].penis is "anusimminent">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 속도를 높여 당신을 범하려 하지만, 미처 넣기도 전에 오르가즘에 달해 무너진다. <<He>>【은는】 당신의 입 안으로 실망스러운 신음을 내뱉는다.
+			<<else>>
+				<<switch random(1, 5)>>
+					<<case 1 2>>
+						<<He>>【은는】 항문에 삽입하기도 전에 절정에 달해 음순 위로 사정한다. 아래로 넥타르가 뚝뚝 떨어져 웅덩이를 이룬다. "제기랄! 좀 더 빨리 했어야 했는데."
+					<<case 3 4>>
+						<<He>>【은는】 삽입하기도 전에 당신의 <<bottom>>에 사정하여, 끈적한 넥타르 줄기가 엉덩이를 타고 흘러내리게 한다. "아, 진짜!" <<he>>【은는】 투덜거린다. "다시 하면 안 돼?"
+					<<case 5>>
+						<<He>>【은는】 신음하며 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【을를】 문지르며 절정에 달해, 당신의 <<bottom>>에 끈적한 넥타르 줄기를 뿌린다. "네 안에 싸고 싶었는데. 엉망으로 만들기나 했네."
+						<<bottomejacstat>><<set $hygiene += 500>><<bodyliquid "bottom" "nectar">>
+				<</switch>>
+				<<bottomejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "bottom" "nectar">>
+			<</if>>
+		<<elseif $NPCList[_nn].penis is "anus">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<switch $NPCList[_nn].penissize>>
+					<<case 4>>
+						<<He>>【은는】 절정에 달해 당신의 사타구니에 몸을 밀어붙이며 경련하고, <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【은는】 끈적한 넥타르의 파도를 <<if canImpregnateParasite("anus")>><span class="red">다른 무언가와 함께 </span><</if>>당신의 항문 깊숙이 뿜어낸다. "날 잊지 못하게 해 줄게," <<he>>【은는】 입술을 깨물며 속삭인다.
+						<<analejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "anus" "nectar">>
+						<<impregnateParasite "vine" 400>><<fertiliseParasites>>
+					<<case 1>>
+						<<He>>【은는】 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>에서 당신의 항문 안으로 넥타르가 찔끔 흘러나오자 신음한다. "시끄러워," <<he>>【은는】 당신의 입 안으로 중얼거린다. "웃지 마."
+					<<default>>
+						<<if random(1)>>
+							<<He>>【은는】 절정에 달해 당신의 입 안으로 꺅 소리를 내고, <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【은는】 당신의 항문 안으로 넥타르를 뿜어낸다.
+						<<else>>
+							<<He>>【은는】 절정에 달해 몸을 떨며, 당신의 <<bottom>> 안으로 넥타르 줄기를 쏟아낸다. <<He>>【은는】 당신에게서 몸을 떼고 <<his>> 입술을 핥는다. "너 내가 가져도 돼?"
+						<</if>>
+						<<analejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "anus" "nectar">>
+				<</switch>>
+			<<else>>
+				<<switch $NPCList[_nn].penissize>>
+					<<case 4>>
+						<<He>>【은는】 경련하며 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【을를】 마지막으로 깊숙이 들이밀고, 당신의 엉덩이 안에 사정한다. 끈적한 넥타르의 파도가 <<if canImpregnateParasite("anus")>><span class="red">다른 무언가와 함께 </span><</if>>안으로 뿜어져 나오자 당신은 숨을 헐떡인다. "날 잊지 못하게 해 줄게," <<he>>【은는】 낮게 속삭인다.
+						<<analejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "anus" "nectar">>
+						<<impregnateParasite "vine" 400>><<fertiliseParasites>>
+					<<case 1>>
+						<<He>>【은는】 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>에서 당신의 항문 안으로 넥타르가 찔끔 흘러나오자 신음한다. "시끄러워," <<he>>【은는】 중얼거린다. "나-나한텐 덩굴이 있다고, 알았어? 웃지 마."
+					<<default>>
+						<<switch random(1, 5)>>
+							<<case 1 2>>
+								<<He>>【은는】 신음하며 절정에 달해 당신의 <<bottom>> 깊숙이 박아 넣는다. 그 거대한 크기를 온전히 받아내며 넥타르가 몸 안을 채우자 당신은 숨을 헐떡인다.
+							<<case 3 4>>
+								<<He>>【은는】 꺅 소리를 내며 당신의 어깨를 붙잡고 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>> 위로 당신을 끌어당긴다. 당신의 <<bottom>> 안이 넥타르로 채워지는 것이 느껴진다.
+							<<case 5>>
+								<<He>>【은는】 꺅 소리를 내며 마지막으로 당신의 <<bottom>>에 강하게 찔러넣고, 항문 안으로 넥타르를 뿜어낸다. "너 내가 가져도 돼? 우리 매일 이거 할 수 있잖아."
+						<</switch>>
+						<<analejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "anus" "nectar">>
+				<</switch>>
+			<</if>>
+		<<elseif $NPCList[_nn].penis is "chest">>
+			<<switch random(1, 5)>>
+				<<case 1 2>>
+					<<He>>【은는】 절정에 달해 신음하며 당신의 <<breasts>> 위로 몸을 누르고 목덜미를 붙잡는다.
+					<<if $position is "missionary">>
+						당신의 <<breasts>> 사이에 _Nectar가 뿜어져 나와 얼굴을 덮고, 일부는 입 안으로 들어간다. <span class="purple">톡 쏘는 맛이 나고,</span> 머리가 빙빙 돈다. "꽤 괜찮지?"
+						<<faceejacstat>><<nectarfed 8>><<bodyliquid "face" "nectar">>
+					<<else>>
+						당신의 <<breasts>> 사이에 _Nectar가 뿜어져 나와 배를 덮는다. "내가 엉망으로 만든 거 봐," <<he>>【은는】 낄낄거린다.
+						<<tummyejacstat>><<bodyliquid "tummy" "nectar">>
+					<</if>>
+				<<case 3 4>>
+					<<He>>【은는】 절정에 달해 당신의 <<breasts>> 사이에 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>> 끝을 문지른다. 끈적한 넥타르가 가슴을 타고 흘러내린다.
+				<<case 5>>
+					<<He>>【은는】 절정에 달해 당신의 <<breasts>>【을를】 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>에 바짝 모아 쥐고 그 위로 사정하여 가슴을 미끌미끌하게 만든다.
+			<</switch>>
+			<<chestejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "chest" "nectar">>
+		<<elseif $NPCList[_nn].penis is "mouthentrance">>
+			<<switch $NPCList[_nn].penissize>>
+				<<case 4>>
+					<<He>>【은는】 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【을를】 단단히 붙잡고 정확히 얼굴을 향해 겨냥하며 흔든다. <span class="pink">걸쭉한 _Nectar 줄기가 얼굴을 덮고 일부는 입 안으로 들어간다.</span> <span class="purple">톡 쏘는 맛이 나고,</span> 머리가 빙빙 돈다. "꽤 괜찮지?"
+					<<faceejacstat>><<oralejacstat>><<ejacstat>><<set $hygiene += 500>><<nectarfed 8>><<bodyliquid "face" "nectar">><<bodyliquid "mouth" "nectar">>
+				<<case 1>>
+					<<He>>【은는】 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>에서 넥타르가 한심하게 찔끔 새어 나와 턱을 타고 흘러내리자 낑낑거린다. "시끄러워," <<he>>【은는】 중얼거린다. "나-나한텐 덩굴이 있다고, 알았어? 웃지 마."
+				<<default>>
+					<<switch random(1, 5)>>
+						<<case 1 2>>
+							<<He>>【은는】 한 손으로는 턱을 감싸고 다른 한 손으로는 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【을를】 쥔 채 얼굴에 사정한다. <<He>>【은는】 미소를 지으며 잠시 당신의 뺨을 쓰다듬는다.
+						<<case 3 4>>
+							<<He>>【은는】 허리를 아치형으로 꺾고 신음하며 얼굴에 _Nectar를 사정한다. "이제 보기만큼 달콤한 맛이 나네!"
+						<<case 5>>
+							<<He>>【은는】 한 손으로는 뺨을 잡고 다른 손으로는 입을 벌리게 한 뒤, 입 안으로 _Nectar를 뿜어낸다. <span class="purple">톡 쏘는 맛이 나고,</span> 머리가 빙빙 돈다. "꽤 괜찮지?"
+							<<oralejacstat>><<nectarfed 8>><<bodyliquid "mouth" "nectar">>
+					<</switch>>
+					<<faceejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "face" "nectar">>
+			<</switch>>
+		<<elseif $NPCList[_nn].penis is "mouthimminent">>
+			<<switch random(1, 5)>>
+				<<case 1 2>>
+					<<He>>【은는】 당신의 머리칼을 움켜쥐고, <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>> 끝이 간신히 닿는 입술 위에 사정한다. <<He>>【은는】 실망한 눈치다. "나를 맛보고 싶지 않아?"
+				<<case 3 4>>
+					<<He>>【은는】 삽입하기도 전에 얼굴에 사정하여, 끈적한 넥타르 줄기가 뺨을 타고 흘러내리게 한다. "아, 진짜!" <<he>>【은는】 투덜거린다. "다시 하면 안 돼?"
+				<<case 5>>
+					<<He>>【은는】 머리칼을 움켜잡고 입 안으로 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【을를】 쑤셔 넣으려 하지만 경련 때문에 뜻대로 되지 않는다. 걸쭉한 _Nectar 줄기가 얼굴을 덮고 입 안으로 들어간다. <span class="purple">톡 쏘는 맛이 나고,</span> 머리가 빙빙 돈다. "원래는 더 많이 주려고 했는데."
+					<<oralejacstat>><<nectarfed 8>><<bodyliquid "mouth" "nectar">>
+			<</switch>>
+			<<faceejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "face" "nectar">>
+		<<elseif $NPCList[_nn].penis is "mouth">>
+			<<switch $NPCList[_nn].penissize>>
+				<<case 4>>
+					<<He>>【은는】 당신의 머리를 고정하고 목구멍 깊숙이 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【을를】 쑤셔 박으며, 입 안 가득 _Nectar를 쏟아붓는다.
+				<<case 1>>
+					<<He>>【은는】 사정하고, _Nectar의 얇은 액기스가 입 안으로 찔끔 흘러 들어온다.
+				<<default>>
+					<<switch random(1, 5)>>
+						<<case 1 2>>
+							<<He>>【은는】 한 손으로는 턱을, 다른 한 손으로는 머리칼을 감싸 쥐고 절정에 달하며 입 안 깊숙이 찔러 넣는다. _Nectar가 목구멍을 타고 흘러내려 입안을 채운다.
+						<<case 3 4>>
+							<<He>>【은는】 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>의 밑동을 움켜쥐고 신음하며 입 안으로 사정한다. 목구멍으로 _Nectar가 흘러내리는 것이 느껴진다.
+						<<case 5>>
+							<<He>>【은는】 절정에 달해 한숨을 쉬며 머리를 쓰다듬고, 입 안으로 _Nectar를 흘려보낸다.
+					<</switch>>
+			<</switch>>
+			<span class="purple">톡 쏘는 맛이 나고,</span> 머리가 빙빙 돈다. <<He>>【은는】 싱긋 웃는다. "맛있지? 전부 너 주려고 만든 거야."
+		<<elseif $NPCList[_nn].penis is "feet">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 절정에 달해 당신의 발을 감싸고 경련하며 당신의 입 안으로 신음한다.
+			<<else>>
+				<<switch random(1, 5)>>
+					<<case 1 2>>
+						<<He>>【은는】 신음하며 절정에 달해 당신의 발목을 움켜쥔다. "인간을 과소평가했던 것 같네. 있는 걸로 어떻게 해야 하는지 잘 아는구나!"
+					<<case 3 4>>
+						<<He>>【은는】 당신의 발에 대고 허리를 꺾으며 절정에 달한다. "대부분의 식물은 밟히는 걸 좋아하지 않는데. 내가 예외인가 봐!"
+					<<case 5>>
+						<<He>>【은는】 절정에 달해 비명을 질러, 당신을 거의 뛰어오르게 만든다. <<His>> 넥타르가 당신의 발 위로 흐른다.
+				<</switch>>
+			<</if>>
+			<<feetejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "feet" "nectar">>
+		<<elseif $NPCList[_nn].penis is "leftarm" and $NPCList[_nn].penis is "rightarm">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 당신이 싸게 해 주자 입 안으로 헐떡인다. 끈적한 _Nectar가 손에 뒤덮인다.
+			<<else>>
+				<<switch random(1, 5)>>
+					<<case 1 2>>
+						<<He>>【은는】 만족스러운 듯 한숨을 쉬며 손 위에 사정한다. "이런 서비스는 처음 받아보는데..."
+					<<case 3 4>>
+						<<He>>【은는】 손에 사정하여 넥타르로 미끌미끌하게 만든다. "너무 특별한 기분이야. 고마워!"
+					<<case 5>>
+						<<He>>【은는} 경련하며 신음하고, 걸쭉한 넥타르 줄기를 뿜어내어 양손을 뒤덮는다. <<He>>【은는】 짓궂은 표정을 지으며 _nectar가 묻은 당신의 손을 입 안으로 밀어 넣는다. <span class="purple">톡 쏘는 맛이 나고,</span> 머리가 빙빙 돈다. "잡았다."
+						<<nectarfed 8>>
+				<</switch>>
+			<</if>>
+			<<handejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "leftarm" "nectar">><<bodyliquid "rightarm" "nectar">>
+		<<elseif $NPCList[_nn].penis is "leftarm" or $NPCList[_nn].penis is "rightarm">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<if random(1)>>
+					<<He>>【은는】 당신이 <<his>> 물건을 흔들어 주자 입 안으로 신음한다. 손이 _Nectar로 뒤덮인다.
+				<<else>>
+					<<He>>【은는】 절정에 달해 두 팔로 당신의 목을 감싸고 입 안으로 꺅 소리를 지른다. _Nectar가 뿜어져 나와 손을 덮는다.
+				<</if>>
+			<<else>>
+				<<switch random(1, 5)>>
+					<<case 1 2>>
+						<<He>>【은는】 만족스러운 듯 한숨을 쉬며 손에 사정한다. "이런 서비스는 처음 받아보는데..."
+					<<case 3 4>>
+						<<He>>【은는】 손에 사정하여 넥타르로 미끌미끌하게 만든다. "너무 특별한 기분이야. 고마워!"
+					<<case 5>>
+						<<He>>【은는】 경련하며 신음하고, 걸쭉한 넥타르 줄기를 뿜어내어 손을 뒤덮는다. <<He>>【은는】 짓궂은 표정을 지으며 _nectar가 묻은 당신의 손을 입 안으로 밀어 넣는다. <span class="purple">톡 쏘는 맛이 나고,</span> 머리가 빙빙 돈다. "잡았다."
+						<<nectarfed 8>>
+				<</switch>>
+			<</if>>
+			<<handejacstat>><<ejacstat>><<set $hygiene += 500>>
+			<<if $NPCList[_nn].penis is "leftarm">><<bodyliquid "leftarm" "nectar">><<else>><<bodyliquid "rightarm" "nectar">><</if>>
+		<<elseif $NPCList[_nn].penis is "otheranus">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<if random(1)>>
+					<<He>>【은는】 당신의 입 안으로 헐떡이며 당신의 <<penis>>에 몸을 짓누른다. _Nectar가 배 위로 튄다.
+					<<tummyejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "tummy" "nectar">>
+				<<else>>
+					<<He>>【은는】 두 팔로 목을, 두 다리로 허리를 감싸고 절정에 달해 당신의 입 안으로 신음한다. 넥타르가 자기 배 위로 튄다.
+				<</if>>
+			<<else>>
+				<<switch random(1, 5)>>
+					<<case 1 2>>
+						<<He>>【은는】 절정에 달해 몸을 떨며, 마지막 신음을 내뱉으면서 당신에게 엉덩이를 밀어붙인다. 페니스에서 _Nectar가 뿜어져 나와 허벅지를 적신다.
+						<<thighejacstat>><<ejacstat>><<set $hygiene += 500>><<bodyliquid "thigh" "nectar">>
+					<<case 3 4>>
+						<<He>>【은는】 절정에 달해 당신의 <<penis>>에 몸을 떨며 신음하고, 최대한 깊숙이 문질러댄다. 바닥에 넥타르를 사정한다.
+					<<case 5>>
+						<<He>>【은는】 절정에 달해 사타구니를 들이받으며 헐떡인다. "보통 대주는 쪽은 아니지만, 씨발 이거 기분 존나 좋네."
+				<</switch>>
+			<</if>>
+		<<elseif ($NPCList[_nn].penis is "otheranusfrot" or $NPCList[_nn].penis is "otheranusentrance" or $NPCList[_nn].penis is "otheranusimminent") and playerChastity("penis")>>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 절정에 달해 당신의 $worn.genitals.name에 엉덩이를 비비며 입 안으로 신음한다.
+			<<else>>
+				<<He>>【은는】 당신의 $worn.genitals.name에 대고 비명을 지른다. "금속은 싫어," <<he>>【은는】 실망한 듯 아래를 내려다보며 헐떡인다.
+			<</if>>
+		<<elseif $NPCList[_nn].penis is "otheranusfrot" or $NPCList[_nn].penis is "otheranusentrance" or $NPCList[_nn].penis is "otheranusimminent">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 속도를 높여 당신의 <<penis>>에 엉덩이를 꽂아 넣으려 하지만, 미처 넣기도 전에 오르가즘에 달해 무너진다. <<He>>【은는】 당신의 입 안으로 실망스러운 신음을 내뱉는다.
+			<<else>>
+				<<switch random(1, 5)>>
+					<<case 1 2>>
+						<<He>>【은는】 안으로 밀어 넣기도 전에 절정에 달해 바닥에 넥타르를 사정한다. "제기랄! 좀 더 빨리 했어야 했는데."
+					<<case 3 4>>
+						<<He>>【은는】 삽입하기 전에 오르가즘의 황홀경 속에서 경련하며 <<his>> 페니스에서 끈적한 넥타르 줄기를 뿜어낸다. "아, 진짜!" <<he>>【은는】 투덜거린다. "다시 하면 안 돼?"
+					<<case 5>>
+						<<He>>【은는】 신음하며 <<his>> <<= window.KR.getPenisDescKr($NPCList[_nn].penisdesc)>>【을를】 문지르며 절정에 달해 바닥에 끈적한 넥타르 줄기를 흩뿌린다. "나랑 제대로 박고 싶지도 않았냐?"
+						<<bottomejacstat>><<set $hygiene += 500>><<bodyliquid "bottom" "nectar">>
+				<</switch>>
+			<</if>>
+		<<elseif ($NPCList[_nn].penis is "penis" or $NPCList[_nn].penis is "penisentrance" or $NPCList[_nn].penis is "penisimminent") and playerChastity("penis")>>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 절정에 달해 당신의 $worn.genitals.name에 <<npcPenis>>【을를】 비비며 입 안으로 신음한다.
+			<<else>>
+				<<He>>【은는】 당신의 $worn.genitals.name에 대고 비명을 지른다. "금속은 싫어," <<he>>【은는】 실망한 듯 아래를 내려다보며 헐떡인다.
+			<</if>>
+		<<elseif $NPCList[_nn].penis is "penis" or $NPCList[_nn].penis is "penisentrance" or $NPCList[_nn].penis is "penisimminent">>
+			<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+				<<He>>【은는】 황홀경에 신음하며 절정에 달할 때 당신의 페니스와 자신의 페니스를 비벼댄다.
+			<<else>>
+				<<switch random(1, 5)>>
+					<<case 1 2>>
+						<<He>>【은는】 페니스끼리 서로 비비는 동안 절정에 달해 쾌감에 찬 신음을 흘린다.
+					<<case 3 4>>
+						<<He>>【은는】 몸을 떨며 당신의 다리에 <<his>> 다리를 감싼다. "와," <<he>>【은는】 낄낄거린다. "덩굴이 왜 필요하겠어?"
+					<<case 5>>
+						<<He>>【은는】 당신의 <<penis>>에 대고 절정에 달해 신음하며 다리를 떤다.
+				<</switch>>
+				넥타르가 당신의 <<penis>>【을를】 뒤덮는다.
+				<<ejacstat>><<set $hygiene += 500>><<bodyliquid "penis" "nectar">>
+			<</if>>
+		<<elseif $NPCList[_nn].mouth is "penis">>
+			<<switch random(1, 5)>>
+				<<case 1 2>>
+					<<He>>【은는】 당신이 <<his>> 입에 박는 동안 당신의 허벅지를 잡고 절정에 달한다. <<He>>【은는】 황홀한 미소를 지으며 몸을 뺀다.
+				<<case 3 4>>
+					<<He>>【은는】 절정에 달할 때 안정을 위해 당신의 허벅지를 붙잡고, 끝날 때까지 <<his>> 입술이 당신의 <<penis>>에 밀착된 상태를 유지한다.
+				<<case 5>>
+					<<He>>【은는】 쾌감에 비명을 지르며 당신의 <<penis>>【을를】 <<his>> 목구멍 깊숙이 꽂아 넣는다. 오르가즘이 지나간 후, <<he>>【은는】 당신의 자지를 샅샅이 핥는다.
+			<</switch>>
+			당신의 <<penis>>【은는】 넥타르로 끈적해진다.
+			<<bodyliquid "penis" "nectar">>
+		<<elseif $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+			<<switch random(1, 5)>>
+				<<case 1 2>>
+					<<He>>【은는】 당신의 목에 두 팔을 감고 입술을 짓이기며 당신의 입 안으로 신음한다.
+				<<case 3 4>>
+					<<He>>【은는】 절정에 달해 당신의 입 안으로 비명을 지른 후, 숨을 헐떡이며 물러난다. "내가 해본 최고의 키스야," <<he>>【은는】 속삭인다.
+				<<case 5>>
+					<<He>>【은는】 절정에 달해 당신의 얼굴을 붙잡고 키스한다. 오르가즘이 지나가자, <<he>>【은는】 당신의 얼굴 전체에 키스를 퍼부으며 달콤한 시럽 같은 넥타르를 당신의 얼굴에 남긴다.
+					<<set $hygiene += 500>><<bodyliquid "face" "nectar">>
+			<</switch>>
+		<<elseif $NPCList[_nn].chest is "mouth" or $NPCList[_nn].chest is "mouthentrance" and $NPCList[_nn].pronoun is "f">>
+			<<switch random(1, 5)>>
+				<<case 1 2>>
+					절정에 달하자 <<he>>【은는】 한숨을 쉬곤 당신을 내려다보며 미소 짓는다. "원하는 만큼 마셔. 더 이상 아무 생각도 할 수 없을 때까지."
+				<<case 3 4>>
+					<<He>>【은는】 당신을 <<his>> 품에 안고 쾌감에 젖어 신음한다. "멈추지 마," <<he>>【이가】 다정하게 말한다. "원하는 만큼 계속해."
+				<<case 5>>
+					<<He>>【이가】 당신의 머리를 붙잡고 <<his>> <<= window.KR.getBreastSizeKr($NPCList[_nn].breastsdesc)>>에 밀착시키자, 과즙이 당신의 얼굴에 뿜어져 나온다.
+					<<set $hygiene += 500>><<bodyliquid "face" "nectar">>
+			<</switch>>
+		<<else>>
+			<<He>>【이가】 절정의 황홀경에 몸을 떤다.
+		<</if>>
+	<</if>>
+
+	<!-- Additional notes for kissing or suckling finishes -->
+	<<if ($NPCList[_nn].chest is "mouth" or $NPCList[_nn].chest is "mouthentrance") and $NPCList[_nn].pronoun is "f">>
+		<<his>> 젖꼭지에서 뿜어져 나온 <<print _Nectar>>【이가】 입안으로 흘러들어온다. <span class="purple">톡 쏘는 맛이 나며,</span> 머리를 빙빙 돌게 만든다.
+		<<nectarfed 20>>
+	<<elseif $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+		<span class="purple"><<print _fizzyNectar>>【이가】 당신의 입안에 가득 차올라</span> 머리를 빙빙 돌게 만든다.
+		<<nectarfed 30>>
+	<</if>>
+	<br><br>
+
+	<!-- Retracting the vines -->
+	<<if $settings.tentaclesEnabled>>
+		<<tentacles>>
+	<</if>>
+
+	<!-- Finishing moves for if the player didn't cum. Plantpeople don't really care about making their partners cum, they only care about the semen. -->
+	<<if _args[0] isnot "short">>
+		<<if $orgasmcurrent is 0 and !playerChastity("penis") and ($consensual is 1 or $pain gte 100)>>
+			"이봐," <<he>>【이가】 말한다. "넌 아직 안 쌌잖아. 그건 불공평하지, 안 그래?"
+			<<if $penisuse is "tentacle">>
+				<<if $player.condom>>
+					<<removePlayerCondom>>
+					<<He>>【은는】 당신의 콘돔을 벗기고,
+				<<else>>
+					The
+				<</if>>
+				$tentaclePenis【은는】 다시 당신의 <<penis>> 쪽으로 <<slithers>> 이내 <<penis>>의 끝을 벌린다. "넌 싸게 될 거야," <<he>>【이가】 당신에게 속삭인다. "나한테 씨앗을 주게 될 거야. 내가 그렇게 만들어 줄게."
+				<<if $consensual is 0>>
+					고통이 너무 심해, 당신은 <<him>>【을를】 멈추기 위해 아무것도 할 수 없다.
+				<</if>>
+				<br><br>
+				$tentaclePenis【은는】 당신의 자지를 쓰다듬고 주무르며, 뿌리까지 집어삼킨다. 당신의 자지 주변으로 끈적한 넥타르가 스며들어, <span class="lewd">감각을 더욱 예민하게 만든다</span>.
+				<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+					<<person>>【은는】 다시 당신에게 몸을 숙이고 당신의 입술에 <<his>> 입술을 짓이기며, 당신의 입안에서 <<his>> 혀를 굴리고 당신의 입가에 넥타르를 잔뜩 묻힌다. <span class="purple">정신이 아득해진다.</span>
+					<<nectarfed 15>>
+				<<else>>
+					<<person>>【은는】 당신에게 기대어 당신의 얼굴과 목 여기저기에 키스 세례를 퍼부으며, 당신의 몸을 넥타르로 더욱 미끈거리게 만든다.
+					<<bodyliquid "face" "nectar">>
+				<</if>>
+				<br><br>
+				당신은 더는 견딜 수 없다.
+				<<orgasm>>
+				<<if $semen_amount lte (($semen_volume / 24) * 6) or $orgasmcount gte 24>>
+					"어?" <<He>>【은는】 당황한 듯 눈을 깜빡이며 $tentaclePenis【을를】 쳐다본다. "이게... 이게 전부야? 아, 진짜!" $tentaclePenis【이가】 다시 뒤로 물러나자 <<he>>【은는】 짜증스럽게 얼굴을 찌푸린다.
+				<<else>>
+					<<He>>【은는】 당신과 함께 신음하고, $tentaclePenis【이가】 마침내 뒤로 물러나기 전에 당신에게서 정액을 남김없이 짜내자 행복하게 한숨을 쉰다. "맛있어."
+					<<set _orgasm to 1>>
+				<</if>>
+				<<unset $tentaclePenis>><<set $penisuse to 0>><<set $penisstate to 0>>
+			<<elseif $penisuse is "othervagina" or $penisuse is "otheranus">>
+				<<if $player.condom>>
+					<<removePlayerCondom>>
+					<<He>>【은는】 당신의 콘돔을 벗기고
+				<<else>>
+					<<He>>
+				<</if>>
+				당신의 <<penis>> 위로 다시 허리를 내린다. "넌 싸게 될 거야," <<he>>【이가】 당신에게 속삭인다. "나한테 씨앗을 주게 될 거야. 내가 그렇게 만들어 줄게."
+				<<if $consensual is 0>>
+					고통이 너무 심해, 당신은 <<him>>【을를】 멈추기 위해 아무것도 할 수 없다.
+				<</if>>
+				<br><br>
+				<<person>>【은는】 때때로 앞뒤로 요동치며, 당신의 <<penis>> 위에서 허리를 튕긴다. <<He>>【은는】 힘을 더 싣기 위해 당신의 어깨에 두 손을 얹는다.
+				<<if $NPCList[_nn].mouth is "kissimminent" or $NPCList[_nn].mouth is "kiss">>
+					<<person>>【은는】 다시 당신에게 몸을 숙이고 당신의 입술에 <<his>> 입술을 짓이기며, 당신의 입안에서 <<his>> 혀를 굴리고 당신의 입가에 넥타르를 잔뜩 묻힌다. <span class="purple">정신이 아득해진다.</span>
+					<<nectarfed 15>>
+				<<else>>
+					<<person>>【은는】 당신에게 기대어 당신의 얼굴과 목 여기저기에 키스 세례를 퍼부으며, 당신의 몸을 넥타르로 더욱 미끈거리게 만든다.
+					<<bodyliquid "face" "nectar">>
+				<</if>>
+				<br><br>
+				당신은 더는 견딜 수 없다.
+				<<orgasm>>
+				<<if $semen_amount lte (($semen_volume / 24) * 6) or $orgasmcount gte 24>>
+					"어?" <<He>>【은는】 당황한 듯 눈을 깜빡이며 당신의 <<penis>>【을를】 내려다본다. "이게... 이게 전부야? 아, 진짜!" <<He>>【은는】 짜증스럽게 얼굴을 찌푸린다.
+				<<elseif $parasite.penis.name or playerHasStrapon()>>
+					"어?" <<He>>【은는】 당황한 듯 눈을 깜빡이다 이내 신음을 내뱉는다. "으아, 저 멍청한 <<if $parasite.penis.name>>$parasite.penis.name<<else>>thing<</if>>! 불공평하잖아!" <<He>>【은는】 짜증스럽게 얼굴을 찌푸린다.
+				<<else>>
+					<<He>>【은는】 당신과 함께 신음하고, 당신이 <<his>> <<if $penisuse is "othervagina">>보지<<else>>항문<</if>>에 정액을 가득 채우자 행복하게 한숨 쉰다. "넌 정말 끝내주는 수분매개자야."
+					<<set _orgasm to 1>>
+				<</if>>
+			<<elseif $penisuse is "othermouth">>
+				<<if $player.condom>>
+					<<removePlayerCondom>>
+					<<He>>【은는】 당신의 콘돔을 벗기고
+				<<else>>
+					<<He>>
+				<</if>>
+				당신의 <<penis>>에 다시 얼굴을 파묻고 끝을 핥는다. "넌 싸게 될 거야," <<he>>【이가】 당신에게 속삭인다. "나한테 씨앗을 주게 될 거야. 내가 그렇게 만들어 줄게."
+				<<if $consensual is 0>>
+					고통이 너무 심해, 당신은 <<him>>【을를】 멈추기 위해 아무것도 할 수 없다.
+				<</if>>
+				<br><br>
+				<<He>>【은는】 다시 당신의 자지를 향해 <<his>> 입을 들이밀고 귀두 주변을 혀로 맴돈다. 미끈거리는 넥타르가 당신의 자지를 감싸 안아, <span class="lewd">당신의 감각을 예민하게 자극한다</span>.
+				<<if $player.penisExist and $player.vaginaExist and random(1)>>
+					<<He>>【은는】 빈손으로 두 손가락을 당신의 <<pussy>> 안에 밀어 넣고 쑤셔 댄다.
+				<<elseif $settings.analEnabled and random(1)>>
+					<<He>>【은는】 빈손으로 손가락을 당신의 <<bottom>> 안에 밀어 넣고 쑤셔 댄다.
+				<<else>>
+					<<He>>【은는】 빈손을 뻗어 당신의 <<breasts>>【을를】 애무하고 꼬집는다.
+				<</if>>
+				<br><br>
+				당신은 더는 견딜 수 없다.
+				<<orgasm>>
+				<<if $semen_amount lte (($semen_volume / 24) * 6) or $orgasmcount gte 24>>
+					"음?" <<He>>【은는】 당황한 듯 눈을 깜빡이며, <<his>> 입안에 들어온 자지를 내려다본다. <<He>>【은는】 시험 삼아 몇 번 더 핥아 보더니, 입을 떼고 인상을 쓴다. "이게... 이게 전부야? 아, 진짜!"
+				<<elseif $parasite.penis.name>>
+					"음?" <<He>>【은는】 당황한 듯 눈을 깜빡이다 이내 신음을 내뱉고 입을 뗀다. "으아, 저 멍청한 $parasite.penis.name! 불공평하잖아! 이상한 맛이 난다 했더니..." <<He>>【은는】 짜증스럽게 얼굴을 찌푸린다.
+				<<else>>
+					<<He>>【은는】 당신과 함께 신음하고, 당신이 <<his>> 입을 정액으로 채워주자 행복하게 한숨을 쉰다. 당신이 끝나자, <<he>>【은는】 입을 떼고 <<his>> 입술을 핥는다. "맛있어."
+					<<set _orgasm to 1>>
+				<</if>>
+			<<else>>
+				<<He>>【은는】 잠시 생각하더니 어깨를 으쓱인다. "뭐 어때."
+			<</if>>
+			<br><br>
+		<</if>>
+	<</if>>
+<</widget>>

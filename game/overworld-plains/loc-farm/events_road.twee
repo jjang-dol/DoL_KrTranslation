@@ -1,0 +1,428 @@
+:: Widgets Farmland Road Events [widget]
+<<widget "farmland_road_events">>
+	<<cleareventpool>>
+
+	<<if $skulduggery gte 600 and $farmland_manors isnot 1>>
+		<<addevent farmland_manors_discovery>>
+	<<elseif !$plants_known.includes("rice") and $tending gte 400>>
+		<<addinlineevent "farmland_road_rice">>
+			<<generate1>><<person1>>
+			"관리 쪽에 재능이 있어 보이네." 울타리 너머의 어느 <<person>>【이가】 말한다. "여기." <<He>>【이가】 당신 쪽으로 가방을 던진다. 안에는 <<foodstufficon "rice">> 벼 씨앗이 가득하다. "난 도무지 안 자라더라고. 이젠 꼴도 보기 싫어. 아마 네가 나보다 운이 좋겠지."
+			<br><br>
+			<span class="gold">이제 쌀을 재배할 수 있습니다.</span>
+			<br><br>
+			<<link [[다음|Farmland]]>><<set $eventskip to 1>><<set $plants_known.push("rice")>><<endevent>><</link>>
+		<</addinlineevent>>
+	<<else>>
+		<<addinlineevent "farmland_road_1">>
+			<<beastNEWinit 3 horse>> 세 마리의 <<beastsplural>>【이가】 기수들을 태운 채 말발굽 소리를 내며 이름 모를 곳을 향해 달려간다.
+			<br><br>
+
+			<<if Weather.precipitation is "rain">>
+				당신은 그들을 피하기 위해 길가의 덤불에 바짝 몸을 붙인다. 그들은 웅덩이를 지나며 당신에게 거의 흙탕물을 튀길 뻔했다.<<gstress>><<stress 6>>
+			<<else>>
+				당신은 그들을 피하기 위해 길가의 덤불에 바짝 몸을 붙인다.
+			<</if>>
+			<br><br>
+
+			<<link [[다음|Farmland]]>><<endevent>><<set $eventskip to 1>><</link>>
+			<br>
+		<</addinlineevent>>
+		<<if $farmland_manors isnot 1>>
+			<<addinlineevent "farmland_road_2">>
+				길은 끝이 돌 구슬로 장식된 한 쌍의 돌기둥 사이를 통과한다. 야생 나무들이 길 위로 늘어져 터널을 만들고 있다.
+				<br><br>
+				당신은 작은 건물들이 모여 있는 곳으로 나온다. <span class="red">어쩌면 버려졌을지도 모를</span> 작은 농장처럼 생겼다. 10분 정도 더 걷자 좀 더 낯익은 지역이 나온다.
+				<br><br>
+				<<link [[다음|Farmland]]>><<pass 10>><<endevent>><<set $eventskip to 1>><</link>>
+				<br>
+			<</addinlineevent>>
+		<</if>>
+
+		<<addinlineevent "farmland_road_3">>
+			당신은 돌로 된 건물 무리를 발견한다. 그중 하나는 코너 상점처럼 보인다.
+			<br><br>
+			<<if $money gte 300>>
+				<<link [[사탕을 산다 (0:02)|Farmland Event Shop]]>><<pass 2>><</link>>
+				<br>
+			<</if>>
+			<<link [[무시한다|Farmland]]>><<endevent>><<set $eventskip to 1>><</link>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "farmland_road_4">>
+			허리 높이까지 오는 꽃밭을 지난다. 그 사이로 오솔길이 표시되어 있다. 도로보다 훨씬 더 쾌적한 길처럼 보인다.
+			<br><br>
+			<<link [[들판을 통과해 간다 (0:05)|Farmland Event Flowers]]>><<pass 5>><<stress -6>><</link>>
+			<br>
+			<<link [[무시한다|Farmland]]>><<set $eventskip to 1>><</link>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "farmland_road_5">>
+			<<generate1>><<person1>>
+			"거기 누구쇼," <<personssimple>> 목소리가 말한다. 옆을 돌아보니 한 <<person>>【이가】 농장 입구에서 당신에게 손을 흔들고 있다.
+			<br><br>
+			"이웃이신가? 관심 있으면 팔려고 밀을 좀 챙겨뒀는데," <<he>>【이가】 말한다. "창고에 있던 거긴 한데, 상태는 좋아. 전부 다 해서 <<printmoney 1000>>만 주면 돼."
+			<br><br>
+
+			<<if !$plants_known.includes("rice")>>
+				"벼 씨앗도 가지고 있어. 난 도저히 키울 수가 없더라고. 흙이 안 맞나 봐. <<printmoney 3000>>에 가져가."
+				<br><br>
+
+				<<if $money gte 3000>>
+					<<foodstufficon "rice">> <<link [[벼 씨앗을 산다 (£30)|Farmland Event Rice]]>><<set $plants_known.push("rice")>><<money -3000>><</link>><<gtending>>
+					<br>
+				<<else>>
+					<span class="blue">씨앗을 살 돈이 없다.</span>
+					<br>
+				<</if>>
+			<</if>>
+			<br>
+			<<if $money gte 1000>>
+				<<link [[밀 50컵을 산다 (£10)|Farmland Event Wheat]]>><<tending_give "wheat" 50>><<money -1000>><</link>>
+				<br>
+			<<else>>
+				<span class="blue">밀을 살 돈이 없다.</span>
+				<br>
+			<</if>>
+			<br>
+			<<link [[아무것도 사지 않는다|Farmland]]>><<endevent>><<set $eventskip to 1>><</link>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "farmland_road_6">>
+			목재가 가득 실린 트럭이 덜컹거리며 지나간다. 길은 트럭 한 대가 겨우 지나갈 정도로 좁다. 당신은 덤불 속으로 몸을 피하며 공간을 만든다.
+			<br><br>
+
+			<<link [[다음|Farmland]]>><<set $eventskip to 1>><</link>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "farmland_road_7">>
+			당신은 열린 헛간을 지나친다. 내부는 건축 자재로 가득하다.
+			<br><br>
+
+			<<link [[다음|Farmland]]>><<set $eventskip to 1>><</link>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "farmland_road_8">>
+			<<if Time.dayState is "night">>
+				어둠 속에서 낮은 형체가 나타나 몇 피트 떨어진 곳에 멈춰 서더니 덤불 아래로 쏜살같이 사라진다.<<gstress>><<stress 6>>
+				<br><br>
+			<<else>>
+				오소리 한 마리가 달려오더니 몇 피트 떨어진 곳에서 멈춰 섰다가 덤불 밑으로 사라진다.<<lstress>><<stress -6>>
+				<br><br>
+			<</if>>
+
+			<<link [[다음|Farmland]]>><<set $eventskip to 1>><</link>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "farmland_road_9">>
+			북쪽에서 미풍이 불어와 바다 냄새를 실어 온다.<<lstress>><<stress -6>>
+			<br><br>
+
+			<<link [[다음|Farmland]]>><<set $eventskip to 1>><</link>>
+			<br>
+		<</addinlineevent>>
+
+		<<addinlineevent "farmland_road_10">>
+			덤불 아래에서 산토끼 한 마리가 튀어나와 당신을 놀라게 한다.<<gstress>><<stress 6>>
+			<br><br>
+
+			<<link [[다음|Farmland]]>><<set $eventskip to 1>><</link>>
+			<br>
+		<</addinlineevent>>
+
+		<<if $farmland_manors is 1 and Time.hour gte 18 and $exposed lte 0 and !$weekly.farmlandStreetManorListen>>
+			<<addinlineevent "farmland_road_11">>
+				<<set $weekly.farmlandStreetManorListen to true>>
+				어느 저택 쪽에서 시끄러운 음악 소리가 들려오고, 대문 근처에 차들이 여럿 주차되어 있는 것이 보인다. 오늘 누군가 파티를 여는 모양이다.
+				<br><br>
+
+				<<link [[엿듣는다|Farmland Event Manor Listen]]>><</link>>
+				<br>
+				<<link [[무시한다|Farmland]]>><<set $eventskip to 1>><</link>>
+				<br>
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+	<<runeventpool>>
+<</widget>>
+
+<<widget "farmland_manors_discovery">>
+	길은 끝에 돌 구체가 달린 한 쌍의 돌기둥 사이를 통과한다. 양옆으로 늘어선 나무들이 위를 덮으며 터널을 이룬다. 거칠고 투박해 보이지만, 의도적으로 이렇게 가꾸었다는 흔적이 역력하다. 길은 곧 오른쪽으로 방향을 틀어, 언덕 아래로 이어진다.
+	<br><br>
+
+	작은 건물들이 모여 있는 곳에 다다른다. 오래된 농장의 일부인 것 같지만, 화려한 증축 건물과 더 화려한 차들이 있는 것으로 보아 <span class="green">지금은 부유한 사람들의 집인 듯하다.</span> 사생활을 위해 다뉴브 가의 편의 시설을 포기할 만한 사람들. 무언가 숨길 것이 있는 사람들이 사는 곳이다.
+	<br><br>
+
+	<span class="gold">농장 저택을 발견했습니다.</span>
+	<<set $farmland_manors to 1>>
+	<br><br>
+
+	<<link [[침입한다|Farmland Manors Lock]]>><</link>>
+	<br>
+	<<link [[일단 내버려둔다|Farmland]]>><<endevent>><<set $eventskip to 1>><</link>>
+	<br>
+<</widget>>
+
+:: Farmland Event Wheat
+<<effects>><<wearProp "wheat">>
+
+<<person>>에게 돈을 주고 밀을 받는다.
+<br><br>
+
+<<if Weather.precipitation is "rain">>
+	"날씨가 개면 좋겠군요." <<he>>【은는】 모자를 눈썹까지 눌러쓰며 말한다.
+<<elseif Weather.precipitation is "snow">>
+	"곧 따뜻해지면 좋겠군요." <<he>>【은는】 몸을 떨며 말한다.
+<<else>>
+	"좋은 하루 보내세요." <<he>>【은는】 농장으로 돌아보며 말한다.
+<</if>>
+<br><br>
+
+<<link [[다음|Farmland]]>><<endevent>><<set $eventskip to 1>><</link>>
+<br>
+
+:: Farmland Event Rice
+<<effects>><<wearProp "rice">>
+
+<<person>>에게 돈을 주고 씨앗 한 봉지를 받는다.
+<br><br>
+
+"나보다 운이 더 좋길 바라오." <<he>>【이가】 말한다. "행운을 비오."
+<br><br>
+
+<span class="gold">이제 쌀을 재배할 수 있습니다.</span>
+<br><br>
+
+<<link [[다음|Farmland]]>><<endevent>><<set $eventskip to 1>><</link>>
+<br>
+
+:: Farmland Event Shop
+<<effects>>
+
+<<generate1>><<person1>>
+가게에 들어서자 카운터 뒤에서 <<person>>【이가】 당신을 보고 미소 짓는다.
+<br><br>
+
+선반에는 식료품, 음료, 세면도구가 진열되어 있다. 마을 주민들이 시내까지 나가지 않아도 되도록 일상용품을 구비해 둔 것이다. 그중에서도 유독 눈길을 끄는 가판대가 있다. 사탕을 파는 곳이다.
+<br><br>
+
+<<if $money gte 300>>
+	<<link [[막대사탕 구매하기 (£3)|Farmland Event Shop Lollipop]]>><<stress -6>><<money -300>><</link>><<lstress>>
+<<else>>
+	<span class="blue">막대사탕을 살 돈이 부족합니다.</span>
+<</if>>
+<br>
+<<if $money gte 500>>
+	<<link [[민트 사탕 한 통 구매하기 (£5)|Farmland Event Shop Mints]]>><<stress -6>><<money -500>><</link>><<lstress>>
+<<else>>
+	<span class="blue">민트 사탕을 살 돈이 부족합니다.</span>
+<</if>>
+<br>
+<<if $money gte 1000>>
+	<<link [[고급 초콜릿 바 구매하기 (£10)|Farmland Event Shop Chocolate]]>><<stress -6>><<money -1000>><</link>><<lstress>>
+<<else>>
+	<span class="blue">고급 초콜릿을 살 돈이 부족합니다.</span>
+<</if>>
+<br><br>
+
+<<link [[떠나기|Farmland]]>><<endevent>><<set $eventskip to 1>><</link>>
+<br>
+
+:: Farmland Event Shop Lollipop
+<<effects>>
+
+<<if random(1, 1000) gte 1000>>
+	<<wearProp "lollipop big">>
+	유독 한 막대사탕이 눈에 띈다. 낫 모양이다. 당신은 그것을 사서 가게를 나오며 핥는다. 놀라울 정도로 달콤하다.<<ltrauma>><<trauma -6>>
+	<br><br>
+<<else>>
+	<<wearProp "lollipop small">>
+	막대사탕을 하나 골라 계산대에서 돈을 낸다. 가게를 나오며 핥는다. 놀라울 정도로 달콤하다.
+<</if>>
+<br><br>
+
+<<link [[다음|Farmland]]>><<endevent>><<set $eventskip to 1>><</link>>
+<br>
+
+:: Farmland Event Shop Mints
+<<effects>><<wearProp "mints">>
+
+<<person>>에게서 민트 사탕 한 통을 사서, 가게를 나오며 몇 개를 입에 던져 넣는다.
+<br><br>
+
+<<link [[다음|Farmland]]>><<endevent>><<set $eventskip to 1>><</link>>
+<br>
+
+:: Farmland Event Shop Chocolate
+<<effects>><<wearProp "chocolate">><<canvas-model-override "mouth" "chew">>
+
+초콜릿 바를 하나 집는다. "제가 제일 좋아하는 거예요." 당신이 돈을 건네자 <<person>>【이가】 말한다.
+<br><br>
+가게를 나오면서 조금씩 베어 문다. 쌉쌀한 맛이 나지만 불쾌하지는 않다.
+<br><br>
+
+<<link [[다음|Farmland]]>><<canvas-model-override "clear">><<endevent>><<set $eventskip to 1>><</link>>
+<br>
+
+:: Farmland Event Flowers
+<<effects>>
+
+꽃밭을 가로질러 우회한다. 길은 거의 보이지 않는다. 지나갈 때마다 꽃잎이 당신을 간지럽힌다.
+<br><br>
+
+<<if $rng gte 91>>
+	<<if $settings.bestialityEnabled and $settings.lurkersEnabled>>
+		옆에서 바스락거리는 소리가 들린다. 무언가가 인간이 아닌 속도로 식물 사이를 헤치며 움직인다. 당신을 향해 똑바로 오고 있다.
+		<br><br>
+
+		<<link [[다음|Farmland Event Flowers Lurker]]>><<set $struggle_start to 1>><</link>>
+		<br>
+	<<else>>
+		옆에서 바스락거리는 소리가 들린다. 무언가가 인간이 아닌 속도로 식물 사이를 헤치며 움직인다. 당신을 향해 똑바로 오고 있다.
+		<br><br>
+
+		당신은 돌아서서 달린다. 간신히 탈출했지만, 상처 없이 벗어나지는 못했다.
+		<<beastescape>>
+		<br><br>
+
+		<<link [[다음|Farmland]]>><<endevent>><<set $eventskip to 1>><</link>>
+		<br>
+	<</if>>
+<<else>>
+	<<if $worn.under_lower.type.includes("naked") and !$worn.lower.type.includes("naked")>>
+		<<if hasSexStat("exhibitionism", 3) and $worn.upper.set isnot $worn.lower.set>>
+			<span class="lewd">음란한 생각이 떠오른다.</span> 식물들이 허리 아래를 가려준다.
+			<br><br>
+			<<link [["" + $worn.lower.name + " 벗기"|Farmland Event Flowers Lower]]>><</link>><<exhibitionist 3>>
+			<br>
+		<</if>>
+	<<elseif !$worn.under_lower.type.includes("naked") and !$worn.lower.type.includes("naked")>>
+		<<if $worn.upper.set isnot $worn.lower.set>>
+			<<if hasSexStat("exhibitionism", 2)>>
+				<span class="lewd">음란한 생각이 떠오른다.</span> 식물들이 허리 아래를 가려준다.
+				<br><br>
+				<<link [["" + $worn.lower.name + " 벗기"|Farmland Event Flowers Under]]>><</link>><<exhibitionist 2>>
+				<br>
+				<<if hasSexStat("exhibitionism", 3) and $worn.under_upper.set isnot $worn.under_lower.set>>
+					<<link [["" + $worn.lower.name + "【와과】 " + $worn.under_lower.name + " 벗기"|Farmland Event Flowers Lower Under]]>><</link>><<exhibitionist 3>>
+					<br>
+				<</if>>
+			<</if>>
+		<</if>>
+	<</if>>
+
+	<<link [[계속해서 밭을 가로지른다|Farmland]]>><<endevent>><<set $eventskip to 1>><</link>>
+	<br>
+<</if>>
+
+:: Farmland Event Flowers Lurker
+<<effects>>
+
+<<if $struggle_start is 1>>
+	<<struggle_init>>
+	<<set $struggle.creature to "lurker">>/*Creature species*/
+	<<struggle_creatures 1 2>>/*How many creatures will be involved, and their health.*/
+	<<set $combat to 1>>
+	<<controlloss>>
+	<<violence 1>>
+	<<molested>>
+	<<if $player.sex is "h">>
+		<<if random(1, 2) is 2>>
+			<<set $struggle.penis.creature to "lurker">><<set $penisuse to "struggle">><<set $penisstate to "struggle">><<set $struggle.enemy[0].location to "penis">>
+		<<else>>
+			<<set $struggle.vagina.creature to "lurker">><<set $vaginause to "struggle">><<set $vaginastate to "struggle">><<set $struggle.enemy[0].location to "vagina">>
+		<</if>>
+	<<elseif $player.penisExist is true>>
+		<<set $struggle.penis.creature to "lurker">><<set $penisuse to "struggle">><<set $penisstate to "struggle">><<set $struggle.enemy[0].location to "penis">>
+	<<else>>
+		<<set $struggle.vagina.creature to "lurker">><<set $vaginause to "struggle">><<set $vaginastate to "struggle">><<set $struggle.enemy[0].location to "vagina">>
+	<</if>>
+	<<set $timer to 12>>
+	<<unset $struggle_start>>
+<</if>>
+
+<<struggle>>
+
+<<if $struggle.done gte $struggle.number>>
+	<span id="next"><<link [[다음|Farmland Event Flowers Lurker End]]>><</link>></span>
+	<br>
+<<else>>
+	<span id="next"><<link [[다음|Farmland Event Flowers Lurker]]>><</link>></span>
+	<br>
+<</if>>
+
+:: Farmland Event Flowers Lurker End
+<<effects>>
+
+<<if $lurkers_held gte 1>>
+	당신은 잡은 럴커를 살펴본다. 채집망이 럴커를 단단히 붙잡고 있다.
+<<else>>
+	럴커가 꽃들 사이로 사라진다.
+<</if>>
+ <<tearful>> 당신은 계속해서 밭을 가로지른다.
+<br><br>
+
+<<clotheson>>
+<<endcombat>>
+
+<<link [[다음|Farmland]]>><<set $eventskip to 1>><</link>>
+<br>
+
+:: Farmland Event Flowers Lower
+<<effects>>
+
+<<generate1>><<person1>>
+$worn.lower.name【을를】 벗어 들고 계속해서 밭을 가로지른다. 인접한 밭에서 일하던 <<person>>【이가】 지나가는 당신을 보고 손을 흔든다. 당신은 빈손으로 답례한다.
+<<exhibitionism3>>
+<<lowerstrip>>
+밭을 건너자마자 몰래 옷을 입는다.
+<br><br>
+
+<<link [[다음|Farmland]]>><<clotheson>><<endevent>><<set $eventskip to 1>><</link>>
+<br>
+
+:: Farmland Event Flowers Lower Under
+<<effects>>
+
+<<generate1>><<person1>>
+$worn.lower.name【와과】 $worn.under_lower.name【을를】 벗어 들고 계속해서 밭을 가로지른다. 인접한 밭에서 일하던 <<person>>【이가】 지나가는 당신을 보고 손을 흔든다. 당신은 빈손으로 답례한다.
+<<exhibitionism3>>
+<<lowerstrip>><<underlowerstrip>>
+밭을 건너자마자 몰래 옷을 입는다.
+<br><br>
+
+<<link [[다음|Farmland]]>><<clotheson>><<endevent>><<set $eventskip to 1>><</link>>
+<br>
+
+:: Farmland Event Flowers Under
+<<effects>>
+
+<<generate1>><<person1>>
+$worn.lower.name【을를】 벗어 들고 계속해서 밭을 가로지른다. 인접한 밭에서 일하던 <<person>>【이가】 지나가는 당신을 보고 손을 흔든다. 당신은 빈손으로 답례한다.
+<<exhibitionism2>>
+<<lowerstrip>>
+밭을 건너자마자 몰래 옷을 입는다.
+<br><br>
+
+<<link [[다음|Farmland]]>><<clotheson>><<endevent>><<set $eventskip to 1>><</link>>
+<br>
+:: Farmland Event Manor Listen
+<<effects>>
+
+<<if $rng gte 26>>
+	얼마 지나지 않아 음악 소리에 묻혀가는 처절한 비명 소리가 들려온다. <<gstress>><<stress 4>><<gtrauma>><<trauma 2>>
+	<br><br>
+	자동차들을 다시 한 번 바라보지만, 돕고 싶어도 도울 수 없다는 사실을 깨닫는다. 그냥 지나치는 게 상책이다.
+<<else>>
+	사람들이 웃고 춤추는 소리가 들린다. 마음이 편안해진다. <<lstress>><<stress -4>><<ltrauma>><<trauma -2>>
+<</if>>
+<br><br>
+
+<<link [[다음|Farmland]]>><<endevent>><<set $eventskip to 1>><</link>>
+<br>

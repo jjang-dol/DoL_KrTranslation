@@ -1,0 +1,31 @@
+:: Widgets EffectsOld [widget]
+
+<<widget "effectsarousalsoak">>
+	<<if $lowerwetstage is 3 or $worn.lower.type.includes("naked")>>
+		<!-- If clothing above underwear is also wet, or missing -->
+		<<set $wetintro to 2>>
+		<span class="lewd">당신의 체액이 $worn.under_lower.name【을를】 적셔, 당신의 <<genitals>>【을를】 드러낸다. </span>
+	<<elseif setup.clothes.lower[clothesIndex('lower', $worn.lower)].skirt is 1>>
+		<span class="lewd">당신의 체액이 $worn.under_lower.name【을를】 적셔, $worn.lower.name 아래로 당신의 <<genitals>>【을를】 드러낸다. </span>
+	<<else>>
+		<span class="lewd">당신의 체액이 $worn.under_lower.name【을를】 흠뻑 적신다. </span>
+	<</if>>
+	<<if $wetintro is 0 and $underupperwet lt 100>>
+		<<if !hasSexStat("exhibitionism", 4)>>
+			당신은 아무도 눈치채지 못하기를 바란다.
+		<<else>>
+			당신은 누군가 눈치채기를 바란다.
+		<</if>>
+	<</if>>
+	<br><br>
+<</widget>>
+
+<<widget "effectsmakeup">>
+	<<if $makeupWashed>>
+		<<unset $makeupWashed>>
+		<span class="teal">당신의 화장이 씻겨 나간다<<if $beauty gte ($beautymax / 7) * 4>>, 당신 본연의 아름다움을 드러내면서<</if>>.</span><br>
+	<</if>>
+	<<if $makeup.mascara and $makeup.mascara_running lt painToTearsLvl($pain) and !$makeup.mascara.includes("waterproof")>>
+		<<set $makeup.mascara_running to painToTearsLvl($pain)>>
+	<</if>>
+<</widget>>

@@ -1,0 +1,2090 @@
+:: Pregnancy Introduction
+<<set $outside to 0>><<set $location to "town">><<effects>>
+<<set $pregnancyStats.parasiteDoctorEvents to 2>>
+<<harper_intro>>
+"배에 이상한 감각이 느껴지신다고요?" <<he>>【이가】 묻는다. 당신은 고개를 끄덕인다. <<He>>【은는】 의자를 더 가까이 굴려 와 당신의 배에 청진기를 댄다.
+<br><br>
+<<He>>【은는】 잠시 귀를 기울이더니, 의자를 굴려 물러나 <<his>> 컴퓨터에 무언가를 입력한다. "기생충 문제입니다." <<he>>【이가】 말한다. "그것들이 번식 주기의 일부로 당신을 이용하고 있습니다." <<He>>【은는】 당신의 표정을 보고 미소 짓는다. "걱정하지 마세요. 해를 끼치진 않을 겁니다. 준비가 되면 스스로 나올 테니까요."
+<br><br>
+<<He>>【은는】 몇 분에 걸쳐 그 생물들을 "낳는" 방법을 설명한다. 무엇을 해야 하고, 무엇을 하지 말아야 하는지. 간단하게 들린다. 네 발로 엎드려 힘을 주면 된다.
+<br><br>
+<<He>>【은는】 다시 <<his>> 컴퓨터로 돌아선다. "이런 종은 과학적으로 흥미롭습니다." <<he>>【이가】 말을 잇는다. "돈을 좀 벌고 싶으시다면, 제가 지역 회사를 대신해 값을 치러드릴 수 있습니다." <<He>>【은는】 자리에서 일어선다. "더 필요한 건 없으신가요?"
+<br><br>
+당신은 고개를 젓는다. <<He>>【이가】 문을 열어주자, 당신은 사무실을 나선다. "몸조리 잘하세요." <<he>>【이가】 당신이 지나갈 때 말한다.
+<br><br>
+<<link [[로비로 돌아가기|Hospital Foyer]]>><<endevent>><</link>>
+
+:: Pregnancy Discussion
+<<set $outside to 0>><<set $location to "town">><<effects>>
+<<if !$harperSeen?.includes("hospital")>>
+	<<harper_intro>>
+<<else>>
+	<<if $firstOption is undefined>><<set $firstOption to true>><</if>>
+<</if>>
+
+<<if $firstOption is true>>
+	<<npc Harper>><<person1>>오래 기다릴 필요는 없다. 하퍼 의사가 <<his>> 사무실에서 나와 당신을 부른다. 당신은 <<his>> 사무실로 들어가 자리에 앉는다.
+	<br><br>
+
+	"무엇을 도와드릴까요?" <<he>>【이가】 묻는다.
+	<br><br>
+<<elseif $firstOption is false>>
+	당신은 하퍼 의사의 사무실에 있다. "더 도와드릴 일이 있습니까?" <<he>>【이가】 묻는다.
+	<br><br>
+<</if>>
+
+<<if $pregnancyStats.parasiteDoctorEvents gte 2 and $container.portable.value gt 0>>
+	<<if $pregnancyStats.namesParasitesChild is true>>
+		<<link [[품고 있는 아이들을 판다 (0:05)|Sell Children]]>><<pass 5>><<set $firstOption to false>><</link>>
+		<br>
+	<<else>>
+		<<link [[품고 있는 기생충들을 판다 (0:05)|Sell Children]]>><<pass 5>><<set $firstOption to false>><</link>>
+		<br>
+	<</if>>
+<</if>>
+<<if $pregnancyStats.parasiteDoctorEvents is 3>>
+	<<link [[배 속에서 커다란 무언가가 느껴진다고 문의한다 (0:10)|Pregnancy Futa Introduction]]>><<pass 10>><<set $firstOption to false>><</link>>
+	<br>
+<</if>>
+<<set _aPregnancy to $sexStats.anus.pregnancy>>
+<<set _vPregnancy to $sexStats.vagina.pregnancy>>
+<<if $pregnancyStats.parasiteDoctorEvents gte 4 and ((_aPregnancy.motherStatus is 2 and _aPregnancy.type is "parasite" and _aPregnancy.fetus.find(parasite => parasite.stats.gender === "Hermaphrodite")) or (_vPregnancy.motherStatus is 2 and _vPregnancy.type is "parasite" and _vPregnancy.fetus.find(parasite => parasite.stats.gender === "Hermaphrodite") and !$worn.genitals.type.includes("hidden")))>>
+	<<link [[양성 기생충 제거에 대해 문의한다 (0:30)|Remove Futa Pregnancy]]>><<pass 30>><<set $futaCheck to true>><<set $firstOption to false>><</link>>
+	<br>
+<</if>>
+<<if $pregnancyStats.parasiteTypesSeen.length gte 4 and $pregnancyStats.parasiteBook is 1>>
+	<<link [[기생충 정보에 대해 문의한다 (0:05)|Harper Parasite Book]]>><<pass 5>><<set $firstOption to false>><</link>>
+	<br>
+<</if>>
+
+<<link [[로비로 돌아가기|Hospital Foyer]]>><<endevent>><<unset $firstOption>><</link>>
+
+:: Sell Children
+<<set $outside to 0>><<set $location to "town">><<effects>>
+하퍼 의사가 <<his>> 사무실 문으로 걸어가 잠근다. <<He>>【은는】 다시 자리에 앉는다. "오늘은 뭘 가져왔지?" <<he>>【이가】 묻는다.
+<br><br>
+/* the 100 multiplier is intentional, used to use the moneyGain widget */
+당신은 <<he>>【이가】 준 작은 용기를 꺼낸다. <<He>>【이가】 안을 들여다본다. 만족한 듯, <<he>>【은는】 <<his>> 책상 밑에서 더 큰 다른 용기를 꺼낸다. <<He>>【은는】 내용물을 옮겨 담고 빈 용기를 당신에게 건넨다. <<He>>【은는】 서랍을 열고 <<money `$container.portable.value * 100` "hospitalParasitesSold">><<printmoney `$container.portable.value * 100`>>【을를】 세어본다. <<He>>【이가】 그것을 당신에게 건넨다.
+<br><br>
+"지역 사회에서 고마워할 거요." <<he>>【이가】 말한다.
+<br><br>
+<<set _paleAmount to 0>>
+<<for _i to 0; _i lt $container.portable.creatures.length; _i++>>
+	<<if $container.portable.creatures[_i].creature.includes("Pale")>>
+		<<set _wraithMessage to true>>
+		<<set _paleAmount++>>
+	<</if>>
+<</for>>
+<<if $wraith.state and _wraithMessage is true>>
+	<<set $wraith.offspring to "sold">>
+	<<set $wraithCompoundChance to ($wraithCompoundChance ? $wraithCompoundChance += 10 : 10)>>
+	<<if $wraithAngerCooldown>>
+		<<set $wraithAngerCooldown += (15 * _paleAmount)>>
+	<<else>>
+		<<set $wraithAngerCooldown to (15 * _paleAmount)>>
+	<</if>>
+	<<number _paleAmount>>마리의 창백한 <<if _paleAmount gt 1>>아이들<<else>>아이<</if>>【이가】 손이 닿지 않는 곳으로 사라지는 것을 보며, 당신은 갑작스러운 공포와 후회를 느낀다. <<gobsession _paleAmount>>
+	<br><br>
+<</if>>
+<<set $container.portable.value to 0>>
+<<set $container.portable.creatures to []>>
+<<link [[다음|Pregnancy Discussion]]>><</link>>
+
+:: Pregnancy Futa Introduction
+<<set $outside to 0>><<set $location to "town">><<effects>><<earnFeat "Broodmother Host">>
+<<set $pregnancyStats.parasiteDoctorEvents to 4>>
+"이상하군요." <<he>>【이가】 말한다. "걱정할 만한 일은 아닙니다." <<He>>【은는】 의자를 <<his>> 컴퓨터 쪽으로 다시 당겨 무언가를 입력한다.
+<br><br>
+당신은 <<he>>【이가】 화면을 읽으며 간간이 키보드를 두드리는 동안 기다린다. <<He>>【은는】 서랍에서 큰 책을 꺼내 먼지를 불어내고 책장을 넘긴다. 마침내 <<he>>【은는】 책을 치우고 당신을 마주 본다.
+<br><br>
+"기생충이 있습니다." <<he>>【이가】 말한다. "특이한 놈입니다. 양쪽 성기를 모두 가지고 있어 자가 교미가 가능하죠. 제거하려면 여기서 시술을 해야 합니다. 그때까지는 계속해서 그 자손을 낳게 될 겁니다."
+<br><br>
+<<link [[다음|Pregnancy Discussion]]>><</link>>
+
+:: Pregnancy Clear
+<br><br>
+<<link [[다음|Pregnancy Discussion]]>><</link>>
+
+:: Remove Futa Pregnancy
+
+<<set $outside to 0>><<set $location to "town">><<effects>>
+
+<<set _aPregnancy to $sexStats.anus.pregnancy>>
+<<if _aPregnancy.type is "parasite">>
+	<<for _i to 0; _i lt _aPregnancy.fetus.length; _i++>>
+		<<if _aPregnancy.fetus[_i] isnot undefined>>
+			<<if _aPregnancy.fetus[_i].stats.gender is "Hermaphrodite">>
+				<<set _analFuta to true>>
+				<<moveCreature _i "destroy" undefined "anus">>
+				<<set _aPregnancy.motherStatus to 1>>
+				<<break>>
+			<</if>>
+		<</if>>
+	<</for>>
+	<<clearToDeleteParasiteFetus>>
+	<<for _i to 0; _i lt _aPregnancy.fetus.length; _i++>>
+		<<if _aPregnancy.fetus[_i] isnot undefined and _i >= maxParasites("anus")>>
+				<<set _analFutaOther to true>>
+				<<moveCreature _i "destroy" undefined "anus">>
+		<</if>>
+	<</for>>
+	<<clearToDeleteParasiteFetus>>
+<</if>>
+
+<<set _vPregnancy to $sexStats.vagina.pregnancy>>
+<<if _vPregnancy.type is "parasite" and !playerChastity("hidden")>>
+	<<for _i to 0; _i lt _vPregnancy.fetus.length; _i++>>
+		<<if _vPregnancy.fetus[_i] isnot undefined>>
+			<<if _vPregnancy.fetus[_i].stats.gender is "Hermaphrodite">>
+				<<set _vaginaFuta to true>>
+				<<moveCreature _i "destroy" undefined "vagina">>
+				<<set _vPregnancy.motherStatus to 1>>
+				<<break>>
+			<</if>>
+		<</if>>
+	<</for>>
+	<<clearToDeleteParasiteFetus>>
+	<<for _i to 0; _i lt _vPregnancy.fetus.length; _i++>>
+		<<if _vPregnancy.fetus[_i] isnot undefined and _i >= maxParasites("vagina")>>
+				<<set _vaginaFutaOther to true>>
+				<<moveCreature _i "destroy" undefined "vagina">>
+		<</if>>
+	<</for>>
+	<<clearToDeleteParasiteFetus>>
+<</if>>
+
+"옷을 벗고 테이블에 누우세요." <<he>>【이가】 라텍스 장갑을 끼며 말한다. "부끄러워할 필요 없습니다." <<He>>【은는】 몸을 돌려 서랍을 뒤적인다.
+<br><br>
+
+당신은 <<he>>【이가】 등을 돌린 사이 <<nervously>> 옷을 벗고, 자신의 <<lewdness>>【을를】 의식하며 테이블에 눕는다. 무표정한 얼굴의 의사는 당신의 다리를 잡아 어깨에 닿도록 밀어붙인 뒤, 끈으로 묶는다.
+<br><br>
+
+"가만히 있는 편이 더 수월할 겁니다." <<he>>【이가】 당신의 손목을 묶으며 확언한다. 당신은 거의 움직일 수 없다.
+<br><br>
+
+<<if _anusFuta && playerChastity("anus")>>
+	<<He>>【은는】 당신의 $worn.under_lower.name【을를】 살피더니, <<his>> 코트에서 이상한 금속 장치를 꺼낸다. <<He>>【이가】 금속을 두드리자, 당신의 항문 보호대가 헐거워지며 떨어진다. "끝나면 돌려드리죠." <<he>>【이가】 말한다.
+	<br><br>
+<</if>>
+
+<<He>>【은는】 다른 서랍을 열어 한쪽 끝에 둥근 공이 달린 매끄러운 흰 막대를 꺼낸다. <<He>>【은는】 가는 쪽 끝을 당신의 <<= _vaginaFuta ? "<<genitals>>" : "<<bottom>>" >>에 밀어붙인다. "긴장 푸세요,<<if playerBellyVisible() and !_vaginaFuta>> 아기에게 해가 되진 않을 겁니다,<</if>>" <<he>>【이가】 말한다. 그것은 마치 윤활유를 바른 것처럼 고통 없이 미끄러져 들어온다. 하퍼가 반대쪽을 비틀자, 그것이 안에서 고동치는 감각이 느껴진다.
+<<garousal>><<arousal 1200 "bottom">>
+<br><br>
+
+고동의 강도가 세지는 동안, 하퍼는 눈도 깜빡이지 않고 당신의 <<= _vaginaFuta ? "<<genitals>>" : "<<bottom>>" >>【을를】 응시한다. 더는 견딜 수 없다고 느낄 때쯤, <<he>>【은는】 그것을 부드럽게 빼낸다. 그 <<if $pregnancyStats.namesParasitesChild is true>>아기<<else>>기생충<</if>>【이가】 그 끝에 감겨 있다<<if _analFutaOther or _vaginaFutaOther>>, 더 작은 놈과 함께<</if>>. <<He>>【은는】 그것을 불투명한 용기에 넣고 밀봉한다.
+<<if _vaginaFuta and _anusFuta>>
+	<<He>>【은는】 당신 안에 있는 다른 기생충 무리에게도 같은 절차를 반복하고, 더 많은 기생충을 포장해 밀봉한다.
+<</if>>
+<br><br>
+
+"다 끝났습니다." <<he>>【이가】 끈을 풀며 말한다. 당신이 옷을 입는 동안 <<he>>【은는】 등을 돌린다.
+<br><br>
+<<link [[다음|Pregnancy Discussion]]>><<unset $futaCheck>><</link>>
+
+:: GiveBirth
+<<set $outside to 0>><<set $location to $container.lastLocation>><<effects>>
+<<set _pregnancy to $sexStats[$giveBirthLocation or "anus"].pregnancy>>
+<<set _pregnancy.parasiteFeltMovement to false>>
+<<set _container to $container[$phase]>>
+<<set $pregResult to "notReady">>
+<<set _stressMulti to 2 - _pregnancy.motherStatus>>
+<<set $checkboxResult to {}>>
+<<set $checkboxReplace to {}>>
+<<set $parasiteSelectionCount to 0>>
+<<set _newlyBirthed to {}>>
+<<set _allSeen to $pregnancyStats.parasiteTypesSeen.length + $pregnancyStats.parasiteVariantsSeen.length>>
+
+<<if $harperSeen?.includes("hospital")>>
+	하퍼 의사의 지시에 따라, 당신은
+<<else>>
+	당신은
+<</if>>
+자세를 잡고 <<if $pregnancyStats.namesParasitesChild is true>>아기<<else>>기생충<</if>>【을를】 낳으려 한다. <<if _stressMulti gt 0>><<gstress>><</if>><<set $stress += 250 * _stressMulti>>
+<br><br>
+
+<<for _i to 0; _i lt _pregnancy.fetus.length; _i++>>
+	<<if _pregnancy.fetus[_i].stats.gender isnot "Hermaphrodite" and _pregnancy.fetus[_i].fertilised>>
+		<<set _rand to random(0,100)>>
+		<<if (_rand lte 80 and _pregnancy.fetus[_i].daysLeft is 0) or (_rand lte 50 and _pregnancy.fetus[_i].daysLeft lte 1) or (_rand lte 30 and _pregnancy.fetus[_i].daysLeft lte 2) or (_rand lte 10 and _pregnancy.fetus[_i].daysLeft lte 3) or $parasiteBirthDebug>>
+			<<if $pregResult is "notReady">>
+				<<set $pregResult to [clone(_i)]>>
+			<<else>>
+				<<set $pregResult.push(clone(_i))>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</for>>
+
+<<if $pregResult is "notReady">>
+	애를 써 보지만, <<if $pregnancyStats.namesParasitesChild is true>>당신의 아이들<<else>>기생충들<</if>> 중 아직 나올 준비가 된 것은 없다.
+	<br><br>
+
+	<<link [[다음|Containers]]>><<unset $pregResult>><<unset $giveBirthLocation>><</link>>
+<<else>>
+	몸이 떨리더니, <<if $pregnancyStats.namesParasitesChild is true>><<number $pregResult.length>>명의 <<print $pregResult.length gt 1 ? "아기들" : "아기">><<else>><<number $pregResult.length>>마리의 <<print $pregResult.length gt 1 ? "기생충들" : "기생충">><</if>>【이가】 바닥으로 떨어진다.
+
+	<ul>
+		<<for _i to 0; _i lt $pregResult.length; _i++>>
+			<<set _result to _pregnancy.fetus[$pregResult[_i]]>>
+			<!-- Printing the checkbox -->
+			<li><label><<print '<<checkbox "$checkboxResult[' + clone($pregResult[_i]) + ']" false true checked>>'>> - <<print window.KR.getCreatureTypeKr(_result.creature)>> - <<creatureActivity _result.stats.speed>></label></li>
+			<<if _result.creature.includes(" ")>>
+				<!-- If the creature has a variant, like Pale. Currently does not account for creatures with more than one variant, because those don't yet exist -->
+				<!-- Possible task for the future: turn parasite variants into variables, so there can be multiple -->
+				<<set _split to _result.creature.split(" ")>>
+				<<if !$pregnancyStats.parasiteVariantsSeen.includes(_split[0]) and _split[0] isnot _split[1]>>
+					<<set $pregnancyStats.parasiteVariantsSeen.pushUnique(_split[0])>>
+					<!-- For Pale Tentacle, this will set _newlyBirthed.Pale to "tentacle" -->
+					<<set _newlyBirthed[_split[0]] to _split[1].toLowerCase()>>
+				<</if>>
+				<<if !$pregnancyStats.parasiteTypesSeen.includes(_split[1])>>
+					<<set $pregnancyStats.parasiteTypesSeen.pushUnique(_split[1])>>
+					<<set _newlyBirthed[_split[1]] to true>>
+				<</if>>
+			<<else>>
+				<!-- Creatures without variants -->
+				<<if !$pregnancyStats.parasiteTypesSeen.includes(_result.creature)>>
+					<<set $pregnancyStats.parasiteTypesSeen.pushUnique(_result.creature)>>
+					<<set _newlyBirthed[_result.creature] to true>>
+				<</if>>
+			<</if>>
+		<</for>>
+	</ul>
+	<<for _n to 0; _n lt Object.values(_newlyBirthed).length; _n++>>
+		<<switch Object.keys(_newlyBirthed)[_n]>>
+			<<case "Tentacle">>
+				당신은 홀린 듯 촉수를 바라본다. 촉수는 앞을 보지 못한 채 꿈틀거리며, 뱀처럼 제 몸을 휘감는다. 어찌나 활기찬지, 보기만 해도 피로가 조금 가시는 듯하다.
+			<<case "Slime">>
+				슬라임은 한동안 움직이지 않는다. 조금 걱정되어 손가락으로 찔러 보자, 말랑하게 흔들린다. 형언하기 어려운 질감이다. 거의 흠잡을 데 없어 보이고, 이런 생물을 <<if $pregnancyStats.namesParasitesChild is true>>낳았다는 사실이 자랑스럽게<<else>>품고 있었다는 사실이 거의 자랑스럽게<</if>> 느껴진다.
+			<<case "Worm">>
+				벌레는 나오자마자 파고들 곳을 찾으려 한다. 뜻대로 되지 않자 불안하게 꿈틀거리다가, 당신이 <<print window.KR.getContainerNameKr(_container.name)>>에 넣고 나서야 잠잠해진다. 이런 생물을 <<if $pregnancyStats.namesParasitesChild is true>>낳았다니<<else>>품고 있었다니<</if>>, 기묘한 기분이 든다.
+			<<case "Lurker">>
+				럴커는 주로 기어 다니지만, 가끔 놀랄 만큼 멀리 뛰어오른다. 놓쳐버리기 전에 서둘러 <<print window.KR.getContainerNameKr(_container.name)>>에 넣는다.
+			<<case "Vine">>
+				덩굴이 더 좋은 환경에 심기지 않으면 살아남지 못하는 건 아닐까 걱정하지만, <<print window.KR.getContainerNameKr(_container.name)>> 안에서 꿈틀거리는 모습을 보니 괜찮아 보인다. 엄밀히 말해 식물은 아닐지도 모른다는 생각이 든다.
+			<<case "Metal">>
+				자세히 살펴보니, 금속성 <<= window.KR.getCreatureTypeKr(_newlyBirthed.Metal)>>【은는】 진짜 금속은 아니다. 금속 같은 색과 무늬가 있지만, 강철이라면 불가능할 방식으로 휘고 꿈틀거린다. 먹이로 특별한 것이 필요하지 않기를 바란다.
+			<<case "Eel">>
+				장어는 곧바로 거칠게 꿈틀거리기 시작한다. 붙잡으려 하자, 놀라울 만큼 강한 힘으로 저항한다. 버둥거리는 것을 간신히 <<print window.KR.getContainerNameKr(_container.name)>>【으로로】 옮기자, 물에 닿는 순간 잠잠해진다.
+			<<case "Snake">>
+				뱀은 미끄러지듯 달아나 당신에게서 숨으려 한다. 손을 물려는 시도를 피해 조심스럽게 목덜미를 잡고, <<print window.KR.getContainerNameKr(_container.name)>>에 넣는다.
+			<<case "Fish">>
+				물고기는 바닥에서 펄떡이며 숨을 헐떡인다. 당신은 서둘러 그것을 떠올려 <<print window.KR.getContainerNameKr(_container.name)>> 안에 넣는다. 물고기가 헤엄치는 모습을 지켜본다. 그 물이 <<= $pregnancyStats.namesParasitesChild ? "당신의 아이" : "기생충">>에게 안전하기를 바란다.
+			<<case "Spider">>
+				당신은 거미가 다리를 버둥거리며 몸을 바로 세우려는 모습을 지켜본다. 거미는 결국 성공하고, 대충 당신이 있는 쪽으로 기어온다. 손을 내밀자 거미가 기어 올라오고, 당신은 안전하게 <<print window.KR.getContainerNameKr(_container.name)>>에 넣는다.
+			<<case "Bee">>
+				벌은 앞다리로 제 몸을 닦는다. 당신을 바라보며 고개를 갸웃하더니, 별다른 저항 없이 보송보송한 몸을 들어 올리게 해준다. 당신은 그것을 <<print window.KR.getContainerNameKr(_container.name)>>에 넣는다.
+			<<case "Wasp">>
+				말벌을 들어 올리려 하자, 말벌은 배를 꿈틀거리며 침을 당신 쪽으로 겨눈다. 놀라게 하지 않으려 천천히 손을 뻗자, 결국 당신이 그것을 <<print window.KR.getContainerNameKr(_container.name)>>에 넣도록 허락한다.
+			<<case "Slug">>
+				민달팽이의 머리에서 눈자루가 솟아나고, 그것은 점액 자국을 남기며 바닥을 천천히 미끄러져 다닌다. 짓누르지 않도록 조심스럽게 잡아 <<print window.KR.getContainerNameKr(_container.name)>>에 넣는다.
+			<<case "Squid">>
+				오징어를 옮기려고 건드리자, 손에 먹물을 조금 뿜는다. 당신은 그것을 닦아내고 오징어를 <<print window.KR.getContainerNameKr(_container.name)>>에 넣는다. 오징어가 헤엄쳐 다닌다. 어쩐지 제법 뿌듯해 보인다.
+			<<case "Maggot">>
+				구더기는 통통한 흰 몸을 꿈틀거리며 바닥을 기어 다닌다. 그것을 <<print window.KR.getContainerNameKr(_container.name)>>【으로로】 옮기며, 이것이 자라서 무엇이 될지 생각한다. 자라기는 한다면 말이다.
+			<<case "Pale">>
+				손이 저절로 움직이는 듯하더니, 어느새 당신은 창백한 <<= window.KR.getCreatureTypeKr(_newlyBirthed.Pale)>>【을를】 안고 있다. 너무 창백해서 거의 반투명해 보인다. 섬뜩한 두려움이 스치지만, 곧 기묘한 만족감으로 바뀐다.
+				<span class="blue">이것을 보관할지 결정할 때는 신중해야 한다.</span>
+			<<default>>
+				<!-- This way, species like Wasp that don't have a unique line don't print <br>s for no reason -->
+				<<continue>>
+		<</switch>>
+		<br><br>
+	<</for>>
+	<<if $pregnancyStats.parasiteBook is 3 and $pregnancyStats.parasiteTypesSeen.length + $pregnancyStats.parasiteVariantsSeen.length gt _allSeen>>
+		당신은 <<if $pregnancyStats.namesParasitesChild is true>>새로 태어난 아이들<<else>>새로운 기생충들<</if>>에 대해 수첩에 적는다.
+		<br><br>
+	<<elseif $pregnancyStats.parasiteTypesSeen.length gte 4 and (!$pregnancyStats.parasiteBook or $pregnancyStats.parasiteBook is 1)>>
+		<<set $pregnancyStats.parasiteBook to 1>>
+		<br><br>
+		당신은 자신이 낳은 생물의 종류가 얼마나 다양한지 새삼 놀라며, 더 알아볼 방법은 없을지 궁금해한다. <span class="gold">하퍼 의사라면 도와줄 수 있을지도 모른다.</span>
+	<</if>>
+	<<if $pregResult.length gt (_container.maxCount - _container.count)>>
+		교체할 대상을 선택하세요. 위에서 아래 순서로 교체됩니다.
+		<br>
+		<ul>
+			<<for _i to 0; _i lt _container.maxCount; _i++>>
+				<<if _container.creatures[_i] is undefined>>
+					<<set $checkboxReplace[_i] to true>>
+					<<continue>>
+				<</if>>
+				<<if _container.creatures[_i] isnot null>>
+					<li><label><<print '<<checkbox "$checkboxReplace[' + clone(_i) + ']" false true `($checkboxReplace[' + clone(_i) + '] ? "checked" : "")`>>'>> - <<print window.KR.getCreatureTypeKr(_container.creatures[_i].creature)>> - <<creatureActivity _container.creatures[_i].stats.speed>></label></li>
+				<</if>>
+			<</for>>
+		</ul>
+	<</if>>
+	<div id="pregResult"><<PregEventsResult>></div>
+<</if>>
+
+:: Widgets PregEventsResult [widget]
+<<widget "PregEventsResult">>
+	<<set $outside to 0>><<set $location to $container.lastLocation>><<effects>>
+	<<set _pregnancy to $sexStats[$giveBirthLocation or "anus"].pregnancy>>
+	<<set _container to $container[$phase]>>
+	<<set $parasiteSelectionCount to 0>>
+	<<set $parasiteReplaceArray to []>>
+	<<set _availableStorage to (_container.maxCount - _container.count)>>
+	<<for _i to 0; _i lt $pregResult.length; _i++>>
+		<<if $checkboxResult[$pregResult[_i]] is true>>
+			<<set $parasiteSelectionCount += 1>>
+		<</if>>
+	<</for>>
+	<<for _i to 0; _i lt _container.count; _i++>>
+		<<if $checkboxReplace[_i] is true>>
+			<<set $parasiteReplaceArray.push(clone(_i))>>
+		<</if>>
+	<</for>>
+
+	<<if $debug is 1>>
+		디버그 - 선택된 아기 유지 결과 (ID - 체크박스 - 결과)
+		<br>
+		<<for _i to 0; _i lt $pregResult.length;_i++>>
+			<<if $checkboxResult[$pregResult[_i]] is true>>
+				<<print $pregResult[_i]>> - <<print $checkboxResult[$pregResult[_i]]>> - 보관
+				<br>
+			<<elseif $checkboxResult[$pregResult[_i]] is false>>
+				<<print $pregResult[_i]>> - <<print $checkboxResult[$pregResult[_i]]>> - 판매
+				<br>
+			<</if>>
+		<</for>>
+		<br>
+	<</if>>
+
+	<<if $parasiteSelectionCount lte _availableStorage>>
+		<<if $parasiteSelectionCount gt 0>>
+			<<if $pregnancyStats.namesParasitesChild is true>>
+				<<link [[선택한 아기들을 보관한다|PregEventsResult2]]>>
+					<<set $pregChoice to "KeepSelected">>
+				<</link>>
+			<<else>>
+				<<link [[선택한 기생충들을 보관한다|PregEventsResult2]]>>
+					<<set $pregChoice to "KeepSelected">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<<elseif $parasiteSelectionCount gt 0>>
+		선택한 수를 보관할 공간이 부족합니다. <<number $parasiteSelectionCount-_availableStorage>>마리의 <<if $pregnancyStats.namesParasitesChild is true>><<print $parasiteSelectionCount - _availableStorage gt 1 ? '아기들을' : '아기를'>><<else>><<print $parasiteSelectionCount - _availableStorage gt 1 ? '기생충들을' : '기생충을'>><</if>> 교체해 주세요.
+		<br>
+		<<if ($parasiteSelectionCount - $parasiteReplaceArray.length) lte _availableStorage>>
+			<<if $pregnancyStats.namesParasitesChild is true>>
+				<<link [[선택한 아기들을 교체한다|PregEventsResult2]]>>
+					<<set $pregChoice to "ReplaceSelected">>
+				<</link>>
+			<<else>>
+				<<link [[선택한 기생충들을 교체한다|PregEventsResult2]]>>
+					<<set $pregChoice to "ReplaceSelected">>
+				<</link>>
+			<</if>>
+		<</if>>
+	<</if>>
+	<<if $pregResult.length lte _availableStorage>>
+		<br>
+		<<if $pregnancyStats.namesParasitesChild is true>>
+			<<link [[모든 아기들을 보관한다|PregEventsResult2]]>>
+				<<set $pregChoice to "keepAll">>
+			<</link>>
+		<<else>>
+			<<link [[모든 기생충들을 보관한다|PregEventsResult2]]>>
+				<<set $pregChoice to "keepAll">>
+			<</link>>
+		<</if>>
+	<</if>>
+
+	<br><br>
+	<<if $pregnancyStats.namesParasitesChild is true>>
+		<<link [[모든 아기들을 판다|PregEventsResult2]]>>
+			<<set $pregChoice to "sellAll">>
+		<</link>>
+	<<else>>
+		<<link [[모든 기생충들을 판다|PregEventsResult2]]>>
+			<<set $pregChoice to "sellAll">>
+		<</link>>
+	<</if>>
+<</widget>>
+
+<<widget "resetPregButtons">>
+	<<replace #pregResult>>
+		<<PregEventsResult>>
+	<</replace>>
+<</widget>>
+
+:: PregEventsResult2
+<<set $outside to 0>><<set $location to $container.lastLocation>><<effects>>
+<<set _pregnancy to $sexStats[$giveBirthLocation or "anus"].pregnancy>>
+
+<<switch $pregChoice>>
+<<case "ReplaceSelected">>
+	<<set _parasiteReplaceCount to $parasiteReplaceArray.length>>
+	<<for _i to 0; _i lt $pregResult.length;_i++>>
+		<<if $checkboxResult[$pregResult[_i]] is true>>
+			<<if $parasiteReplaceArray.length gt 0>>
+				<<moveCreature $pregResult[_i] "replace" $parasiteReplaceArray[0] $giveBirthLocation>>
+				<<run $parasiteReplaceArray.deleteAt(0)>>
+			<<else>>
+				<<moveCreature $pregResult[_i] "container" undefined $giveBirthLocation>>
+			<</if>>
+		<<elseif $checkboxResult[$pregResult[_i]] is false>>
+			<<moveCreature $pregResult[_i] "portable" undefined $giveBirthLocation>>
+		<</if>>
+	<</for>>
+	당신은 <<if $pregnancyStats.namesParasitesChild is true>>자식<<else>>기생충<</if>> 중 <<number $parasiteSelectionCount>>마리를 기르기로 하고, 다른 <<number _parasiteReplaceCount>>마리<<if _parasiteReplaceCount gt 1>>들<</if>> 대신 그것들을 <<print window.KR.getContainerNameKr($container[$phase].name)>>에 넣는다. 나머지는 하퍼 의사에게 넘길 준비를 한다.
+	<br><br>
+<<case "KeepSelected">>
+	<<for _i to 0; _i lt $pregResult.length;_i++>>
+		<<if $checkboxResult[$pregResult[_i]] is true>>
+			<<moveCreature $pregResult[_i] "container" undefined $giveBirthLocation>>
+		<<elseif $checkboxResult[$pregResult[_i]] is false>>
+			<<moveCreature $pregResult[_i] "portable" undefined $giveBirthLocation>>
+		<</if>>
+	<</for>>
+	당신은 <<number $parasiteSelectionCount>>마리의 <<if $pregnancyStats.namesParasitesChild is true>>자식<<else>>기생충<</if>>【을를】 기르기로 하고, 그것들을 당신의 <<print window.KR.getContainerNameKr($container[$phase].name)>>에 넣는다. 나머지는 하퍼 의사에게 넘길 준비를 한다.
+	<br><br>
+<<case "keepAll">>
+	<<for _i to 0; _i lt $pregResult.length;_i++>>
+		<<moveCreature $pregResult[_i] "container" undefined $giveBirthLocation>>
+	<</for>>
+	당신은 <<if $pregnancyStats.namesParasitesChild is true>>자식<<else>>기생충<</if>> 전부를 기르기로 하고, <<print window.KR.getContainerNameKr($container[$phase].name)>>에 넣는다.
+	<br><br>
+<<case "sellAll">>
+	<<for _i to 0; _i lt $pregResult.length;_i++>>
+		<<moveCreature $pregResult[_i] "portable" undefined $giveBirthLocation>>
+	<</for>>
+	당신은 <<if $pregnancyStats.namesParasitesChild is true>>자식<<else>>기생충<</if>> 전부를 팔아 하퍼 의사에게 데려갈 준비를 한다.
+	<br><br>
+<</switch>>
+
+<<clearToDeleteParasiteFetus>>
+
+<<link [[다음|Containers]]>>
+	<<unset $pregChoice>><<unset $pregResult>>
+	<<unset $checkboxResult>><<unset $checkboxReplace>>
+	<<unset $parasiteSelectionCount>><<unset $parasiteReplaceArray>>
+	<<unset $giveBirthLocation>>
+<</link>>
+
+:: Harper Parasite Book
+<<effects>>
+<<set $pregnancyStats.parasiteBook to 2>>
+하퍼가 만족스럽다는 듯 고개를 끄덕인다. "더 알고 싶어 하다니 좋군요." <<He>>【은는】 꽤 두꺼운 책을 꺼내 당신에게 보여준다. "이건 과학자들 사이에서 널리 쓰이는 참고서입니다. 이 주제에 대한 정보가 많이 담겨 있지만, 병원 소유물이라 제가 빌려줄 권한은 없습니다."
+<br><br>
+
+<<He>>【은는】 몇 초간 생각에 잠긴다. "<span class="gold">하이 가의 애완동물 가게에 뭔가 있을지도 모르겠군요.</span> 정 안 되면, 공책을 하나 사서 직접 모은 정보를 채워 넣는 방법도 있고요."
+<br><br>
+
+<<link [[다음|Pregnancy Discussion]]>><</link>>
+
+/*Passing out without rescue*/
+
+:: Pregnancy Birth Hospital Passout
+<<set $outside to 0>><<effects>>
+
+당신은 그 자리에서 쓰러진다. 마지막으로 들리는 것은 급히 다가오는 발소리뿐이다.
+<br><br>
+
+<<switch $location>>
+	<<case "moor" "forest">><<set _time to 60>>
+	<<case "town">><<set _time to 15>>
+	<<default>><<set _time to 30>>
+<</switch>>
+<<set _hours to Math.floor(_time / 60)>>
+<<set _minutes to _time % 60>>
+<<link [[다음 (<<print getTimeString(_time)>>)| Pregnancy Birth Hospital]]>><<pass _time>><<set $phase to 1>><</link>>
+
+/*Rescued by someone*/
+
+:: Pregnancy Birth Hospital Rescue
+<<set $outside to 0>><<effects>>
+
+누군가 당신을 들어 올리는 것이 느껴진다. 목소리가 들리지만, 무슨 말인지 알아들을 수 없다.
+<br><br>
+
+<<switch $location>>
+	<<case "moor" "forest">><<set _time to 60>>
+	<<case "bog">><<set _time to 90>>
+	<<case "town">><<set _time to 15>>
+	<<default>><<set _time to 30>>
+<</switch>>
+<<set _hours to Math.floor(_time / 60)>>
+<<set _minutes to _time % 60>>
+<<link [[다음 (<<print getTimeString(_time)>>)| Pregnancy Birth Hospital]]>><<pass _time>><<set $phase to 1>><</link>>
+
+:: Pregnancy Birth Hospital
+/* Hospital birth (human). 2-4 = the birth, 6-8 = Bailey drives you home; if Alex
+   is the father, 5 branches to the Alex chain. Shared bits in pregnancy-widgets.twee. */
+<<set $outside to 0>><<set $location to "hospital">><<effects>>
+<<set $first_birth to !$pregnancyStats.humanToysUnlocked>>
+<<npc "Harper">><<person1>>
+<<setKnowsAboutPregnancy "pc" "Harper">>
+
+<<if !$harperSeen.includes("hospital")>>
+	<<if $phase is 1>>
+		당신은 병원 침대에서 깨어난다. 흐릿한 형체 몇몇이 주위를 서성인다. 그중 하나가 가까이 다가오자, <<his>> 이목구비가 젊은 <<personsimple>>의 모습으로 또렷해진다.
+		<<if $harperSeen.includes("livestock")>>
+			농장에 있던 의사다. 당신을 상대로 실험했던 그 사람이다. "저는 하퍼 의사입니다," <<he>>【이가】 말한다. <<his>> 얼굴에는 알아보는 기색이 없다. "놀라지 마세요. 양수가 터졌습니다. 지금 병원에 계신 겁니다."
+		<<elseif $harperSeen.includes("party")>>
+			에이버리의 파티에 있던 의사다. 분홍색 가루를 쓰던 그 사람이다. "저는 하퍼 의사입니다," <<he>>【이가】 말한다. <<He>>【은는】 순진한 미소를 짓는다. "놀라지 마세요. 양수가 터졌습니다. 지금 병원에 계신 겁니다."
+		<<else>>
+			"저는 하퍼 의사입니다," <<he>>【이가】 <<his>> 금발 앞머리를 눈가에서 쓸어넘기며 말한다. "놀라지 마세요. 양수가 터졌습니다. 지금 병원에 계신 겁니다." <<He>>【은는】 의사치고는 젊다. 스물다섯 살을 넘지 않아 보인다.
+		<</if>>
+	<<else>>
+		접수원이 고개를 끄덕인다. "자리에 앉아 잠시만 기다려 주세요. 의사 선생님께서 곧 오실 겁니다."
+		<br><br>
+
+		오래 기다릴 필요는 없었다. 의사처럼 옷을 입은 젊은 <<personsimple>>【이가】 도착한다.
+		<<if $harperSeen.includes("livestock")>>
+			농장에 있던 그 의사다. 당신을 실험했던 바로 그 사람. "하퍼 의사입니다." <<he>>【이가】 말한다. <<his>> 얼굴에는 당신을 알아본 기색이 없다. "침대를 준비해 두었습니다. 이쪽으로 오시죠."
+		<<elseif $harperSeen.includes("party")>>
+			에이버리의 파티에 있던 그 의사다. 분홍색 가루를 가지고 있던 사람. "하퍼 의사입니다." <<he>>【이가】 말한다. <<He>>【은는】 순진한 미소를 짓는다. "침대를 준비해 두었습니다. 이쪽으로 오시죠."
+		<<else>>
+			"하퍼 의사입니다." <<he>>【이가】 눈에서 금발 앞머리를 쓸어넘기며 말한다. "침대를 준비해 두었습니다. 이쪽으로 오시죠." <<He>>【은는】 의사치고는 젊어 보인다. 많아 봐야 25살을 넘지 않았을 것이다.
+		<</if>>
+		<br><br>
+
+		<<He>>【은는】 당신을 이끌고 병원을 지나 분만실의 한 병실로 들어간다. 조산사가 침대 옆 기계를 조작하고 있다.
+	<</if>>
+
+	<<set $harperSeen.pushUnique("hospital")>>
+<<else>>
+	<<if $phase is 1>>
+		당신은 병원 침대에서 깨어난다. 흐릿한 형체 몇몇이 주위를 서성인다. 그중 하나가 가까이 다가오자, <<his>> 이목구비가 하퍼 의사의 모습으로 또렷해진다. "놀라지 마세요. 양수가 터졌습니다. 지금 병원에 계신 겁니다."
+	<<else>>
+		접수원이 고개를 끄덕인다. "자리에 앉아 잠시만 기다려 주세요. 의사 선생님께서 곧 오실 겁니다."
+		<br><br>
+		하퍼 의사가 곧 도착한다. "침대를 준비해 두었습니다. 이쪽으로 오시죠."
+		<br><br>
+		<<He>>【은는】 당신을 이끌고 병원을 지나 분만실의 한 병실로 들어간다. 조산사가 침대 옆 기계를 조작하고 있다.
+	<</if>>
+<</if>>
+<br><br>
+
+<<if $exposed lt 2 and $phase isnot 1>>
+	"옷을 벗어주세요," 의사가 말한다.
+<<else>>
+	"심호흡하세요," 의사가 말한다.
+<</if>>
+
+<<if playerChastity("hidden")>>
+	<<He>>【은는】 당신의 <<print $worn.genitals.name>>【을를】 보고는 가슴 높이의 찬장을 연다. <<He>>【은는】 집게처럼 생겼지만 더 투박한 도구를 꺼낸다. "그 장치를 제거해야 합니다. <<if $phase isnot 1>>누우세요.<</if>> 아프지 않을 겁니다."
+	<br><br>
+	<<if $phase isnot 1>>당신은 눕는다. 천장은 평범한 흰색이다. 바로 위에는 선풍기가 있다. <</if>><<He>>【은는】 집게로 당신의 <<print $worn.genitals.name>>【을를】 붙잡고 손잡이에 있는 버튼을 누른다. 도구 안에서 윙윙거리는 소리가 들리더니, <span class="pink">금속이 부러진다.</span>
+	<<set $worn.genitals.type.push("broken")>>
+<<elseif $phase isnot 1>>
+	"그럼 누우세요." 당신은 그렇게 한다. 천장은 평범한 흰색이다. 바로 위에는 선풍기가 있다.
+<</if>>
+<br><br>
+<<wash>><<undress "hospital_birth">><<upperwear "patient gown" "teal">>
+
+<<link [[다음|Pregnancy Birth Hospital 2]]>><</link>>
+<br>
+
+:: Pregnancy Birth Hospital 2
+<<effects>>
+
+조산사가 당신의 얼굴에 마스크를 씌운다. 의식이 희미해진다. 주위에 다른 몇몇 인물들이 나타나지만, 그 형태는 흐릿하다.
+<br><br>
+
+<<set _pregnancy to getLabouringPregnancy("pc")>>
+<<set $alex_pregnancy to _pregnancy?.possibleDonors.length is 1 and _pregnancy?.donor is "Alex">>
+
+<<set _timeCalc to birthLaborTime()>>
+
+/* Note: Pregnancy species */
+<<switch playerNormalPregnancyType()>>
+	<<case "human">>
+		<<setKnowsAboutPregnancy "pc" "Bailey">>
+		안개 속에서 하퍼의 목소리가 들려온다. "정상적인 인간<<if !$player.vaginaExist>>, 비정상적인 분만<</if>>【이】지만, 만일을 대비해 다른 사람들은 대기시켜..."
+		<br><br>
+
+		시간이 빠르게 흘렀다가 느려지는 것처럼 느껴지면서 고통이 커진다. "숨 쉬세요", "힘주세요"라는 말을 여러 번 듣고, 당신은 최선을 다해 따른다.
+		<br><br>
+
+		<<if $dissociation gte 1>>
+			<<birthDissociationVision>>
+		<</if>>
+
+		<<link [[다음 (<<print getTimeString(_timeCalc)>>)|Pregnancy Birth Hospital 3]]>><<endevent>><<run beginPlayerBirth()>><<pass _timeCalc>><</link>>
+	<<case "wolf">>
+		하퍼의 목소리가 안개 속에서 들려온다. "인간이 아니군. 비정상적인 분만이 될 거다. 내 지시를 글자 하나 틀리지 말고 따르도록..."
+		<br><br>
+		<<link [[다음 (<<print getTimeString(_timeCalc)>>)|Pregnancy Birth Hospital Wolf]]>><<endevent>><<pass _timeCalc>><</link>>
+<</switch>>
+
+:: Pregnancy Birth Hospital 3
+<<set $outside to 0>><<set $location to "hospital">><<effects>>
+<<endevent>>
+<<generate1>><<person1>>
+
+<<set $litter_size to getLabouringLitter("pc").length>>
+<<set _baby to $litter_size is 1 ? "아기" : "아기들">>
+
+<<if $dissociation gte 1>>
+	당신은 다른 방에서 깨어난다. 당신의 두 눈이 천천히 떠진다. 당신은 병원 침대에 누워 있다. 미소 짓는 조산사가 <<his>> 품에 포대기에 싸인 <<= $litter_size is 3 ? "세 명의" : $litter_size is 2 ? "두 명의" : "한 명의">> _baby【을를】 안고 당신 곁에 서 있다.
+	<br><br>
+
+	"<<pmummy>>【이가】 깼나 보네요," <<he>>【이가】 말하며 _baby【을를】 건네준다.
+	<<birthCradle "the midwife">>
+	<<birthDissociationGlee>>
+	<<birthBabySleeps>> <<trauma -100>><<llltrauma>>
+<<else>>
+	당신은 다른 방에서 깨어난다. 미소 짓는 조산사가 <<his>> 품에 포대기에 싸인 <<= $litter_size is 3 ? "세 명의" : $litter_size is 2 ? "두 명의" : "한 명의">> _baby【을를】 안고 당신의 침대 곁에 서 있다.
+	<br><br>
+
+	"<<pmummy>>【이가】 깼나 보네요," <<he>>【이가】 말하며 _baby【을를】 건네준다.
+	<<birthCradle "the midwife">>
+	<<birthBabySleeps>>
+<</if>>
+<br><br>
+
+"검사는 모두 마쳤습니다," 조산사가 말한다. "건강 문제는 하나도 없어요. <<= $litter_size gte 2 ? "아기들 이름은" : "이름은">> 생각해 두셨나요?"
+<br><br>
+
+<<set $bornChildrenIds to []>>
+<<run getLabouringLitter("pc").forEach(child => $bornChildrenIds.push(child.childId))>>
+
+<<birthUi "pc" "hospital" "home" "Pregnancy Birth Hospital 4" _time>>
+
+:: Pregnancy Birth Hospital 4
+<<set $outside to 0>><<set $location to "hospital">><<effects>>
+<<childSelect `getChildrenOf($recentBirthId).last().childId`>>
+<<set _pregFame to ($litter_size * 5)>>
+<<famepregnancy _pregFame>>
+<<if $litter_size is 1>>
+
+	당신은 아기를 좀 더 안고 있으면서, <<childhis>> 작은 숨소리와 움직임을 즐긴다. <<childHe>>【은는】 대부분의 시간을 잠으로 보내지만, 가끔 <<childhis>> 눈을 떠 당신을 바라본다.
+	<br><br>
+	조산사가 돌아온다.
+
+	<<birthAftercareNappy>>
+	"졸리시면 말씀해 주세요," <<he>>【이가】 말한다. "푹 쉬셔야 하니까요. 그동안 아기는 저희가 돌보겠습니다."
+	<br><br>
+	<<childname>>【을를】 안고 싶은 마음이 굴뚝같지만, 어느새 꾸벅꾸벅 졸고 만다.
+	<br><br>
+<<elseif $litter_size is 2>>
+	당신은 잠시 더 아기들을 품에 안고, 작은 숨결과 움직임을 만끽한다. 아기들은 대부분 잠들어 있지만, 이따금 눈을 뜨고 당신을 바라본다.
+	<br><br>
+	조산사가 돌아온다.
+
+	<<birthAftercareNappy>>
+	"졸리시면 말씀해 주세요," <<he>>【이가】 말한다. "푹 쉬셔야 하니까요. 그동안 아기는 저희가 돌보겠습니다."
+	<br><br>
+	쌍둥이를 안고 싶은 마음이 굴뚝같지만, 어느새 꾸벅꾸벅 졸고 만다.
+	<br><br>
+<<elseif $litter_size is 3>>
+	당신은 잠시 더 아기들을 품에 안고, 작은 숨결과 움직임을 만끽한다. 아기들은 대부분 잠들어 있지만, 이따금 눈을 뜨고 당신을 바라본다.
+	<br><br>
+	조산사가 돌아온다.
+
+	<<birthAftercareNappy>>
+	"졸리시면 말씀해 주세요," <<he>>【이가】 말한다. "푹 쉬셔야 하니까요. 그동안 아기는 저희가 돌보겠습니다."
+	<br><br>
+	세쌍둥이를 안고 싶은 마음이 굴뚝같지만, 어느새 꾸벅꾸벅 졸고 만다.
+	<br><br>
+<</if>>
+
+<<link [[다음|Pregnancy Birth Hospital 5]]>><<storeon "hospital_birth">><<pass 24 hour>><<stress -40>><</link>>
+<br><br>
+
+
+:: Pregnancy Birth Hospital 5
+<<effects>>
+
+<<if $litter_size gte 2>><<childrenNames $bornChildrenIds>><<else>><<childname>><</if>>【이가】 요람에 누워 있는 동안, 조산사가 당신이 일어서는 것을 돕는다.
+
+<<if $first_birth or playerNormalPregnancyTotal() is 0>>
+	일어서자 내장이 쏟아지는 듯한 느낌이 들지만, <<he>>【은는】 그게 정상이라고 안심시킨다.
+	<br><br>
+
+	아프긴 하지만, 출산 전보다 훨씬 편하게 걸을 수 있다는 걸 느낀다. 몸 안에 다른 사람이 없이 움직이는 게 얼마나 쉬운 일인지 잊고 있었다.
+	<br><br>
+
+	조산사가 옷 입는 것을 도와준다. "이제 가보셔도 좋습니다." <<He>>【이가】 말한다.
+<<elseif between(playerNormalPregnancyTotal(), 1, 2)>>
+	일어서자 몸속이 쑥 꺼지는 듯한 느낌이 든다. 지난 출산 때도 느꼈던 감각이라 정상이라는 걸 안다.
+	<br><br>
+
+	아프긴 하지만, 출산 전보다 훨씬 편하게 걸을 수 있다는 걸 느낀다. 몸 안에 다른 사람이 없이 움직이는 게 얼마나 쉬운 일인지 잊고 있었다.
+	<br><br>
+
+	조산사가 옷 입는 것을 도와준다. "이제 가보셔도 좋습니다." <<He>>【이가】 말한다.
+<<elseif between(playerNormalPregnancyTotal(), 3, 7)>>
+	일어서자 몸속이 쑥 꺼지는 듯한 느낌이 든다. 아직 이 느낌에는 익숙해지지 않았다.
+	<br><br>
+
+	다시 걷는 게 꽤 쉽게 느껴진다. 조금 어색하긴 하지만, 예전만큼 힘들지는 않다. 몸 안에 다른 사람이 없을 때 움직이는 게 여전히 더 편하다.
+	<br><br>
+
+	조산사는 여전히 옷 입는 것을 도와주겠다고 고집한다. "이제 가보셔도 좋습니다." <<he>>【이가】 말한다.
+<<elseif between(playerNormalPregnancyTotal(), 8, 19)>>
+	당신은 아무 문제 없이 일어선다. 이제는 느낌의 차이가 거의 없지만, 훨씬 더 가뿐하게 느껴지긴 한다.
+	<br><br>
+
+	<<he>>【은는】 당신의 기동성에 감명받은 듯, 자세를 잡아주기 위해 팔만 두를 뿐이다. "그렇게 빨리 다시 일어나는 사람은 잘 못 봤어요. 정말 튼튼하시군요!"
+	<br><br>
+
+	조산사는 여전히 옷 입는 것을 도와주겠다고 고집한다. "이제 가보셔도 좋습니다." <<he>>【이가】 말한다.
+<<elseif playerNormalPregnancyTotal() gte 20>>
+	당신은 도움 없이 스스로 일어서지만, 속이 텅 빈 듯한 느낌이 든다. 벌써부터 임신했을 때의 느낌이 그립다.
+	<br><br>
+
+	당신이 아무 도움 없이 걷자, <<he>>【은는】 입을 떡 벌린 채 쳐다본다. 당신은 서둘러 옷을 다시 입는다.
+	<br><br>
+
+	"ㅇ-이제 가보셔도 좋습니다." <<he>>【이가】 말한다.
+<</if>>
+"누가 당신을 기다리고 있어요.
+
+<<if $alex_pregnancy>>
+
+	<<if C.npc.Alex.pregnancy.nursery is true>>
+		당신의 <<nnpc_girlfriend "Alex">>인 것 같아요."
+		<br><br>
+
+		<<link [[다음|Pregnancy Birth Hospital Alex]]>><</link>>
+
+	<<else>>
+		<<set C.npc.Alex.pregnancy.hospitalBirth to true>>
+		당신의 <<nnpc_mum "Bailey">>인 것 같아요."
+		<br><br>
+
+		<<link [[다음|Pregnancy Birth Hospital 6]]>><<endevent>><</link>>
+
+	<</if>>
+
+<<else>>
+	당신의 <<nnpc_mum "Bailey">>인 것 같아요."
+	<br><br>
+
+	<<link [[다음|Pregnancy Birth Hospital 6]]>><<endevent>><</link>>
+<</if>>
+
+:: Pregnancy Birth Hospital 6
+<<set $location to "town">><<effects>>
+
+<<npc "Bailey">><<person1>>
+<<childSelect `getChildrenOf($recentBirthId).last().childId`>>
+베일리가 병원 로비에서 당신을 기다리고 있다. <<he>>【은는】 당신을 보자 미소 짓는다. 거의 진짜 미소처럼 보인다. "장소는 마련해 뒀어." <<he>>【이가】 말한다.
+<<if $litter_size is 1>>
+
+<<elseif $litter_size is 2>>
+	"둘 다 말이야."
+<<else>>
+	"셋 다 말이야."
+<</if>>
+<<He>>【은는】 당신을 밖으로 이끈다. 밖에는 <<his>> 차가 기다리고 있다. <<He>>【은는】 당신을 위해 조수석 문을 열어준 뒤, 반대편으로 올라탄다.
+<br><br>
+엔진에 시동이 걸린다.
+<!-- Bailey may not know about all your pregnancies -->
+<<set _knownPregnancyCount to knowsAboutPregnancyTotal("pc","Bailey","home")>>
+<<if _knownPregnancyCount is 1>>
+	"네 새끼는 네가 책임지는 거야." <<he>>【이가】 말한다. "내가 개입해야 한다면, 추가로 <span class="red">£100</span>를 내야 할 거다. 일주일에.<<if $litter_size gte 2>> 각각.<</if>>"
+	<br><br>
+	"보육실에서 못 나와." <<he>>【은는】 병원 주차장에서 차를 몰며 덧붙인다. "절대로."
+<<elseif _knownPregnancyCount lte 4>>
+	"네 새끼는 네가 책임져야 한다는 걸 기억해." <<he>>【이가】 말한다. "내가 개입해야 한다면, 추가로 <span class="red">£100</span>를 내야 할 거다. 일주일에.<<if $litter_size gte 2>> 각각.<</if>>"
+<<else>>
+	"넌 무책임한 암캐야." <<he>>【이가】 말한다. "네 새끼들 돌보는 데 내가 개입해야 한다면, 일주일에 <span class="red">£100</span>씩 추가로 내야 할 거란 걸 기억해둬.<<if $litter_size gte 2>> 각각.<</if>>"
+<</if>>
+<<if $baileydefeatedchain gte 3>>
+	<<him>>【이가】 비웃는 것이 보이지만, 아주 잠깐뿐이다. "다른 놈들 손에 네 애새끼들을 맡기고 싶진 않지만, 계속 이따위로 좆같이 굴면 다시는 그 애들을 볼 수 없을 줄 알아."
+<</if>>
+<br><br>
+
+<<if $litter_size is 1>>
+	<<link [[베일리에게 아이의 이름을 말해준다|Pregnancy Birth Hospital 7]]>><<set $phase to 1>><</link>>
+	<br>
+	<<link [[그냥 아기를 꼭 안고 있는다|Pregnancy Birth Hospital 7]]>><</link>>
+	<br>
+<<else>>
+	<<link [[베일리에게 아이들의 이름을 말해준다|Pregnancy Birth Hospital 7]]>><<set $phase to 1>><</link>>
+	<br>
+	<<link [[그냥 아기들을 꼭 안고 있는다|Pregnancy Birth Hospital 7]]>><</link>>
+	<br>
+<</if>>
+
+:: Pregnancy Birth Hospital 7
+<<set $location to "town">><<effects>>
+
+베일리가 신전을 지나 다뉴브 가로 차를 몬다.
+<<if $phase is 1>>
+	<<if $litter_size is 1>>
+		"이 아이는 <<childname>>【이】야." 당신은 <<childhim>>【을를】 베일리의 팔에 더 가까이 안으며 말문을 연다.
+	<<else>>
+		"이 아이들은 <<childrenNames $bornChildrenIds>>【이】야." 당신은 아이들을 한 명씩 베일리의 팔에 더 가까이 안으며 말문을 연다.
+	<</if>>
+	당신은 병원에 도착했을 때부터 있었던 모든 일을 베일리에게 말한다. <<He>>【은는】 말을 끊지도, 그렇다고 대답하지도 않는다.
+<<else>>
+	<<if $litter_size gte 2>>
+		당신은 아기들을 가슴에 안는다. <<childname>>【이가】 하품한다.
+	<<else>>
+		당신은 아기를 가슴에 안는다. <<childHe>>【이가】 하품한다.
+	<</if>>
+<</if>>
+<br><br>
+<<pass 5>>
+
+도무스 가에 도착한다. 베일리가 당신을 위해 차 문을 열어준다.
+
+<<if $first_birth>>
+	"안까지 바래다주지." <<he>>【이가】 말한다. <<His>> 시선이 <<if $litter_size gte 2>>당신 품에 안긴 아기들에게<<else>><<childname>><</if>> 쏠린다. "안전을 위해서."
+	<br><br>
+	당신은 고아원을 지나 유아 병동으로 향한다.
+	<br><br>
+<<else>>
+	"유아 병동까지 바래다주지." <<he>>【이가】 말한다. <<His>> 시선이 <<if $litter_size gte 2>>당신 품에 안긴 아기들에게<<else>><<childname>><</if>> 쏠린다. "안전을 위해서."
+	<br><br>
+	<<He>>【은는】 당신을 이끌고 고아원을 지나 유아 병동으로 향한다.
+	<br><br>
+<</if>>
+
+<<link [[다음|Pregnancy Birth Hospital 8]]>><</link>>
+<br>
+
+:: Pregnancy Birth Hospital 8
+<<set $location to "home">><<effects>>
+
+<<generate2>><<person2>>
+<<if $litter_size is 1>>
+	베일리의 부하 중 한 명인 <<person>>【이가】 요람을 밀며 유아 병동에서 나온다. 당신은 <<childname>>【을를】 그 안에 눕힌다. "내 부하들이 여기를 지켜볼 거다." 베일리가 말한다. "네 녀석 새끼가 굶거나 하진 않게 해주지, <span class="gold">하지만 매일 시간을 보내도록 해.</span> 안 그러면 돈을 청구할 거다."
+	<br><br>
+	<<person1>>
+	"나중에 말이야." <<he>>【이가】 덧붙인다. "넌 몸이나 좀 씻어야겠고, 네 새끼는 어차피 자고 있잖아." <<person2>><<person>>【은는】 <<childname>>【을를】 병동 문 안으로 밀어 넣는다. <<person1>>베일리는 <<childhe>>【이가】 안전하게 안으로 들어갈 때까지 <<childname>>에게서 <<his>> 시선을 떼지 않는다.
+	<br><br>
+<<elseif $litter_size is 2>>
+	베일리의 부하 중 한 명인 <<person>>【이가】 요람 두 개를 밀며 유아 병동에서 나온다. 당신은 쌍둥이를 그 안에 눕힌다. "내 부하들이 여기를 지켜볼 거다." 베일리가 말한다. "네 녀석 새끼들이 굶거나 하진 않게 해주지, <span class="gold">하지만 매일 시간을 보내도록 해.</span> 안 그러면 돈을 청구할 거다."
+	<br><br>
+	<<person1>>
+	"나중에 말이야." <<he>>【이가】 덧붙인다. "넌 몸이나 좀 씻어야겠고, 네 새끼들은 어차피 자고 있잖아." <<person2>><<person>>【은는】 쌍둥이를 병동 문 안으로 밀어 넣는다. <<person1>>베일리는 아이들이 안전하게 안으로 들어갈 때까지 <<childrenNames $bornChildrenIds>>에게서 <<his>> 시선을 떼지 않는다.
+	<br><br>
+<<else>>
+	베일리의 부하 중 한 명인 <<person>>【이가】 요람 세 개를 밀며 유아 병동에서 나온다. 당신은 세쌍둥이를 그 안에 눕힌다. "내 부하들이 여기를 지켜볼 거다." 베일리가 말한다. "네 녀석 새끼들이 굶거나 하진 않게 해주지, <span class="gold">하지만 매일 시간을 보내도록 해.</span> 안 그러면 돈을 청구할 거다."
+	<br><br>
+	<<person1>>
+	"나중에 말이야." <<he>>【이가】 덧붙인다. "넌 몸이나 좀 씻어야겠고, 네 새끼들은 어차피 자고 있잖아." <<person2>><<person>>【은는】 세쌍둥이를 병동 문 안으로 밀어 넣는다. <<person1>>베일리는 아이들이 안전하게 안으로 들어갈 때까지 <<childrenNames $bornChildrenIds>>에게서 <<his>> 시선을 떼지 않는다.
+	<br><br>
+<</if>>
+<<if $first_birth>>
+	<span class="gold">이제 유아 병동과 아기방에 출입할 수 있습니다.</span>
+	<br><br>
+<</if>>
+
+<<link [[다음|Orphanage]]>><<unset $litter_size>><<unset $first_birth>><<endevent>><<set $ward_unlocked to true>><<unset $bornChildrenIds>><</link>>
+
+:: Pregnancy Birth Hospital Wolf
+<<set $outside to 0>><<set $location to "hospital">><<effects>>
+주변이 온통 울리는 것이 느껴진다. 이어서 복부에 통증이 온다. 당신은 묶인 채로, 구급차처럼 보이는 차의 뒷칸에 누워 있다.
+<<if playerChastity("hidden")>>
+	당신 옆에 어떤 형체가 흐릿한 도구를 당신의 <<print $worn.genitals.name>>에 대고 있다. 금속이 부러지는 느낌과 함께 당신은 다시 한번 의식을 잃는다.
+	<<set $worn.genitals.type.push("broken")>>
+	<<genitalsruined>>
+	<br><br>
+<<else>>
+	옆에 있던 형체가 당신의 얼굴에 마스크를 눌러대자, 당신은 다시 한번 의식을 잃는다.
+	<br><br>
+<</if>>
+
+<<link [[다음 (0:15)|Pregnancy Birth Hospital Wolf 2]]>><<pass 15>><<endevent>><</link>>
+
+:: Pregnancy Birth Hospital Wolf 2
+<<location "forest">><<effects>>
+
+다시 깨어난다. 당신은 두 형체 사이에 축 늘어져 있다. 머리 위로 숲의 나뭇가지들이 보인다. 누군가 당신을 옮기고 있지만, 너무 약해서 움직일 수 없다. 의식이 다시 한번 희미해진다.
+
+<br><br>
+<<link [[다음 (0:15)|Pregnancy Birth Hospital Wolf 3]]>><<pass 15>><<endevent>><</link>>
+
+/* From the hospital or dropped by non-wolf rescuers */
+
+:: Pregnancy Birth Hospital Wolf 3
+<<location "forest">><<effects>>
+당신은 땅에 부딪힌다. 한 쌍의 발소리가 당신에게서 급히 멀어진다.
+<br><br>
+<<if $syndromewolves is 1>>
+	이 냄새를 기억한다. 당신은 늑대 동굴 밖에 있다.
+<<else>>
+	당신은 동굴 밖에 있다. 적어도 피할 곳은 된다. 당신은 비틀거리며 안으로 들어간다.
+<</if>>
+<br><br>
+<<link [[다음 (0:15)|Pregnancy Birth Wolf Cave 1]]>><<pass 15>><<endevent>><<set $phase to 3>><</link>>
+
+/* Rescued by wolves */
+
+:: Pregnancy Birth Wolf Rescue
+<<location "forest">><<effects>>
+움직임이 멈춘다. 당신의 몸이 부드러운 것 위로 내려지는 것이 느껴진다.
+<br><br>
+<<if $syndromewolves is 1>>
+	이 냄새를 기억한다. 당신은 늑대 동굴 안에 있다.
+<<else>>
+	당신은 동굴 안에 있다. 적어도 피할 곳은 된다.
+<</if>>
+<br><br>
+<<link [[다음 (0:15)|Pregnancy Birth Wolf Cave 1]]>><<pass 15>><<endevent>><<set $phase to 3>><</link>>
+
+:: Pregnancy Birth Forest Shop Rescue
+<<set $outside to 0>><<set $location to "forest_shop_garden">><<effects>><<run statusCheck("Gwylan")>>
+<<npc Gwylan>><<person1>>
+<<if $gwylanSeen.includes("garden")>>
+	그윌란의 정원에서 깨어난다. <<He>>【은는】 허둥지둥 돌아다니며 물건들을 모아 근처에 둔다.
+<<else>>
+	장미 향기를 맡으며 깨어난다.
+	<br><br>
+
+	네모난 돌 타일이 땅을 따라 넓게 펼쳐져 있고, 잔디밭과 흙, 꽃, 허브로 채워진 돋운 흙더미들을 잇고 있다.
+	그 주위는 2미터가 훌쩍 넘는 높이의 나무 말뚝들이 인상적으로 엮여 둘러싸고 있다. 덩굴이 틈새를 비집고 올라올 수 있을 정도의 간격만 있어, 외부의 엿보는 시선으로부터 이 구역 전체를 가려준다.
+	<br><br>
+
+	당신은 나무 지붕으로 덮인 다른 돋운 구역 안에 있다.
+	<<if Weather.precipitation is "rain" or Weather.precipitation is "snow">>
+		<<print Weather.precipitation is "rain" ? "비" : "눈">>의 영향을 받지 않는 곳으로,
+	<</if>>
+	안쪽은 다양한 쿠션과 누비이불로 채워져 있다.
+	<br><br>
+
+	익숙한 목소리가 흥얼거리는 소리가 들린다. 그윌란이다. <<He>>【은는】 허둥지둥 돌아다니며 물건들을 모아 근처에 둔다.
+<</if>>
+<br><br>
+
+당신이 깨어난 것을 보자 <<he>>【은는】 미소를 지으며 무릎을 꿇는다. "여기 있어, 숨 쉬는 거 잊지 마. 괜찮을 거야. 약속해." <<He>>【은는】 당신의 손을 잡고 꽉 쥔 뒤 다시 달려간다. <<takeHandholdingVirginity "Gwylan" "consensual">>
+<br><br>
+
+<<link [[다음|Pregnancy Birth Forest Shop]]>><<endevent>><</link>>
+
+:: Pregnancy Birth Forest Shop
+/* Forest shop birth (human). Gwylan delivers with herbs. 3-4 = the birth.
+   Shares prose with the hospital chain via pregnancy-widgets.twee. */
+<<set $outside to 0>><<set $location to "forest_shop_garden">><<effects>><<run statusCheck("Gwylan")>>
+<<set $first_birth to !$pregnancyStats.humanToysUnlocked>>
+<<npc Gwylan>><<person1>>
+<<setKnowsAboutPregnancy "pc" "Gwylan">>
+
+최대한 침착하려 애쓰지만, 공황 상태에 빠지기 시작한다.
+<<if $gwylanSeen.includes("beast_ritual")>>
+	그윌란이 서툴다는 건 알지만, <<he>>【은는】 항상 자기가 뭘 하는지 아는 것 같다.
+<<else>>
+	그윌란이 정말 이걸 어떻게 하는지 알긴 하는 걸까?
+<</if>>
+<<he>>【이가】 베개, 수건 더미와 허브가 가득 담긴 바구니를 들고 돌아오자 당신의 공포심은 사그라든다. "자, 이쪽으로 앞으로 와." <<He>>【은는】 재빨리 베개와 수건으로 당신을 위한 둥지를 만든다. 분명 편안하겠지만, 당신은 지금 얼마나 아픈지에 대해서만 생각할 수 있다.
+<br><br>
+
+"아- 해봐." <<He>>【은는】 당신의 입에 허브를 집어넣는다. "이게 진통을 더..." <<he>>【은는】 <<his>> 손목을 돌린다. "부드럽게 해줄 거야. 아기가... 어이! 숨 쉬어! 아기가 더 쉽게 나올 거야. 아! 진통에 쓸 만한 걸 찾아줄게!" 당신은 그윌란이 이 상황에 거의 신이 난 것처럼 들린다는 걸 알아차리지 않을 수 없다.
+<br><br>
+
+<<He>>【은는】 <<his>> 바구니를 뒤져 허브를 하나씩 살피다가, 만족스러운 숨을 내쉬며 <<himself>>에게 고개를 끄덕인다. "이거면 되겠어. 자, 그거 뱉어." <<He>>【은는】 <<his>> 손을 내민다.
+<br><br>
+
+<<link [[뱉는다|Pregnancy Birth Forest Shop 2]]>><<set $phase to 1>><<stress 24>><</link>><<ggstress>>
+<br>
+<<link [[삼킨다|Pregnancy Birth Forest Shop 2]]>><<set $phase to 2>><</link>>
+<br>
+
+:: Pregnancy Birth Forest Shop 2
+<<effects>><<run statusCheck("Gwylan")>>
+
+<<if $phase is 1>>
+	당신은 그윌란의 손에 그것을 뱉는다. <<He>>【은는】 전혀 개의치 않는 듯, 그저 다음 것을 당신의 입에 집어넣는다.
+<<else>>
+	당신은 그것을 삼킨다. 그윌란이 얼굴을 찡그린다. "안 좋은 수였어. 다른 쪽으로 나올 때 기분 안 좋을 텐데." <<He>>【은는】 다음 것을 당신의 입에 집어넣는다.
+<</if>>
+"씹어. 어금니로."
+<br><br>
+
+당신은 씹는다. 따뜻한 맛이 난다. 몸이 이완되기 시작한다. <<pain -8>><<llpain>>
+<br><br>
+
+"좋아, 잠깐만 나한테 협조해 줘야겠어." <<He>>【은는】 당신에게 아주 가까이 다가와 엉덩이를 잡는다.
+<<outfitChecks>>
+<<if !_fullyNaked>>
+	<<He>>【은는】 당신의 옷을 벗기기 시작하고, 옷가지 하나하나가 마치 액체처럼 스르르 벗겨진다.
+<</if>>
+<<if playerChastity()>>
+	<<He>>【은는】 당신의 <<print $worn.genitals.name>>【을를】 보고 <<his>> 얼굴을 찌푸린다. "그건 내가 처리할 수 있어." <<He>>【은는】 다시 한번 쏜살같이 달려 나갔다가, 온갖 도구와 유리병을 들고 금방 돌아온다.
+	<br><br>
+
+	진짜 끌이라고 생각되는 도구로 한참 동안 쪼아낸 끝에, 마침내 그것이 부서진다.
+	<<set $worn.genitals.type.push("broken")>><<genitalsruined>>
+<</if>>
+<br><br>
+
+<<He>>【은는】 장갑과 의료용 마스크를 착용하고, 물이 가득 담긴 양동이를 옆으로 밀어 놓는다. <<He>>【은는】 수건 몇 장을 물에 담가 하나는 당신의 이마에 올려놓고, 다른 하나로는 당신을 닦아주기 시작한다. 당신은 <<hes>> 일하는 속도에 깜짝 놀란다.
+<<wash>><<undress "forest_shop_birth">>
+<br><br>
+
+<<link [[그윌란에게 병원에 데려다 달라고 부탁한다|Pregnancy Birth Forest Shop 3]]>><<set $phase to 1>><</link>>
+<br>
+<<link [[그윌란에게 자기가 하는 일을 알고 있는지 묻는다|Pregnancy Birth Forest Shop 3]]>><<set $phase to 2>><</link>>
+<br>
+
+:: Pregnancy Birth Forest Shop 3
+<<effects>><<run statusCheck("Gwylan")>>
+<<if $phase is 1>>
+	<<switch $speech_attitude>>
+		<<case "meek">>"병원에 가야 하는 거 아니에요?!" 당신이 묻는다.
+		<<case "bratty">>"그윌란, 제발 구급차 좀 불러줘. 아니면 경찰이라도. 병원에 데려다줄 사람이면 누구든."
+		<<default>>"그윌란, 왜 날 병원에 데려가지 않는 거야?"
+	<</switch>>
+	<br><br>
+
+	<<He>>【은는】 멈추지 않는다. "어림없어. 병원에 갈 필요 없어." <<He>>【이가】 당신을 올려다본다. <<his>> 시선이 강렬하다. "애 받는 거 처음 아니야, 얘야. 날 믿어." <<His>> 목소리가 갑자기 완전히 달라진다.
+<<else>>
+	<<switch $speech_attitude>>
+		<<case "meek">>"뭘 해야 할지 아는 것 같네." 당신은 거친 숨을 몰아쉬며 말한다.
+		<<case "bratty">>"신나 보이네. 걱정해야 하나? 이런 거 해본 적은 있어?" 당신은 거친 숨을 몰아쉬며 묻는다.
+		<<default>>"이런 일을 하는 게 처음은 아닌 것 같네." 당신은 거친 숨을 몰아쉬며 말한다.
+	<</switch>>
+	<br><br>
+
+	<<He>>【이가】 당신을 올려다본다. <<his>> 시선이 강렬하다. "애 받는 거 처음 아니야, 얘야. 날 믿어." <<His>> 목소리가 갑자기 완전히 달라진다.
+<</if>>
+<br><br>
+
+<<He>>【은는】 긴 라이터를 집어 들고 근처에 매달린 향로에 불을 붙인다. <<He>>【은는】
+<<if $seabird_lullaby gte 2>>
+	<span class="teal">바닷새의 자장가</span>를 흥얼거리기 시작한다.
+<<else>>
+	어떤 <span class="teal">어렴풋이 익숙한</span> 곡조를 흥얼거리기 시작한다.
+<</if>>
+<br><br>
+
+갑자기 피곤함이 몰려온다. 지금껏 느껴본 적 없는 피로감이다. 고통이 사라지면서, 당신은 주변의 베개와 이불 속으로 가라앉고 의식이 흐려진다.
+<br><br>
+
+<<set _timeCalc to birthLaborTime()>>
+
+/* Note: Pregnancy species */
+<<switch playerNormalPregnancyType()>>
+	<<case "human">>
+		<<setKnowsAboutPregnancy "pc" "Bailey">>
+		꿈 없는 잠결에 그윌란의 목소리가 들려온다. "숲의 아이여, 제발 울지 마라.<<if !$player.vaginaExist>> 너의 출산이 이상할지는 몰라도, 나에게는 아무런 차이가 없다.<</if>>"
+	<<case "wolf">>
+		꿈 없는 잠결에 그윌란의 목소리가 들려온다. "아, 우리 숲에서 태어난 야생의 심장이로구나! 이 얼마나 멋진가. 얼마 만인지..."
+<</switch>>
+<br><br>
+
+깊은 숨소리가 들린다. 당신의 숨소리인 것 같다. "좋아. 숨 쉬어." 그윌란의 목소리는 노래처럼 선율이 아름답다. "...그리고 힘 줘." <<His>> 목소리가 한 옥타브 낮아진다. "숨 쉬고... 힘 줘. 숨 쉬고... 힘 줘."
+<br><br>
+
+<<if $dissociation gte 1>>
+	<<birthDissociationVision>>
+<</if>>
+
+<<switch playerNormalPregnancyType()>>
+	<<case "human">>
+		<<link [[다음 (<<print getTimeString(_timeCalc)>>)|Pregnancy Birth Forest Shop 4]]>><<endevent>><<run beginPlayerBirth()>><<pass _timeCalc>><</link>>
+	<<case "wolf">>
+		<<link [[다음 (<<print getTimeString(_timeCalc)>>)|Pregnancy Birth Forest Shop Wolf]]>><<endevent>><<run beginPlayerBirth()>><<pass _timeCalc>><</link>>
+<</switch>>
+
+:: Pregnancy Birth Forest Shop 4
+<<set $outside to 0>><<set $location to "forest_shop_garden">><<effects>>
+<<endevent>>
+<<npc Gwylan>><<person1>>
+
+<<set $litter_size to getLabouringLitter("pc").length>>
+<<set _baby to $litter_size is 1 ? "아기" : "아기들">>
+
+그 익숙한 콧노래가 다시 들려온다.
+
+<<if $dissociation gte 1>>
+	당신은 담요에 단단히 싸인 채로 깨어난다. 두 눈이 천천히 떠진다. 그윌란이 <<his>> 품에 포대기에 싸인 <<= $litter_size is 3 ? "세 명의" : $litter_size is 2 ? "두 명의" : "한 명의">> _baby【을를】 안고 당신 곁에 서 있다.
+	<br><br>
+
+	"일어나세요, <<pmummy>>," <<he>>【이가】 말하며 _baby【을를】 건네준다.
+	<<birthCradle>>
+	<<birthDissociationGlee>>
+	<<birthBabySleeps>> <<trauma -100>><<llltrauma>>
+<<else>>
+	당신은 담요에 단단히 싸인 채로 깨어난다. 그윌란이 <<his>> 품에 포대기에 싸인 <<= $litter_size is 3 ? "세 명의" : $litter_size is 2 ? "두 명의" : "한 명의">> _baby【을를】 안고 당신 곁에 서 있다.
+	<br><br>
+
+	"일어나세요, <<pmummy>>," <<he>>【이가】 말하며 _baby【을를】 건네준다.
+	<<birthCradle>>
+	<<birthBabySleeps>>
+<</if>>
+<br><br>
+
+"순조로웠어." <<he>>【이가】 말한다. <<He>>【은는】 잠시 아쉬운 표정을 짓다가, 이내 떨쳐버리고 당신과 당신의 <<= $litter_size gte 2 ? "아이들" : "아이">>【이가】 함께 있는 모습을 보며 거의 현기증이 날 정도로 기뻐하는 듯 보인다. "모든 아이에겐 이름이 필요해. 생각해 둔 이름 있어?"
+<br><br>
+
+<<set $bornChildrenIds to []>>
+<<run getLabouringLitter("pc").forEach(child => $bornChildrenIds.push(child.childId))>>
+
+<<birthUi "pc" "forest_shop" "home" "Pregnancy Birth Forest Shop 5" _time>>
+
+:: Pregnancy Birth Forest Shop 5
+<<effects>><<run statusCheck("Gwylan")>>
+<<childSelect `getChildrenOf($recentBirthId).last().childId`>>
+<<if $litter_size is 1>>
+	당신은 아기를 좀 더 안고 있으면서, <<childhis>> 작은 숨소리와 움직임을 즐긴다. <<childHe>>【은는】 대부분의 시간을 잠으로 보내지만, 가끔 <<childhis>> 눈을 떠 당신을 바라본다.
+	<br><br>
+	그윌란이 당신의 어깨를 주무른다.
+	<<birthAftercareNappy>>
+	"쉬고 싶으면," <<he>>【이가】 말한다. "그동안 내가 <<childhim>>【을를】 돌볼게. 우린 바로 네 옆에 있을 거야. 차도 끓여올게."
+	<br><br>
+	<<childname>>【을를】 안고 싶은 마음이 굴뚝같지만, 어느새 꾸벅꾸벅 졸고 만다.
+	<br><br>
+<<elseif $litter_size is 2>>
+	당신은 잠시 더 아기들을 품에 안고, 작은 숨결과 움직임을 만끽한다. 아기들은 대부분 잠들어 있지만, 이따금 눈을 뜨고 당신을 바라본다.
+	<br><br>
+	그윌란이 당신의 어깨를 주무른다.
+	<<birthAftercareNappy>>
+	"쉬고 싶으면," <<he>>【이가】 말한다. "그동안 내가 <<childhim>>【을를】 돌볼게. 우린 바로 네 옆에 있을 거야. 차도 끓여올게."
+	<br><br>
+	쌍둥이를 안고 싶은 마음이 굴뚝같지만, 어느새 꾸벅꾸벅 졸고 만다.
+	<br><br>
+<<elseif $litter_size is 3>>
+	당신은 잠시 더 아기들을 품에 안고, 작은 숨결과 움직임을 만끽한다. 아기들은 대부분 잠들어 있지만, 이따금 눈을 뜨고 당신을 바라본다.
+	<br><br>
+	그윌란이 당신의 어깨를 주무른다.
+	<<birthAftercareNappy>>
+	"쉬고 싶으면," <<he>>【이가】 말한다. "그동안 내가 <<childhim>>【을를】 돌볼게. 우린 바로 네 옆에 있을 거야. 차도 끓여올게."
+	<br><br>
+	세쌍둥이를 안고 싶은 마음이 굴뚝같지만, 어느새 꾸벅꾸벅 졸고 만다.
+	<br><br>
+<</if>>
+
+<<link [[다음|Pregnancy Birth Forest Shop 6]]>><<storeon "forest_shop_birth">><<pass 4 hour>><<stress -40>><</link>>
+<br><br>
+
+:: Pregnancy Birth Forest Shop 6
+<<effects>>
+<<if $litter_size gte 2>><<childrenNames $bornChildrenIds>><<else>><<childname>><</if>>【은는】 해먹에 누워 있고, 그윌란이 당신이 일어서는 것을 돕는다.
+<<if $first_birth or playerNormalPregnancyTotal() is 0>>
+	일어서자 내장이 쏟아지는 듯한 느낌이 들지만, <<he>>【은는】 그게 정상이라고 안심시킨다.
+	<br><br>
+
+	아프긴 하지만, 출산 전보다 훨씬 편하게 걸을 수 있다는 걸 느낀다. 몸 안에 다른 사람이 없이 움직이는 게 얼마나 쉬운 일인지 잊고 있었다.
+	<br><br>
+
+	그윌란이 옷 입는 것을 도와준다. "절 믿어줘서 고마워요." <<he>>【이가】 말한다.
+<<elseif between(playerNormalPregnancyTotal(), 1, 2)>>
+	일어서자 몸속이 쑥 꺼지는 듯한 느낌이 든다. 지난 출산 때도 느꼈던 감각이라 정상이라는 걸 안다.
+	<br><br>
+
+	아프긴 하지만, 출산 전보다 훨씬 편하게 걸을 수 있다는 걸 느낀다. 몸 안에 다른 사람이 없이 움직이는 게 얼마나 쉬운 일인지 잊고 있었다.
+	<br><br>
+
+	그윌란이 옷 입는 것을 도와준다. "절 믿어줘서 고마워요." <<he>>【이가】 말한다.
+<<elseif between(playerNormalPregnancyTotal(), 3, 7)>>
+	일어서자 몸속이 쑥 꺼지는 듯한 느낌이 든다. 아직 이 느낌에는 익숙해지지 않았다.
+	<br><br>
+
+	다시 걷는 게 꽤 쉽게 느껴진다. 조금 어색하긴 하지만, 예전만큼 힘들지는 않다. 몸 안에 다른 사람이 없을 때 움직이는 게 여전히 더 편하다.
+	<br><br>
+
+	그윌란이 옷 입는 것을 도와준다. "절 믿어줘서 고마워요." <<he>>【이가】 말한다.
+<<elseif between(playerNormalPregnancyTotal(), 8, 19)>>
+	당신은 아무 문제 없이 일어선다. 이제는 느낌의 차이가 거의 없지만, 훨씬 더 가뿐하게 느껴지긴 한다.
+	<br><br>
+
+	<<He>>【은는】 당신의 기동성에 감탄한 듯, 안정을 위해 팔로 당신을 감싸기만 한다. "와, 이것 좀 봐요! 타고났네요."
+	<br><br>
+
+	그윌란이 옷 입는 것을 도와준다. "절 믿어줘서 고마워요." <<he>>【이가】 말한다.
+<<elseif playerNormalPregnancyTotal() gte 20>>
+	당신은 도움 없이 스스로 일어서지만, 속이 텅 빈 듯한 느낌이 든다. 벌써부터 임신했을 때의 느낌이 그립다.
+	<br><br>
+
+	<<He>>【이가】 킥킥 웃는다. "오래지 않아 다시 짐을 지게 될 것 같은 느낌이 드네요." 당신은 서둘러 옷을 다시 입는다.
+	<br><br>
+
+	"절 믿어줘서 고마워요." <<he>>【이가】 말한다.
+<</if>>
+<br><br>
+
+그윌란이 당신과 차를 나누며, 둘이서 한동안 이야기를 나눈다. <<He>>【은는】 아이를 기르는 기쁨에 대해 할 말이 많은 듯하다. <<stress -6>><<llstress>>
+<br><br>
+
+"실례가 안 된다면 좋겠는데..." <<he>>【이가】 갑자기 말을 더듬는다. "이미 고아원 관리인에게 연락했어요. <<nnpc_He "Bailey">>【이가】 곧 올 거예요. 고아원이 최선의 장소는 아니란 걸 알아요. 하지만 갓난아기에게는... 훨씬 더 나쁜 곳들도 있으니까요."
+<br><br>
+
+<<He>>【이가】 당신의 어깨에 손을 얹는다.
+<br><br>
+
+<<link [[다음|Pregnancy Birth Forest Shop 7]]>><<endevent>><</link>>
+
+:: Pregnancy Birth Forest Shop 7
+<<set $location to "town">><<effects>>
+
+<<npc "Bailey" 1>><<npc "Gwylan" 2>><<person2>>
+<<childSelect `getChildrenOf($recentBirthId).last().childId`>>
+
+그윌란이 당신과 함께 숲속 상점 입구로 걸어간다. 마침 문에서 노크 소리가 들린다. 그윌란이 미소를 지으며 문을 연다. 베일리가 <<him>>【을를】 내려다보며 인상을 쓴다.
+<br><br>
+
+"왜 <<phim>>【을를】 병원에 데려가지 않았지?" <<person1>><<he>>【이가】 무미건조하게 묻는다.
+<br><br>
+
+그윌란이 <<person2>><<his>> 양손을 <<his>> 허리에 짚고 미소 짓는다. "제가 더 낫거든요."
+<br><br>
+
+"실력 문제가 아니라, 위험 부담 문제야." 베일리가 말한다. "여긴 전문 의료 장비가 없잖아. 내 보호 대상이 감염이라도 되면 어쩔 거지?"
+<br><br>
+
+"그윌란의 명랑한 표정이 굳는다. "당신의 <i>보호 대상</i>이라니," 멀쩡하고, <<if $litter_size gte 2>><<pher>> 사랑스러운 아이들도<<else>><<pher>> 사랑스러운 아이도<</if>> 마찬가지예요. 다른 사람도 아니고 당신 같은 사람에게 '고맙다'는 말 한마디를 기대했다니, 제가 뭘 놀라는 걸까요?"
+<br><br>
+
+베일리가 <<person1>><<him>> 뒤에서 고개를 끄덕인다. 그윌란이 손을 흔들어 당신을 배웅하는 동안, 당신과 베일리는 마을을 향해 걸어간다. "머무를 곳은 마련해 뒀어." <<he>>【이가】 말한다.
+<<if $litter_size is 1>>
+<<elseif $litter_size is 2>>
+	"둘 다 말이야."
+<<else>>
+	"셋 다 말이야."
+<</if>>
+
+<<He>>【은는】 나이팅게일 가로 당신을 이끈다. 그곳에는 <<his>> 차가 기다리고 있다. <<He>>【은는】 당신을 위해 조수석 문을 열어주고는, 반대편으로 올라탄다.
+<br><br>
+엔진에 시동이 걸린다.
+<!-- Bailey may not know about all your pregnancies -->
+<<set _knownPregnancyCount to knowsAboutPregnancyTotal("pc","Bailey","home")>>
+<<if _knownPregnancyCount is 1>>
+	"네 새끼는 네가 책임지는 거야." <<he>>【이가】 말한다. "내가 개입해야 한다면, 추가로 <span class="red">£100</span>를 내야 할 거다. 일주일에.<<if $litter_size gte 2>> 각각.<</if>>"
+	<br><br>
+	"보육실에서 못 나와." <<he>>【은는】 병원 주차장에서 차를 몰며 덧붙인다. "절대로."
+<<elseif _knownPregnancyCount lte 4>>
+	"네 새끼는 네가 책임져야 한다는 걸 기억해." <<he>>【이가】 말한다. "내가 개입해야 한다면, 추가로 <span class="red">£100</span>를 내야 할 거다. 일주일에.<<if $litter_size gte 2>> 각각.<</if>>"
+<<else>>
+	"넌 무책임한 암캐야." <<he>>【이가】 말한다. "네 새끼들 돌보는 데 내가 개입해야 한다면, 일주일에 <span class="red">£100</span>씩 추가로 내야 할 거란 걸 기억해둬.<<if $litter_size gte 2>> 각각.<</if>>"
+<</if>>
+<<if $baileydefeatedchain gte 3>>
+	<<him>>【이가】 비웃는 것이 보이지만, 아주 잠깐뿐이다. "다른 놈들 손에 네 애새끼들을 맡기고 싶진 않지만, 계속 이따위로 좆같이 굴면 다시는 그 애들을 볼 수 없을 줄 알아."
+<</if>>
+<br><br>
+
+<<if $litter_size is 1>>
+	<<link [[베일리에게 아이의 이름을 말해준다|Pregnancy Birth Forest Shop 8]]>><<endevent>><<set $phase to 1>><</link>>
+	<br>
+	<<link [[그냥 아기를 꼭 안고 있는다|Pregnancy Birth Forest Shop 8]]>><<endevent>><</link>>
+	<br>
+<<else>>
+	<<link [[베일리에게 아이들의 이름을 말해준다|Pregnancy Birth Forest Shop 8]]>><<endevent>><<set $phase to 1>><</link>>
+	<br>
+	<<link [[그냥 아기들을 꼭 안고 있는다|Pregnancy Birth Forest Shop 8]]>><<endevent>><</link>>
+	<br>
+<</if>>
+
+:: Pregnancy Birth Forest Shop 8
+<<set $location to "town">><<effects>>
+<<npc "Bailey" 1>><<person1>>
+<<childSelect `getChildrenOf($recentBirthId).last().childId`>>
+
+베일리가 신전을 지나 다뉴브 가로 차를 몬다.
+<<if $phase is 1>>
+	<<if $litter_size is 1>>
+		"이 아이는 <<childname>>【이】야." 당신은 <<childhim>>【을를】 베일리의 팔에 더 가까이 안으며 말문을 연다.
+	<<else>>
+		"이 아이들은 <<childrenNames $bornChildrenIds>>【이】야." 당신은 아이들을 한 명씩 베일리의 팔에 더 가까이 안으며 말문을 연다.
+	<</if>>
+	당신은 그윌란의 가게에 도착했을 때부터 있었던 모든 일을 베일리에게 말한다. <<He>>【은는】 얼굴을 찌푸린다. "그 가게 주인이 유능하다는 건 부정하지 않겠어. 그래도 병원이 더 안전했을 텐데."
+<<else>>
+	<<if $litter_size gte 2>>
+		당신은 아기들을 가슴에 안는다. <<childname>>【이가】 하품한다.
+	<<else>>
+		당신은 아기를 가슴에 안는다. <<childHe>>【이가】 하품한다.
+	<</if>>
+<</if>>
+<br><br>
+<<pass 5>>
+
+도무스 가에 도착한다. 베일리가 당신을 위해 차 문을 열어준다.
+
+<<if $first_birth>>
+	"안까지 바래다주지." <<he>>【이가】 말한다. <<His>> 시선이 <<if $litter_size gte 2>>당신 품에 안긴 아기들에게<<else>><<childname>><</if>> 쏠린다. "안전을 위해서."
+	<br><br>
+	당신은 고아원을 지나 유아 병동으로 향한다.
+	<br><br>
+<<else>>
+	"유아 병동까지 바래다주지." <<he>>【이가】 말한다. <<His>> 시선이 <<if $litter_size gte 2>>당신 품에 안긴 아기들에게<<else>><<childname>><</if>> 쏠린다. "안전을 위해서."
+	<br><br>
+	<<He>>【은는】 당신을 이끌고 고아원을 지나 유아 병동으로 향한다.
+	<br><br>
+<</if>>
+
+<<link [[다음|Pregnancy Birth Hospital 8]]>><</link>>
+<br>
+
+:: Pregnancy Birth Forest Shop Wolf
+<<effects>><<run statusCheck("Gwylan")>>
+<<endevent>>
+<<npc Gwylan>><<person1>>
+
+익숙한 허밍 소리가 다시 들려온다. 낑낑거리는 소리도 함께다.
+<br><br>
+
+담요에 단단히 싸인 채 잠에서 깬다. 천천히 눈을 뜨자, 그윌란이 곁에 서서 <<his>> 팔에 당신의 새끼들을 한아름 안고 있다.
+<br><br>
+
+"일어나세요, <<pmummy>>," <<he>>【이가】 말하며 새끼들을 한 마리씩 건네준다. 눈은 아직 감겨 있고, 배는 조용한 숨결에 맞춰 오르내린다.
+<br><br>
+
+"순조로웠어." <<he>>【이가】 말한다. <<He>>【은는】 잠시 아쉬운 표정을 짓지만, 이내 떨쳐버리고 당신과 새끼들이 함께 있는 모습을 보며 거의 현기증이 날 정도로 기뻐하는 듯 보인다. "숲의 모든 아이는 이름이 필요해. 생각해 둔 거 있어?"
+<br><br>
+
+<<set $bornChildrenIds to []>>
+<<run getLabouringLitter("pc").forEach(child => $bornChildrenIds.push(child.childId))>>
+
+<<birthUi "pc" "forest_shop" "wolf_cave" "Pregnancy Birth Forest Shop Wolf 2" _time>>
+
+:: Pregnancy Birth Forest Shop Wolf 2
+<<effects>><<run statusCheck("Gwylan")>>
+
+당신은 새끼들의 작은 숨결과 움직임을 즐기며 잠시 더 품에 안고 있는다. 그윌란이 당신의 어깨를 문지른다.
+
+"쉬고 싶으면," <<he>>【이가】 말을 시작한다. "내가 동굴로 데려갈 수 있어. 네가 보러 갈 수 있을 때까지 잘 돌봐줄게, 약속해."
+<br><br>
+그저 새끼들을 안고 있고 싶지만, 그럼에도 불구하고 꾸벅꾸벅 졸음이 쏟아진다.
+<br><br>
+
+<<link [[다음|Pregnancy Birth Forest Shop Wolf 3]]>><<storeon "forest_shop_birth">><<pass 4 hour>><<stress -40>><</link>>
+<br>
+
+:: Pregnancy Birth Forest Shop Wolf 3
+<<effects>><<run statusCheck("Gwylan")>>
+
+그윌란이 당신에게 차를 나눠주고, 두 사람은 잠시 이야기를 나눈다. <<He>>【은는】 아이를 키우는 즐거움에 대해 할 말이 많다. <<stress -6>><<llstress>>
+<br><br>
+
+<<he>>【은는】 당신이 준비되었다고 확신하자, <<he>>【은는】 당신을 다시 가게 안으로 이끈다.
+<br><br>
+
+<<link [[다음|Forest Shop Entrance]]>><<endevent>><<set $forest to 0>><</link>>
+<br>
+
+
+/* Note: Pregnancy - Unused passages */
+
+:: Pregnancy Birth Hospital Wolf 4
+<<set $outside to 0>><<set $location to "wolf_cave">><<effects>>
+당신은 늑대 동굴에 도착하여, 새끼를 낳기 위해 동굴 안쪽으로 안내받는다.
+<br><br>
+<<strip>>
+<<if playerChastity("vagina")>>
+	착용 중이던 정조대가 파괴된다.
+	무리 또한 당신의 고통을 느끼고 있다. 무리의 대부분은 당신을 풀어주기 위해 정조대를 사납게 물어뜯느라 입가에 상처를 입는다.
+	<<set $worn.genitals.type.push("broken")>>
+	<<genitalsruined>>
+	<br><br>
+<</if>>
+<<link [[다음 (0:15)|Pregnancy Birth Wolf Cave 1]]>><<pass 15>><<endevent>><<set $phase to 3>><</link>>
+
+:: Pregnancy Birth Hospital Wolf 5
+<<set $outside to 0>><<set $location to "wolf_cave">><<effects>>
+다른 늑대들은 당신이 출산할 수 있도록 자리를 비켜준다. 이번에는 홀로 남았지만, 평소의 출산과 비슷한 과정이 이어진다.
+<br><br>
+<<link [[다음 (0:15)|Pregnancy Birth Hospital Wolf 6]]>><<pass 15>><<endevent>><</link>>
+
+:: Pregnancy Birth Hospital Wolf 6
+<<set $outside to 0>><<set $location to "wolf_cave">><<effects>>
+출산을 마친 당신은 기운을 차리며 갓 태어난 새끼들과 소중한 시간을 보내기 시작한다.
+<br><br>
+
+<<birthUi "pc" "wolf_cave" "wolf_cave" "Pregnancy Birth Hospital Wolf 7" 60>>
+
+:: Pregnancy Birth Hospital Wolf 7
+<<set $outside to 0>><<set $location to "wolf_cave">><<effects>>
+당신은 새끼들을 돌보고 젖을 먹이며 시간을 보낸다.
+<br><br>
+옷을 다시 챙겨 입는다.
+<<clotheson>>
+<br><br>
+<<if $syndromewolves isnot 1>>
+	<<if $settings.bestialityEnabled>>
+		<span class="red"><i>스스로 새끼를 낳고 나니, 그들이 그저 귀여운 동물로 보이기 시작합니다.</i> "스톡홀름 증후군: 늑대" 특성을 얻었습니다.</span>
+		<br><br>
+	<<else>>
+		<span class="red"><i>스스로 새끼를 낳고 나니, 그들이 그저 귀여운 수인으로 보이기 시작합니다.</i> "스톡홀름 증후군: 늑대인간" 특성을 얻었습니다.</span>
+		<br><br>
+	<</if>>
+	<<set $syndromewolves to 1>>
+	<<set $wolfevent to 0>>
+	<<set $wolfstate to "cave">>
+	<<set $wolfpackferocity to 10>>
+	<<set $wolfpackharmony to 10>>
+<</if>>
+<<link [[다음 (24:00)|Wolf Cave]]>><<pass 15>><<endevent>><<set $wolfevent to 0>><</link>>
+/*Player giving birth ends here*/
+
+/*ToDo: Pregnancy Story Content: add in additional location*/
+
+:: pregnancyTest
+<<effects>><<wearProp "pregnancy test">>
+<<set $pregnancyTest-->>
+<<switch $lastPassage>>
+	<<case "Bedroom">>
+		임신 테스트기를 사용한 뒤 침실로 돌아온다. 테스트기는 침대 위에 놓여 있고, 당신은 결과가 나오기를 기다리며 방 안을 서성인다.
+	<<case "Eden Cabin">>
+		에덴의 욕실에서 임신 테스트기를 사용하고, 다시 거실로 돌아온다. 결과가 나오기를 기다리며, 감히 눈을 떼지 못한 채 손에 든 테스트기를 뚫어지게 쳐다본다.
+	<<case "Wolf Cave Clearing">>
+		늑대들의 시야에서 벗어나 임신 테스트기를 사용한다. 결과가 나오기를 기다리며, 감히 눈을 떼지 못한 채 손에 든 테스트기를 뚫어지게 쳐다본다.
+	<<case "Farm Shed">>
+		당신은 임신 테스트기를 사용한다. 결과가 나오기를 기다리며, 감히 눈을 떼지 못한 채 손에 든 테스트기를 뚫어지게 쳐다본다.
+	<<default>>
+		당신은 임신 테스트기를 사용한다. 결과가 나오기를 기다리며, 감히 눈을 떼지 못한 채 손에 든 테스트기를 뚫어지게 쳐다본다.
+<</switch>>
+포장지에는 3분을 기다리라고 쓰여 있었지만, 영원처럼 느껴진다. <<gstress>><<stress 3>>
+<br><br>
+<<set $pregnancyStats.pregnancyTestsTaken++>>
+<<rng>>
+<<set _pregnancyTest to getPlayerPregnancy()>>
+<<if _pregnancyTest ? _pregnancyTest.orifice is "anus" : !$player.vaginaExist>>
+	<<if !_pregnancyTest or (between(daysAlong(_pregnancyTest), 0, PregnancyConstants.pregnancyTest.veryEarlyDays) and $rng gt PregnancyConstants.pregnancyTest.veryEarlyNegativeRoll) or (between(daysAlong(_pregnancyTest), PregnancyConstants.pregnancyTest.veryEarlyDays, PregnancyConstants.pregnancyTest.earlyDays) and $rng gt PregnancyConstants.pregnancyTest.earlyNegativeRoll)>>
+		<span class="green">음성이다.</span><<if !playerAwareTheyCanBePregnant()>> 어떻게 양성이 나올 수 있는지 의아하다.<</if>>
+	<<elseif $sexStats.anus.pregnancy.totalBirthEvents >= 1>>
+		<span class="lewd">양성이다.</span> 수많은 생각이 머릿속을 스쳐 지나가고, 당신은 마음을 가다듬기 위해 자리에 앉는다. <<gstress>><<stress 3>><<garousal>><<arousal 100>>
+		<br><br>
+		<<pregnancyFatherHint _pregnancyTest>>
+		<<run setPlayerLearnedFrom(_pregnancyTest.pregnancyId, "pregnancyTest")>>
+	<<else>>
+		<span class="lewd">양성이다.</span> 당신은 순간 헛것을 보거나 미쳐버린 건 아닌지 생각한다. 수많은 생각이 머릿속을 스쳐 지나가고, 마음을 가다듬기 위해 자리에 앉는다. <<ggstress>><<stress 10>><<ggarousal>><<arousal 200>>
+		<br><br>
+		<<pregnancyFatherHint _pregnancyTest>>
+		<<run setPlayerLearnedFrom(_pregnancyTest.pregnancyId, "pregnancyTest")>>
+	<</if>>
+<<else>>
+	<<if !_pregnancyTest or (between(daysAlong(_pregnancyTest), 0, PregnancyConstants.pregnancyTest.veryEarlyDays) and $rng gt PregnancyConstants.pregnancyTest.veryEarlyNegativeRoll) or (between(daysAlong(_pregnancyTest), PregnancyConstants.pregnancyTest.veryEarlyDays, PregnancyConstants.pregnancyTest.earlyDays) and $rng gt PregnancyConstants.pregnancyTest.earlyNegativeRoll)>>
+		<span class="green">음성이다.</span>
+	<<else>>
+		<span class="lewd">양성이다.</span> 수많은 생각이 머릿속을 스쳐 지나가고, 당신은 마음을 가다듬기 위해 자리에 앉는다. <<gstress>><<stress 3>><<garousal>><<arousal 100>>
+		<br><br>
+		<<pregnancyFatherHint _pregnancyTest>>
+		<<run setPlayerLearnedFrom(_pregnancyTest.pregnancyId, "pregnancyTest")>>
+	<</if>>
+<</if>>
+
+<br><br>
+<<link [[다음|$lastPassage]]>><<endevent>><<unset $lastPassage>><<set $eventskip to 1>><</link>>
+
+:: pregnancyTestWidget [widget]
+<<widget "pregnancyTest">>
+	<<if _args[0]>>
+		<<if $pregnancyTest gt 0>>
+			<<if !playerAwareTheyArePregnant()>>
+				<<pregnancytesticon>><<link [[임신 테스트기를 사용한다 (0:05)|pregnancyTest]]>><<pass 5>><<set $lastPassage to _args[0]>><</link>>
+				<br>
+			<<elseif playerAwareTheyArePregnant()>>
+				<<pregnancytesticon>><span class="lewd"> 임신 테스트기를 가지고 있지만, 이미 임신한 것을 알고 있다.</span>
+				<br>
+			<</if>>
+		<</if>>
+	<</if>>
+<</widget>>
+
+/*Note: Pregnancy */
+
+:: Pregnancy ultrasound
+/* Ultrasounds not performed before 12 weeks in normal circumstances, or before 8 in high-risk. Prior to 12 weeks, ultrasounds are usually performed transvaginally. Future commit will address this.*/
+
+<<set $outside to 0>><<set $location to "hospital">><<effects>>
+<<harper_intro>>
+<<setKnowsAboutPregnancy "pc" "Harper">>
+<<if $ultrasoundIntro isnot 1>>
+	<<set $ultrasoundIntro to 1>>
+	/* player is introduced to what ultrasounds are, how it occurs and the reasons why they are done. */
+	"우선," 의사가 말한다. "축하드립니다. 초음파 검사는 현명한 요청입니다. 영상의학과로 저를 따라오십시오." 당신이 걷는 동안 <<He>>【은는】 계속해서 말을 잇는다.
+	<br><br>
+
+	"임신 주수가 충분히 지났다면, 먼저 젤을 바르는 것으로 시작합니다. 공기층이 생기는 것을 막기 위함인데, 공기층은 몸속으로 보낼 음파를 방해할 수 있습니다. 위험은 없습니다. 젤은 수성이어서 쉽게 제거할 수 있고, 음파는 인체에 무해합니다."
+<<else>>
+	"초음파 검사는 현명한 요청입니다. 영상의학과로 저를 따라오십시오."
+<</if>>
+<br><br>
+
+<<He>>【은는】 당신을 병원 지하의 한 방으로 안내한다. 여러 기계가 불빛을 깜빡이며 부드러운 핑 소리를 낸다. 방 한쪽 구석에는 침대가 있고, 그 옆에는 모니터가 있다. 기사가 도움을 주기 위해 기다리고 있다.
+<br><br>
+
+"속옷만 남기고 탈의해 주십시오," 의사가 말한다.
+<br><br>
+
+<<link [[다음|Pregnancy ultrasound 2]]>><<overupperstrip>><<upperstrip>><<underupperstrip>><</link>>
+
+:: Pregnancy ultrasound 2
+<<set $outside to 0>><<set $location to "hospital">><<effects>>
+
+/*Alex variables*/
+<<if getLabouringPregnancy("pc")?.donor is "Alex">>
+	<<set C.npc.Alex.pregnancy.ultraSoundPics to true>>
+<</if>>
+
+당신은 옷을 벗고 눕는다.
+<<set _pregnancy to getPlayerPregnancy()>><<set _pregnancyGenital to _pregnancy.orifice>><<set _litter to getChildrenOf(_pregnancy.pregnancyId)>>
+<<if pregnancyProgress(_pregnancy) lte 0.3>>
+	<<set _pregnancy.awareOfMultiple to true>>
+	"아직 복부 초음파를 하기에는 임신 주수가 부족하군요." 하퍼 의사가 말한다. "하지만 도플러를 사용해서 심장 활동을 들어볼 수는 있습니다."
+	<br><br>
+	<<He>>【은는】 작은 휴대용 기구를 집어 들고, 다이얼을 돌린 뒤, 작고 둥근 막대를 당신의 아랫배에 댄다. <<He>>【은는】 그것을 당신의 몸 위에서 움직인다. 기구에서는 정전기 같은 '쉭' 소리가 나고, 간간이 '둥둥' 하는 소리가 섞여 들린다. <<He>>【이가】 속도를 늦추자, '둥둥' 소리는 규칙적인 스타카토처럼 울린다.
+	<br><br>
+	"자! 들어보세요. 건강한 아이입니다." 초당 두 번보다 조금 더 빠른 박자다. 둥둥거리는 소리가 당신을 진정시킨다.<<lstress>>
+	<br><br>
+	<<stress -10>>
+	<<if _litter.length gt 1>>
+		<<He>>【은는】 막대를 조금 더 움직이다가 놀라움을 감추지 못한다. "한 명 더 있군요." 템포가 약간 다른 두 번째 맥박 소리가 들린다.<<gstress>><<stress 6>>
+		<br><br>
+	<</if>>
+	<<if C.npc.Alex.pregnancy.ultraSound is "requested">>
+		<<set C.npc.Alex.pregnancy.ultraSound to "collected2">>
+		당신은 <<him>>에게 임신 사실을 증명하는 진단서를 요청한다. <<He>>【은는】 잠시 <<his>> 컴퓨터를 두드리더니, 공식적으로 보이는 서신을 인쇄한다. <<He>>【은는】 화려하게 서명한 뒤 당신에게 건네준다.
+		<br><br>
+	<</if>>
+<<else>>
+	<<if C.npc.Alex.pregnancy.ultraSound is "requested">><<set C.npc.Alex.pregnancy.ultraSound to "collected">><</if>>
+	/* Player has pictures of the babies */
+	<<set _pregnancy.ultrasoundDone to true>>
+	<<bodyliquid "tummy" "goo" 2>>
+	하퍼 의사가 시술을 위해 젤과 탐촉자를 준비한다. <<he>>【이가】 당신의 복부에 젤을 듬뿍 바르자, 기분 좋게 따뜻한 느낌이 든다.
+	<br><br>
+
+	<<if $cowbuild gte 20>>
+		음메 하고 울고 싶은 충동을 억누른다. 당신의 젖꼭지가 기대로 짜릿해진다.<<garousal>> <<arousal 3>> <br><br>
+	<<elseif $wolfbuild gte 20>>
+		/* Your wolf fur gets slightly matted by the gel.<br><br> */
+	<<elseif $catbuild gte 20>>
+		/* Your cat fur gets slightly matted by the gel. <br><br> */
+	<</if>>
+	<<He>>【은는】 탐촉자를 당신의 아랫배 위에서 좌우로 움직이자, <<his>> 얼굴 위로 화면이 바뀌며 다양한 회색 음영이 스쳐 지나간다.
+	<br>
+	<<if childBaseSpecies(_pregnancy.donorSpecies) isnot "human">>
+		하퍼는 <<he>>【이가】 장비를 살피는 동안 한동안 조용했고, 기사는 걱정스러운 표정을 짓는다. 당신은 초조해진다. 기사가 여러 부위를 측정하면서 컴퓨터를 클릭하고 타이핑하는 소리가 요란하게 들린다. 대퇴골, 머리, 상완골, 그리고 양수 수치.
+	<<else>>
+		기사가 여러 부위를 측정하면서 컴퓨터를 클릭하고 타이핑하는 소리가 요란하게 들린다.
+	<</if>>
+	<br><br>
+
+	<<if _litter.length gt 1>>
+		<<set _multiple to true>>
+	<<else>>
+		<<set _multiple to false>>
+		<<switch _litter[0].gender>>
+			<<case "m">>
+				<<set _he to "아이">>
+				<<set _He to "아이">>
+				<<set _his to "아이의">>
+				<<set _His to "아이의">>
+				<<set _him to "아이">>
+				<<set _gender to "male">>
+			<<case "f">>
+				<<set _he to "아이">>
+				<<set _He to "아이">>
+				<<set _his to "아이의">>
+				<<set _His to "아이의">>
+				<<set _him to "아이">>
+				<<set _gender to "female">>
+			<<case "h">>
+				<<set _he to "아이">>
+				<<set _He to "아이">>
+				<<set _his to "아이의">>
+				<<set _His to "아이의">>
+				<<set _him to "아이">>
+				<<set _gender to "hermaphrodite">>
+		<</switch>>
+	<</if>>
+	<<if childBaseSpecies(_pregnancy.donorSpecies) isnot "human" and _litter[0].features.monster>>
+		<<if childBaseSpecies(_pregnancy.donorSpecies) is "hawk">>
+			<<set _type to "harpy">>
+		<<else>>
+			<<set _type to _litter[0].species + "person">>
+		<</if>>
+	<<else>>
+		<<set _type to _litter[0].species>>
+	<</if>>
+	<<switch childBaseSpecies(_pregnancy.donorSpecies)>>
+		<<case "human">>
+			<<He>>【은는】 마침내 당신을 돌아본다. "보시겠어요?"
+			<<He>>【은는】 모니터를 당신 쪽으로 돌린다.
+			<<if !_pregnancy.awareOfMultiple and _litter.length gt 1>>
+				당신은 눈앞에 보이는 것에 놀란다.
+			<</if>>
+			<br><br>
+
+			의사가 탐촉자를 배 위로 움직이자, <<if _multiple>><<if _litter.length is 3>>세 쌍<<else>>두 쌍<</if>><<else>>한 쌍<</if>>의 눈과 팔, 손, 다리, 발이 보인다. <<stress -5>><<lstress>>
+			<br><br>
+
+			"좋습니다," 의사가 말한다. "인화해서 가져가실 수 있게 해드릴게요."
+			<br><br>
+
+			<<if !knowsGender(_litter[0].childId, "pc")>>
+				<<run _litter.forEach(c => setKnowsGender(c.childId, "pc"))>>
+				"때가 됐네요," 의사가 알린다.
+				<<if _multiple>>
+					"아이들의 성별을 알게 되어 기쁘시길 바랍니다."
+					<br><br>
+
+					<<He>>【이가】 살짝 부풀어 오른 당신의 배 위로 탐촉자를 미끄러뜨린다. 압박감이 불편하게 느껴진다.
+					<<pregnancyGendersText>>
+					<br><br>
+				<<else>>
+					"성별을 알게 되어 기대되시나요?" <<he>>【이가】 묻는다.
+					<br><br>
+
+					<<He>>【이가】 둥그렇게 부푼 당신의 배 위로 탐촉자를 미끄러뜨린다. 압박감이 불편하게 느껴진다.
+					<<if _litter[0].gender is "m">>
+						"아들이네요," <<he>>【이가】 말한다. "축하드립니다." 화면에서 그걸 알아볼 만한 건 전혀 안 보이지만, 하퍼는 확신하는 듯하다.
+						<br><br>
+					<<elseif _litter[0].gender is "f">>
+						"딸이네요," <<he>>【이가】 말한다. "축하드립니다." 화면에서 그걸 알아볼 만한 건 전혀 안 보이지만, 하퍼는 확신하는 듯하다.
+						<br><br>
+					<<else>>
+						"아들인지 딸인지 구분이 잘 안 되네요," <<he>>【이가】 말한다. "<span class="blue">거의 둘 다인 것처럼 보이는군요.</span> 어느 쪽이든, 건강합니다. 축하드립니다."
+						<br><br>
+					<</if>>
+				<</if>>
+			<</if>>
+			<<if pregnancyProgress(_pregnancy) gte 0.9>>
+			/* 36-40 weeks, full term */
+				<<if ! _multiple>>
+					"좋은 소식입니다," <<he>>【이가】 말을 잇는다. "아기가 아래로 내려와 머리를 아래로 향하고 있습니다. 이걸로 느끼시던 압박감이 좀 덜해질 겁니다."
+				<</if>>
+				곧 출산할 때가 될 것이다. 의사는 진통과, 진통이 시작되었을 때 해야 할 일에 대한 자료를 건네준다. "양수가 터지면 저희를 찾아오세요. 잘 돌봐드리겠습니다."
+				<br><br>
+			<<elseif pregnancyProgress(_pregnancy) gte 0.8>>
+			/*32-36 weeks, preterm */
+				의사가 계속해서 살피는 동안, 몇 번의 파닥이는 듯한 발길질이 느껴진다. "이 측정치로 보아," 기사가 말한다. "몇 주 안에 만삭이 될 겁니다. 출산 계획은 세우셨나요? 충분한 휴식과 영양 섭취를 하도록 하세요."
+				<br><br>
+				당신은 휴식과 돈이 필요하다는 것을 안다.<<gstress>><<stress 6>>
+				<br><br>
+			<<elseif pregnancyProgress(_pregnancy) gte 0.7>>
+			/*28-32 weeks */
+				<<if !_multiple>>
+					"보세요, <<print _he>>【이가】 움직이고 있어요," 의사가 말한다. "손가락이 보이나요?" 마치 <<print _his>> 손이 화면에 대고 손을 흔드는 것처럼 보인다. 동시에 안에서 움직임이 느껴진다.<<llstress>><<stress -7>>
+					<br><br>
+
+					"아이는 건강해 보입니다," 하퍼가 말을 잇는다. "<<print _He>>【은는】 계속 자라면서 체중을 늘리고 <<print _his>> 폐를 성숙시키기만 하면 됩니다. 지금은 아이가 모든 것을 당신의 몸에 의존하고 있으니, 건강한 선택을 하는 것이 매우 중요합니다."
+				<<else>>
+					"보세요, 아이들이 움직이고 있어요," 의사가 말한다. "손가락이 보이나요?" 마치 아이들 중 하나의 손이 화면에 대고 손을 흔드는 것처럼 보인다. 동시에 안에서 움직임이 느껴진다.<<llstress>><<stress -7>>
+					<br><br>
+					하퍼가 말을 잇는다. "아이들은 건강해 보입니다. 계속 자라면서 체중을 늘리고 폐를 성숙시키기만 하면 됩니다. 지금은 아이들이 모든 것을 당신의 몸에 의존하고 있으니, 건강한 선택을 하는 것이 매우 중요합니다."
+				<</if>>
+				<br><br>
+			<<elseif pregnancyProgress(_pregnancy) gte 0.6>>
+			/* 24-28 weeks */
+				<<if _multiple>>
+					의사는 계속해서 당신의 배를 탐색한다. <<he>>【이가】 그렇게 하자, 아이들이 쿡쿡 찌르는 것에 반응하여 이리저리 몸을 돌리면서 뱃속에서 나비 떼가 날아다니는 듯한 느낌이 든다.
+					<br><br>
+					"별다른 이상은 없어 보이네요," 하퍼가 말한다. "아기들의 크기는 <<childKrText "size" _litter[0].features.size>>이고 아주 건강합니다. 출산이 임박했을 때쯤, 몇 달 후에 다시 뵙도록 하죠."
+					<br><br>
+				<<else>>
+					의사는 계속해서 당신의 배를 탐색한다. <<he>>【이가】 그렇게 하자, 아이가 쿡쿡 찌르는 것에 반응하여 이리저리 몸을 돌리면서 뱃속에서 나비 떼가 날아다니는 듯한 느낌이 든다.
+					<br><br>
+					"별다른 이상은 없어 보이네요," 하퍼가 말한다. "아기 크기는 <<childKrText "size" _litter[0].features.size>>이고 아주 건강합니다. 출산이 임박했을 때쯤, 몇 달 후에 다시 뵙도록 하죠."
+					<br><br>
+				<</if>>
+			<<elseif pregnancyProgress(_pregnancy) gte 0.4>>
+			/* 16-24 weeks */
+				<<if _multiple>>
+					"아기들은 괜찮습니다," 의사가 말한다. "하나만 가졌을 때보다는 조금 작지만, 반응도 좋고 잘 움직입니다. 양수도 충분해서 정상적인 임신이 될 겁니다."
+					<<llstress>> <<stress -8>>
+					<br><br>
+					화면에는 아기들이 움직이는 모습이 보인다. 다리와 팔이 자리를 바꾼다. 한 아기가 움찔한다. "딸꾹질입니다." 하퍼가 당신을 안심시킨다.
+					<br><br>
+				<<else>>
+					"아기는 아주 잘 자라고 있습니다. <<print _He>>【은는】 반응도 좋고 잘 움직여요." 의사가 말한다. "양수도 충분하니, 정상적인 임신이 될 겁니다."
+					<<llstress>> <<stress -8>>
+					<br><br>
+					화면에는 <<print _him>>【이가】 움직이는 모습이 보인다. 다리와 팔이 자리를 바꾼다. <<print _He>>【이가】 움찔한다. "딸꾹질입니다." 하퍼가 당신을 안심시킨다.
+					<br><br>
+				<</if>>
+			<<elseif pregnancyProgress(_pregnancy) gte 0.3>>
+			/* 12-16 weeks */
+				<<if _multiple>>
+					"아기들은 건강합니다." 의사가 말한다. "반응도 좋고 잘 움직여요. 양수도 충분하니, 정상적인 임신이 될 겁니다."<<llstress>><<stress -8>>
+					<br><br>
+					화면에는 아기들이 움직이는 모습이 보인다. 다리와 팔이 자리를 바꾼다. 한 아기가 움찔한다. "딸꾹질입니다." 하퍼가 당신을 안심시킨다.
+				<<else>>
+					"아기는 건강합니다." 의사가 말한다. "<<print _He>>【은는】 반응도 좋고 잘 움직여요. 양수도 충분하니, 정상적인 임신이 될 겁니다."<<llstress>><<stress -8>>
+					<br><br>
+					화면에는 <<print _him>>【이가】 움직이는 모습이 보인다. 다리와 팔이 자리를 바꾼다. <<print _He>>【이가】 움찔한다. "딸꾹질입니다." 하퍼가 당신을 안심시킨다.
+				<</if>>
+				<br><br>
+			<<else>>
+			/* Shouldn't get here. */
+			<</if>>
+
+		<<case "wolf">>
+			<<if !knowsChild(_litter[0].childId, "pc")>>
+				"축하드립니다." <<he>>【이가】 당신을 향해 몸을 돌리며 말을 시작한다. "아주 특이한 임신을 하셨군요. 운이 좋으십니다. 인간 아이 대신, <span class="lewd">당신이 임신한 것은
+				<<if _multiple>>
+					_typeText 새끼 한 배입니다.
+				<<else>>
+					_type 새끼 한 마리입니다.
+				<</if>>
+				</span>놀랍군요."
+				<br><br>
+
+				하퍼가 당신을 향해 미소 짓는다. "걱정하실 것 없습니다, <<if _multiple>>아이들은<<else>>아이는<</if>> 아주 건강합니다. 보시겠어요?"
+			<<else>>
+				<<He>>【은는】 마침내 당신을 돌아본다. "보시겠어요?"
+			<</if>>
+			<<He>>【은는】 모니터를 당신 쪽으로 돌린다.
+			<br><br>
+
+			의사가 탐촉자를 배 위로 움직이자, <<if _multiple>><<number _litter.length>>쌍<<else>>한 쌍<</if>>의 눈과 다리, 발이 보인다. <<stress -5>><<lstress>>
+			<br><br>
+			"좋습니다," 의사가 말한다. "인화해서 가져가실 수 있게 해드릴게요."
+			<br><br>
+
+			<<if !knowsGender(_litter[0].childId, "pc")>>
+				<<run _litter.forEach(c => setKnowsGender(c.childId, "pc"))>>
+				"때가 됐네요," 의사가 알린다.
+				<<if _multiple>>
+					"새끼들의 성별을 알게 되어 기쁘시길 바랍니다."
+					<br><br>
+
+					<<He>>【이가】 살짝 부풀어 오른 당신의 배 위로 탐촉자를 미끄러뜨린다. 압박감이 불편하게 느껴진다.
+					<<pregnancyGendersText>>
+					<br><br>
+				<<else>>
+					"성별을 알게 되어 기대되시나요?" <<he>>【이가】 묻는다.
+					<br><br>
+
+					<<He>>【이가】 둥그렇게 부푼 당신의 배 위로 탐촉자를 미끄러뜨린다. 압박감이 불편하게 느껴진다.
+					<<if _litter[0].gender is "m">>
+						"수컷이네요," <<he>>【이가】 말한다. "축하드립니다." 화면에서 그걸 알아볼 만한 건 전혀 안 보이지만, 하퍼는 확신하는 듯하다.
+						<br><br>
+					<<elseif _litter[0].gender is "f">>
+						"암컷이네요," <<he>>【이가】 말한다. "축하드립니다." 화면에서 그걸 알아볼 만한 건 전혀 안 보이지만, 하퍼는 확신하는 듯하다.
+						<br><br>
+					<<else>>
+						"수컷인지 암컷인지 구분이 잘 안 되네요," <<he>>【이가】 말한다. "<span class="blue">거의 둘 다인 것처럼 보이는군요.</span> 어느 쪽이든, 건강합니다. 축하드립니다."
+						<br><br>
+					<</if>>
+				<</if>>
+			<</if>>
+			<<if pregnancyProgress(_pregnancy) gte 0.9>>
+			/* 36-40 weeks, full term */
+				<<if ! _multiple>>
+					"좋은 소식입니다." <<he>>【이가】 말을 잇는다. "새끼가 아래로 내려와 머리를 아래로 향하고 있습니다. 이로써 느끼시던 압박감이 좀 덜해질 겁니다."
+				<</if>>
+				곧 출산할 때가 될 것이다. 의사는 진통과, 진통이 시작되었을 때 해야 할 일에 대한 자료를 건네준다. 하지만 늑대에 관한 내용은 전혀 없다. "양수가 터지면 저희에게 오세요. 잘 돌봐드리겠습니다."
+				<br><br>
+			<<elseif pregnancyProgress(_pregnancy) gte 0.8>>
+			/*32-36 weeks, preterm */
+				의사가 계속해서 탐촉자로 살피는 동안, 몇 번의 파닥이는 듯한 발길질이 느껴진다. "이 측정치로 보아," 기사가 말한다. "곧 만삭이 될 겁니다. 아마도요. 인간이 아닌 존재의 임신이라... 확실히 말하기가 아주 어렵네요. 출산 계획은 세우셨나요? 휴식과 영양 섭취를 충분히 하셔야 합니다."
+				<br><br>
+				휴식과 돈이 필요하다는 것을 안다. 새끼들을 어디서 키워야 할지 고민이다.<<gstress>><<stress 6>>
+				<br><br>
+			<<elseif pregnancyProgress(_pregnancy) gte 0.7>>
+			/*28-32 weeks */
+				<<if !_multiple>>
+					"보세요, <<print _he>>【이가】 움직이고 있어요." 의사가 말한다. "발가락이 보이나요?" 마치 <<print _his>> 발이 화면을 향해 손을 흔드는 것처럼 보인다. 동시에 뱃속에서 움직임이 느껴진다.<<llstress>><<stress -7>>
+					<br><br>
+
+					"새끼는 건강해 보입니다." 하퍼가 말을 잇는다. "<<print _He>>【은는】 계속 자라면서 체중을 늘리고 <<print _his>> 폐를 성숙시키기만 하면 됩니다. 지금은 아이가 모든 것을 당신의 몸에 의존하고 있으니, 건강한 선택을 하는 것이 매우 중요합니다."
+				<<else>>
+					"보세요, 아기들이 움직이고 있어요." 의사가 말한다. "발가락이 보이나요?" 마치 아기들 중 하나의 발이 화면을 향해 손을 흔드는 것처럼 보인다. 동시에 뱃속에서 움직임이 느껴진다.<<llstress>><<stress -7>>
+					<br><br>
+					하퍼가 말을 잇는다. "아이들은 건강해 보입니다. 계속 자라면서 체중을 늘리고 폐를 성숙시키기만 하면 됩니다.
+					지금은 아이들이 모든 것을 당신의 몸에 의존하고 있으니, 건강한 선택을 하는 것이 매우 중요합니다. 특히 이렇게 특이한 임신인 만큼 몸조리를 잘하는 것이 중요합니다."
+				<</if>>
+				<br><br>
+			<<elseif pregnancyProgress(_pregnancy) gte 0.6>>
+			/* 24-28 weeks */
+				<<if _multiple>>
+					의사는 계속해서 당신의 배를 탐촉자로 살핀다. <<he>>【이가】 그렇게 하자, 탐촉자의 움직임에 반응하여 새끼들이 이리저리 뒤척이는 통에 뱃속에서 나비 떼가 날아다니는 듯한 느낌이 든다.
+					<br><br>
+					"별다른 이상은 없어 보이네요," 하퍼가 말한다. "새끼들의 크기는 <<childKrText "size" _litter[0].features.size>>이고 아주 건강합니다. 출산이 임박했을 때쯤, 몇 주 후에 다시 뵙도록 하죠."
+					<br><br>
+				<<else>>
+					의사는 계속해서 당신의 배를 탐촉자로 살핀다. <<he>>【이가】 그렇게 하자, 탐촉자의 움직임에 반응하여 새끼가 이리저리 뒤척이는 통에 뱃속에서 나비 떼가 날아다니는 듯한 느낌이 든다.
+					<br><br>
+					"별다른 이상은 없어 보이네요," 하퍼가 말한다. "새끼 크기는 <<childKrText "size" _litter[0].features.size>>이고 아주 건강합니다. 출산이 임박했을 때쯤, 몇 주 후에 다시 뵙도록 하죠."
+					<br><br>
+				<</if>>
+			<<elseif pregnancyProgress(_pregnancy) gte 0.4>>
+			/* 16-24 weeks */
+				<<if _multiple>>
+					"아... 아니, 새끼들은 괜찮습니다." 의사가 말한다. "한 마리만 가졌을 때보다는 조금 작지만, 반응도 좋고 잘 움직입니다. 양수도 충분해서 정상적인 임신이 될 겁니다. 이런 임신이 정상일 수 있는 한에서 말이죠."
+					<<llstress>> <<stress -8>>
+					<br><br>
+					화면에서 새끼들이 다리를 교차하며 움직이는 것을 볼 수 있다. 한 마리가 움찔한다. "딸꾹질입니다." 하퍼가 당신을 안심시킨다.
+					<br><br>
+				<<else>>
+					"새끼는 아주 잘 자라고 있습니다. <<print _He>>【은는】 반응도 좋고 잘 움직입니다." 의사가 말한다. "양수도 충분해서 정상적인 임신이 될 겁니다. 이런 임신이 정상일 수 있는 한에서 말이죠."
+					<<llstress>> <<stress -8>>
+					<br><br>
+					화면에서 <<print _him>>【이가】 다리를 교차하며 움직이는 것을 볼 수 있다. <<print _He>>【이가】 움찔한다. "딸꾹질입니다." 하퍼가 당신을 안심시킨다.
+					<br><br>
+				<</if>>
+			<<elseif pregnancyProgress(_pregnancy) gte 0.3>>
+			/* 12-16 weeks */
+				<<if _multiple>>
+					"새끼들은 건강합니다." 의사가 말한다. "반응도 좋고 잘 움직입니다. 양수도 충분해서 정상적인 임신이 될 겁니다. 이런 임신이 정상일 수 있는 한에서 말이죠."<<llstress>><<stress -8>>
+					<br><br>
+					화면에서 새끼들이 다리를 교차하며 움직이는 것을 볼 수 있다. 한 마리가 움찔한다. "딸꾹질입니다." 하퍼가 당신을 안심시킨다.
+				<<else>>
+					"새끼는 건강합니다." 의사가 말한다. "<<print _He>>【은는】 반응도 좋고 잘 움직입니다. 양수도 충분해서 정상적인 임신이 될 겁니다. 이런 임신이 정상일 수 있는 한에서 말이죠."<<llstress>><<stress -8>>
+					<br><br>
+					화면에서 <<print _him>>【이가】 다리를 교차하며 움직이는 것을 볼 수 있다. <<print _He>>【이가】 움찔한다. "딸꾹질입니다." 하퍼가 당신을 안심시킨다.
+				<</if>>
+				<br><br>
+			<<else>>
+			/* Shouldn't get here. */
+			<</if>>
+		<<case "hawk">>
+			<<if !knowsChild(_litter[0].childId, "pc")>>
+				"축하드립니다." <<he>>【이가】 당신을 향해 몸을 돌리며 말을 시작한다. "아주 특이한 임신을 하셨군요. 운이 좋으십니다. 인간 아이 대신, <span class="lewd">당신이 임신한 것은
+				<<if _multiple>>
+					아... 한 무더기의 새알.
+				<<else>>
+					아... 새알이네요.
+				<</if>>
+				</span>놀랍군요."
+				<br><br>
+
+				<<if _pregnancyGenital is "vagina">>
+					<<He>>【이가】 헛기침을 한다. "난자를 배출하는 대신, 난소 내의 폭주 반응으로 인해 세포 덩어리가 일종의 막으로 응고되어 더 큰 알이 된 것으로 보입니다. 그것들은 이미 수란관을 통과하여 자궁 안에 자리 잡고 있습니다."
+					<br><br>
+				<</if>>
+				하퍼가 당신을 향해 미소 짓는다. "걱정하실 것 없습니다, <<if _multiple>>아이들은<<else>>아이는<</if>> 아주 건강합니다. 보시겠어요?"
+			<<else>>
+				<<He>>【은는】 마침내 당신을 돌아본다. "보시겠어요?"
+			<</if>>
+			<<He>>【은는】 모니터를 당신 쪽으로 돌린다.
+			<br><br>
+
+			의사가 탐촉자를 배 위로 움직이자, <<if _multiple>><<number _litter.length>>개의 단단한 윤곽<<else>>한 개의 단단한 윤곽<</if>>【이가】 보이는데, 각각 한 쌍의 눈과 다리,<<if _type is "harpy">> 팔,<</if>> 그리고 작은 날개를 품고 있다. 알껍데기 때문에 알아보기 조금 힘들지만, 조금씩 더 자세히 보인다. <<stress -5>><<lstress>>
+			<br><br>
+
+			<<if !knowsGender(_litter[0].childId, "pc")>>
+				"안타깝게도, 껍데기가 단단해지고 있어서 성별을 알아내는 것이 거의 불가능합니다. 하지만 직접 확인하기까지 그리 오래 기다릴 필요는 없을 것 같군요." <<He>>【은는】 더 나은 각도를 잡으려고 탐촉자를 계속 움직이지만, 화면이 너무 작고 왜곡되어 있다.
+				<br><br>
+			<</if>>
+			<<if pregnancyProgress(_pregnancy) gte 0.8>>
+				<<if ! _multiple>>
+					"좋은 소식입니다." <<he>>【이가】 말을 잇는다. "<<if _pregnancyGenital is "vagina">>당신의 수란관이 알<<if _multiple>>들<</if>>【이가】 통과할 수 있도록 확장되고 있습니다.<<else>>알<<if _multiple>>들이<<else>>【이가】 <</if>> 산란을 준비하며 움직이기 시작했습니다.<</if>>"
+				<</if>>
+				곧 출산할 때가 될 것이다. 의사는 진통과, 진통이 시작되었을 때 해야 할 일에 대한 자료를 건네준다. 하지만 새나 알에 관한 내용은 전혀 없다. "산란 과정은 집에서도 충분히 하실 수 있을 겁니다. 하지만 추가적인 질문이 있으시면 주저하지 말고 저희를 찾아오세요."
+				<br><br>
+			<<elseif pregnancyProgress(_pregnancy) gte 0.6>>
+				몸속에서 낮은 울림이 느껴진다. "이 측정치로 보아," 기사가 말한다. "곧 만삭이 될 겁니다. 아마도요. 인간이 아닌 존재의 임신이라... 확실히 말하기가 아주 어렵네요. 출산 계획은 세우셨나요? 휴식과 영양 섭취를 충분히 하셔야 합니다."
+				<br><br>
+				휴식이 필요하다는 것을 안다. 어디에 두어야 할지 고민이다. 둥지? <<if _pregnancy.donor is "Great Hawk">>성의 탑이 떠오른다.<</if>>
+				<br><br>
+			<<elseif pregnancyProgress(_pregnancy) gte 0.4>>
+			/* 16-24 weeks */
+				<<if _multiple>>
+					"아... 아니, 알들은 괜찮습니다." 의사가 말한다. "반응도 좋고 잘 움직입니다. 양수도 충분해서 정상적인 임신이 될 겁니다. 이런 임신이 정상일 수 있는 한에서 말이죠."
+					<<llstress>> <<stress -8>>
+					<br><br>
+				<<else>>
+					"알은 아주 잘 자라고 있습니다. 안의 아기는 반응도 좋고 잘 움직입니다." 의사가 말한다. "양수도 충분해서 정상적인 임신이 될 겁니다. 이런 임신이 정상일 수 있는 한에서 말이죠."
+					<<llstress>> <<stress -8>>
+					<br><br>
+				<</if>>
+			<<elseif pregnancyProgress(_pregnancy) gte 0.3>>
+				<<if _multiple>>
+					"알들은 건강합니다." 의사가 말한다. "반응도 좋고 잘 움직입니다. 양수도 충분해서 정상적인 임신이 될 겁니다. 이런 임신이 정상일 수 있는 한에서 말이죠."<<llstress>><<stress -8>>
+					<br><br>
+				<<else>>
+					"알은 건강합니다." 의사가 말한다. "반응도 좋고 잘 움직입니다. 양수도 충분해서 정상적인 임신이 될 겁니다. 이런 임신이 정상일 수 있는 한에서 말이죠."<<llstress>><<stress -8>>
+					<br><br>
+				<</if>>
+				<br><br>
+			<<else>>
+			/* Shouldn't get here. */
+			<</if>>
+		<<default>>
+	<</switch>>
+	<<makeAwareOfDetails>>
+	<<set _pregnancy.awareOfMultiple to true>>
+<</if>>
+
+<<link [[다음|Pregnancy ultrasound 3]]>><</link>>
+
+:: Pregnancy ultrasound 3
+<<set $outside to 0>><<set $location to "hospital">><<effects>><<wearProp "rag">>
+
+당신이 하퍼 의사에게 스캔에 대해 감사 인사를 건네자, <<he>>【이가】 따뜻한 수건을 건네준다. 젤을 닦아내지만, 일부는 여전히 끈적하게 남아 있다.
+<br><br> <<bodyliquid "tummy" "goo" -1>>
+<<clotheson>>
+
+<<link [[로비로 돌아가기|Hospital Foyer]]>><<endevent>><</link>>
+
+:: Pregnancy Birth Hospital Alex
+/* Alex drive-home. Branches in from Hospital 5 when Alex is the father; reuses the
+   hospital birth passages, only the drive home differs. Not merged with Bailey's
+   drive-home (it's a separate scene, not duplicated prose). */
+<<effects>>
+<<npc "Alex">>
+<<childSelect `getChildrenOf($recentBirthId).last().childId`>>
+
+<<if $alexRescued>>
+	알렉스가 병원 로비에서 당신을 기다리며 <<his>> 발을 톡톡 두드리고 있다. <<he>>【은는】 당신에게 달려오는데, 하마터면 당신을 넘어뜨릴 뻔했다. "파트너! 무사해서 정말 다행이야. 이 농장 <<nnpc_gendery "Alex">>【을를】 얼마나 놀라게 했는지 알아?"
+	<<unset $alexRescued>>
+<<else>>
+	알렉스가 병원 로비에서 당신을 기다리고 있다. <<He>>【은는】 당신을 보자 미소 짓는다. "이봐, 병원에서 네가 진통 중이라고 연락이 왔어. 최대한 빨리 달려왔지."
+<</if>>
+<br><br>
+
+<<He>>【은는】 <<if $litter_size is 1>><<childname>><<else>><<childrenNames $bornChildrenIds>><</if>>【을를】 바라보며 미소 짓는다. "그래, <<print $litter_size > 1 ? "이 녀석들이 우리 아기들이구나" : "이 녀석이 우리 아기구나">>."
+<br><br>
+
+<<if $litter_size is 1>>
+	<<link [[알렉스에게 아기를 안겨준다|Pregnancy Birth Hospital Alex 2]]>><<set $phase to 1>><</link>>
+	<br>
+	<<link [[아기를 계속 안고 있는다|Pregnancy Birth Hospital Alex 2]]>><<set $phase to 2>><</link>>
+
+<<else>>
+	<<link [[알렉스가 안게 둔다|Pregnancy Birth Hospital Alex 2]]>><<set $phase to 1>><</link>>
+	<br>
+	<<link [[아기들을 계속 안고 있는다|Pregnancy Birth Hospital Alex 2]]>><<set $phase to 2>><</link>>
+<</if>>
+
+:: Pregnancy Birth Hospital Alex 2
+<<effects>>
+
+<<if $phase is 1>>
+	"자, 너도 <<if $litter_size is 1>><<childhim>><<else>>아기들을<</if>> 안아봐." 당신은 알렉스에게 <<if $litter_size is 1>><<childname>><<else>><<childrenNames $bornChildrenIds>><</if>>【을를】 건네며 말한다.
+	<br><br>
+
+	<<He>>【은는】 <<if $litter_size is 1>><<childhim>><<else>>아기들을<</if>> 안는 데 아무런 문제가 없다. 사실, <<hes>> 이런 일에 익숙해 보인다. "정말 귀엽네." <<he>>【이가】 킥킥 웃으며 당신에게 <<if $litter_size is 1>><<childname>><<else>>아기들을<</if>> 돌려주며 말한다.
+	<br><br>
+
+<<else>>
+	<<if $litter_size gte 2>>
+		당신은 아기들을 가슴에 안는다. <<childname>>【이가】 하품한다.
+	<<else>>
+		당신은 아기를 가슴에 안는다. <<childHe>>【이가】 하품한다.
+	<</if>>
+	<br><br>
+
+<</if>>
+
+"벌써 <<if $litter_size is 1>><<childhim>>에게 이름을 지어줬어<<else>>아기들 이름을 지어줬어<</if>>?"
+<br>
+
+당신은 고개를 끄덕이고 알렉스에게 <<if $litter_size is 1>><<childhis>> 이름<<else>>아기들의 이름<</if>>【을를】 알려준다.
+<br>
+
+"<<if $litter_size is 1>><<childname>><<else>><<childrenNames $bornChildrenIds>><</if>>【이】구나, 응? 이제 집에 가자, 어때?" <<he>>【이가】 말한다.
+<br><br>
+
+당신의 얼굴에 혼란스러운 표정이 스쳐 지나간다. "우리가 <<if $litter_size is 1>><<childhim>><<else>>아기들을<</if>> 데리고 말을 타고 농장으로 갈 수는 없다는 거 알지?"
+<br><br>
+
+알렉스가 웃는다. "알아, 바보야. 내가 정말 그럴 거라고 생각했어?" <<he>>【이가】 묻는다.
+<br>
+
+"알았어," <<he>>【이가】 인정한다. "어쩌면 그럴 생각도 했었지. 하지만 있잖아, 맞춰봐. 누가 우리를 태워주기로 했어. 이리 와, 보여줄게." <<he>>【이가】 차가 주차된 곳으로 당신을 안내하며 말한다.
+<br><br>
+
+<<if pregnancyCountBetweenParents("pc","Alex") gte 2 or pregnancyCountBetweenParents("Alex","pc") gte 2>>
+	<<link [[다음|Pregnancy Birth Hospital Alex 5]]>><<endevent>><</link>>
+
+<<else>>
+	<<link [[다음|Pregnancy Birth Hospital Alex 3]]>><</link>>
+
+<</if>>
+
+:: Pregnancy Birth Hospital Alex 3
+/*This part may only happen if the player first birth was at the hospital*/
+<<effects>>
+<<set _alex to statusCheck("Alex")>>
+
+"잠깐만," 뒤에서 목소리가 들린다. <span class="red">베일리다.</span>
+<br>
+"내 소유물을 데리고 어딜 가려는 거지?" <<nnpc_he "Bailey">>【이가】 말한다.
+<br><br>
+
+알렉스가 눈살을 찌푸린다. "네 '소유물'? 대체 무슨 말을 하려는 거야, 친구?"
+<br><br>
+
+베일리는 알렉스의 질문을 무시하고 당신을 쏘아본다. "고아원에 자리를 마련해 뒀어. 이제 내 일이 편해지도록 <<print $litter_size > 1 ? "애새끼들을" : "애새끼를">> 넘겨."
+<br><br>
+
+"우리가 우리 <<print $litter_size > 1 ? "아이들을" : "아이를">> 그냥 너한테 줄 거라고 생각하는 이유가 뭐지?" 알렉스가 항의한다.
+<br><br>
+
+베일리가 <<nnpc_his "Bailey">> 시선을 알렉스에게 돌린다. "이봐, '소<<nnpc_gendery "Alex">>', 네가 아무 창녀랑 떡을 쳤어도 난 신경 안 썼을 거야. 하지만 넌 내 보호 대상에 손을 댔어."
+<br>
+
+알렉스가 <<his>> 주먹을 쥔다. "그리고 정확히 누가 <<pshe>> 네 거라고 했지? <<pShes>> 내 <<woman>>【아야】."
+<br>
+
+베일리는 꿰뚫는 듯한 시선으로 알렉스를 쳐다본다. "그리고 네가 농장이라고 부르는 그 구멍에서 정확히 어떻게 애를 돌볼 계획인데?"
+<br><br>
+
+<<link [[다음|Pregnancy Birth Hospital Alex 4]]>><</link>>
+
+:: Pregnancy Birth Hospital Alex 4
+<<effects>>
+
+"오두막에 우리만의 아기 방이 있어. 네 도움은 필요 없어." 알렉스가 대답한다.
+<br><br>
+
+귀가 먹먹할 정도의 긴 침묵이 주위를 채운다. 베일리는 계속해서 당신과 알렉스를 쳐다본다.
+<br><br>
+
+"쯧." 베일리가 먼저 침묵을 깬다. "마음대로 해. 어차피 내 골칫거리 하나 줄어드는 셈이니까." 당신에게 마지막으로 한 번 더 눈을 흘긴 뒤, <<nnpc_he "Bailey">>【은는】 몸을 돌려 병원을 떠난다.
+<br><br>
+
+"끝나서 다행이다." 알렉스가 말한다. "차가 주차된 곳으로 가자."
+<br><br>
+
+<<link [[다음|Pregnancy Birth Hospital Alex 5]]>><<endevent>><</link>>
+
+:: Pregnancy Birth Hospital Alex 5
+<<effects>>
+<<set _alex to statusCheck("Alex")>>
+<<loadNPC 0 "alexs_parent1">>
+<<npc "Alex" 2>><<person2>>
+
+<<run getChildrenAt("home").forEach(child => {
+	const pregnancy = getPregnancyOf(child);
+	if (pregnancy.donor === "Alex" || pregnancy.carrier === "Alex") child.development.location = "alex_cottage";
+})>>
+
+알렉스의 <<father>>【이가】 당신 둘에게 손을 흔든다.
+<br><br>
+
+알렉스가 당신을 위해 문을 열어준다. <<person2>><<He>>【은는】 당신이 안으로 들어가는 것을 돕고는 당신 옆자리에 앉는다.
+<br><br>
+
+<<if pregnancyCountBetweenParents("pc", "Alex") gte 2>>
+	"또?" <<nnpc_His "Alex">> <<person1>><<father>>【이가】 웃는다. "내 <<nnpc_daughter "Alex">>【이가】 널 확실히 바쁘게 만드는군, 안 그래 <<nnpc_he "Alex">>?"
+	<br><br>
+
+	알렉스는 얼굴을 붉히며 고개를 돌린다.
+	<br><br>
+
+<<else>>
+	"내 작은 <<nnpc_gendery "Alex">>【이가】 드디어 정착하는구나." <<nnpc_his "Alex">> <<person1>><<father>>【이가】 웃으며 말한다.
+	<br>
+
+	알렉스는 얼굴을 붉히며 고개를 돌린다.
+	<br><br>
+
+	"게다가 이렇게 <<if $player.gender_appearance is "f">>아름다운<<else>>잘생긴<</if>> <<woman>>【이】랑 말이야!" <<he>>【이가】 덧붙인다.
+	<br>
+
+	"<<Ma>>!" 알렉스가 항의한다.
+	<br>
+
+	"왜? 사실을 말하는 건데." <<he>>【이가】 말한다. 알렉스의 얼굴이 이보다 더 붉어질 수는 없을 것 같다.
+	<br><br>
+
+<</if>>
+
+<<link [[다음|Pregnancy Birth Hospital Alex 6]]>><</link>>
+
+:: Pregnancy Birth Hospital Alex 6
+<<effects>>
+
+<<He>>【은는】 농장으로 차를 몰며, 이따금 <<his>> <<print $litter_size > 1 ? "손주들을" : "손주를">> 보고 미소 짓는다.
+<br><br>
+
+긴 여정은 아니었고, 당신은 곧 농장에 도착한다.
+<br><br>
+
+알렉스는 당신이 차에서 내리는 것을 돕고, 당신의 <<print $litter_size > 1 ? "아이들을" : "아이를">> 오두막의 아기 방으로 데려간다.
+<br><br>
+
+<<if pregnancyCountBetweenParents("pc", "Alex") gte 2>>
+	알렉스의 <<father>>【이가】 알렉스에게 몸을 돌린다. "네가 정착해서 기쁘긴 한데, 피임 좀 하는 게 어때? 네 아이들이 너보다 형제가 더 많아지길 바라는 게 아니라면 말이야." <<He>>【은는】 웃으며 차를 몰고 떠난다.
+	<br><br>
+
+<<else>>
+	알렉스의 <<father>>【이가】 알렉스에게 몸을 돌린다. "이제 일하러 돌아가야 하지만, 들어봐, 네가 자랑스럽다. 드디어 이 장소를 집처럼 만들고 있구나." <<he>>【이가】 말하고는 차를 몰고 떠난다.
+	<br><br>
+
+<</if>>
+
+<<link [[다음|Farm Work]]>><<endevent>><<unset $litter_size>><<unset $alex_pregnancy>><</link>>

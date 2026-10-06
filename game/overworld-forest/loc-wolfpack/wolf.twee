@@ -1,0 +1,1184 @@
+:: Watching the Forest Stay
+<<effects>>
+
+숲 속 깊이 들어가고 싶지 않다. 당신은 검은 늑대에게 등을 돌리고 막 술래잡기를 시작하려는 어린 녀석들에게 돌아간다.
+<br><br>
+
+<<beasttype>>【은는】 만족스러워 보이지 않지만, 그럼에도 불구하고 당신을 보내준다. 당신이 나이 든 <<if $monster is 1>>늑대인간<<else>>늑대<</if>> 한 쌍을 지나갈 때, 그들의 <<if $monster is 1>>얼굴<<else>>주둥이<</if>>에 희미한 불만이 그려져 있는 것을 알아차린다.
+<br><br>
+
+<<if $monster is 1>>
+
+	"부르면, 따라와야지." 그들 중 하나가 말하는 소리가 들린다.
+	<br><br>
+
+<</if>>
+
+<<link [[다음|Wolf Cave Clearing]]>><<endevent>><</link>>
+
+:: Watching the Forest Follow
+<<effects>>
+
+<<if $forestCliffKnown isnot 1>>
+
+	당신은 검은 늑대를 따라 숲 속 깊이 들어간다. 사냥할 때와는 달리, 당신의 동료는 당신의 속도에 맞춰 천천히 걷는다.
+	<br><br>
+
+	숲의 이 부분은 당신에게 익숙하지 않다. 하지만, <<beasttype>>【은는】 당신이 어디로 가고 있는지 정확히 아는 것 같다.
+	<br><br>
+
+	<<bhis>> <<if $monster is 1>>얼굴<<else>>주둥이<</if>>에 가득한 순수한 자신감이 당신의 마음에 평온을 가져다준다.
+	<br><br>
+
+	안전하다고 느낀다. 이렇게 크고 사나운 <<beasttype>>【을를】 공격하려는 사람은 아무도 없을 것이다.
+	<br><br>
+
+	당신은 미소를 지으며 <<bhis>> 검은 <<if $monster is 1>>머리카락<<else>>털<</if>> 위로 손가락을 스친다.<<lstress>><<stress -6>>
+	<br><br>
+
+<<else>>
+	당신은 검은 늑대를 따라 숲 속 깊이 들어간다. 사냥할 때와는 달리, 당신의 동료는 당신의 속도에 맞춰 천천히 걷는다.
+	<br><br>
+
+	당신은 이미 검은 늑대와 함께 숲의 이 부분에 와본 적이 있다. 전과 마찬가지로, <<bhe>>【은는】 <<bhis>> <<if $monster is 1>>얼굴<<else>>주둥이<</if>>에 자신감 있는 표정을 짓고 있고, 그것이 당신의 마음에 평화를 가져다준다.
+	<br><br>
+
+	안전하다고 느낀다. 이렇게 크고 사나워 보이는 <<beasttype>>【을를】 감히 공격하려는 사람은 아무도 없을 것이다.
+	<br><br>
+
+	당신은 미소를 지으며 <<bhis>> 검은 <<if $monster is 1>>머리카락<<else>>털<</if>> 위로 손가락을 스친다.<<lstress>><<stress -6>>
+	<br><br>
+
+<</if>>
+
+<<link [[다음|Watching the Forest Follow 2]]>><</link>>
+
+:: Watching the Forest Follow 2
+<<effects>>
+
+<<if $forestCliffKnown isnot 1>>
+
+	곧, 드문드문 나무가 솟아 있는 높은 언덕에 다다른다. 검은 늑대는 멈추지 않고 언덕을 계속 올라가며, <<bhis>> 눈으로 부드러운 눈빛을 보내 당신도 따라오도록 재촉한다.
+	<br><br>
+
+	<<if $monster is 1>>
+
+		"힘들지만, 다리에 좋다. 가자." <<bhe>>【이가】 말한다.
+		<br><br>
+
+	<</if>>
+
+	정상에 도착하자 숨이 멎을 듯한 광경이 펼쳐진다. 방금 올라온 언덕의 측면과는 달리, 반대편은 갑자기 깎아지른 절벽으로, 아래에 펼쳐진 숲의 장관을 드러낸다. 바람에 평화롭게 흔들리는 나무 꼭대기와 수평선을 향해 구불구불 이어지는 강줄기가 보인다. <<lstress>><<stress -6>>
+<<else>>
+
+	드문드문 나무가 솟아 있는 익숙한 언덕 기슭에 도착한다.
+	<br><br>
+
+	검은 늑대가 언덕을 오르기 시작하자, 당신은 망설임 없이 <<bhim>>【을를】 따라 가장 높은 곳으로 향한다.
+	<br><br>
+
+	<<if $monster is 1>>
+
+		"다리가 더 튼튼해 보인다. 좋아." <<bhe>>【이가】 말한다.
+		<br><br>
+
+	<</if>>
+
+	정상에 도착하자, 아래로 펼쳐진 숲의 평온한 풍경이 다시 한번 눈에 들어온다.
+	<br><br>
+
+	가파른 절벽 가장자리에 서니, 바람에 평화롭게 흔들리는 나무 꼭대기와 수평선을 향해 구불구불 이어지는 강줄기가 보인다.<<lstress>><<stress -6>>
+
+<</if>>
+<br><br>
+
+검은 늑대가 키 큰 풀밭에 <<if $monster is 1>>앉아<<else>>누워<</if>>, 먼 곳에 <<bhis>> 시선을 고정한다.
+<br><br>
+
+<<link [[경치를 감상한다|Watching the Forest Sit]]>><<stress -12>><<trauma -6>><</link>><<lstress>><<ltrauma>>
+<br>
+<<link [[동굴로 돌아간다|Watching the Forest Return]]>><</link>>
+
+:: Watching the Forest Sit
+<<effects>>
+
+당신은 검은 늑대 옆에 앉아 먼 곳을 바라본다.
+<br><br>
+
+얼마 지나지 않아 당신은 <<bhis>> 포근한 검은 털에 몸을 기대고 있는 자신을 발견한다.
+<br><br>
+
+이 고요한 순간, 당신의 마음속에는 오직 당신과, 동반자의 온기, 그리고 지평선을 향해 뻗어 있는 끝없는 숲만이 존재한다.
+<br><br>
+
+/*<<if $monster is 1 and C.npc["Black Wolf"].love gte 100>>
+	<<link [[Kiss|Watching the Forest Kiss]]>><<npcincr "Black Wolf" love 1>><</link>><<glove>>
+<</if>>*/
+
+<<link [[낮잠 자기 (3:00)|Watching the Forest Nap]]>><</link>><<ltiredness>>
+<br>
+<<link [[계속 지켜본다|Watching the Forest Watch]]>><<stress -9>><<trauma -6>><</link>><<lstress>><<ltrauma>>
+<br>
+<<link [[동굴로 돌아간다|Watching the Forest Return]]>><</link>>
+
+:: Watching the Forest Kiss
+<<effects>>
+
+:: Watching the Forest Nap
+<<effects>>
+
+눈꺼풀이 점점 무거워지는 것을 느낀다. 졸음을 이기지 못하고, 당신은 잠에 빠져든다.
+<br><br>
+
+<<link [[다음|Watching the Forest Nap 2]]>><<pass 180>><<tiredness -20>><</link>>
+
+:: Watching the Forest Nap 2
+<<effects>>
+
+눈을 뜨자, 당신은 여전히 검은 늑대에게 몸을 기댄 채다. 늑대는 위에서 숲을 계속 지켜보고 있다. 잠든 지 얼마나 시간이 흘렀는지 알 수 없다.
+<br><br>
+
+<<if $monster is 1>>
+
+	검은 늑대는 당신이 깨어난 것을 알아차리자마자, 일어나 당신의 눈을 바라본다.
+	<br><br>
+
+	"내가 지켜줬다." <<bhe>>【이가】 안심시키듯 말한다. "이제 무리로 돌아가자."
+	<br><br>
+
+<<else>>
+
+	검은 늑대는 당신이 깨어난 것을 알아차리자마자, 일어나 당신의 눈을 바라본다. 당신은 <<bhe>>【이가】 집으로 돌아가자고 제안하는 것임을 이해한다.
+	<br><br>
+
+<</if>>
+
+동굴로 돌아오자, 무리는 둘 다 돌아온 것을 보고 기뻐한다.
+<br><br>
+
+<<link [[다음|Wolf Cave Clearing]]>><<set $forestCliffKnown to 1>><<endevent>><</link>>
+
+:: Watching the Forest Watch
+<<effects>>
+
+당신은 높은 곳에서 계속 숲을 지켜본다.
+<br><br>
+
+잠시나마 걱정과 두려움이 마음에서 사라지는 것을 느낀다.
+<br><br>
+
+<<if $monster is 1>>
+
+	"평화로운 곳이다." <<bhe>>【이가】 말한다. "마음에 든다." <<bhe>>【이가】 말한다.
+	<br><br>
+
+<</if>>
+
+언덕 위에서 얼마나 있었을까, 검은 늑대가 <<bhis>> 아늑한 자리에서 일어선다. <<bhis>> 눈빛으로 보아, 돌아가야 할 시간임을 짐작한다.
+<br><br>
+
+동굴로 돌아오자, 무리는 둘 다 돌아온 것을 보고 기뻐한다.
+<br><br>
+
+<<link [[다음|Wolf Cave Clearing]]>><<set $forestCliffKnown to 1>><<endevent>><</link>>
+
+:: Watching the Forest Return
+<<effects>>
+
+<<if $forestCliffKnown isnot 1>>
+
+	당신은 검은 늑대의 <<bhis>> 머리를 쓰다듬으며 이렇게 멋진 곳에 데려와 준 것에 대해 <<bhim>>에게 감사하지만, 무리가 당신의 갑작스러운 부재에 대해 걱정하기 전에 돌아가자고 제안한다.
+
+<<else>>
+
+	당신은 검은 늑대의 머리를 쓰다듬으며, 이 멋진 곳에 다시 데려와 준 것에 대해 <<bhim>>에게 감사하지만, 무리가 당신의 갑작스러운 부재에 대해 걱정하기 전에 돌아가야 한다고 제안한다.
+
+<</if>>
+<<beasttype>>【이가】 당신의 손을 핥고<<if $monster is 1>>, 무언가 웅얼거리더니<</if>> 일어선다.
+<br><br>
+
+동굴로 돌아오자, 무리는 둘 다 돌아온 것을 보고 기뻐한다.
+<br><br>
+
+<<link [[다음|Wolf Cave Clearing]]>><<set $forestCliffKnown to 1>><<endevent>><</link>>
+
+:: Wolf Relax
+<<effects>>
+
+<<if $phase is 1>>
+	<<set $phase to 0>>
+	당신은 검은 늑대를 향해 나아간다.
+	<<if $wolfgirl gte 6 and $wolfpackferocity gte 15 and $wolfpackharmony gte 15 and Time.dayState isnot "night" and ($daily.blackWolfHeatEvent or 0) - Time.hour lte -3 and ((playerHeatMinArousal() and (V.player.vaginaExist or playerCanCarryAnally()) and C.npc["Black Wolf"].penis isnot "none") or
+	(playerRutMinArousal() and C.npc["Black Wolf"].vagina isnot "none"))>>
+		<<set $daily.blackWolfHeatEvent to Time.hour>>
+		<<set _blackWolfHeatEvent to true>>
+		<<bHe>>【이가】 당신을 발견하고는 몸을 일으켜, 호기심 어린 눈으로 당신을 바라본다.
+		<<if $monster is 1>>
+			"도움이 필요한가, <<ppackbrother>>?" <<bHe>>【이가】 당신 쪽으로 코를 킁킁거리더니, 히죽 웃는다. "기꺼이 도와주지."
+		<<else>>
+			<<bHis>> 꼬리가 당신 쪽 냄새를 맡고는 흔들리기 시작한다.
+		<</if>>
+
+	<<elseif knowsAboutPregnancy("Black Wolf", "pc") or (playerIsPregnant() and playerAwareTheyArePregnant()) and knowsAboutPregnancy("pc","Black Wolf")>>
+
+		<<bwpcinteraction>>
+
+	<<elseif $wolfpackferocity gte 20 and $wolfpackharmony gte 20>>
+		<<bHe>>【이가】 당신을 발견하고 몸을 일으킨다. <<bHis>> 꼬리가 흔들리기 시작한다.
+		<<if $monster is 1>>
+			<<switch random(1,3)>>
+				<<case 1>>
+					"<<ppackbrother>>【을를】 도와줄까?"
+				<<case 2>>
+					"<<ppackbrother>>. 무사해서 다행이다."
+				<<default>>
+					"<<pPackbrother>>. 오늘 밤을 준비해야 한다. 재미있는 사냥이 될 거다."
+			<</switch>>
+		<</if>>
+	<<elseif $wolfpackferocity gte 10 and $wolfpackharmony gte 10>>
+		<<bHe>>【이가】 당신이 다가가자 돌아본다.
+		<<if $monster is 1>>
+			<<switch random(1,3)>>
+				<<case 1>>
+					"<<pPackbrother>>. 괜찮나?"
+				<<case 2>>
+					"쉬러 왔다. 조용해서."
+				<<default>>
+					"무리는 나아지기도, 나빠지기도 한다."
+			<</switch>>
+		<<else>>
+			<<bHe>>【이가】 <<bhis>> 코로 당신의 팔을 툭 친다.
+		<</if>>
+	<<elseif $wolfpackferocity gte 15>>
+		<<bHe>>【이가】 당신이 정체를 알 수 없는 커다란 뼈를 씹고 있다. 적어도 사람 뼈는 아니다. <<bHe>>【은는】 당신에게 으르렁거리지만, 이내 냄새를 맡고 당신의 향을 확인하고는 진정한다.
+		<<if $monster is 1>>
+			<<switch random(1,3)>>
+				<<case 1>>
+					"<<ppackbrother>>. 뭘 원하나?"
+				<<case 2>>
+					"<<pPackbrother>>. 저 아래 있어야지. 새끼들과 놀아줘라."
+				<<default>>
+					"지금은 방해받고 싶지 않다."
+			<</switch>>
+		<</if>>
+	<<elseif $wolfpackharmony gte 15>>
+		<<bHe>>【이가】 잠이 들려다가 당신이 갑자기 나타나자 잠에서 깬다. <<bHe>>【은는】 하품을 한다.
+		<<if $monster is 1>>
+			<<switch random(1,3)>>
+				<<case 1>>
+					"무리가 조용하군. 지금 잠 좀 자면 좋겠다."
+				<<case 2>>
+					"어린 새끼들... 활기차. 그리고 시끄럽지."
+				<<default>>
+					"동굴은 가끔 너무 시끄럽다. 종종 여기로 낮잠 자러 온다."
+			<</switch>>
+		<</if>>
+	<<elseif $wolfpackferocity gte 1 and $wolfpackharmony gte 1>>
+		<<bHis>> 귀가 당신이 다가오자 쫑긋하지만, <<bhe>>【은는】 당신을 알아보려 돌아보지는 않는다.
+		<<if $monster is 1>>
+			<<switch random(1,3)>>
+				<<case 1>>
+					"나머지 무리를 여기로 데려오지 마라."
+				<<case 2>>
+					"앉아라, <<ppackbrother>>."
+				<<default>>
+					"무리는 숲을 향해 울부짖는다. 가끔은 숲도 답한다."
+			<</switch>>
+		<</if>>
+	<<else>>
+		<<bHe>>【이가】 아래를 내려다보며 조용히 낑낑거린다. <<bHe>>【은는】 잠시 돌아 당신을 발견하지만, 당신의 존재를 신경 쓰지 않는 것 같다.
+		<<if $monster is 1>>
+			<<switch random(1,3)>>
+				<<case 1>>
+					"그냥 혼자 둬라."
+				<<case 2>>
+					"얼마나 버틸지 가끔 궁금하다."
+				<<default>>
+					"여기로 와야만 했다. 혼자... 있을 필요가 있었어."
+			<</switch>>
+		<</if>>
+	<</if>>
+	<<if !_blackWolfHeatEvent>>
+		<br><br>
+		당신은 <<bhim>> 옆에 앉는다. 둘 다 앉아 있어도, <<if $monster is 1>>당신의 머리는 <<bhis>> 가슴에 겨우 닿는다<<else>><<bhe>>【은는】 당신과 눈을 마주칠 수 있다<</if>>.
+	<</if>>
+<<elseif $phase is 2>>
+	<<set $phase to 0>>
+	무리는 당신 없이 숲으로 뛰어든다.
+	<<if playerIsPregnant() and playerBellySize() gte 15>>
+		검은 늑대가 코웃음을 치고는, 당신의 임신한 배를 툭 친다. 당신은 무리가 함께 떠나는 것을 지켜본다.
+	<<elseif $wolfpackleader is 1 and (statusCheck("Black Wolf").love lt 125 or $wolfpackharmony lt 18)>>
+		검은 늑대는 잠시 의아한 듯 당신을 바라보지만, 당신의 결정을 받아들이는 것 같다. 당신은 무리가 함께 떠나는 것을 지켜본다.
+		<<if $wolfpackharmony lt 18>>
+			<<npcincr "Black Wolf" love -1>><<llove>>
+		<</if>>
+	<<else>>
+		검은 늑대가 당신의 목에 다정하게 코를 비비더니, 이내 코웃음을 치며 긴장을 풀고 무리가 떠나는 것을 지켜본다.
+	<</if>>
+	<<lharmony>>
+<<else>>
+	당신은 검은 늑대 곁에 앉아 쉰다.
+	<<switch random(1,8)>>
+		<<case 1>>
+			아래 어딘가에서 어린 <<wolf_cave_plural>> 소리가 들린다. 검은 늑대는 강가에서 장난치며 싸우는 그들을 흐뭇하게 바라본다.
+			<<if $monster is 1>>
+				"새끼들이 노는 걸 보니 마음이 편안해지는군." <<bhe>>【이가】 놀랍도록 다정한 목소리로 말한다. <<if pregnancyCountBetweenParents("pc", "Black Wolf") gte 1>>"이제 내 새끼를 갖게 되어 기쁘다."<<else>>"언젠가 내 새끼를 가졌으면 좋겠다."<</if>>
+			<<else>>
+				<<bhis>> 몸에서 긴장이 일부 풀리는 것을 볼 수 있다.
+			<</if>>
+		<<case 2>>
+			<<bHe>>【이가】 우뚝 서서 동굴과 그 주변 지역을 살핀다. <<bHe>>【은는】 곧 자리에 앉는다.
+			<<if $monster is 1>>
+				"무리는 여기서 안전하다." <<bhe>>【이가】 말한다. "외부인들은 멀리 떨어져 있어야 한다는 걸 안다."
+			<<else>>
+				<<bHe>>【이가】 동굴의 안전에 만족하며 흡족한 듯 코웃음을 친다.
+			<</if>>
+		<<case 3 4>>
+			<<if $syndromeeden is 1 and $rng gte 51>>
+				<<bHe>>【이가】 에덴의 오두막 방향을 쳐다본다. <<bHis>> 귀가 <<bhis>> 머리에 바싹 붙는다.
+				<<if $monster is 1>>
+					"요전 날 아주 큰 소리를 들었다." <<bhe>>【이가】 말한다. "끔찍한 인간의 창조물."
+				<<else>>
+					당신은 총성이 늑대에게 얼마나 크게 들릴지 생각하고는 얼굴을 찡그린다. <<bHe>>【이가】 걱정하는 것도 당연하다.
+				<</if>>
+			<<else>>
+				당신은 <<bhim>>【을를】 쓰다듬으려고 <<bhis>> 털에 손을 뻗는다.
+				<<if $monster is 1>>
+					"<<ppackbrother>>. 내가 길들여진 놈으로 보이나?" <<bhe>>【이가】 당신의 손길을 피하며 묻는다.
+				<<else>>
+					<<bHe>>【이가】 기분이 상한 듯 코웃음을 치며 몸을 뺀다.
+				<</if>>
+			<</if>>
+		<<case 5>>
+			<<if $monster is 1>>
+				<<bHe>>【이가】 <<bhis>> 다리의 한 부분을 문지른다. "<<pPackbrother>>. 혼자 사냥하는 건 피해야 한다." <<bhe>>【이가】 말한다. "외톨이 늑대는 외로운 바보다. 무리에서 떨어져 나오면 다치거나, 더 심한 꼴을 당한다."
+			<<else>>
+				<<bHe>>【이가】 다리의 상처를 핥는다. 꽤 오래된 상처 같고, <<bhim>>【을를】 크게 괴롭히는 것 같지는 않다.
+			<</if>>
+		<<case 6>>
+			호수 방향에서 무언가가 <<bhis>> 주의를 끈다. <<bHe>>【은는】 혼란스러운 듯 <<bhis>> 고개를 갸웃거린다.
+			<<if $monster is 1>>
+				"<<pPackbrother>>. 호수에 가려면 조심해야 한다." <<bhe>>【이가】 경고한다. "무리는 무슨 수를 써서라도 그곳을 피한다."
+			<<else>>
+				<<bHe>>【은는】 불안해 보인다.
+			<</if>>
+		<<case 7>>
+			<<bHe>>【이가】 당신의 냄새를 맡기 시작하더니, <<bhis>> 주둥이를 당신의 머리카락에 파묻고 코를 킁킁거린다.
+			<<if $monster is 1>>
+				"<<ppackbrothers>> 냄새는 절대 잊을 수 없다." <<bhe>>【이가】 말한다. "필요하다면 숲 전체를 추적할 수 있다."
+			<<else>>
+				<<bHe>>【은는】 아마 지금쯤 당신의 냄새를 기억했을 것이다.
+			<</if>>
+		<<case 8>>
+			<<if $wolfgirl gte 4 and $transformationParts.wolf.ears isnot "hidden">>
+				<<if random(1,2) is 1>>
+					<<bHe>>【이가】 당신의 얼굴 냄새를 맡더니, 다정하게 당신의 목에 코를 비빈다.
+					<<if $monster is 1>>
+						"<<pPackbrothers>> 털이 오늘따라 아름답군." <<bhe>>【이가】 말한다.
+					<<else>>
+						<<bHe>>【은는】 아마 지금쯤 당신의 냄새를 기억했을 것이다.
+					<</if>>
+				<<else>>
+					<<bHe>>【이가】 당신의 늑대 귀를 감탄하며 바라본다. <<bHe>>【은는】 부드럽게 귀를 깨문다.
+					<<if $monster is 1>>
+						"<<pPackbrother>>. 무리와 사는 것에 잘 적응했군." <<bhe>>【이가】 말한다.
+					<</if>>
+				<</if>>
+			<<elseif $cat gte 4 and $transformationParts.cat.ears isnot "hidden">>
+				<<bHe>>【이가】 당신의 고양이 귀를 노려본다.
+				<<if $monster is 1>>
+					"<<pPackbrother>>. 길을 잃었군." <<bhe>>【이가】 <<bhis>> 고개를 저으며 말한다. "한동안 무리와 함께 있어야 한다."
+				<<else>>
+					<<bHe>>【이가】 으르렁거리지만, 당신에게 달려들려다 <<bhimself>> 멈춘다.
+				<</if>>
+			<<elseif $fox gte 4 and $transformationParts.fox.ears isnot "hidden">>
+				<<bHe>>【이가】 당신의 여우 귀를 노려본다.
+				<<if $monster is 1>>
+					"<<pPackbrother>>. 골치 아파 보이는군." <<bhe>>【이가】 <<bhis>> 고개를 저으며 말한다. "한동안 무리와 함께 있어야 한다."
+				<<else>>
+					<<bHe>>【이가】 으르렁거리지만, 당신에게 달려들려다 <<bhimself>> 멈춘다.
+				<</if>>
+			<<elseif $harpy gte 6 and $transformationParts.bird.plumage isnot "hidden">>
+				<<bHe>>【이가】 당신의 깃털을 매료된 듯 쳐다본다.
+				<<if $monster is 1>>
+					<<bHe>>【이가】 가까이 다가와 당신의 날개를 따라 손을 움직인다. "비슷한 건 본 적이 없다." <<bhe>>【이가】 말한다. "이 숲에서는."
+				<<else>>
+					<<bHe>>【이가】 가까이 다가와 당신의 날개 냄새를 맡는다. <<bHe>>【은는】 아마 이렇게 가까이서 날개를 본 적이 별로 없을 것이다.
+				<</if>>
+			<<elseif $cow gte 4 and $transformationParts.cow.ears isnot "hidden">>
+				<<bHe>>【이가】 당신의 소 귀를 쳐다보며 <<bhis>> 고개를 갸웃거린다.
+				<<if $monster is 1>>
+					"<<pPackbrothers>> 귀는 쫑긋 세울 수 없군." <<bhe>>【이가】 말한다. "먼 거리 소리는 잘 못 듣겠어. 그래도 무리의 울음소리는 들을 수 있겠지."
+				<<else>>
+					<<bHe>>【이가】 냄새를 맡으려고 몸을 기울인다,
+					<<if $transformationParts.cow.horns isnot "hidden" or ($demon gte 2 and $transformationParts.demon.horns isnot "hidden")>>
+						하지만 <<bhis>> 코가 당신의 뿔에 부딪힌다. <<bHe>>【은는】 코웃음을 치며 물러선다.
+					<<else>>
+						간지러운 느낌에 당신은 킥킥 웃는다.
+					<</if>>
+				<</if>>
+			<<else>>
+				<<if $monster is 1>>
+					<<bHe>>【이가】 당신의 머리카락 위로 손을 움직인다. "<<ppackbrother>>. 전투에서 귀를 잃었나? 애도를 표한다." 당신은 킥킥 웃으며 머리 옆을 톡톡 쳐서 인간의 귀를 보여준다. <<bHe>>【은는】 이해하지 못하는 것 같고, 코웃음을 치며 고개를 돌린다.
+				<<else>>
+					<<bHe>>【이가】 몸을 기울여 당신의 얼굴 냄새를 맡는다.
+				<</if>>
+			<</if>>
+	<</switch>>
+<</if>>
+<br><br>
+
+<<if $wolfevent is 1 and ($wolfstate is "cave" and !["finished","ongoing"].includes($huntstate) and ["dusk", "night"].includes(Weather.dayState))>>
+	<<set $huntstate to "ongoing">><<set $wolfpackpoisoned to 0>>
+	<<if (statusCheck("Black Wolf").love gte random(100,200) or $wolfpackleader is 1 or playerConceivedWith("Black Wolf")) and ($wolfpackharmony + $wolfpackferocity gte 20)>>
+		무리가 사냥 준비를 하며 흥분해서 울부짖기 시작한다. 당신은 검은 늑대를 쳐다본다. <<bhe>>【이가】 그들과 합류할 거라 예상했지만, 대신 당신을 향해 보고 있는 <<bhim>>【을를】 발견한다.
+		<<if $wolfpackleader is 1>>
+			<<if $monster is 1>>
+				"사냥하나, 대장?"
+			<<else>>
+				<<bHe>>【이가】 당신의 지시를 기다린다.
+			<</if>>
+		<<else>>
+			<<if $monster is 1>>
+				"오늘 밤은 우리 없이도 무리가 사냥을 잘할 것 같다."
+			<<else>>
+				<<bHe>>【은는】 헤어지기를 주저하는 것 같다.
+			<</if>>
+		<</if>>
+		<br><br>
+
+		<<link [[함께 간다|Wolf Cave Hunt]]>><<set $wolfstate to "hunt">><<npcincr "Black Wolf" love 1>><<endevent>><</link>><<glove>>
+		<br>
+		<<link [[검은 늑대와 함께 머무른다|Wolf Relax]]>><<set $phase to 2>><<set $blackWolfNotHunting to true>><</link>>
+		<br>
+		<<link [[검은 늑대에게 가라고 격려한다|Wolf Cave Hunt Leave]]>><<endevent>><<set $phase to 1>><<set $wolfstate to "hunt">><</link>>
+		<br>
+	<<else>>
+		<<if npcBellySize("Black Wolf") lte 15>>
+			<<set $wolfstate to "hunt">>
+			검은 늑대가 일어서서 울부짖는다. 나머지 무리도 함께한다.
+			<<if $monster is 1>>
+				"곧 사냥한다. 준비해라."
+			<<else>>
+				그들은 사냥을 가려 한다.
+			<</if>>
+		<<else>>
+			<<set $blackWolfNotHunting to true>>
+			무리가 나무 사이를 달리며 울부짖기 시작한다. 당신은 검은 늑대와 함께 <<bhis>> 바위에 앉아, <<bhe>>【이가】 <<bhis>> 임신한 배를 툭 치는 것을 지켜본다.
+			<<if $monster is 1>>
+				<br><br>
+				<<bHe>>【은는】 한숨을 쉬고 누워서 무리를 지켜본다.
+			<</if>>
+		<</if>>
+		<<endevent>>
+		<br><br>
+
+		<<link [[함께 간다|Wolf Cave Hunt]]>><</link>>
+		<br>
+		<<link [[떠나는 것을 지켜본다|Wolf Cave Hunt Leave]]>><</link>>
+		<br>
+	<</if>>
+<<elseif Time.dayState is "night">>
+	검은 늑대가 일어선다.
+	<<if $monster is 1>>
+		"어둠이 내린다." <<bhe>>【이가】 말한다. "이제 자야 한다." <<bHe>>【은는】 걸어간다.
+	<<else>>
+		<<bHe>>【이가】 밤하늘을 보더니, 걸어간다.
+	<</if>>
+	<br><br>
+	<<link [[따라가서 잔다|Wolf Cave Bed]]>><<endevent>><</link>>
+	<br>
+	<<link [[머무른다|Wolf Cave Clearing]]>><<endevent>><</link>>
+<<else>>
+	<<if _blackWolfHeatEvent and hasSexStat("deviancy", 5)>>
+		<<if playerAwareTheyAreInHeat() and $NPCList[0].penis isnot "none" and (($player.vaginaExist and !playerChastity("vagina")) or (playerCanCarryAnally() and !playerChastity("anus")))>>
+			<<ind>><<link [[엉덩이를 내민다|Wolf Cave Black Wolf Before Mate]]>><</link>><<deviant5>><<wolfgirl>><<heat>>
+			<br>
+		<</if>>
+		<<if playerRutMinArousal() and $NPCList[0].vagina isnot "none" and !playerChastity("penis")>>
+			<<ind>><<link [[장난스레 깨문다|Wolf Cave Black Wolf Before Mate]]>><<set $phase to 1>><</link>><<deviant5>><<wolfgirl>><<rut>>
+			<br>
+		<</if>>
+	<</if>>
+	<<if playerIsPregnant() and playerAwareTheyArePregnant() and playerBellySize() gte 7 and !knowsAboutPregnancy("pc","Black Wolf")>>
+		<<ind>><<link [[배를 내민다 (0:10)|Player Presents Pregnancy To Black Wolf]]>><<pass 10>><</link>>
+		<br>
+	<</if>>
+	<<ind>><<link [[휴식을 취한다 (0:15)|Wolf Relax]]>><<pass 15>><<stress -3>><<tiredness -3>><<npcincr "Black Wolf" love 1>><<if $rng gte 71>><<transform wolf 1>><</if>><</link>><<lstress>><<ltiredness>><<glove>>
+	<br>
+	<<if canGiftFood("Black Wolf")>>
+		<<skinicon "give">><<link [[검은 늑대에게 음식을 준다|Black Wolf Gifts List]]>><</link>>
+		<br>
+	<</if>>
+	<<getouticon>><<link [[떠난다|Wolf Cave Clearing]]>><<endevent>><</link>>
+	<br>
+<</if>>
+
+:: Wolf Challenge Accept
+<<effects>><<set $wolfchallengereason to 0>>
+당신은 위협적인 자세를 취하며 검은 늑대에게 <<if $transformationParts.traits.fangs isnot "disabled">>송곳니<<else>>이빨<</if>>【을를】 드러내 보이고, 물러서지 않겠다는 뜻을 분명히 한다. <<bHe>>【은는】 즉시 당신에게 달려든다.
+<<if $monster is 1>>
+	"네가 무리에 걸맞은 존재임을 보여라!"
+<</if>>
+<br><br>
+
+<<link [[다음|Wolf Challenge Fight]]>><<set $fightstart to 1>><</link>>
+
+:: Wolf Challenge Surrender
+<<effects>><<set $wolfpackleader to 0>><<set $wolfchallengereason to 0>>
+당신은 땅에 엎드려 머리와 목을 감싸며, 짐승이 자비를 베풀어주길 바란다.
+<<if $speech_attitude is "meek">>
+	"아, 안 돼!" 당신은 울부짖는다. "제발, 해치지 마! 네가 우두머리 해!"
+<<elseif $speech_attitude is "bratty">>
+	"저리 가!" 당신은 소리친다. "그 빌어먹을 무리, 너 가져!"
+<<else>>
+	"그냥 가버려!" 당신은 말한다. "다시는 널 귀찮게 안 할게!"
+<</if>>
+<br><br>
+
+<<if $monster is 1>>
+	"한심한 <<ppackbrother>>." <<bhe>>【이가】 으르렁거린다. "약해빠진 놈은 우두머리가 될 자격이 없다. 네가 있어야 할 곳, 무리를 따라라."
+<<else>>
+	검은 늑대는 당신의 한심한 모습을 비웃기라도 하듯 짧게 으르렁거린다.
+<</if>>
+<<bHe>>【이가】 울부짖자, 나머지 무리도 <<bhim>>【을를】 따라 울부짖는다. <<bHe>>【은는】 등을 돌려 동굴로 들어간다. <<wolf_cave_plural>>【은는】 새로운 우두머리의 발자취를 따른다.
+<br><br>
+
+<span class="red">당신은 더 이상 무리를 이끌고 사냥할 수 없습니다.</span>
+<br><br>
+
+<<destinationwolfcave>>
+
+:: Wolf Challenge Reason
+<<effects>>
+무리의 다른 늑대들처럼 살아온 당신은 그들과 더 깊은 유대감을 느낀다. "물러서!" 당신이 말한다. 검은 늑대는 <<if $monster isnot 1>>당신의 명령을 이해한 듯 <</if>>한 걸음 뒤로 물러선다.
+
+"무리가 화난 거 알아..." 당신은 <<if $settings.bestialityEnabled>>짐승들<<else>>괴물들<</if>>【이가】 알아듣기 쉽도록 천천히 말하려 애쓴다. "긴장감은 높고, 사냥 성공률은 낮지. 하지만 무리가 강해지려면 단결해야 해. 가족끼리 공격해선 안 돼." 당신은 단호한 요구를 간신히 유지한다.
+<br><br>
+
+<<if $wolfchallengereason is 1>>
+	검은 늑대는 당신의 말에 으르렁거린다.
+	<<if $monster is 1>>
+		"<<pPackbrother>>【이가】 지난번에도 그렇게 말했지." <<bhe>>【이가】 뱉어낸다. "말만으로는 사냥감을 잡을 수 없다. <span class="red">무리는 결과를 원한다!</span>"
+	<<else>>
+		<<bHe>>【이가】 동요하지 않고 더 가까이 다가온다. <span class="red"><<bHe>>【은는】 상투적인 말이 아니라 결과를 요구한다.</span>
+	<</if>>
+	<br><br>
+
+	<<link [[싸운다|Wolf Challenge Accept]]>><</link>>
+	<br>
+	<<link [[항복한다|Wolf Challenge Surrender]]>><</link>>
+<<else>>
+	<<set $wolfchallengereason to 1>>
+	<<if $monster is 1>>
+		"우두머리가 솔직하게 말하는군." 검은 늑대가 마지못해 인정한다. <<bHis>> 눈이 가늘어진다. "하지만 우두머리가 무리에 대한 충성을 주장한다면, 그것을 증명해야 할 것이다."
+	<<else>>
+		당신이 처한 상황의 부조리함에도 불구하고, <<beasttype>>【은는】 이해하는 것 같다.
+	<</if>>
+	검은 늑대는 <<bhis>> 공격을 멈추고 돌아선다. 이제 진정되었고, 당신의 반응에 만족한 듯 보인다.
+	<br><br>
+
+	<<destinationwolfcave>>
+<</if>>
+
+:: Wolf Challenge Fight
+<<if $fightstart is 1>>
+	<<set $fightstart to 0>>
+	<<controlloss>>
+	<<violence 1>>
+	<<neutral 1>>
+	<<molested>>
+	<<beastCombatInit>>
+	<<set $enemytrust -= 40>><<set $enemyanger += 200>>
+	<<blackwolfhealth>>
+<</if>>
+
+<<effects>>
+<<effectsman>>
+<br>
+<<beast $enemyno>>
+<br><br>
+<<stateman>>
+<br><br>
+<<actionsman>>
+
+<<if _combatend>>
+	<span id="next"><<link [[다음|Wolf Challenge Fight Finish]]>><</link>></span><<nexttext>>
+<<else>>
+	<span id="next"><<link [[다음|Wolf Challenge Fight]]>><</link>></span><<nexttext>>
+<</if>>
+
+:: Wolf Challenge Fight Finish
+<<set $location to "wolf_cave">><<effects>>
+
+<<if $enemyarousal gte $enemyarousalmax>>
+	<<beastejaculation>>
+
+	검은 늑대가 진정한다.
+	<<if $monster is 1>>
+		<<bHe>>【이가】 말한다. "우두머리... 영리하군. 언젠가 그 영리함으로 무리를 도울지도..." <<bHe>>【은는】 킬킬거리며 돌아선다.
+	<<else>>
+		<<bHe>>【이가】 알 수 없는 표정으로 당신을 보더니, 킁 소리를 내고는 돌아선다.
+	<</if>>
+	<br><br>
+
+	<<tearful>> 당신은 울부짖는다. 다른 <<wolf_cave_plural>>【이가】 당신과 함께 울부짖는다. <span class="gold">당신은 여전히 무리를 이끌고 사냥할 수 있습니다.</span>
+<<elseif $enemyhealth lte 0>>
+	검은 늑대가 뒤로 물러선다. 당신의 힘 과시에 놀란 <<bhe>>【은는】 동굴 안으로 후퇴한다.
+	<<if $monster is 1>>
+		"우두머리가 그리 약하지는 않군." <<bhe>>【이가】 말한다. "언젠가 그 힘으로 무리를 도울지도..."
+	<</if>>
+	<br><br>
+
+	<<tearful>> 당신은 울부짖는다. 다른 <<wolf_cave_plural>>【이가】 당신과 함께 울부짖는다. <span class="gold">당신은 여전히 무리를 이끌고 사냥할 수 있습니다.</span>
+<<else>>
+	<<set $wolfpackleader to 0>>
+	당신은 상대의 순수한 힘과 흉포함에 금세 압도당한다. 검은 늑대가 당신의 목덜미를 <<if $monster is 1>>잡지만<<else>>물지만<</if>>, <<bhe>>【이가】 제대로 붙잡기 전에 간신히 빠져나온다. 당신은 뒤로 비틀거리다 얼굴부터 땅에 처박힌다.
+	<br><br>
+	<<if $monster is 1>>
+		"<<pPackbrother>>【은는】 따르도록 되어 있었지, 이끌도록 되어 있지 않았다." 검은 늑대가 <<bhis>> 머리를 흔들며 말한다. "<<ppackbrother>>【이가】 더 강해지면, 다시 도전하러 와라."
+		<br><br>
+	<</if>>
+
+	<<bHe>>【은는】 등을 돌려 동굴로 들어간다. <<wolf_cave_plural>>【은는】 새로운 우두머리의 발자취를 따른다.
+	<br><br>
+
+	<span class="red">당신은 더 이상 무리를 이끌고 사냥할 수 없습니다.</span>
+	<<if $wolfpackpoisoned isnot 1>>
+		<i>검은 늑대는 매우 강하다. 상황을 대등하게 만들 방법이 분명 있을 것이다.</i>
+	<</if>>
+<</if>>
+<br>
+
+<<endcombat>><<clotheson>>
+<<destinationwolfcave>>
+
+:: Wolf Patrol Intro
+<<effects>>
+<<set $wolfcavepatrol to 0>>
+<<npc "Black Wolf">>
+
+<<if $wolfpackleader is 1>>
+	<<if $wolfpackharmony gte $wolfpackferocity>>
+		<<if $monster is 1>>
+			"우두머리." 당신이 다가가자 <<bHis>> 귀가 쫑긋 솟는다. <<bhe>>【은는】 몸을 일으켜 앉아 <<bhis>> 팔다리를 쭉 뻗는다. 달을 올려다보며, <<bhe>>【은는】 공기 중의 냄새를 맡고 <<bhis>> 꼬리를 흔든다.
+			<br><br>
+			검은 늑대는 눈을 가늘게 뜨고, 귀를 <<bhis>> 머리에 바싹 붙인다. "침입자다." <<bhe>>【이가】 으르렁거린다. 일어서서, <<bhe>>【은는】 가도 좋다는 허락을 구하며 당신을 돌아본다.
+		<<else>>
+			당신이 다가가자 <<bHis>> 귀가 쫑긋 솟는다. <<bhe>>【은는】 몸을 일으켜 앉아 <<bhis>> 팔다리를 쭉 뻗는다. 고개를 뒤로 젖히고, <<bhe>>【은는】 공기 중의 냄새를 맡으며 <<bhis>> 꼬리를 흔든다.
+			<br><br>
+			검은 늑대는 입술을 말아 올려 으르렁거리며, 귀를 <<bhis>> 머리에 바싹 붙인다. 일어서서, <<bhe>>【은는】 가도 좋다는 허락을 구하며 당신을 돌아본다.
+		<</if>>
+	<<else>>
+		<<if $monster is 1>>
+			당신이 다가가자, 검은 늑대는 편안한 상태에서 벗어나 당신이 앉는 동안에도 계속 주시한다. 결국, <<bhe>>【은는】 복종의 의미로 <<bhis>> 시선을 피하지만, 여전히 긴장한 상태를 유지한다.
+			<br><br>
+			"우두머리, 뭐 필요한 거라도?" <<bhe>>【이가】 묻지만, 당신이 대답하기도 전에 다른 무언가가 <<bhis>> 주의를 끈다. <<bHe>>【은는】 다시 돌아볼 때 불안해 보인다.
+			<br><br>
+			"저기 뭔가 있다." <<bhe>>【이가】 당신의 지시를 기다리며 재촉한다.
+		<<else>>
+			당신이 다가가자, 검은 늑대는 편안한 상태에서 벗어나 당신이 앉는 동안에도 계속 주시한다. 결국, <<bhe>>【은는】 복종의 의미로 <<bhis>> 시선을 피하지만, 여전히 긴장한 상태를 유지한다.
+			<br><br>
+			<<bHe>>【은는】 <<bhis>> 고개를 갸웃거리지만, 당신이 말을 걸기도 전에 다른 무언가가 <<bhis>> 주의를 끈다. <<bHe>>【은는】 다시 돌아볼 때 불안해 보인다.
+			<br><br>
+			검은 늑대의 목구멍에서 으르렁거리는 소리가 나고, 짐승은 일어서서 잎사귀 속을 노려본다. <<bHe>>【은는】 움직이지 않고, 그저 가만히 서서 당신의 지시를 기다린다.
+		<</if>>
+	<</if>>
+	<br><br>
+	<<link [[혼자 가라고 명령한다|Wolf Patrol Alone]]>><</link>>
+	<br>
+	<<link [[동행하라고 명령한다 (1:00)|Wolf Patrol Follow]]>><<pass 1 hour>><</link>>
+	<br>
+	<<link [[내버려 두라고 명령한다|Wolf Patrol Ignore]]>><</link>>
+<<else>>
+	<<if $wolfpackharmony gte $wolfpackferocity>>
+		<<if $monster is 1>>
+			"<<pPackbrother>>." 당신이 다가가자 <<bHis>> 귀가 쫑긋 솟는다. <<bhe>>【은는】 몸을 일으켜 앉아 <<bhis>> 팔다리를 쭉 뻗는다. 달을 올려다보며, <<bhe>>【은는】 공기 중의 냄새를 맡고 <<bhis>> 꼬리를 흔든다.
+			<br><br>
+			검은 늑대는 눈을 가늘게 뜨고, 귀를 <<bhis>> 머리에 바싹 붙인다. "침입자다." <<bhe>>【이가】 으르렁거린다. 일어서서, <<bhe>>【은는】 뒤도 돌아보지 않고 나무들 사이로 향한다.
+		<<else>>
+			당신이 다가가자 <<bHis>> 귀가 쫑긋 솟는다. <<bhe>>【은는】 몸을 일으켜 앉아 <<bhis>> 팔다리를 쭉 뻗는다. 고개를 뒤로 젖히고, <<bhe>>【은는】 공기 중의 냄새를 맡으며 <<bhis>> 꼬리를 흔든다.
+			<br><br>
+			검은 늑대는 입술을 말아 올려 으르렁거리며, 귀를 <<bhis>> 머리에 바싹 붙인다. 일어서서, <<bhe>>【은는】 뒤도 돌아보지 않고 나무들 사이로 향한다.
+		<</if>>
+	<<else>>
+		<<if $monster is 1>>
+			당신이 다가가자, 검은 늑대는 편안한 상태에서 벗어나 당신이 앉는 동안에도 계속 주시한다.
+			<br><br>
+			<<bHe>>【은는】 냄새를 맡으면서도, 당신과 나무들 사이를 번갈아 보며 경계를 늦추지 않는다.
+			<br><br>
+			"저기 뭔가 있다." <<bhe>>【이가】 으르렁거리며, 일어서서 달려 나간다. 당신은 그저 혼자 있고 싶어서 핑계를 대는 건 아닌지 궁금해진다.
+		<<else>>
+			당신이 다가가자, 검은 늑대는 편안한 상태에서 벗어나 당신이 앉는 동안에도 계속 주시한다.
+			<br><br>
+			<<bHe>>【은는】 냄새를 맡으면서도, 당신과 나무들 사이를 번갈아 보며 경계를 늦추지 않는다.
+			<br><br>
+			<<bHe>>【은는】 으르렁거리며, 일어서서 달려 나간다. 당신은 그저 혼자 있고 싶어서 핑계를 대는 건 아닌지 궁금해진다.
+		<</if>>
+	<</if>>
+	<br><br>
+	<<link [[따라간다 (1:00)|Wolf Patrol Follow]]>><<pass 1 hour>><</link>>
+	<br>
+	<<link [[무시한다|Wolf Patrol Alone]]>><</link>>
+<</if>>
+
+:: Wolf Patrol Alone
+<<effects>><<set $wolfpatrolsent to 1>>
+
+<<if $wolfpackleader is 1>>
+	<<if $speech_attitude is "meek">>
+		"ㅈ-조사하러 가," 당신은 <<bhim>>에게 말한다. "무리를 지켜."
+	<<elseif $speech_attitude is "bratty">>
+		"그래서? 가서 해결해," 당신은 <<bhim>>에게 말한다. "무리를 지켜."
+	<<else>>
+		"조사하러 가," 당신은 <<bhim>>에게 말한다. "무리를 지켜."
+	<</if>>
+	<br><br>
+<</if>>
+
+당신은 검은 늑대가 떠나는 것을 지켜본다. <<bhis>> 거대한 몸이 덤불 사이로 사라진다.
+<br><br>
+
+<<endevent>><<destinationwolfcave>>
+
+:: Wolf Patrol Ignore
+<<if $speech_attitude is "meek">>
+	"ㄱ-가까이 올 만큼 용감한 건 없을 것 같아," 당신은 몸을 더 가까이 웅크리며 말한다. "네가 남아서 모두를 지켜야 해. 만약을 위해서."
+	<br><br>
+	<<if $wolfpackharmony gte $wolfpackferocity>>
+		검은 늑대는 당신이 <<bhis>> 몸에 기대는 것을 허락하며 킁킁거린다.
+	<<else>>
+		당신이 <<bhim>>에게 기대려 하자 검은 늑대가 밀어낸다. <<bHe>>【은는】 당신의 결정이 명백히 마음에 들지 않는 모양이다.
+	<</if>>
+<<elseif $speech_attitude is "bratty">>
+	"아마 아무것도 아닐 거야," 당신은 팔꿈치로 몸을 기댄 채 말한다. "그냥 여기서 좀 쉬어. <<if Weather.precipitation isnot "none">>혼자 가기엔 너무 추워<<else>>밤이 좋잖아<</if>>."
+	<br><br>
+	<<if $wolfpackharmony gte $wolfpackferocity>>
+		당신은 <<bhis>> 거대한 몸에 더 가까이 웅크리고, <<bhe>>【은는】 당신의 머리에 <<bhis>> 머리를 기댄다.
+	<<else>>
+		당신은 가까이 웅크리려 하지만, <<bhe>>【은는】 당신의 손길을 피한다. <<bHe>>【은는】 당신의 결정이 명백히 마음에 들지 않는 모양이다.
+	<</if>>
+<<else>>
+	"저기보다 여기가 더 널 필요로 해," 당신은 지적한다. "아마 아무것도 아닐 거야."
+	<br><br>
+	검은 늑대는 당신의 칭찬에 자부심을 느끼며 조금 더 꼿꼿이 앉는 것 같다.
+	<<if $wolfpackharmony gte $wolfpackferocity>>
+		당신이 쉬면서 <<bhis>> 몸에 머리를 기대자 <<bHe>>【은는】 그것을 받아들인다.
+	<<else>>
+		하지만, 당신이 <<bhim>>에게 손을 대려 하자 <<bhe>>【은는】 여전히 몸을 뺀다.
+	<</if>>
+<</if>>
+<br><br>
+
+<<endevent>><<destinationwolfcave>>
+
+:: Wolf Patrol Follow
+<<location "forest">><<effects>>
+
+당신들은 함께 숲으로 들어간다. 검은 늑대가 계속 킁킁거리는 동안 동굴 주변을 원을 그리며 수색한다.
+<<if $wolfgirl gte 6 or $cat gte 6 or $fox gte 6>>
+	당신은 최선을 다해 돕지만, 무리의 냄새만 맡을 수 있을 뿐이다.
+<</if>>
+<br><br>
+
+한 바퀴를 다 돌았지만 아무것도 발견되지 않았다. 원을 넓혀 다시 시도하지만, 검은 늑대가 맡았던 냄새는 상상이거나, 더 이상 근처에 없는 것이 틀림없다.
+<<if $monster is 1>>
+	수색이 진행될수록 <<bHe>>【은는】 더욱 초조해한다. "냄새를 맡았어. 확실해!"
+<<else>>
+	<<bHe>>【은는】 으르렁거리며 조심스럽게 주위를 둘러본다. <<bHe>>【은는】 초조해 보인다.
+<</if>>
+<br><br>
+
+<<link [[안심시킨다|Wolf Patrol Follow 2]]>><<sub 1>><<set $phase to 1>><</link>>
+<br>
+<<link [[얕본다|Wolf Patrol Follow 2]]>><<def 1>><<set $phase to 2>><</link>>
+<br>
+<<link [[계속 걷는다|Wolf Patrol Follow 2]]>><<set $phase to 0>><</link>>
+
+:: Wolf Patrol Follow 2
+<<if $phase is 1>>
+	<<if $speech_attitude is "meek">>
+		"ㅎ-헤이, 괜찮아!" 당신은 말한다. "무시하고 위협을 놓치는 것보다 확실히 해두는 게 낫잖아, 그렇지?" 당신은 <<bhis>> 어깨에 부드럽게 손을 얹고 한두 번 두드려주자, <<bhe>>【은는】 계속 걷는다.
+	<<elseif $speech_attitude is "bratty">>
+		"분명히, 그게 뭐였든 도망쳤나 보네," 당신은 킥킥 웃는다. "우리 둘을 이길 수 있을 리가 없지!" 당신이 미소 지으며 <<bhim>>의 등을 친다. 검은 늑대는 계속 나아가면서 조금 더 허리를 편다.
+	<<else>>
+		"넌 네 임무를 다한 거야. 괜찮아." 당신은 <<bhim>>【을를】 위로하기 위해 <<bhis>> 어깨에 손을 얹는다. 효과가 있는 것 같다.
+	<</if>>
+	<<gharmony>><<lferocity>><<npcincr "Black Wolf" love 1>><<glove>>
+	<br><br>
+
+<<elseif $phase is 2>>
+	<<if $speech_attitude is "meek">>
+		"우리가 이렇게 많은 시간을 낭비한 건 ㄴ-네 탓이야," 당신은 중얼거린다. 당신은 고개를 숙인 채 검은 늑대를 쳐다보지 않는다. 그럼에도 불구하고, 당신은 <<bhim>>【이가】 당신을 노려보는 것을 느낄 수 있다. <<bHe>>【은는】 더 가까이 다가와 당신을 나무에 밀어붙인다.
+	<<elseif $speech_attitude is "bratty">>
+		"잘했네, 멍청아. 지금쯤 낮잠이나 잘 수 있었을 텐데!" 당신이 짜증 섞인 한숨을 내쉬자, 화가 난 <<beasttype>>에게 나무 쪽으로 밀쳐진다.
+	<<else>>
+		"자기 전에 심심풀이할 게 필요하긴 했지." 당신이 뻐근함을 없애려 어깨를 돌리자, 검은 늑대가 당신에게 다가온다.
+	<</if>>
+	<br><br>
+
+	<<if $wolfpackleader is 1>>
+		<<if $monster is 1>>
+			"네 생각이었잖아!" <<bhe>>【이가】 으르렁거리더니, 재빨리 다시 물러선다. <<bHe>>【은는】 거의 부끄러워하는 것처럼 보인다. "미안. 누가 우두머리인지 잊었군." <<bHis>> 어깨가 축 처진 채 <<bhe>>【은는】 계속 나아간다.
+		<<else>>
+			다가왔던 것만큼이나 재빨리, 검은 늑대는 뒤로 물러선다. <<bHis>> 귀가 머리에 납작하게 붙고 <<bhe>>【은는】 낑낑거린다. 사과하는 것 같다.
+		<</if>>
+	<<else>>
+		<<if $monster is 1>>
+			"누가 우두머리인지 기억해," <<bhe>>【이가】 으르렁거린다, 날카로운 이빨이 당신 얼굴 바로 앞에 있다.
+		<<else>>
+			<<bHe>>【이가】 당신에게 으르렁거리며, <<bhis>> 이빨을 드러낸다. 누가 책임자인지 기억해야 한다.
+		<</if>>
+	<</if>>
+	<<lharmony>><<gferocity>><<npcincr "Black Wolf" love -1>><<llove>>
+	<br><br>
+<</if>>
+
+<<if $phase is 1>>기분이 나아진 듯한 <<bhe>>【을를】 반기며<<else>><<bhis>> 기분을 무시하고<</if>>, 당신은 강 근처의 풀밭 공터를 향해 계속 걷는다. 그곳이 마지막으로 확인할 장소다.
+<br><br>
+
+동굴을 둘러싼 나무들과 마찬가지로, 공터에서는 들쥐보다 더 위협적인 것은 발견되지 않는다. 머리 위 달빛 아래, 당신이 알아볼 수 있는 몇 송이 꽃들이 꽤 예뻐 보인다.
+<br><br>
+
+잠자는 동안 아무것도 당신을 공격하지 않을 것이라고 만족하며, 당신은 돌아가려고 몸을 돌린다. 검은 늑대가 당신의 길을 막는다.
+<<if $monster is 1>>
+	"혼자 있을 시간이 거의 없어," <<bhe>>【이가】 낮게 으르렁거린다. <<bHis>> 꼬리가 흔들리며 <<bhe>>【은는】 몸을 기울여 당신의 목에 코를 비빈다. <<bHis>> 손이 돌아다니기 시작한다.
+<<else>>
+	<<bHis>> 머리가 당신의 허벅지에 코를 비빈다. <<bHe>>【은는】 무언가를 원하는 것 같다.
+<</if>>
+<br><br>
+
+<<link [[교미 자세를 취한다|Wolf Patrol Sex]]>><<set $sexstart to 1>><</link>>
+<br>
+<<link [[밀어낸다|Wolf Patrol Push]]>><<def 1>><</link>>
+
+:: Wolf Patrol Push
+<<effects>>
+
+<<if $wolfpackleader is 1>>
+	"지금은 안 돼." 당신은 밀치고 지나가 동굴로 돌아간다.
+	<<if $wolfpackharmony gte $wolfpackferocity>>
+		검은 늑대가 귀를 축 늘어뜨린 채 따라온다.
+	<<else>>
+		돌아오는 내내, 당신은 <<bhis>> 눈이 당신의 뒤통수를 쏘아보는 것을 느낄 수 있다.
+	<</if>>
+	<<npcincr "Black Wolf" love -1>><<llove>>
+	<<endevent>>
+	<br><br>
+	<<link [[다음|Wolf Cave Clearing]]>><<set $wolfevent to 0>><</link>>
+<<else>>
+	"지금은 안 돼." 당신은 <<bhe>>【이가】 멈추기를 바랐지만, <span class="red"><<bhis>> 관심은 더욱 친밀해질 뿐이다.</span> <<bHe>>【은는】 으르렁거리며 당신 위에 올라탄다.
+	<br><br>
+	<<link [[다음|Wolf Patrol Sex]]>><<set $molestationstart to 1>><</link>>
+<</if>>
+
+:: Wolf Patrol Sex
+<<if $sexstart is 1>>
+	<<set $sexstart to 0>>
+	<<consensual>>
+	<<set $consensual to 1>>
+	<<neutral 1>>
+	<<beastCombatInit>>
+
+	<<blackwolfhealth>>
+
+<<elseif $molestationstart is 1>>
+	<<set $molestationstart to 0>>
+	<<controlloss>>
+	<<violence 1>>
+	<<neutral 1>>
+	<<molested>>
+	<<beastCombatInit>>
+	<<blackwolfhealth>><<set $enemytrust -= 40>><<set $enemyanger += 40>>
+<</if>>
+
+<<effects>>
+<<effectsman>>
+<br>
+<<beast $enemyno>>
+<br><br>
+<<stateman>>
+<br><br>
+<<actionsman>>
+
+<<if _combatend>>
+	<span id="next"><<link [[다음|Wolf Patrol Sex Finish]]>><</link>></span><<nexttext>>
+<<else>>
+	<span id="next"><<link [[다음|Wolf Patrol Sex]]>><</link>></span><<nexttext>>
+<</if>>
+
+:: Wolf Patrol Sex Finish
+<<if $finish is 1>>
+	검은 늑대가 일어나 당신에게서 물러난다. <<tearful>> 당신은 몸을 추스른다.
+	<<endcombat>><<clotheson>>
+<<elseif $enemyarousal gte $enemyarousalmax>>
+	<<beastejaculation>>
+	<<if $consensual is 1 or $enemyanger lt 40>>
+		<<if $monster is 1>>
+			"짝 냄새 좋다. 내 냄새 나." 검은 늑대는 다시 당신의 목덜미에 <<bhis>> 코를 묻고, 잠시 더 당신을 가까이 껴안는다.
+		<<else>>
+			검은 늑대는 만족스러워하며 당신의 목덜미를 핥아 올린다.
+		<</if>>
+		<<gharmony>><<lferocity>><<npcincr "Black Wolf" love 1>><<glove>>
+		<br><br>
+		<<tearful>> 당신은 잠시 그곳에 누워 몸을 추스른다. <<clotheson>>
+		<<if $consensual is 1>>
+			<<if $monster is 1>>
+				<<bHe>>【이가】 먼저 일어나, 당신이 잡을 수 있도록 손을 내민다. 당신이 받아들이자, <<bhe>>【은는】 당신을 일으켜 세운다—그리고는 당신을 공주님 안기로 들어 올려, 당신을 웃게 만든다.
+				<br><br>
+				"<<pPackbrother>>【은는】 쉴 자격이 있어. 내가 돌봐줄게." 검은 늑대는 이를 드러내며 웃어 보인 후, 당신을 동굴 집으로 데려간다. 도착하자 <<bHe>>【은는】 당신을 부드럽게 내려놓는다.
+			<<else>>
+				<<bHe>>【이가】 먼저 일어나, 당신의 팔 아래로 <<bhis>> 머리를 들이민다. <<bHe>>【은는】 당신이 <<bhim>>에게 기대길 원한다. <<bhis>> 털을 쓰다듬으며, 당신은 동굴 집으로 돌아가는 길에 그 도움을 받아들인다.
+			<</if>>
+			<<stress -12>><<trauma -6>><<llstress>><<ltrauma>>
+			<br><br>
+			<<endcombat>>
+		<<else>>
+			검은 늑대는 물러서서 당신을 힐끗 쳐다보고, 당신은 일어선다. 둘은 동굴로 행진하듯 돌아간다.
+			<br><br>
+			<<endcombat>>
+		<</if>>
+	<<else>>
+		분노한 검은 늑대가 당신의 어깨를 물어, 당신은 고통에 찬 비명을 지른다. <<pain 6>><<gpain>><<lharmony>><<gferocity>>
+		<br><br>
+		<<bHe>>【은는】 여전히 화가 난 듯 일어나 동굴을 향해 행진한다. <<tearful>> 당신은 일어나 뒤따른다.
+		<br><br>
+		<<endcombat>><<clotheson>>
+	<</if>>
+<<elseif $enemyhealth lte 0>>
+	당신이 <<bhim>>【을를】 걷어차자 검은 늑대가 낑낑거린다.
+	<<if $monster is 1>>
+		"아무에게도 말하지 마," <<bhe>>【이가】 으르렁거리며, <<bhis>> 갈비뼈를 잡고 찡그린다. 몸은 마치 숨으려는 듯 웅크리고 있다.
+	<<else>>
+		<<bHe>>【이가】 으르렁거리며, 몇 미터 더 절뚝거리며 멀어진다.
+	<</if>>
+	<<lharmony>><<gferocity>><<npcincr "Black Wolf" love -1>><<llove>>
+	<br><br>
+	<<bHe>>【은는】 여전히 화가 난 듯 일어나 동굴을 향해 행진한다. <<tearful>> 당신은 일어나 뒤따른다.
+	<br><br>
+	<<endcombat>><<clotheson>>
+<</if>>
+
+<<link [[다음|Wolf Cave Clearing]]>><<set $wolfevent to 0>><</link>>
+<br>
+
+:: Wolf Liquid Clean
+<<effects>>
+<<outfitChecks>>
+
+당신은 <<bhe>>【이가】 당신의 얼굴을 핥아 깨끗하게 하도록 내버려 둔다. <<bHe>>【은는】 <<= $monster is 1 ? "손을 뻗어 <<bhis>> 검지와 <<bhis>> 엄지손가락으로 당신의 턱을 잡는다" : "당신에게서 모든 방울을 떼어내기 위해 세심한 주의를 기울인다">>.<<wash_face>>
+<br><br>
+<<bHis>> 혀가 아래로 내려가고, <<bHe>>【은는】 <<bhis>> 이빨이 당신의 피부에 너무 가까이 닿지 않도록 조심한다.
+<br><br>
+<<if !_topless>>
+	<<if $monster is 1>>
+		<<bHe>>【은는】 당신의 <<allTopsUnderwear>>【을를】 잡아당겨 벗기고, 당신의 피부를 공기 중에 노출시킨다.
+	<<else>>
+		<<bHe>>【은는】 <<bhis>> 코로 당신의 <<allTopsUnderwear>>【을를】 밀어 올려 피부를 드러낸다.
+	<</if>>
+	<<upperstrip>><<underupperstrip>>
+<</if>>
+<<bHis>>혀가 당신의 가슴을 훑고 지나가며, 젖꼭지 주위에서 너무 오래 머문다.<<arousal 1200 "breasts">><<ggarousal>>
+<br><br>
+<<if playerIsPregnant() and playerAwareTheyArePregnant() and knowsAboutPregnancy("pc","Black Wolf")>>
+	<<set _pregnancy to getPlayerPregnancy()>>
+	<<if childBaseSpecies(_pregnancy.donorSpecies) is "wolf" and couldBeDonor(_pregnancy, "Black Wolf")>>
+		<<bHe>>【은는】 몸단장을 멈추고 당신의 배 냄새를 맡는다. <<bHe>>【은는】 배에 코를 비비고, 계속해서 몸을 닦으면서 그 부위에 세심한 주의를 기울인다.
+	<<else>>
+		<<bHe>>【은는】 몸단장을 멈추고 당신의 배 냄새를 맡는다. <<bHe>>【은는】 계속하기 전에 <<bhis>> 머리를 부드럽게 배에 댄다.
+	<</if>>
+	<br><br>
+<</if>>
+<<bHis>> 혀놀림이 점점 거칠고 지저분해지며 <<bhe>>【은는】 당신의 <<genitals>> 쪽으로 내려간다.
+<br><br>
+
+<<set _parts to ["neck", "chest", "tummy"]>>
+<<for _i, _part range _parts>>
+	<<bodyliquid _part "semen" -5>>
+	<<bodyliquid _part "goo" -5>>
+	<<bodyliquid _part "nectar" -5>>
+<</for>>
+
+<<link [[다리를 벌린다|Wolf Liquid Clean Spread]]>><</link>><<if !playerChastity() and $player.penisExist>><<NPCvirginitywarning "Black Wolf" "oral">><</if>>
+<br>
+<<link [[<<bhim>>【을를】 밀어낸다|Wolf Liquid Clean Away]]>><<set $phase to 0>><</link>>
+<br>
+
+:: Wolf Liquid Clean Spread
+<<effects>>
+<<outfitChecks>>
+
+<<set _parts to []>>
+
+당신은 다리를 벌려 <<bhim>>【을를】 환영한다.
+<<if !_bottomless>>
+	당신은 <<allBottomsUnderwear>>【을를】 벗어 옆으로 던져버린다.<<lowerstrip>><<underlowerstrip>>
+<</if>>
+<br><br>
+<<bHe>>【은는】 <<bhis>> <<= $monster is 1 ? "주둥이" : "입">>【을를】 당신의 <<genitals>>에 파묻는다.<<garousal>>
+<br><br>
+<<if playerChastity()>>
+	<<if $worn.genitals.name is "chastity parasite">>
+		<<bHe>>【은는】 당신의 정조 기생충에 당황한 듯, 물어서 떼어내려고 잠정적으로 시도한다. <<bHe>>【은는】 성공하지 못했다.
+	<<elseif $worn.genitals.type.includes('cage')>>
+		<<bHe>>【은는】 혀를 당신의 케이지를 따라 움직이며, 들어갈 수 있는 틈을 찾으려 한다.<<ggarousal>>
+	<<else>>
+		<<bHe>>【은는】 당신의 <<= $worn.genitals.name>>【와과】 허벅지 안쪽 사이로 혀를 움직여, 벨트 아래로 혀를 넣으려고 시도한다.<<ggarousal>>
+	<</if>>
+	<br><br>
+	장애물에도 불구하고, <<bhe>>【은는】 당신의 몸이 긴장하는 것을 느낄 때까지 열심히 당신의 <<genitals>>【을를】 계속 핥는다.<<gggarousal>>
+<<elseif $player.penisExist>>
+	<<set _parts.push("penis")>><<set _virgin to C.npc["Black Wolf"].virginity.oral>>
+	<<bHe>>【이가】 당신의 성기를 따라 혀를 움직이며, 입안에 담고 애무한다. <<bHe>>【은는】 당신의 귀두에 특히 더 신경을 쓴다.<<takeNPCVirginity "Black Wolf" "oral">>
+	<br><br>
+	<<bHe>>【은는】 당신의 성기를 입에 담고 계속해서 핥는다. 당신이 몸을 떨며 절정에 이르자, <<bhe>>【은는】 <<bhis>> 코를 <<if $settings.pubicHairEnabled and $pblevel gte 2>>당신의 음모에 <</if>>당신의 치골 언덕에 파묻는다.<<gggarousal>>
+<<else>>
+	<<set _parts.push("vagina", "vaginaoutside")>>
+	<<bHe>>【이가】 당신의 질을 따라 혀를 움직이며, 클리토리스에 집중하는 것과 음란한 체액을 핥아 올리는 것을 번갈아 한다. <<bHis>> 혀가 매번 움직일 때마다 당신의 질 안팎을 미끄러지듯 드나든다. <<bHe>>【은는】 당신을 더 맛보려는 듯 <<bhis>> 코를 당신에게 밀어붙인다. <<gggarousal>>
+<</if>>
+<br>
+<<if !_virgin>>
+	<br>
+<</if>>
+<<orgasm>>
+
+<<if $worn.genitals.name is "chastity parasite" or ($player.penisExist and $femaleclimax is 1)>>
+	핥아먹을 정액이 나오지 않자, <<bhe>>【은는】 툴툴거리며 물러난다.
+<<else>>
+	<<bHe>>【이가】 당신의 정액을 한 입에 삼켜버린다.
+<</if>>
+<br><br>
+당신이 숨을 고르는 동안, 검은 늑대가 당신 위에 선다. <<bHe>>【은는】 거칠게 숨을 몰아쉬며, <<bhis>> 혀를 입 밖으로 내밀고 있다. 아래를 내려다보니, <<= $NPCList[0].penis isnot "none" ? "<<bhis>> 발기한 <<= window.KR.getPenisDescKr($NPCList[0].penisdesc)>>【이가】 보인다" : "<<bhis>> 다리 사이에서 체액이 떨어지는 것이 보인다">>.
+<br><br>
+
+<<if _parts.length isnot 0>>
+	<<for _i, _part range _parts>>
+		<<bodyliquid _part "semen" -5>>
+		<<bodyliquid _part "goo" -5>>
+		<<bodyliquid _part "nectar" -5>>
+	<</for>>
+<</if>>
+
+<<if hasSexStat("deviancy", 2)>>
+	<<link [[엉덩이를 흔든다|Wolf Liquid Clean Sex]]>><<set $sexstart to 1>><</link>><<deviant2>>
+	<br>
+<</if>>
+<<link [[`<<bhim>> 아래에서 빠져나온다`|Wolf Liquid Clean Away]]>><<set $phase to 1>><</link>>
+<br>
+
+:: Wolf Liquid Clean Away
+<<effects>>
+<<set $daily.blackWolfCleanAway to true>>
+
+<<if $phase is 0>> /* Push away */
+	당신은 <<bhis>> <<= $monster is 1 ? "얼굴" : "주둥이">>【을를】 밀어낸다.
+	<br><br>
+	<<bHe>>【은는】 킁, 하고 숨을 내쉬며 입을 삐죽인다. <<bHe>>【은는】 몸을 돌려 <<bhis>> 휴식처로 돌아가며, 당신을 다시는 쳐다보지 않는다.
+<<else>> /* Move out */
+	당신은 <<bhim>>의 밑에서 빠져나와 고개를 젓는다.
+	<br><br>
+	<<bHe>>【은는】 낮게 으르렁거린 후, 당신을 떠나기 위해 몸을 돌린다.
+<</if>>
+<br><br>
+<<clotheson>>
+
+<<link [[다음|Wolf Cave Clearing]]>><<endevent>><</link>>
+<br>
+
+:: Wolf Liquid Clean Sex
+<<if $sexstart is 1>>
+	<<set $sexstart to 0>>
+	<<consensual>>
+	<<set $consensual to 1>>
+	<<neutral 1>>
+	<<beastCombatInit>>
+	<<set $NPCList[0].stance to "top">>
+	<<deviancy2>>
+	<<if $wolfpackleader gte 1>><<enable_rescue>><</if>>
+	<<blackwolfhealth>>
+<</if>>
+
+<<effects>>
+<<effectsman>>
+<<alarmstate "<span class='red'><<wolf_cave_plural>>【은는】 자기 생각에만 정신이 팔려 당신을 도와주지 못한다.</span>">>
+<<beast $enemyno>>
+<br><br>
+
+<<stateman>>
+<br><br>
+<<actionsman>>
+
+<<if _combatend>>
+	<span id="next"><<link [[다음|Wolf Liquid Clean Sex Finish]]>><</link>></span><<nexttext>>
+<<else>>
+	<span id="next"><<link [[다음|Wolf Liquid Clean Sex]]>><</link>></span><<nexttext>>
+<</if>>
+
+:: Wolf Liquid Clean Sex Finish
+<<effects>>
+
+<<if $enemyarousal gte $enemyarousalmax>>
+	<<beastejaculation>>
+
+	검은 늑대가 신음하며 움직임을 멈춘다. 거친 숨을 몰아쉬며 <<bhe>>【은는】 당신에게서 내려와, <<bhis>> 휴식처로 돌아가기 전에 <<= $monster is 1 ? "당신의 뺨에 입을 맞춘다" : "당신의 뺨을 한 번 더 핥는다">>.
+<<elseif $enemyhealth lte 0>>
+	검은 늑대가 상처와 혼란이 뒤섞인 표정으로 당신을 본다. <<bHe>>【은는】 <<bhis>> 귀를 뒤로 젖히고 <<bhis>> 휴식처로 물러나 <<bhis>> 상처를 핥는다.
+<<elseif $alarm is 1 and $rescue is 1>>
+	검은 늑대가 당신에게서 내려온다. <<bhis>> 표정에는 혼란이 가득하다.
+	<br><br>
+	<<generatewolf2>><<beasttype 1>> 한 마리가 동굴에서 나와, 머리를 낮추고 으르렁거린다. 긴장된 자세와 뒤로 젖혀진 귀는 우두머리를 지키기 위해 싸울 준비가 되었음을 알려준다.
+	<br><br>
+	검은 늑대가 당신과 <<beasttype 1>> 사이를 번갈아 본다. <<bHe>>【은는】 한숨을 쉬고 당신에게서 내려온다. <<bHe>>【은는】 <<bhis>> 휴식처로 돌아간다. 당신은 <<bhe>>【이가】 당신을 보지 않으려 한다는 것을 알아챈다.
+	<br><br>
+	<<beasttype 1>>【이가】 당신에게 다가와 잠시 당신을 살핀다. 당신이 괜찮다고 판단한 후, <<bhe>>【은는】 동굴로 돌아간다.
+<<else>>
+	<<if $wolfpackharmony gte 12>>
+		검은 늑대가 주춤하다 당신에게서 내려온다. <<bHe>>【은는】 고개를 갸웃거리며 당신을 본다.
+		<br><br>
+		<<if $pain gte 80>>
+			<<bHe>>【은는】 조심스럽게 당신의 상처를 핥고, 슬픈 표정으로 당신을 바라본 뒤 <<bhis>> 휴식처로 돌아간다.
+		<<else>>
+			아무 이상이 없는 것을 확인한 <<bhe>>【은는】 당신의 머리에 <<bhis>> 머리를 부드럽게 부딪힌 후 <<bhis>> 휴식처로 돌아간다.
+		<</if>>
+	<<else>>
+		검은 늑대가 신음하며 멈춘다. <<bHe>>【은는】 거친 숨을 몰아쉬며 당신에게서 내려온다.
+		<<if $wolfpackleader gte 1>>
+			<<bHe>>【은는】 <<bhis>> 휴식처로 돌아가 누우며 당신에게 더 이상 신경 쓰지 않는다.
+		<<else>>
+			<<bHe>>【은는】 당신의 뺨에 코를 비비고 <<bhis>> 휴식처로 돌아가 눕는다.
+		<</if>>
+	<</if>>
+<</if>>
+<br><br>
+
+<<clotheson>>
+<<endcombat>>
+
+<<link [[다음|Wolf Cave Clearing]]>><</link>>
+<br>
+
+:: Wolf Cave Wash Marking
+<<effects>>
+
+<<= $monster is 1 ? "히죽 웃으며, <<bhe>>" : "<<bHe>>">>【은는】 아래로 내려가, 당신의 가슴부터<<if playerAwareTheyArePregnant() and playerBellySize() gte 15>> 임신으로 부푼<</if>> 배까지 흔적을 남기더니, 마침내 당신의 다리 사이에 자리 잡는다.
+<br><br>
+시간을 낭비하지 않고, <<bhe>>【은는】 길고 넓은 혀놀림으로 당신의 <<= $player.vaginaExist ? "<<pussy>>" : "<<penis>>">>【을를】 핥는다. 당신은 몸을 떨며 꿈틀거리지만, <<bhe>>【은는】 멈추지 않는다. <<bhis>> 혀가 미끄러지듯
+<<if $player.vaginaExist>>
+	당신의 입구를 지나 안쪽까지 파고들어, 안에서부터 당신을 자신의 것으로 표기한다.
+<<else>>
+	당신의 기둥을 따라 끝까지 올라갔다가 다시 내려오며, <<bhis>> 소유권을 주장하지 않은 곳이 한 뼘도 없게 만든다.
+<</if>>
+<br><br>
+당신은 본능적으로 <<bhis>> <<= $monster is 1 ? "머리카락" : "털">>【을를】 움켜쥔다. 당신의 다리는 맹공에 떨리다가 마침내 쾌락에 굴복한다.
+<br><br>
+<<orgasm>>
+
+힘겹게 헐떡이며, 당신은 검은 늑대의 눈을 바라본다. <<bHe>>【은는】 승리에 찬 눈으로 당신의 시선을 쉽게 받아낸다.<<if $monster is 1>> "내 것이다. 무리 모두가 알아야 해."<</if>> 만약을 대비하려는 듯, <<bhe>>【은는】 <<bhis>> 뺨을 당신의 축축한 뺨에 비빈다.
+<br><br>
+스스로에게 꽤 만족한 듯, <<bhe>>【은는】 당신에 대한 <<bhis>> 소유권을 명확히 했으니 이제 무리를 지켜보기 위해 <<bhis>> 평소 자리로 돌아간다.
+<br><br>
+<<tearful>> 당신은 자리에서 일어선다.
+<br><br>
+
+<<link [[다음|Wolf Cave Clearing]]>><<endevent>><<clotheson>><</link>>
+<br>

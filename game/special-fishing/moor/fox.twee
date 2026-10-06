@@ -1,0 +1,275 @@
+:: Fishing Moor Fox Arrive
+<<effects>>
+<<beastNEWinit 1 fox>><<saveNPC 0 "moor_fishing_fox">>
+<<set $daily.fishing.fishingMoor.fox.phase to "watching">>
+<<set $daily.fishing.fishingMoor.fox.closeness to 0>>
+
+<<beasttype>>【이가】 헤더 덤불 속에서 종종걸음으로 나와 조금 떨어진 곳에 멈춰 서더니, 호기심 어린 반짝이는 눈으로 당신을 지켜본다.<<stress -2>><<lstress>>
+<br><br>
+
+<<link [[다음|Fishing Moor Wait]]>><<endevent>><</link>>
+
+
+:: Fishing Moor Fox Feed
+<<effects>>
+<<loadNPC 0 "moor_fishing_fox">>
+<<if $fishingHookedFish.size gte 80>>
+	당신이 <<= setup.foodstuff[$fishingHookedFish.type].name>>【을를】 <<beasttype>> 앞에 던져준다. <<bHe>>【은는】 냄새를 맡고는 물고기를 꽉 물고 황무지를 가로질러 끌고 간다.
+<<else>>
+	당신이 <<= setup.foodstuff[$fishingHookedFish.type].name>>【을를】 <<beasttype>>에게 던져준다. <<bHe>>【은는】 물고기를 깔끔하게 낚아채고 헤더 덤불 속으로 달아난다.
+<</if>>
+<<set $daily.fishing.fishingMoor.fox.phase to "finished">><<endevent>>
+<<unset $fishingHookedFish>>
+<br><br>
+
+<<link [[다음|Fishing Moor Wait]]>><</link>>
+
+
+:: Fishing Moor Fox Angry Feed
+<<effects>>
+<<loadNPC 0 "moor_fishing_fox">>
+당신이 <<= setup.foodstuff[$fishingHookedFish.type].name>>【을를】 <<beasttype>> 쪽으로 밀어붙인다. <<bHe>>【은는】 당신의 손에서 잽싸게 물고기를 낚아채더니, 뒤도 돌아보지 않고 황무지를 가로질러 달아난다.
+<<set $daily.fishing.fishingMoor.fox.phase to "finished">><<endevent>>
+<<unset $fishingHookedFish>>
+<br><br>
+
+<<link [[다음|Fishing Moor Wait]]>><</link>>
+
+:: Fishing Moor Fox Molestation
+<<if $molestationstart is 1>>
+	<<set $molestationstart to 0>>
+	<<loadNPC 0 "moor_fishing_fox">>
+	<<controlloss>>
+	<<violence 1>>
+	<<neutral 1>>
+	<<molested>>
+	<<beastCombatInit>>
+	<<set $NPCList[0].stance to "top">>
+	<<set $enemytrust to -200>>
+	<<set $enemyanger to 200>>
+	<<hawkRescueSetup>>
+<</if>>
+
+<<effects>>
+<<effectsman>>
+<<alarmstate>>
+<<beast $enemyno>>
+<br><br>
+
+<<stateman>>
+<br><br>
+
+<<actionsman>>
+
+<<if _combatend or ($pain gte 100 and $willpowerpain is 0)>>
+	<span id="next"><<link [[다음|Fishing Moor Fox Molestation Finish]]>><</link>></span>
+<<else>>
+	<span id="next"><<link [[다음|Fishing Moor Fox Molestation]]>><</link>></span>
+<</if>>
+
+
+:: Fishing Moor Fox Molestation Finish
+<<effects>>
+<<if $enemyarousal gte $enemyarousalmax>>
+	<<beastejaculation>>
+	<<beasttype>>【은는】 혼란스러운 듯 당신에게서 떨어져 물러난다. <<bHe>>【은는】 고개를 휘저으며 헤더 덤불 속으로 사라진다.
+	<<if $fishingMoorFoxPhase is 1>>
+		당신은 <<= setup.foodstuff[$fishingHookedFish.type].name>>【을를】 안전하게 보관한다.
+		<<tending_give $fishingHookedFish.type 1>>
+		<<unset $fishingHookedFish>>
+	<</if>>
+	<<set $daily.fishing.fishingMoor.fox.phase to "finished">>
+	<br><br>
+
+	<<tearful>> 당신은 몸을 추스른다.
+	<br><br>
+	<<clotheson>>
+	<<endcombat>>
+	<<unset $fishingMoorFoxPhase>>
+	<<link [[다시 낚시한다|Fishing Moor Wait]]>><</link>>
+	<br>
+	<<link [[떠난다|Moor]]>><<set $eventskip to 1>><</link>>
+<<elseif $alarm is 1 and $rescue is 1>>
+	구조를 요청하는 비명에 응답이 들려온다. <<hawkScreechDesc>>【이가】 허공을 찢을 듯 울려 퍼진다. <<hawkRescueApproachSentence>>
+	<br><br>
+
+	그 소리에 움찔한 <<beasttype>>【은는】 헤더 덤불 속으로 달아난다.
+	<<if $fishingMoorFoxPhase is 1>>
+		당신은 간신히 <<= setup.foodstuff[$fishingHookedFish.type].name>>【을를】 놓치지 않고 쥐고 있다.
+		<<tending_give $fishingHookedFish.type 1>>
+		<<unset $fishingHookedFish>>
+	<</if>>
+	<<set $daily.fishing.fishingMoor.fox.phase to "finished">>
+	<br><br>
+	<<clotheson>>
+	<<endcombat>>
+	<<unset $fishingMoorFoxPhase>>
+	<<npc "Great Hawk">><<person1>>
+	<<tearful>> 당신은 하늘을 살핀다. <<if $syndromebird is 1>>당신의<<else>>한 마리의<</if>> <<beasttype>>【이가】 당신을 향해 하강하는 모습이 보인다.
+	<br><br>
+
+	<<set $phase to 0>>
+	<<if $syndromebird is 1>>
+		<<link [[다음|Bird Rescue Syndrome]]>><</link>>
+	<<else>>
+		<<link [[다음|Bird Rescue No Syndrome]]>><</link>>
+	<</if>>
+	<br>
+<<elseif $enemyhealth lte 0>>
+	<<beastwound>>
+	<<beasttype>>【은는】 깨갱거리며 다리 사이로 꼬리를 만 채 물러나더니, 돌아서서 헤더 덤불 속으로 달아난다.
+	<<if $fishingMoorFoxPhase is 1>>
+		당신은 <<= setup.foodstuff[$fishingHookedFish.type].name>>【을를】 안전하게 보관한다.
+		<<tending_give $fishingHookedFish.type 1>>
+	<</if>>
+	<<set $daily.fishing.fishingMoor.fox.phase to "finished">>
+	<br><br>
+
+	<<tearful>> 당신은 고작 <<= setup.foodstuff[$fishingHookedFish.type].name>> 한 마리를 두고 이렇게까지 할 가치가 있었는지 의문이 든다.
+	<br><br>
+
+	<<clotheson>>
+	<<endcombat>>
+	<<unset $fishingHookedFish>>
+	<<unset $fishingMoorFoxPhase>>
+	<<link [[다시 낚시한다|Fishing Moor Wait]]>><</link>>
+	<br>
+	<<link [[떠난다|Moor]]>><<set $eventskip to 1>><</link>>
+<<elseif $pain gte 100 and $willpowerpain is 0>>
+	<<if $fishingMoorFoxPhase is 1>>
+		너무 많이 다쳐 계속 싸울 수 없는 상태라, <<beasttype>>【이가】 당신의 <<= setup.foodstuff[$fishingHookedFish.type].name>>【을를】 가로채 헤더 덤불 속으로 달아나는 것을 지켜볼 수밖에 없다.
+	<</if>>
+	<<set $daily.fishing.fishingMoor.fox.phase to "finished">>
+	<br><br>
+	
+	<<tearful>> 당신은 고작 <<= setup.foodstuff[$fishingHookedFish.type].name>> 한 마리를 두고 이렇게까지 할 가치가 있었는지 의문이 든다.
+	<br><br>
+	<<unset $fishingHookedFish>>
+
+	<<clotheson>>
+	<<endcombat>>
+
+	<<link [[다시 낚시한다|Fishing Moor Wait]]>><</link>>
+	<br>
+	<<link [[떠난다|Moor]]>><<set $eventskip to 1>><</link>>
+<</if>>
+
+
+:: Fishing Moor Cat Eat Fox
+<<effects>>
+<<loadNPC 0 "moor_fishing_fox">>
+여우를 힐끗 본 뒤, 입을 크게 벌리고 <<= setup.foodstuff[$fishingHookedFish.type].name>>【을를】 통째로 입 안에 넣는다. <<fishingEatFishTfProgress>><<lstress>><<stress -6>>
+<<unset $fishingHookedFish>>
+<br><br>
+
+<<beasttype>>【은는】 멍하니 당신을 바라본다. 그러다 표정이 어두워지고 귀를 바짝 눕히더니, 몸을 날려 당신을 덮친다.
+<br><br>
+
+<<if $settings.bestialityEnabled>>
+	<<link [[다음|Fishing Moor Fox Molestation]]>><<set $molestationstart to 1>><<set $fishingMoorFoxPhase to 2>><<endevent>><</link>>
+<<else>>
+	당신은 뒤로 물러나며, <<bhe>>【이가】 더 공격하기 전에 허둥지둥 쫓아낸다. 간신히 쫓아내긴 했지만 그 과정에서 발톱에 할퀴고 말았다.<<beastescape>>
+	<<set $daily.fishing.fishingMoor.fox.phase to "finished">><<endevent>>
+	<br><br>
+
+	<<link [[다음|Fishing Moor Wait]]>><<endevent>><</link>>
+<</if>>
+
+
+:: Fishing Moor Keep Fox
+<<effects>>
+<<loadNPC 0 "moor_fishing_fox">>
+<<silently>><<dancedifficulty 1 1000>><</silently>>
+<<if $danceSuccess>>
+	당신이 낚싯바늘을 빼는 순간 <<beasttype>>【이가】 <<= setup.foodstuff[$fishingHookedFish.type].name>>【을를】 향해 돌진하지만, 아슬아슬하게 물고기를 홱 당겨 손이 닿지 않게 피한다.
+	<br><br>
+
+	당신이 <<= setup.foodstuff[$fishingHookedFish.type].name>>【을를】 보관하자, <<beasttype>>【은는】 귀를 머리에 바짝 붙인 채 뒤로 쪼르르 물러난다.
+	<<set $daily.fishing.fishingMoor.fox.closeness -= random(3, 4)>>
+	<<tending_give $fishingHookedFish.type 1>>
+	<<unset $fishingHookedFish>>
+<<else>>
+	당신이 <<= setup.foodstuff[$fishingHookedFish.type].name>>에서 바늘을 빼려 할 때, <<beasttype>>【이가】 돌진하여 물고기를 낚아채더니 헤더 덤불 속으로 달아난다.
+	<<set $daily.fishing.fishingMoor.fox.phase to "finished">><<endevent>>
+	<<unset $fishingHookedFish>>
+<</if>>
+<br><br>
+
+<<link [[다음|Fishing Moor Wait]]>><<endevent>><</link>>
+
+
+:: Fishing Moor Throw Back Fox
+<<effects>>
+<<loadNPC 0 "moor_fishing_fox">>
+<<if $settings.bestialityEnabled and dangerEvent()>>
+	당신이 <<= setup.foodstuff[$fishingHookedFish.type].name>>【을를】 물속으로 던지자, <<beasttype>>의 눈이 그것을 따라 물가로 향한다. <<bHe>>【은는】 귀를 바짝 눕히며 날카로운 눈빛으로 당신을 노려본다. 으르렁거리며 당신을 향해 몸을 던진다.
+	<<unset $fishingHookedFish>>
+	<br><br>
+
+	<<link [[다음|Fishing Moor Fox Molestation]]>><<set $molestationstart to 1>><<set $fishingMoorFoxPhase to 2>><<endevent>><</link>>
+<<elseif $rng lt 30>>
+	당신이 <<= setup.foodstuff[$fishingHookedFish.type].name>>【을를】 물속으로 던지자, <<beasttype>>【이가】 재빨리 얕은 물가에서 그것을 낚아채더니 황무지로 뛰어간다.
+	<<set $daily.fishing.fishingMoor.fox.phase to "finished">><<endevent>>
+	<<unset $fishingHookedFish>>
+	<br><br>
+
+	<<link [[다음|Fishing Moor Wait]]>><</link>>
+<<else>>
+	당신이 <<= setup.foodstuff[$fishingHookedFish.type].name>>【을를】 물속으로 던지는 것을 <<beasttype>>【이가】 지켜본다. 어깨가 축 처진 채, 슬픈 표정으로 당신을 올려다본다.
+	<<unset $fishingHookedFish>>
+	<br><br>
+
+	<<link [[다음|Fishing Moor Wait]]>><<endevent>><</link>>
+<</if>>
+
+
+:: Widgets Fishing Moor Fox [widget]
+<<widget "fishingMoorFoxAmbient">>
+	<<loadNPC 0 "moor_fishing_fox">>
+	<<set _foxMoved to false>>
+	<<if $rng gte 70 and $daily.fishing.fishingMoor.fox.closeness lt 9 and !$daily.fishing.fishingMoor.fox.movedLastLoop>>
+		<<set $daily.fishing.fishingMoor.fox.closeness += 1>>
+		<<set _foxMoved to true>>
+	<</if>>
+	<<cleareventpool>>
+	<<if _foxMoved>>
+		<<if $daily.fishing.fishingMoor.fox.closeness lte 2>>
+			<<addinlineevent 1>>
+				<<beasttype>>【이가】 사뿐사뿐 다가와 자리를 잡고 당신을 지켜본다.
+			<</addinlineevent>>
+		<<elseif $daily.fishing.fishingMoor.fox.closeness lte 5>>
+			<<addinlineevent 1>>
+				<<beasttype>>【이가】 헤더 덤불 속에 몸을 낮춘 채 살금살금 다가온다.
+			<</addinlineevent>>
+		<<elseif $daily.fishing.fishingMoor.fox.closeness lte 7>>
+			<<addinlineevent 1>>
+				<<beasttype>>【이가】 스르륵 다가와 불과 몇 걸음 떨어진 곳에 자리를 잡는다.
+			<</addinlineevent>>
+		<<else>>
+			<<addinlineevent 1>>
+				<<beasttype>>【이가】 팔이 닿을 거리에 살금살금 다가와 땅에 바짝 엎드린다.
+			<</addinlineevent>>
+		<</if>>
+	<<else>>
+		<<if $daily.fishing.fishingMoor.fox.closeness lte 2>>
+			<<addinlineevent 1>>
+				<<beasttype>>【이가】 헤더 덤불 가장자리에서 당신을 지켜본다.
+			<</addinlineevent>>
+		<<elseif $daily.fishing.fishingMoor.fox.closeness lte 5>>
+			<<addinlineevent 1>>
+				<<beasttype>>【이가】 근처 헤더 덤불 속에 몸을 웅크린 채 당신의 찌를 주시한다.
+			<</addinlineevent>>
+		<<elseif $daily.fishing.fishingMoor.fox.closeness lte 7>>
+			<<addinlineevent 1>>
+				<<beasttype>>【이가】 몇 걸음 떨어진 곳에 앉아, 완전히 몰입하여 당신을 빤히 바라본다.
+			<</addinlineevent>>
+		<<else>>
+			<<addinlineevent 1>>
+				<<beasttype>>【이가】 당신 옆에 미동도 없이 엎드려 낚싯줄을 뚫어지게 응시하고 있다.
+			<</addinlineevent>>
+		<</if>>
+	<</if>>
+	<<runeventpool>>
+	<<set $daily.fishing.fishingMoor.fox.movedLastLoop to _foxMoved>>
+	<<endevent>>
+<</widget>>

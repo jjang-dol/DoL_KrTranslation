@@ -1,0 +1,259 @@
+:: Fishing Pier Catch
+<<if $daily.fishing.fishingPier.whitney.phase is "bet">>
+	<<fishingPierCatchWhitneyBet>>
+<<elseif $daily.fishing.fishingPier.whitney.phase is "idle" and $rng gte 90 and !$daily.fishing.fishingPier.whitney.fishKiss>>
+	<<set $daily.fishing.fishingPier.whitney.fishKiss to true>>
+	<<fishingPierCatchWhitneyKiss>>
+<<elseif $daily.fishing.fishingPier.fisher.phase is "fishing" and $daily.fishing.fishingPier.fisher.drunk gte 4 and $rng gte 80>>
+	<<fishingPierCatchFisherDrunk>>
+<<elseif Weather.dayState is "day" and [undefined, "finished"].includes($daily.fishing.fishingPier.whitney.phase) and [undefined, "finished"].includes($daily.fishing.fishingPier.fisher.phase) and $rng gte 90 and $daily.fishing.seagullSteal is undefined>>
+	<<fishingSeagullCatch $fishingHookedFish $bus>>
+<<else>>
+	<<fishingPierCatch>>
+<</if>>
+
+
+:: Widgets Fishing Pier Catch [widget]
+<<widget "fishingPierCatchWhitneyBet">>
+	<<effects>>
+	<<generatey1>><<saveNPC 0 "fishing_date_friend1">><<clearsinglenpc 0>>
+
+	휘트니는 당신이 잡은 물고기에 눈을 고정하고, 속으로 무언가 계산하는 표정을 짓는다.
+
+	<<if $fishingHookedFish.size gt 60>>
+		<<nnpc_He "Whitney">>【은는】 천천히 일어서며 입가에 커다란 미소를 띠고 말한다. "이거지, 씨발." <<nnpc_He "Whitney">>【은는】 당신을 위아래로 훑어본다. "내가 이겼어, 걸레년아. 이리 와."
+		<br><br>
+
+		<<if hasSexStat("promiscuity", 3)>>
+			<<link [[마지못해 따른다|Fishing Whitney Pier Won Sex]]>><<npc Whitney>><<person1>><<set $molestationstart to 1>><</link>>
+			<br>
+		<<else>>
+			<<link [[마지못해 따른다|Fishing Whitney Pier Won Sex]]>><<npc Whitney>><<person1>><<set $molestationstart to 1>><<stress 6>><<trauma 6>><</link>><<gstress>><<gtrauma>>
+			<br>
+		<</if>>
+		<<if hasSexStat("promiscuity", 4)>>
+			<<link [[기꺼이 따른다|Fishing Whitney Pier Won Sex]]>><<npc Whitney>><<person1>><<set $sexstart to 1>><</link>><<promiscuous4>>
+			<br>
+		<</if>>
+		<<link [[거부한다|Fishing Whitney Pier Won Resist]]>><</link>>
+		<br>
+		<<link [[크기에 대해 거짓말한다|Fishing Whitney Pier Bet Lie Big]]>><</link>><<englishdifficulty 300 1000>>
+
+	<<else>>
+		<<nnpc_He "Whitney">>【은는】 쯧 하고 혀를 찬다. "너무 좆만하잖아." <<nnpc_He "Whitney">>【은는】 씩 웃으며 자기 친구들을 힐끗 쳐다본다. "이 새낀 니들 거다." 휘트니의 친구 중 한 명이 앞으로 나서며 당신을 훑어본다.
+		<br><br>
+
+		<<if hasSexStat("promiscuity", 3)>>
+			<<link [[마지못해 따른다|Fishing Whitney Pier Friend Won Sex]]>><<set $molestationstart to 1>><</link>>
+			<br>
+		<<else>>
+			<<link [[마지못해 따른다|Fishing Whitney Pier Friend Won Sex]]>><<set $molestationstart to 1>><<stress 6>><<trauma 6>><</link>><<gstress>><<gtrauma>>
+			<br>
+		<</if>>
+		<<if hasSexStat("promiscuity", 4)>>
+			<<link [[기꺼이 따른다|Fishing Whitney Pier Friend Won Sex]]>><<set $sexstart to 1>><</link>><<promiscuous4>>
+			<br>
+		<</if>>
+		<<link [[거부한다|Fishing Whitney Pier Friend Won Resist]]>><</link>>
+		<br>
+		<<link [[크기에 대해 거짓말한다|Fishing Whitney Pier Bet Lie Small]]>><</link>><<englishdifficulty 300 1000>>
+	<</if>>
+	<<unset $fishingHookedFish>>
+<</widget>>
+
+
+<<widget "fishingPierCatchWhitneyKiss">>
+	<<effects>>
+
+	당신이 미처 반응하기도 전에 휘트니가 앞으로 다가와 당신의 손에서 낚아챈다. <<nnpc_He "Whitney">>【은는】 <<= setup.foodstuff[$fishingHookedFish.type].name>>【을를】 당신의 얼굴 쪽으로 들이민다. "이 조그만 새끼가 키스하고 싶어 하는 거 같은데, 안 그래?" <<nnpc_His "Whitney">> 일행이 킬킬거리며 몸을 기울인다.
+	<br><br>
+
+	<<if $player.virginity.kiss is true>>
+		<span class="red">당신의 첫 키스를 빼앗기려 하고 있다. 생선에게.</span>
+		<br><br>
+	<</if>>
+
+	<<link [[거부한다|Fishing Whitney Pier Kiss Fish Refuse]]>><<npcincr Whitney dom -1>><</link>><<ldom>><<athleticsdifficulty 600 1200>>
+	<br>
+	<<link [[setup.foodstuff[$fishingHookedFish.type].name에게 키스한다|Fishing Whitney Pier Kiss Fish Accept]]>><<npcincr Whitney dom 1>><</link>><<deviant1>><<gdom>><<if $player.virginity.kiss is true>><<kissvirginitywarning>><</if>>
+<</widget>>
+
+
+<<widget "fishingPierCatchFisherDrunk">>
+	<<loadNPC 0 "fishing_pier_npc_fisher">><<person1>>
+
+	<<person>>【은는】 당신이 잡은 것을 잠시 노려보더니 눈을 가늘게 뜬다. <<He>>【은는】 비틀거리며 자세를 바로잡더니 당신 쪽으로 한 걸음 다가온다. "그건 내 거야, 내 낚싯줄이 거기 있었다고. 이리 내놔."
+	<br><br>
+
+	<<link [[<<him>>에게 물고기를 넘긴다|Fishing Pier Fisher Take Fish Accept]]>><<endevent>><</link>>
+	<br>
+	<<link [[거절한다|Fishing Pier Fisher Take Fish Refuse]]>><<endevent>><</link>>
+<</widget>>
+
+
+<<widget "fishingPierCatch">>
+	<<set _canEatFish to canEatFishTf($fishingHookedFish)>>
+
+	<<if $fishingHookedFish.size gte 100 and Time.dayState is "day" and $docks.hired and $rng gte 80>>
+		멀리서 부두 노동자 몇 명이 그 크기를 보고 환호성을 지른다.<<dockstatus 1>>
+		<br><br>
+	<</if>>
+
+	<<if _canEatFish>>
+		아주 작은 물고기라, 한입에 다 넣을 수도 있을 것 같다.
+		<br><br>
+	<</if>>
+
+	<<link [[setup.foodstuff[$fishingHookedFish.type].name + " 보관하기"|Fishing Pier Wait]]>>
+		<<tending_give $fishingHookedFish.type 1>>
+		<<set $fishingAmbientOverride to "stowAway">>
+		<<if baitShopWants($fishingHookedFish.type)>><<set $daily.fishing.baitShopRequest to "ready">><</if>>
+		<<endevent>>
+	<</link>>
+	<br>
+	<<link [[놓아준다|Fishing Pier Wait]]>><<set $fishingAmbientOverride to "throwBack">><</link>>
+	<<if _canEatFish>>
+		<br>
+		<<if $daily.fishing.fishingPier.fisher.phase is "fishing">>
+			<<link [[물고기를 먹는다|Fishing Pier Cat Eat Fisher]]>><</link>><<fishEatingTf>>
+		<<else>>
+			<<link [[물고기를 먹는다|Fishing Pier Cat Eat]]>><</link>><<fishEatingTf>>
+		<</if>>
+	<</if>>
+<</widget>>
+
+
+:: Fishing Pier Cut
+<<effects>>
+<<if $daily.fishing.fishingPier.whitney.phase is "bet">>
+	<<fishingPierCutLineWhitneyBet>>
+<<else>>
+	<<fishingPierCut>>
+<</if>>
+
+
+:: Widgets Fishing Pier Cut [widget]
+<<widget "fishingPierCut">>
+	당신은 낚싯줄을 <span class="purple">끊어버렸고</span>, <<= setup.foodstuff[$fishingHookedFish.type].name>>【은는】 깊은 물 속으로 헤엄쳐 도망간다.
+	<br><br><br>
+
+	<<fishingMinigameResultUi $fishingMinigame.fishDistance "cut">>
+	<br><br>
+
+	<<unset $fishingHookedFish>>
+	<<run fishingMinigameEnd()>>
+	<<link [[미끼를 꿰어 낚싯줄을 던진다 (0:03)|Fishing Pier Wait]]>><<set $fishingAmbientOverride to "reHook">><<pass 3>><</link>>
+	<br>
+	<<link [[떠난다|Mer Pier]]>><</link>>
+<</widget>>
+
+
+:: Fishing Pier Snapped
+<<if $daily.fishing.fishingPier.whitney.phase is "bet">>
+	<<fishingPierLineSnappedWhitneyBet>>
+<<else>>
+	<<fishingPierLineSnapped>>
+<</if>>
+
+
+:: Widgets Fishing Pier Snapped [widget]
+<<widget "fishingPierLineSnapped">>
+	낚싯줄이 팽팽해지더니, 이내 <span class="red">끊어진다.</span> <<= setup.foodstuff[$fishingHookedFish.type].name>>【은는】 사라졌다.
+	<br><br><br>
+
+	<<fishingMinigameResultUi $fishingMinigame.fishDistance "lineSnapped">>
+	<br><br>
+
+	<<unset $fishingHookedFish>>
+	<<run fishingMinigameEnd()>>
+	<<link [[미끼를 꿰어 낚싯줄을 던진다 (0:03)|Fishing Pier Wait]]>><<set $fishingAmbientOverride to "reHook">><<pass 3>><</link>>
+	<br>
+	<<link [[떠난다|Mer Pier]]>><</link>>
+<</widget>>
+
+
+:: Fishing Pier Fish Too Far
+<<if $daily.fishing.fishingPier.whitney.phase is "bet">>
+	<<fishingPierLineSnappedWhitneyBet>>
+<<else>>
+	<<fishingPierFishTooFar>>
+<</if>>
+
+
+:: Widgets Fishing Pier Fish Too Far [widget]
+<<widget "fishingPierFishTooFar">>
+	<<= setup.foodstuff[$fishingHookedFish.type].name>>【이가】 낚싯줄 끝까지 도달해 바늘을 풀고 <span class="red">도망쳤다</span>.
+	<br><br><br>
+
+	<<fishingMinigameResultUi $fishingMinigame.fishDistance "fishOffHook">>
+	<br><br>
+
+	<<unset $fishingHookedFish>>
+	<<run fishingMinigameEnd()>>
+	<<link [[미끼를 꿰어 낚싯줄을 던진다 (0:03)|Fishing Pier Wait]]>><<set $fishingAmbientOverride to "reHook">><<pass 3>><</link>>
+	<br>
+	<<link [[떠난다|Mer Pier]]>><</link>>
+<</widget>>
+
+
+:: Fishing Pier Pulled In
+<<if $daily.fishing.fishingPier.whitney.phase is "bet">>
+	<<fishingPierLineSnappedWhitneyBet>>
+<<elseif $daily.fishing.fishingPier.fisher.phase is "fishing" and random(1, 2) is 1>>
+	<<fishingPierPulledInFisherSaved>>
+<<elseif $daily.fishing.fishingPier.whitney.phase is "idle">>
+	<<fishingPierPulledInWhitney>>
+<<else>>
+	<<fishingPierPulledIn>>
+<</if>>
+
+
+:: Widgets Fishing Pier Pulled In [widget]
+<<widget "fishingPierPulledInWhitney">>
+	<<= setup.foodstuff[$fishingHookedFish.type].name>>【이가】 더 세게 잡아당기자, 당신은 미끄러지고 만다. 떨어지면서도 낚싯대는 꼭 쥐고 있었지만, 당신은 <span class="red">난간 너머로 끌려가</span> 아래쪽 물속으로 빠진다.<<gstress>><<stress 5>>
+	<br><br><br>
+
+	<<fishingMinigameResultUi $fishingMinigame.fishDistance "pulledIn">>
+
+	<<unset $fishingHookedFish>>
+	<<set $daily.fishing.fishingPier.whitney.playerFellOff to true>>
+	물 위로 떠오르자 위쪽에서 휘트니와 <<nnpc_his "Whitney">> 일행이 깔깔거리며 비웃는 소리가 들려온다.
+	<br><br>
+
+	<<run fishingMinigameEnd()>>
+	<<link [[다음|Sea Docks]]>><<set $eventskip to 1>><</link>>
+<</widget>>
+
+
+<<widget "fishingPierPulledInFisherSaved">>
+	<<loadNPC 0 "fishing_pier_npc_fisher">><<person1>>
+	<<= setup.foodstuff[$fishingHookedFish.type].name>>【이가】 더 세게 잡아당기자, 당신은 미끄러지고 만다. <span class="red">난간 너머로 몸이 끌려가지만,</span> 물속으로 완전히 빠지기 전에 옆에 있던 <<person>>【이가】 당신을 붙잡는다.<<gstress>><<stress 3>>
+	<br><br><br>
+
+	<<fishingMinigameResultUi $fishingMinigame.fishDistance "lineSnapped">>
+
+	<<unset $fishingHookedFish>>
+	"괜찮아요?" <<he>>【이가】 가쁜 숨을 몰아쉬며 묻는다.
+	<br><br>
+
+	<<run fishingMinigameEnd()>>
+	<<link [[아무 말도 하지 않는다|Fishing Pier Fisher Saved On Pier]]>><<set $phase to 0>><</link>>
+	<br>
+	<<link [[<<him>>에게 고마워한다|Fishing Pier Fisher Saved On Pier]]>><<set $phase to 1>><</link>>
+	<br>
+	<<link [[키스로 고마움을 전한다|Fishing Pier Fisher Thank Kiss]]>><<set $phase to 2>><<promiscuous1>><<kissvirginitywarning>><</link>>
+<</widget>>
+
+
+
+<<widget "fishingPierPulledIn">>
+	<<= setup.foodstuff[$fishingHookedFish.type].name>>【이가】 더 세게 잡아당긴다. 떨어지면서도 낚싯대는 꼭 쥐고 있었지만, 당신은 <span class="red">난간 너머로 끌려가</span> 아래쪽 물속으로 빠진다.<<gstress>><<stress 5>>
+	<br><br><br>
+
+	<<fishingMinigameResultUi $fishingMinigame.fishDistance "pulledIn">>
+	<br><br>
+
+	<<unset $fishingHookedFish>>
+	<<run fishingMinigameEnd()>>
+	<<link [[다음|Sea Docks]]>><<set $eventskip to 1>><</link>>
+<</widget>>

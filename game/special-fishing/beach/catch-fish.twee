@@ -1,0 +1,134 @@
+:: Fishing Beach Catch
+<<if Weather.dayState is "day" and ($daily.fishing.fishingBeach.fisher.phase is "finished" or $daily.fishing.fishingBeach.fisher.phase is undefined) and $rng gte 92 and $daily.fishing.seagullSteal is undefined>>
+	<<fishingSeagullCatch $fishingHookedFish $bus>>
+<<elseif $daily.fishing.fishingBeach.fisher.phase is "fishing" and fishingHasMinutesPassedSinceNpcArrival(60) and $daily.fishing.fishingBeach.fisher.drunk gte 1 and $rng gte 80>>
+	<<fishingBeachCatchFisherDrunk>>
+<<elseif beachCampfirePartyPresent() and $rng gte 75 and $daily.fishing.fishingBeach.partyFeed is undefined and canCookFish($fishingHookedFish.type)>>
+	<<fishingBeachCatchCampfireCook>>
+<<else>>
+	<<fishingBeachCatch>>
+<</if>>
+
+
+:: Widgets Fishing Beach Catch [widget]
+<<widget "fishingBeachCatchFisherDrunk">>
+	<<effects>>
+	<<loadNPC 0 "fishing_beach_npc_fisher">><<person1>>
+
+	<<person>>【은는】 눈을 가늘게 뜨고 잠시 당신이 잡은 것을 응시한다. <<He>>【은는】 비틀거리며 똑바로 서더니 당신을 향해 한 걸음 다가온다. "그건 내 거야. 내가 바로 거기에 낚싯줄을 던져놨었다고. 내놔."
+	<br><br>
+
+	<<link [[물고기를 준다|Fishing Beach Fisher Give Fish]]>><<endevent>><</link>>
+	<br>
+	<<link [[거절한다|Fishing Beach Fisher Give Fish Attack]]>><<endevent>><</link>>
+<</widget>>
+
+
+<<widget "fishingBeachCatchCampfireCook">>
+	<<effects>>
+	<<set _canEatFish to canEatFishTf($fishingHookedFish)>>
+	<<set $daily.fishing.fishingBeach.partyFeed to "offering">>
+
+	캠프파이어 쪽에서 환호성이 들린다. 누군가 모두가 먹을 수 있게 요리하고 싶은데 <<= setup.foodstuff[$fishingHookedFish.type].name>>【을를】 나눠줄 수 있냐고 소리쳐 묻는다.
+	<br><br>
+
+	<<if _canEatFish>>
+		통째로 입에 넣을 수 있을 만큼 아주 작은 물고기다.
+		<br><br>
+	<</if>>
+
+	<<if ($exposed is 1 and !hasSexStat("exhibitionism", 3)) or ($exposed gte 2 and !hasSexStat("exhibitionism", 5))>>
+		<<insufficientStat "exhibitionism" "심하게 노출한 상태로 모닥불 불빛 아래로 걷기엔">>
+		<br>
+	<<else>>
+		<<link [[물고기를 요리 해달라고 한다 (0:15)|Beach Party Fish Cook]]>>
+			<<pass 15>>
+			<<set $daily.fishing.fishingBeach.partyFeed to "accepted">>
+
+			/* The people around the campfire like you for doing this. So you shouldn't be assaulted at the campfire today */
+			<<set $daily.fishing.safeFromBeachCampfireDanger to true>>
+		<</link>>
+		<br>
+	<</if>>
+
+	<<link [[setup.foodstuff[$fishingHookedFish.type].name + "【을를】 챙긴다"|Fishing Beach Keep Party]]>>
+		<<if baitShopWants($fishingHookedFish.type)>><<set $daily.fishing.baitShopRequest to "ready">><</if>>
+		<<endevent>>
+	<</link>>
+	<br>
+	<<link [[놓아준다|Fishing Beach Throw Back Party]]>><</link>>
+	<br>
+	<<if _canEatFish>>
+		<<link [[물고기를 먹는다|Fishing Beach Cat Eat Party]]>><</link>><<fishEatingTf>>
+	<</if>>
+<</widget>>
+
+
+<<widget "fishingBeachCatch">>
+	<<set _canEatFish to canEatFishTf($fishingHookedFish)>>
+
+	<<if _canEatFish>>
+		통째로 입에 넣을 수 있을 만큼 아주 작은 물고기다.
+		<br><br>
+	<</if>>
+
+	<<link [[setup.foodstuff[$fishingHookedFish.type].name + "【을를】 챙긴다"|Fishing Beach Wait]]>>
+		<<tending_give $fishingHookedFish.type 1>>
+		<<set $fishingAmbientOverride to "stowAway">>
+		<<if baitShopWants($fishingHookedFish.type)>><<set $daily.fishing.baitShopRequest to "ready">><</if>>
+		<<endevent>>
+	<</link>>
+	<br>
+	<<link [[놓아준다|Fishing Beach Wait]]>><<set $fishingAmbientOverride to "throwBack">><</link>>
+	<<if _canEatFish>>
+		<br>
+		<<if $daily.fishing.fishingBeach.fisher.phase is "fishing">>
+			<<link [[물고기를 먹는다|Fishing Beach Cat Eat Fisher]]>><</link>><<fishEatingTf>>
+		<<else>>
+			<<link [[물고기를 먹는다|Fishing Beach Cat Eat]]>><</link>><<fishEatingTf>>
+		<</if>>
+	<</if>>
+<</widget>>
+
+
+:: Fishing Beach Cut
+<<effects>>
+당신은 낚싯줄을 <span class="purple">끊어버리고</span>, <<= setup.foodstuff[$fishingHookedFish.type].name>>【은는】 깊은 물 속으로 헤엄쳐 도망간다.
+<br><br><br>
+
+<<fishingMinigameResultUi $fishingMinigame.fishDistance "cut">>
+<br><br>
+
+<<unset $fishingHookedFish>>
+<<run fishingMinigameEnd()>>
+<<link [[낚싯줄을 묶고 다시 던진다 (0:03)|Fishing Beach Wait]]>><<set $fishingAmbientOverride to "reHook">><<pass 3>><</link>>
+<br>
+<<link [[떠난다|Beach]]>><<set $eventskip to 1>><</link>>
+
+
+:: Fishing Beach Snapped
+낚싯줄이 팽팽해지더니 이내 <span class="red">끊어진다.</span> <<= setup.foodstuff[$fishingHookedFish.type].name>>【은는】 사라졌다.
+<br><br><br>
+
+<<fishingMinigameResultUi $fishingMinigame.fishDistance "lineSnapped">>
+<br><br>
+
+<<unset $fishingHookedFish>>
+<<run fishingMinigameEnd()>>
+<<link [[낚싯줄을 묶고 다시 던진다 (0:03)|Fishing Beach Wait]]>><<set $fishingAmbientOverride to "reHook">><<pass 3>><</link>>
+<br>
+<<link [[떠난다|Beach]]>><<set $eventskip to 1>><</link>>
+
+
+:: Fishing Beach Fish Too Far
+<<= setup.foodstuff[$fishingHookedFish.type].name>>【이가】 낚싯줄 끝에 다다라 낚싯바늘을 헐겁게 만들더니, <span class="red">사라져 버린다</span>.
+<br><br><br>
+
+<<fishingMinigameResultUi $fishingMinigame.fishDistance "fishOffHook">>
+<br><br>
+
+<<unset $fishingHookedFish>>
+<<run fishingMinigameEnd()>>
+<<link [[낚싯줄을 묶고 다시 던진다 (0:03)|Fishing Beach Wait]]>><<set $fishingAmbientOverride to "reHook">><<pass 3>><</link>>
+<br>
+<<link [[떠난다|Beach]]>><<set $eventskip to 1>><</link>>

@@ -1,0 +1,917 @@
+:: Widgets Home Events [widget]
+
+<<widget "homeevent">>
+	<<rng>>
+	<<if Weather.precipitation === "snow" && $weatherObj.snow lte 20 && Time.month gte 10 && !$yearly.firstSnow>>
+		<<npc Bailey>><<generatey2>><<generatey3>><<generatey4>>
+		<<set $yearly.firstSnow to true>>
+		흥분한 목소리들이 들린다. 고아들 몇 명이 창문 주위에 모여 있다. 눈이 내리고 있다.
+		<br><br>
+		"눈사람 만들고 싶어."
+		<br>
+		"눈이 덜 쌓였잖아."
+		<br>
+		"곧 쌓일 거야!"
+		<br>
+		"나가기 전에 꼭 따뜻하게 입어야 해."
+		<br><br>
+		<<person2>><<person>>【이가】 현관문으로 달려가 벌컥 연다. 그러나 곧 <<his>> 미소가 사라진다. 베일리가 성큼성큼 걸어 들어오고, 문이 쾅 닫힌다.<<lhope>><<hope -1>>
+		<br><br>
+
+		<<link [[다음|Orphanage]]>><<endevent>><</link>>
+		<br>
+	<<elseif $christmas is 1 and $christmas_event is undefined>>
+		<<set $christmas_event to 1>>
+		<<generatey1>><<generatey2>>
+		당신은 두 고아의 대화를 엿듣게 된다.
+		<br><br>
+		"이번 크리스마스에는 무슨 선물을 받을까?" <<person1>><<person>>【이가】 손에 든 작은 물건을 만지작거리며 묻는다.
+		<br>
+		"베일리가 장식하는 건 허락해 주잖아." <<person2>><<person>>【이가】 대답한다. "하지만 선물은? 아마 산타 할아버지가 갖다 주지 않겠어?" <<He>>【이가】 못 미더운 표정을 짓고 있는 <<person1>><<person>>【을를】 슬쩍 찌른다.
+		<br><br>
+		<i>새 옷을 선물하면 아이들이 참 좋아할 것이다. 쇼핑 센터에서 구하면 될 것이다. <<if C.npc.Robin.init is 1>> 숲속 상점이나 쇼핑 센터에서 로빈에게 줄 선물도 고를 수 있다.<</if>></i>
+		<br><br>
+
+		<<endevent>>
+		<<link [[다음|Orphanage]]>><</link>>
+		<br>
+	<<elseif $home_event_timer lte 0>><<set $home_event_timer to 6>>
+		<<switch $home_event_count>>
+			<<case 0>><<set $home_event_count += 1>>
+				<<homeeventnorm>>
+			<<case 1>><<set $home_event_count += 1>>
+				<<npc Bailey>><<generateyv2>><<person1>>"이번 주에 내야 할 돈이 £200야." 앞쪽에서 베일리가 말하는 소리가 들린다. "당장 내놔."
+				<br><br>
+				<<saveNPC 1 orphan_rent>>
+				<<He>>【은는】 <<person2>><<person>>에게 말하고 있고, 그 <<person>>【은는】 팔짱을 끼고 있다. "이 돈은 내가 힘들게 일해서 번 거야, 네 맘대로 뜯어가게 두지 않겠어. 마음대로 해 봐." <<he>>【이가】 반항적으로 쏘아붙인다.
+				<br><br>
+
+				베일리는 검은 복면과 밧줄을 꺼낸다. "좋아." <<person1>><<he>>【이가】 말한다. "가만히 있어." 다른 아이들은 고개를 돌려버린다.
+				<br><br>
+
+				<<link [[개입한다|Home Intervene]]>><</link>>
+				<br>
+				<<link [[지켜본다|Home Watch]]>><</link>>
+				<br>
+				<<link [[무시한다|Orphanage]]>><<endevent>><<set $orphan_rent to "taken">><</link>>
+				<br>
+
+			<<case 2>><<set $home_event_count += 1>>
+				<<generateyv1>><<generateyv2>>
+				<<set $maxTheDog to true>>
+				고아들이 동그랗게 모여 웅성거리는 것이 보인다. 몹시 들떠 있는 목소리다. 가까이 다가가 보니, 커다란 프렌치 마스티프 개 한 마리가 아이들의 시선을 독차지하고 있다. 개는 여러 낯선 사람들이 자신을 쓰다듬고 있는데도 아랑곳하지 않고 느긋해 보인다.
+				<br><br>
+
+				"내가 안으로 데리고 들어오기 전까지 밖에서 한참 서 있었어." <<person1>><<person>>【이가】 말한다.
+				<br><br>
+
+				"우리가 키웠으면 좋겠다." <<person2>><<person>>【이가】 말하자, 고아들이 일제히 신나게 동의하며 환호한다.
+				<br><br>
+
+				<<person1>><<person>>【이가】 개의 목걸이에 달린 인식표로 손을 뻗는다. "맥스네." <<he>>【이가】 말한다. 맥스는 자기 이름을 듣고 <<person>>【을를】 쳐다본다. "전화번호도 적혀 있어. 주인이 있는 개야."
+				<br><br>
+
+				몇몇 고아들이 아쉬워하는 소리를 낸다. "어차피 베일리가 알면 가만두지 않을 거야." <<person>>【이가】 말을 잇는다. "원래 주인한테 전화해야겠어."
+				<br><br>
+
+				<<link [[쓰다듬는다 (0:30)|Home Max]]>><<pass 30>><<trauma -24>><<stress -24>><</link>><<lltrauma>><<llstress>>
+				<br>
+				<<link [[무시한다|Orphanage]]>><<endevent>><</link>>
+				<br>
+
+			<<case 3>><<set $home_event_count += 1>>
+				당신은 두 명의 아이가 소곤소곤 대화하는 것을 엿듣게 된다. <<generateyv1>><<generateyv2>><<person1>>"이거 말고 내가 할 수 있는 게 뭐가 있겠어?" <<person>>【이가】 속삭인다. "점점 더 힘들어지기만 해."
+				<br><br>
+
+				"분명 더 나은 방법이 있을 거야." <<person2>><<person>>【이가】 대답한다.
+				<br><br>
+
+				밖에서 자동차 경적 소리가 들리자, <<person1>><<person>>【이가】 가방을 뒤적인다. "그놈들이 왔어." <<he>>【이가】 말하며 술병 하나를 꺼낸다. <<He>>【은는】 <span class="red">컥컥거리며 헛구역질을 할</span> 때까지 꿀꺽꿀꺽 술을 들이킨다.
+				<br><br>
+
+				"난 괜찮을 거야." <<he>>【이가】 기침하며 말한다. <<He>>【은는】 심호흡을 하더니 밖으로 나간다.
+				<br><br>
+
+				창밖을 내다보니, 문이 열린 차 옆에서 <<generate3>><<person3>><<person>>【이가】 기다리고 있는 것이 보인다. <<He>>【은는】 <<person1>><<persons>>【이가】 차에 타자 엉덩이를 덥석 주무르고는, 자기도 차에 올라타 그대로 몰고 가버린다. <<person2>><<person>>【이가】 다른 창문에서 그 모습을 지켜본다. <<He>>【은는】 몹시 걱정스러운 표정이다.
+				<<lhope>><<hope -1>>
+				<br><br>
+
+				<<link [[다음|Orphanage]]>><<endevent>><</link>>
+				<br>
+			<<case 4>><<set $home_event_count += 1>>
+				<<if $orphan_rent is "paid">>
+					<<loadNPC 0 orphan_rent>><<person1>>"이봐!" 뒤에서 누군가 외친다. 당신이 베일리에게서 구해줬던 <<person>>【이】다. "내가 갚는다고 했잖아." <<He>>【이가】 주머니에서 지폐 다발을 꺼낸다. "<<printmoney 100000>>【아야】." <<He>>【이가】 웃으며 손을 내민다. "받아."
+					<br><br>
+
+					<<link [[받는다|Home Money Take]]>><<money 100000>><</link>>
+					<br>
+					<<link [[거절한다|Home Money Refuse]]>><<hope 1>><</link>><<ghope>>
+					<br>
+				<<else>>
+					<<npc Bailey>><<loadNPC 1 orphan_rent>><<person1>>"이번 주에는 £1000다." 앞에서 베일리의 목소리가 들린다. "당장 내놔." <<He>>【은는】 당신이 예전에 <<person1>><<him>>【을를】 끌고 가는 걸 목격했던 그 <<person2>><<person>>에게 말하고 있다.
+					<br><br>
+
+					<<person2>><<persons>> 반항적이던 태도는 흔적도 없이 사라졌다. <<He>>【은는】 묵묵히 돈을 건네주며 발끝만 내려다보고 있다.
+					<<lhope>><<lreb>><<hope -1>><<reb -1>>
+					<br><br>
+
+					<<link [[다음|Orphanage]]>><<endevent>><</link>>
+					<br>
+				<</if>>
+			<<case 5>><<set $home_event_count += 1>>
+				<<set $loft_known to 1>><<set $loft_upgrade to 0>>
+				<<npc Bailey>><<generateyv2>><<generateyv3>>계단 위에서 신난 목소리들이 들린다. 꼭대기 층에 올라가 보니 어린 고아 두 명이 번갈아 가며 펄쩍펄쩍 뛰어올라 천장 쪽을 붙잡으려 하고 있다.
+				<br><br>
+
+				당신이 마침 계단을 다 올랐을 때, 그중 한 명인 <<person2>><<person>>【이가】 조금이라도 더 높이 닿으려고 의자를 가져다 놓는다. 다른 한 명인 <<person3>><<person>>【이가】 당신을 보고 미소 짓는다.
+				<<if $bodysize gte 3>>
+					"안녕! 너 우리보다 훨씬 크잖아." <<he>>【이가】 말한다. "저 위에 줄이 있는데. 좀 당겨줄 수 있어?
+				<<elseif $bodysize is 2>>
+					"안녕! 너 우리보다 크잖아." <<he>>【이가】 말한다. "저 위에 줄이 있는데. 좀 당겨줄 수 있어?
+				<<elseif $bodysize is 1>>
+					"안녕! 너 우리보다 조금 더 크잖아." <<he>>【이가】 말한다. "저 위에 줄이 있는데. 좀 당겨줄 수 있어?
+				<<else>>
+					"안녕!" <<he>>【이가】 말한다. "저 위에 줄이 있는데. 손 닿을 거 같아?
+				<</if>>
+				"무슨 일이 생기는지 보고 싶어."
+				<br><br>
+
+				<<if pcAreArmsBound("any")>>
+					<<link [[결박부터 풀어달라고 요청한다|Orphanage Loft Intro]]>><<set $phase to 1>><</link>>
+				<<elseif $bodysize lte 0>>
+					<<link [[줄을 당기려 시도해본다|Orphanage Loft Intro]]>><<set $phase to 0>><</link>>
+				<<else>>
+					<<link [[줄을 당긴다|Orphanage Loft Intro]]>><<set $phase to 0>><</link>>
+				<</if>>
+				<br>
+				<<link [[거절한다|Orphanage Loft Intro]]>><<set $phase to 2>><</link>>
+				<br>
+
+			<<case 6>>
+				<<homeeventnorm>>
+		<</switch>>
+	<<elseif $rng gte 71>>
+		<<rng 9>>
+		<<if $rng gte 9>>
+			<<if $loft_wren gte 2>>
+				<<homeeventwren>>
+			<<else>>
+				<<homeeventnorm>>
+			<</if>>
+		<<elseif $rng gte 8>>
+			<<if $loft_gh gte 2>>
+				<<homeeventgh>>
+			<<else>>
+				<<homeeventnorm>>
+			<</if>>
+		<<elseif $rng gte 7>>
+			<<if $loft_whitney gte 6>>
+				<<homeeventwhitney>>
+			<<else>>
+				<<homeeventnorm>>
+			<</if>>
+		<<elseif $rng gte 6>>
+			<<if $loft_kylar>>
+				<<homeeventkylar>>
+			<<else>>
+				<<homeeventnorm>>
+			<</if>>
+		<<elseif $rng gte 5>>
+			<<if $chef_speech is "bailey">>
+				<<homeeventchef>>
+			<<else>>
+				<<homeeventnorm>>
+			<</if>>
+		<<elseif $rng gte 4>>
+			<<if $loft_river>>
+				<<homeeventriver>>
+			<<else>>
+				<<homeeventnorm>>
+			<</if>>
+		<<elseif $rng gte 3>>
+			<<if $mason_pond gte 5>>
+				<<homeeventpond>>
+			<<else>>
+				<<homeeventnorm>>
+			<</if>>
+		<<elseif $rng gte 2>>
+			<<if $alex_greenhouse gte 3>>
+				<<homeeventalex>>
+			<<else>>
+				<<homeeventnorm>>
+			<</if>>
+		<<else>>
+			<<homeeventnorm>>
+		<</if>>
+	<<else>>
+		<<rng>>
+		<<if $rng gte 51>>
+			<<if $orphan_hope gte random(1, 50)>>
+				<<homeeventhopehi>>
+			<<elseif $orphan_hope lte random(-50, -1)>>
+				<<homeeventhopelo>>
+			<<else>>
+				<<homeeventnorm>>
+			<</if>>
+		<<else>>
+			<<if $orphan_reb gte random(1, 50)>>
+				<<homeeventrebhi>>
+			<<elseif $orphan_reb lte random(-50, -1)>>
+				<<homeeventreblo>>
+			<<else>>
+				<<homeeventnorm>>
+			<</if>>
+		<</if>>
+	<</if>>
+<</widget>>
+
+<<widget "homeeventnorm">>
+	<<switch random(1, 14)>>
+		<<case 1>>
+			<<generateyv1>><<person1>><<person>>【이가】 당신에게 다가온다. "돈 좀 줄 수 있어?" <<he>>【이가】 묻는다. "정말 급해서 그래."
+			<br><br>
+
+			<<if $money gte 500>>
+				<<link [[£5을 준다|Home Beg Give]]>><<set $phase to 0>><<money -500>><<hope 1>><</link>><<ghope>>
+				<br>
+			<</if>>
+			<<if $money gte 2500>>
+				<<link [[£25을 준다|Home Beg Give]]>><<set $phase to 1>><<money -2500>><<hope 2>><</link>><<gghope>>
+				<br>
+			<</if>>
+			<<if $money gte 10000>>
+				<<link [[£100을 준다|Home Beg Give]]>><<set $phase to 2>><<money -10000>><<hope 3>><<reb -1>><</link>><<lreb>><<ggghope>>
+				<br>
+			<</if>>
+			<<if $skulduggery gte 100>>
+				<<link [[도둑질을 부추긴다|Home Beg Skulduggery]]>><<reb 1>><</link>><<greb>>
+				<br>
+			<</if>>
+			<<if hasSexStat("promiscuity", 3)>>
+				<<link [[매춘을 부추긴다|Home Beg Prostitution]]>><<reb 1>><</link>><<greb>>
+				<br>
+			<</if>>
+			<<link [[거절한다|Home Beg Refuse]]>><<hope -1>><</link>><<lhope>>
+			<br>
+		<<case 2>>
+			<<generateyv1>><<person1>><<person>>【이가】 당신에게 다가온다. "책가방을 잃어버렸어." <<he>>【이가】 걱정스러운 얼굴로 말한다. "아무리 찾아봐도 안 보여. 같이 좀 찾아줄래?"
+			<br><br>
+
+			<<link [[도와준다 (0:30)|Home School Bag]]>><<hope 1>><<pass 30>><</link>><<ghope>>
+			<br>
+			<<link [[거절한다|Home School Bag Refuse]]>><<hope -1>><</link>><<lhope>>
+			<br>
+
+		<<case 3>>
+			<<generateyv1>><<person1>><<person>>【이가】 현관문으로 비틀거리며 걸어 들어온다. 옷은 다 찢어져 있다. <<He>>【은는】 곧장 <<his>> 방으로 향한다.<<lhope>><<hope -1>>
+			<br><br>
+
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+			<br>
+
+		<<case 4>>
+			<<npc Bailey>><<generate2>><<person2>><<person>>【이가】 계단에서 나동그라진다. 베일리가 그 뒤를 따라 천천히 걸어 내려온다. 그 <<person>>【은는】 황급히 몸을 일으켜 허둥지둥 현관문 쪽으로 내달린다.
+			<br><br>
+
+			"또 여길 멋대로 들락거리는 걸 내 눈에 일만 해봐," 베일리가 입을 뗀다. 베일리가 말을 끝마치기도 전에 <<person>>【은는】 벌써 현관문을 박차고 뛰쳐나간 지 오래다.
+			<br><br>
+
+			베일리는 창밖으로 그 모습을 지켜본다. 만족스러운 듯, <<person1>><<he>>【은는】 다시 사무실로 돌아간다.
+			<<lreb>><<reb -1>>
+			<br><br>
+
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+			<br>
+
+		<<case 5>>
+			<<npc Bailey>><<generate2>><<generateyv3>>침실 쪽에서 비명 소리가 들린다.
+			<br><br>
+
+			<<link [[조사한다|Home Scream]]>><</link>>
+			<br>
+			<<link [[무시한다|Home Scream Ignore]]>><<hope -1>><</link>><<lhope>>
+			<br>
+
+		<<case 6>>
+			<<generateyv1>><<person1>><<person>>【이가】 눈물범벅이 된 얼굴로 엉덩이를 감싸 쥔 채 베일리의 사무실에서 나온다.<<lreb>><<reb -1>>
+			<br><br>
+
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+			<br>
+
+		<<case 7>>
+			<<generateyv1>><<person1>><<person>>【이가】 지나가는 사람들을 붙잡고 자기 친구를 못 봤느냐고 묻고 다닌다. 아무도 본 사람이 없다.<<lhope>><<hope -1>>
+			<br><br>
+
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+			<br>
+
+		<<case 8>>
+			<<generatey1>><<person1>>화장실 옆을 지나가고 있다. 문 하나가 살짝 열려 있고, 그 안에서 누군가의 소리가 들린다.
+			<br><br>
+
+			<<link [[훔쳐본다|Home Peek]]>><<arousal 600>><</link>><<garousal>>
+			<br>
+			<<link [[문을 닫는다|Home Close]]>><<famegood 1>><</link>>
+			<br>
+
+		<<case 9>>
+			<<generatey1>><<generatey2>>두 고아가 모여 있는 <<fullGroup>> 옆을 지나간다. <<person1>><<person>>【은는】 당신을 보자 얼굴을 붉히며 고개를 돌린다. <<person2>><<person>>【이가】 그런 <<person1>><<him>>【을를】 보며 킬킬댄다.
+			<br><br>
+
+			<<link [[추궁한다|Home Pair]]>><</link>>
+			<br>
+			<<link [[무시한다|Orphanage]]>><<endevent>><</link>>
+			<br>
+
+		<<case 10>>
+			<<npc Bailey>>베일리가 부엌으로 식료품을 옮기며 거칠게 당신을 밀치고 지나간다.
+			<<pain 1>><<gpain>>
+			<br><br>
+
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+			<br>
+
+		<<case 11>>
+			<<rng>>
+			<<generatey1>><<generatey2>><<fullGroup>>인 두 아이가 모여 무언가 속닥거리는 것을 듣게 된다.
+			<<if C.npc.Robin.init is 1 and $rng gte 51>>
+				들어보니 로빈 이야기를 하고 있다.
+				<br><br>
+
+				<<link [[엿듣는다|Home Rumor Eavesdrop Robin]]>><</link>>
+				<br>
+				<<link [[무시한다|Orphanage]]>><<endevent>><</link>>
+				<br>
+			<<else>>
+				<br><br>
+				<<link [[엿듣는다|Home Rumor Eavesdrop]]>><</link>>
+				<br>
+				<<link [[무시한다|Orphanage]]>><<endevent>><</link>>
+				<br>
+			<</if>>
+		<<case 12>>
+			<<generateyv1>><<person1>>
+			<<person>>【이가】 팔에 붕대를 감은 채 고아원으로 들어온다.
+			<<if $tending gte 200>>
+				<<He>>【은는】 시선을 피하며 자기 방으로 서둘러 들어간다.
+				<br><br>
+
+				그 애가 지나갈 때 다시 그 붕대로 눈이 간다. <span class="green">다시 매주어야 할 것 같다는 것을 눈치챈다.</span>
+				<br><br>
+
+				<<link [[도와준다 (0:10)|Home Bandage]]>><<pass 10>><<hope 1>><</link>><<ghope>>
+				<br>
+				<<link [[무시한다|Orphanage]]>><<hope -1>><<endevent>><</link>><<lhope>>
+				<br>
+			<<else>>
+				<<He>>【은는】 사람들과의 눈 맞춤을 피하며 자기 방으로 서둘러 들어간다.<<lhope>><<hope -1>>
+				<br><br>
+
+				<<link [[다음|Orphanage]]>><<endevent>><</link>>
+			<</if>>
+
+		<<case 13>>
+			<<generatey1>><<person1>>
+
+			고아원 복도를 걷고 있다. 코너를 도는 순간 <<person1>><<person>>【와과】 쾅 부딪히고 만다. 종이가 사방으로 흩날리며 둘 다 바닥에 나뒹굴게 된다. <<He>>【은는】 헐레벌떡 당신에게 부딪힌 것을 사과하며 바닥에 떨어진 종이들을 정신없이 주워 모은다.
+			<br><br>
+
+			<<link [[돕는다 (0:04)|Home Orphan Poster]]>><<set $phase to 1>><<pass 4>><</link>>
+			<br>
+			<<link [[무시한다 (0:01)|Home Orphan Poster]]>><<set $phase to 2>><<pass 1>><</link>>
+		<<case 14>>
+			<<if $fame.scrap gte 200>>
+				복도에 들어서자마자 왁자지껄하게 떠들며 달려온 아이들이 당신을 순식간에 에워싼다.
+				<br><br>
+				"너 싸움 많이 해봤다며, 그치?" 한 아이가 묻는다. 대답할 틈도 주지 않고 "진짜 멋있다! 어떻게 싸우는지 좀 얘기해줘! 제발!" 다른 아이들도 잔뜩 기대를 품고 당신의 대답을 기다리며 조용해진다.
+				<br><br>
+				자랑하고 싶다면 조금 과장해서 이야기해 줘도 좋을 것이다.
+				<br><br>
+				<<link [[얘기한다 (0:05)|Home Combat Agree]]>><<pass 5>><</link>>
+				<br>
+				<<link [[과장해서 얘기한다 (0:10)|Home Combat Exaggerate]]>><<pass 10>><</link>><<englishdifficulty 100 400>>
+				<br>
+				<<link [[거절한다|Home Combat Refuse]]>><</link>>
+				<br>
+			<<else>>
+				서로 호신술 꿀팁을 나누고 있는 고아들 곁을 지나간다. 들어보니 영 도움 될 거 같진 않다.
+				<br><br>
+
+				<<link [[다음|Orphanage]]>><<endevent>><</link>>
+				<br>
+			<</if>>
+	<</switch>>
+<</widget>>
+
+<<widget "homeeventhopehi">>
+	<<switch random(1, 7)>>
+		<<case 1>>
+			<<npc Bailey>><<person1>>고아들이 둥글게 모여 앉아 수다를 떨고 있다. 베일리가 와서 그들을 쫓아버린다.
+			<<lreb>><<reb -1>>
+			<br><br>
+
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+			<br>
+		<<case 2>>
+			<<npc Bailey>><<person1>>누군가가 중앙 홀에 응원하는 포스터를 붙여놓았다. 베일리가 그것을 찢어버린다.
+			<<lhope>><<hope -1>>
+			<br><br>
+
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+			<br>
+		<<case 3>>
+			<<generatey1>><<generateyp2>><<person1>><<person>>【이가】 책을 읽는 척하며 홀 반대편에 있는 <<person2>><<person>>【을를】 쳐다보고 있다. 그 <<person>>【은는】 친구들과 웃으며 떠드는 와중에도 가끔 <<person1>><<person>> 쪽을 흘끗거리고, 그럴 때마다 <<person1>><<person>>【은는】 얼굴을 붉히며 황급히 책 뒤로 숨는다.
+			<br><br>
+
+			<<link [[격려한다|Home Encourage]]>><<hope 1>><</link>><<ghope>>
+			<br>
+			<<link [[추파를 던진다|Home Flirt]]>><</link>><<promiscuous1>>
+			<br>
+			<<link [[무시한다|Orphanage]]>><<endevent>><</link>>
+			<br>
+		<<case 4>>
+			<<generateyv1>><<person1>><<person>>【이가】 중앙 홀에서 울먹이는 어린 고아를 다독여 주고 있다. 정말 사랑스러운 모습이다.<<ltrauma>><<trauma -6>>
+			<br><br>
+
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+			<br>
+		<<case 5>>
+			<<rng>>
+			<<if $rng gte 56>>
+				<<set _poster to either(
+					"'매일은 빛날 수 있는 새로운 기회야'라고 휘갈겨 쓴 일출 그림이",
+					"'함께라면 뭐든 할 수 있어'라고 휘갈겨 쓴 손을 잡고 있는 졸라맨 두 명이",
+					"'매일은 빛날 수 있는 새로운 기회야'라고 휘갈겨 쓴 갈라진 보도블록 틈에서 피어난 꽃 한 송이가",
+					"'무슨 일이 있어도 넌 혼자가 아니야'라는 문구와 함께 손을 내밀고 있는 그림이",
+					"노란색의 따봉 그림이",
+					"'아주 작은 시작이 큰 결과를 낳을 수도 있어'라고 휘갈겨 쓴 땅에서 싹트는 씨앗 그림이",
+					"'하늘이 한계야'라고 휘갈겨 쓴 산을 오르는 탐험가의 모습이",
+					"'네가 누군지 모르지만, 사랑해'라고 크레용으로 삐뚤빼뚤하게 쓴 알록달록한 하트가"
+				)>>
+
+				당신은 고아원을 걷는다.
+				<br><br>
+
+				가던 길에 당신은 걸음을 멈춘다. 게시판에 아무렇게나 대충 색칠해 그린 조잡한 포스터가 꽂혀 있는 것을 발견했다. 포스터에는 _poster 그려져 있다.
+				<br><br>
+
+				포스터를 지나치며 가슴 속에 훈훈한 감정이 퍼진다.<<ghope>><<hope 1>><<lstress>><<stress -6>>
+				<br><br>
+			<<else>>
+				당신은 중앙 홀에서 누군가 손수 만든 응원 포스터를 발견한다. 고아원 아이 중 누군가가 붙인 게 틀림없다. 왠지 기분이 좋아진다.
+				<<ghope>><<hope 1>><<lstress>><<stress -6>>
+				<br><br>
+			<</if>>
+
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+			<br>
+		<<case 6>>
+			당신은 고아원을 걷는다.
+			<br><br>
+			감미로운 소리가 복도를 채운다. 음악 소리가 당신의 마음에 울려 퍼질 때까지 서서히 커진다. 외부의 잡음이 줄어들며, 분위기가 한층 밝아진 느낌이다.<<lstress>><<stress -6>>
+			<br><br>
+			머지않아 당신은 소리의 진원지를 발견한다. 근처에 열려 있는 방안에서 흘러나오는 소리였다.
+			<br><br>
+			<<link [[조사한다 (0:15)|Home Orphan Music Calm Choice]]>><<pass 15>><<set $phase to 1>><</link>>
+			<br>
+			<<link [[무시한다|Home Orphan Music Calm Choice]]>><<set $phase to 2>><</link>>
+			<br>
+		<<case 7>>
+			당신은 고아원을 거닐던 중, 기분을 북돋우는 음악 소리를 듣는다. <<lstress>><<stress -6>>
+			<br><br>
+			음악 소리가 갑자기 끊기고, 무언가 부서지는 소리와 함께 고함이 들려온다. 잠시 후 <<generatey1>><<person1>><<person>>【을를】 끌고 가는 베일리의 손에는 산산이 조각난 현악기가 들려 있다. 그 <<person1>><<person>>【은는】 베일리의 폭정에 대해 소리 지르며 발버둥을 친다. <<greb>><<reb 1>>
+			<br><br>
+			그 <<personsimple>>【이가】 자기를 꽉 깨물기 전까지는, 베일리는 전혀 개의치 않는 듯했다. 화가 난 <<nnpc_He "Bailey">>【은는】 아이를 때리며 벽에 강하게 내동댕이친다. 충격으로 인해 금세 끔찍한 멍이 부어오른다. 말문이 막힌 아이는 두 손으로 얼굴을 감싼 채 끅끅거리며 울음을 참는다.<<gtrauma>><<trauma 3>>
+			<br><br>
+			베일리는 그 아이의 머리채를 거머쥔 채 계속 끌고 간다.
+			<br><br>
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+			<br>
+	<</switch>>
+<</widget>>
+
+<<widget "homeeventhopelo">>
+	<<switch random(1, 7)>>
+		<<case 1>>
+			<<generateyv1>><<person1>>훌쩍이는 소리가 들린다. <<person>>【이가】 구석에서 벽을 본 채 혼자 서 있다.
+			<br><br>
+
+			<<link [[달랜다 (1:00)|Home Comfort]]>><<famegood 1>><<pass 60>><<hope 1>><</link>><<ghope>>
+			<br>
+			<<link [[무시한다|Orphanage]]>><<endevent>><</link>>
+			<br>
+
+		<<case 2>>
+			고아들이 시선을 아래로 깔고 중앙 홀을 터덜터덜 지나간다.
+			<<lhope>><<hope -1>>
+			<br><br>
+
+			<<link [[다음|Orphanage]]>><</link>>
+			<br>
+
+		<<case 3>>
+			<<generateyv1>><<person1>><<person>>【이가】 울고 있는 어린 고아 두 명을 달래주는 모습이 보인다. <<He>>【은는】 굉장히 수척하고 지쳐 보인다.<<lreb>><<reb -1>>
+			<br><br>
+
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+			<br>
+
+		<<case 4>>
+			<<generateyv1>><<generateyv2>>당신은 <<fullGroup>> 곁을 지나간다. <<person1>><<person>>【은는】 두 손에 얼굴을 파묻고 있고, 친구가 옆에서 <<him>>【을를】 위로하려 애쓰고 있다.<<gtrauma>><<trauma 6>>
+			<br><br>
+
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+			<br>
+
+		<<case 5>>
+			<<generateyv1>><<person1>><<person>>【이가】 울고 있는 어린 고아 두 명을 달래주는 모습이 보인다. <<He>>【은는】 굉장히 수척하고 지쳐 보인다.<<lreb>><<reb -1>>
+			<br><br>
+
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+			<br>
+
+		<<case 6>>
+			당신은 고아원을 걷는다.
+			<br><br>
+
+			<<generatey1>><<person1>><<person>>【이가】 <<generatey2>><<person2>><<person>>【을를】 달래주는 모습이 보인다. 그들은 핀에 꽂힌 찢어진 포스터 조각들 옆에 서 있다. <<person2>><<person>>【은는】 훌쩍이며 더듬거린다. "왜 베일리는 계-계속 이걸 찢—"
+			<br><br>
+
+			<<He>>【은는】 통곡한다. <<person1>><<person>>【은는】 <<person2>><<him>>【을를】 꼭 안아준다. "괜찮아," <<person1>><<he>>【이가】 말한다. "이것 봐." <<personsimple>>【은는】 주머니에 손을 넣어 지폐 몇 장을 꺼내 우는 친구에게 쥐여준다.
+			<br><br>
+
+			"가서 다른 포스터를 하나 더 붙여. 베일리한테 질 순 없잖아." <<person2>><<personsimple>>【은는】 울음을 그치고, 뛰어가는 내내 <<person1>><<person>>에게 고마워한다. <<personsimple>>【은는】 몸을 돌려 남은 찢어진 조각들을 정리한다.
+			<br><br>
+
+			"이게 내가 가진 돈 전부였는데..." <<He>>【이가】 한숨을 쉰다.
+			<br><br>
+
+			당신은 길을 계속 간다.<<ghope>><<greb>><<hope 1>><<reb 1>>
+			<br><br>
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+
+		<<case 7>>
+			중앙 홀에 들어서자 어린 고아 하나가 문가에 주저앉아 있는 것이 보인다. <<generatey1>><<person1>><<He>>【은는】 몹시 절망스러워 보인다.
+			<br><br>
+
+			<<link [[위로한다 (1:00)|Home Balloon]]>><<famegood 1>><<pass 60>><<set $phase to 0>><</link>><<ghope>>
+			<<if $worn.handheld.name.includes("balloon")>>
+				<br>
+				<<link [[풍선을 준다|Home Balloon]]>><<famegood 1>><<set $phase to 1>><</link>><<ghope>>
+			<</if>>
+			<br>
+			<<link [[무시한다|Orphanage]]>><<endevent>><</link>>
+
+	<</switch>>
+<</widget>>
+
+<<widget "homeeventrebhi">>
+	<<switch random(1, 11)>>
+		<<case 1>>
+			<<npc Bailey>><<person1>>베일리가 침실 사이를 걸어 다니며 압수한 간식들을 들고 있는 모습이 보인다.
+			<<lhope>><<hope -1>>
+			<br><br>
+
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+			<br>
+		<<case 2>>
+			<<npc Bailey>><<person1>>몇몇 고아들이 낙서로 덮인 벽을 청소하고 있고, 베일리가 그들을 지켜보고 있다.
+			<<lreb>><<reb -1>>
+			<br><br>
+
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+			<br>
+		<<case 3>>
+			<<wearProp "cash three">>
+			침실 문에 봉투 하나가 붙어 있는 것을 발견한다. 거기엔 당신의 이름이 적혀 있다. 안에는 <<printmoney 10000>>【와과】 쪽지가 들어있다. 쪽지에는 이렇게 적혀 있다.
+
+			<<switch random(1, 10)>>
+				<<case 1>>
+					"넌 할 수 있어!"
+				<<case 2>>
+					"넌 내게 영감을 줬어."
+				<<case 3>>
+					<<if $skulduggery gte 200>>
+						"네 본을 따랐어. 사람들은 자기 물건을 좀 더 잘 간수해야 해."
+					<<else>>
+						"이걸 어디서 났는지는 묻지 마."
+					<</if>>
+				<<case 4>>
+					<<if $fame.prostitution gte 100>>
+						"네 본을 따랐어. 사람들이 내 몸을 노린다면, 대가를 치르게 해야지."
+					<<else>>
+						"걱정 마. 앞으로 더 올 테니까."
+					<</if>>
+				<<case 5>>
+					"우린 한 배를 탔어."
+				<<case 6>>
+					"베일리 엿먹어."
+				<<case 7>>
+					"힘내."
+				<<case 8>>
+					<<if $fame.good gte 100>>
+						"언젠가는 나도 너처럼 따뜻한 사람이 되고 싶어."
+					<<else>>
+						"난 나누는 걸 좋아해."
+					<</if>>
+				<<case 9>>
+					"포기하지 마."
+				<<case 10>>
+					"계속 이렇게 가자."
+			<</switch>>
+			<br><br>
+
+			<<money 10000>>
+			<<link [[다음|Orphanage]]>><</link>>
+			<br>
+		<<case 4 5>>
+			<<generateyv1>><<person1>>한 <<person>>【이가】 당신과 부딪힌다. "미안해," <<he>>【이가】 몸을 숙이며 말한다. "너 이거 떨어뜨렸어."
+
+			<<if $spray gte $spraymax or random(1, 100) gte 50>>
+				<<He>>【은는】 당신에게 본 적 없는 불룩한 봉투를 건넨다. 그 안에는
+				<<if $museumAntiques.antiques.antiquesilverbrooch isnot "found" and $museumAntiques.antiques.antiquesilverbrooch isnot "talk" and $museumAntiques.antiques.antiquesilverbrooch isnot "museum">>
+					<<wearProp "antique silver brooch">>
+					은 브로치가 들어 있다. 꽤 낡아 보인다. 아마 수집가들이 관심을 보일 것 같다.
+					<<set $antiquemoney += 50>><<museumAntiqueStatus "antiquesilverbrooch" "found">>
+				<<else>>
+					<<switch random(1, 3)>>
+						<<case 1>>
+							<<wearProp "antique silver brooch">>
+							은 브로치가 들어 있다. 꽤 낡아 보인다. 아마 수집가들이 관심을 보일 것 같다.
+							<<set $antiquemoney += 50>><<museumAntiqueStatus "antiquesilverbrooch" "found">>
+						<<case 2>>
+							은 귀걸이 한 쌍이 들어 있다. 아마 훔친 물건이겠지만, 구매자를 찾을 수 있을 것이다.
+							<<set $blackmoney += 30>>
+						<<case 3>>
+							시계가 들어 있다. 아마 훔친 물건이겠지만, 구매자를 찾을 수 있을 것이다.
+							<<set $blackmoney += 40>>
+					<</switch>>
+				<</if>>
+				<br><br>
+			<<else>>
+				<<spray 1>>
+				<<He>>【은는】 당신에게 불룩한 봉투를 건넨다. 그 안에는 후추 스프레이 리필용 카트리지가 들어 있다.
+				<<gspray>>
+				<<wearProp "pepper spray">>
+				<br><br>
+
+			<</if>>
+			<<endevent>>
+			<<link [[다음|Orphanage]]>><</link>>
+			<br>
+		<<case 6>>
+			한 무리의 고아들이 다트 게임을 하고 있다. 다트판 위에는 베일리의 사진이 꽂혀 있다.
+			<br><br>
+
+				<<if currentSkillValue("handskill") lte 999>>
+					<<link [[참여한다 (0:30)|Home Darts]]>><<pass 30>><<handskill 5>><<stress -3>><</link>><<ghandskill>><<lstress>>
+				<<else>>
+					<<link [[참여한다 (0:30)|Home Darts]]>><<pass 30>><<control 10>><<stress -3>><</link>><<gcontrol>><<lstress>>
+				<</if>>
+				<br>
+
+				<<link [[무시한다|Orphanage]]>><</link>>
+				<br>
+		<<case 7>>
+			당신은 고아원 안을 걷는다.
+			<br><br>
+
+			한 <<generatey1>><<person1>><<person>>【이가】 포스터를 여기저기 뿌리며 미친 듯이 웃으면서 당신 곁을 지나쳐 뛰어간다. 당신은 포스터 한 장을 붙잡는다. 그 포스터는 베일리에 대항하는 선언문으로, <<nnpc_him "Bailey">>【을를】 저주하며 <<nnpc_his "Bailey">> 범죄에 대한 추잡한 세부 사항들이 나열되어 있다. <<reb 1>><<greb>>
+			<br><br>
+
+			누군가 당신의 손에서 포스터를 찢어가더니, 당신을 벽으로 거칠게 밀어붙인다.<<gpain>><<violence 6>>
+			<br><br>
+
+			당신이 올려다보니, 베일리다. <<nnpc_He "Bailey">>【은는】 당신에게 신경 쓰지 않고 대신 <<personsimple>>【을를】 뒤쫓아 전력 질주한다.
+			<br><br>
+
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+		<<case 8>>
+			<<generatey1>>
+			<<set _poster to either(
+				"베일리의 얼굴 위에 큰 'X' 표시가 그려져 있는 포스터다. 글자는 없지만 그 의도는 명백하다.",
+				"베일리의 얼굴 위에 큰 'X' 표시가 그려져 있는 포스터다. 글자는 없지만 그 의도는 명백하다.",
+				"고아원 위로 'X' 표시가 그려진 포스터다. 그 아래에는 굵은 글씨로 '폭정을 끝내라'라고 적혀 있다.",
+				"'우리의 목소리는 중요하다.'라고 쓰인 현수막을 들고 있는 한 <<person1>><<person>>【을를】 그린 포스터다.",
+				"세 가지의 굵은 단어: '두려움 없는. 끈질긴. 불굴의.'가 쓰인 포스터다."
+				)>>
+
+			당신은 고아원 안을 걷는다.
+			<br><br>
+
+			당신은 도중에 멈춰 선다. 게시판에 대충 꽂힌 흥미로운 포스터 하나가 눈에 띈다. 그것은 _poster
+			<br><br>
+
+			포스터를 지나칠 때 묘한 온기가 마음속에 퍼진다.<<greb>><<reb 1>>
+			<br><br>
+
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+		<<case 9>>
+			당신은 고아원 안을 걷는다.
+			<br><br>
+
+			쿵쾅거리는 소리가 들려와 하마터면 깜짝 놀랄 뻔했다. 그 소리의 근원지를 찾는 동안 당신의 심장이 빠르게 뛴다.<<gstress>><<stress 6>>
+			<br><br>
+
+			결국 당신은 그것을 찾아낸다. 한 <<generatey1>><<person1>><<person>>【이가】 탁자 두 개 위에 올라선 채 일렉트릭 기타를 치고 앰프를 조작하고 있다. 고아들이 그 공연에 호기심을 느끼고 <<his>> '무대'로 모여든다.
+			<br><br>
+
+			<<link [[다가간다|Home Orphan Music Stormy Choice]]>><<set $phase to 1>><</link>>
+			<br>
+			<<link [[무시한다|Home Orphan Music Stormy Choice]]>><<set $phase to 2>><</link>>
+		<<case 10>>
+			<<set _instrument to either("플루트","바이올린","키보드","기타","리코더")>>
+			고아원을 지나가던 중 익숙한 목소리가 들린다. 베일리다.
+			<br><br>
+
+			"내놔." <<nnpc_He "Bailey">>【은는】 _instrument【을를】 꼭 안고 있는 한 <<generatey1>><<person1>><<person>> 위로 우뚝 솟아 있다.
+			<br><br>
+
+			"이건 내 _instrument야," <<personsimple>>【이가】 항의한다. "맘대로 뺏어갈 순 없어!"
+			<br><br>
+
+			베일리의 표정이 굳어진다. <<nnpc_He "Bailey">>【은는】 한 걸음 다가와 <<personssimple>> 얼굴을 향해 몸을 기울인다. "다시 말해 봐. 정중히."<<gstress>><<stress 6>>
+			<br><br>
+
+			<<person1>><<person>>【은는】 눈살을 찌푸리지만 어쩔 수 없이 베일리에게 _instrument【을를】 건넨다. 베일리는 <<his>> 손에서 그것을 확 낚아챈다.
+			<br><br>
+
+			"고마워." <<nnpc_He "Bailey">>【은는】 _instrument【을를】 챙겨 떠나고, 남겨진 <<personsimple>>【은는】 <<nnpc_him "Bailey">>【을를】 쏘아본다. 그 <<personsimple>>【은는】 기회가 오면 베일리에게 가할 잔혹한 짓거리를 중얼거린다.<<lhope>><<greb>><<hope -1>><<reb 1>>
+			<br><br>
+
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+		<<case 11>>
+			<<generatey1>><<generatey2>>
+			베일리의 사무실로 몰래 들어가는 고아 몇 명을 발견한다. 그들 중 한 <<person1>><<person>>【은는】 물이 찰랑거리는 양동이를 들고 있고, 다른 <<person2>><<person>>【은는】 사다리를 들고 있다. 그들은 장난기 가득한 눈으로 주위를 살피며 서로 킥킥거리고 있다.
+			<br><br>
+
+			<<link [[따라간다|Home Orphan Rebellious Prank]]>><<set $phase to 0>><</link>>
+			<br>
+			<<link [[무시한다|Home Orphan Rebellious Prank]]>><<set $phase to 1>><</link>>
+			<br>
+	<</switch>>
+<</widget>>
+
+<<widget "homeeventreblo">>
+	<<switch random(1, 6)>>
+		<<case 1>>
+			<<npc Bailey>><<person1>>베일리가 중앙 홀을 지나간다. 고아들은 시선을 돌린 채 <<his>> 눈길을 피하려 든다.
+			<<lreb>><<reb -1>>
+			<br><br>
+
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+			<br>
+		<<case 2>>
+			<<npc Bailey>><<generateyv2>>한 <<person2>><<person>>【이가】 베일리와 이야기하는 소리가 들린다. <<He>>【은는】 다른 원생에 대해 고자질하고 있다.<<lhope>><<hope -1>>
+			<br><br>
+
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+			<br>
+		<<case 3>>
+			<<generateyv1>><<person1>>한 <<person>>【이가】 발에 걸려 넘어지며 더러운 물이 든 양동이를 바닥에 쏟는다. "안-안 돼," <<he>>【이가】 중얼거린다. "베일리가 곧 올 텐데!" <<He>>【은는】 걸레의 물을 짠 후 쏟아진 물을 닦아내려 하지만, 발이 미끄러져 바닥에 넘어지고 만다.
+			<br><br>
+
+			<<link [[도와준다 (0:20)|Home Spill Help]]>><<pass 20>><<famegood 1>><</link>>
+			<br>
+			<<link [[무시한다|Orphanage]]>><<endevent>><<hope -1>><</link>><<lhope>>
+			<br>
+		<<case 4>>
+			<<generateyv1>><<person1>>당신이 한 <<person>> 곁을 지나가며 <<him>>【을를】 놀라게 한다. <<He>>【은는】 소리 지른다.<<gstress>><<stress 6>>
+			<br><br>
+
+			"미-미안해," <<he>>【이가】 말한다. "베일리인 줄 알았어."
+			<br><br>
+
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+			<br><br>
+		<<case 5>>
+			<<generate1>><<generateyv2>>"보기 좋은데," 밖에서 누군가 큰 소리로 말한다. 당신이 창문을 통해 내다본다. 당신에게 한 말이 아니라, 정문을 막 통과하려던 한 <<person2>><<person>>에게 하는 말이다. "한 번 하는데 얼마야?"
+			<br><br>
+
+			<<person>>【이가】 돌아본다. "£50," <<he>>【이가】 무뚝뚝하게 대답한다.
+			<br><br>
+
+			<<person1>><<person>>【은는】 비웃는다. "네 엉덩이는 그만한 가치가 없어," <<he>>【이가】 말한다. "£20 주지." <<He>>【은는】 지폐를 흔든다.
+			<br><br>
+
+			<<person2>><<person>>【은는】 잠시 고민하더니 <<person1>><<person>>에게로 돌아간다.
+			<br><br>
+
+			<<link [[개입한다|Home Solicitation]]>><<hope 1>><</link>><<ghope>>
+			<br>
+			<<link [[무시한다|Orphanage]]>><<endevent>><</link>>
+			<br>
+		<<case 6>>
+			<<generatey1>><<person1>>
+
+			당신은 고아원 안을 걷는다.
+			<br><br>
+
+			베일리의 목소리가 들려 고개를 돌려보니, <<nnpc_him "Bailey">>【이가】 한 <<person1>><<person>>【을를】 깔보듯 말하고 있다.
+			<br><br>
+
+			"나가서 일자리를 찾는 대신 빈둥거리면서 시간이나 낭비하겠다 이거지?" <<nnpc_He "Bailey">>【은는】 짜증스러운 표정으로 '구인' 포스터를 이리저리 흔든다.
+			<br><br>
+
+			"정확히 그런 건 아니..." <<person1>><<person>>【이가】 말을 시작한다. "전 단지 위험을 감수하고 싶지..." 베일리가 <<his>> 광고 전단지를 찢어버리자 <<personsimple>>【은는】 깜짝 놀란다.
+			<br><br>
+
+			"네 <<printmoney 50000>>【은는】 모레까지 내야 돼. 돈을 어떻게 구하든 그건 내 알 바 아니야."
+			<br><br>
+
+			<<person1>><<persons>> 눈에 눈물이 고인다. <<He>>【이가】 도망쳐 버린다. 당신은 베일리 눈에 띄기 전에 그 자리를 벗어나기로 한다.<<lhope>><<hope -1>>
+			<br><br>
+			<<link [[다음|Orphanage]]>><<endevent>><</link>>
+			<br>
+	<</switch>>
+<</widget>>
+
+<<widget "homeeventwhitney">>
+	<span class="teal">당신은 <<generateyv1>><<generateyv2>><<fullGroup>>【이가】 치한들에게 어떤 식으로 복수했는지 소곤소곤 얘기 나누는 것을 듣게 된다.</span><<greb>><<reb 1>>
+	<br><br>
+
+	<<link [[다음|Orphanage]]>><<endevent>><</link>>
+	<br>
+<</widget>>
+
+<<widget "homeeventkylar">>
+	<span class="teal">당신은 <<generateyv1>><<generateyv2>><<fullGroup>>【이가】 치한을 호신용 스프레이로 혼내준 무용담을 신나게 주고받는 것을 듣게 된다.</span><<greb>><<reb 1>>
+	<br><br>
+
+	<<link [[다음|Orphanage]]>><<endevent>><</link>>
+	<br>
+<</widget>>
+
+<<widget "homeeventriver">>
+	<<generateyv1>><<generateyv2>>
+	<span class="teal"><<fullGroup>>【이가】 여러 보따리를 들고 지나간다. 당신은 자루 중 하나에 설탕이 들어있는 걸 슬쩍 본다. 그들은 사다리를 타고 다락방으로 향한다. 다들 꽤 신나 보인다.</span><<gghope>><<hope 3>>
+	<br><br>
+
+	<<link [[다음|Orphanage]]>><<endevent>><</link>>
+	<br>
+<</widget>>
+
+<<widget "homeeventgh">>
+	<<generateyv1>><<generateyv2>>
+	당신은 <<fullGroup>>【이가】 돌출창 밖으로 보이는 숲의 멋진 풍경에 대해 수다를 떠는 것을 우연히 듣는다.<<ghope>><<hope 1>>
+	<br><br>
+
+	<<link [[다음|Orphanage]]>><<endevent>><</link>>
+	<br>
+<</widget>>
+
+<<widget "homeeventchef">>
+	<<generateyv1>><<generateyv2>><<person1>>
+	<span class="teal">고아 무리가 입구 근처의 상자 하나를 둘러싸고 있는 것이 보인다.</span> <<person>>【이가】 달콤한 간식을 한가득 품에 안고 얼굴 가득 미소를 띠며 멀어진다.
+	<br><br>
+	당신이 그 상자 안을 들여다보자, 간식이 더 많이 남아 있다. 안에는 쪽지도 하나 들어있다.
+	<br>
+	<i><span class="teal">힘내. 너희들이 어떤 대우를 받는지 마음 쓰는 사람들도 있으니까.</span>
+	<br>
+	- 한 친구가.</i>
+
+	<<hope 3>><<gghope>>
+	<br><br>
+
+	<<link [[다음|Orphanage]]>><<endevent>><</link>>
+	<br>
+<</widget>>
+
+<<widget "telltalepenissize">>
+	<<if $player.penissize lte 3>>
+		당신은 <<he>>【이가】 복도를 달려가는 소리를 벽 너머로 듣는다. "누가 <<EZsmall>> 자지를 가졌게!" <<he>>【이가】 소리친다. 그 뒤를 이어 꺄르르 웃는 소리가 들려온다.
+		<<stress 15>><<trauma 15>>
+	<<elseif $player.penissize is 6>>
+		당신은 <<he>>【이가】 복도를 달려가는 소리를 벽 너머로 듣는다. "누가 <<EZbig>> 자지를 가졌게!" <<he>>【이가】 소리친다. 그 뒤를 이어 꺄르르 웃는 소리가 들려온다.
+		<<stress 10>><<trauma 10>>
+	<</if>>
+	<<gtrauma>><<gstress>>
+	<<incgpenisinsecurity>>
+<</widget>>
+
+<<widget "homeeventpond">>
+	고아 두 명이 젖은 발을 이끌며 입가에 미소를 머금은 채 정원에서 걸어 나온다.
+	<<ghope>><<hope 1>>
+	<br><br>
+
+	<<link [[다음|Orphanage]]>><<endevent>><</link>>
+	<br>
+<</widget>>
+
+<<widget "homeeventalex">>
+	고아 두 명이 직접 기른 꽃다발을 한가득 품에 안고 정원에서 걸어 나온다.
+	<<ghope>><<hope 1>>
+	<br><br>
+
+	<<link [[다음|Orphanage]]>><<endevent>><</link>>
+	<br>
+<</widget>>
+
+<<widget "homeeventwren">>
+	시야 구석에서 어두운 형체를 발견했다. 고아원 아이 중 한 명이지만, 누구인지 알아채기도 전에 축축한 발자국만 남긴 채 시야에서 사라졌다.<<reb 1>><<greb>>
+	<br><br>
+
+	<<link [[다음|Orphanage]]>><</link>>
+	<br>
+<</widget>>

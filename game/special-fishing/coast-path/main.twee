@@ -1,0 +1,173 @@
+:: Fishing Coast Path Approach Down
+<<set $bus to "fishingCoastPathApproach">>
+<<effects>>
+<<silently>><<dancedifficulty -300 600>><</silently>>
+<<if $rng gte 20 and $danceSuccess>>
+	당신은 해안로에서 벗어나 절벽 아래로 난 좁은 오솔길로 접어든다. 발길이 고르지 않아 약간 주의가 필요하지만, 무사히 내려간다.
+<<else>>
+	당신은 해안 산책로에서 벗어나 절벽을 따라 내려가는 오솔길로 접어든다. 흔들리는 돌에 발이 <span class="red">미끄러지며</span> 세게 넘어져 손과 무릎이 까진다.
+	<<gpain>><<pain 4>>
+<</if>>
+<br><br>
+
+<<link [[다음|Fishing Coast Path Approach]]>><</link>>
+
+
+:: Fishing Coast Path Approach
+<<set $bus to "fishingCoastPathApproach">>
+<<effects>>
+아래쪽으로 튀어나온 낡은 나무 부두는 반쯤 썩어 바람에 삐걱거리며 당장이라도 무너질 것 같다. 부두 위에 서는 것은 위험해 보이지만, 그 앞의 길은 꽤 안전하다.
+<br><br>
+
+<<if canStartFishing()>>
+	<<fishingRodIcon>><<link [[낚시한다 (0:05)|Fishing Coast Path Wait]]>><<set $fishingAmbientOverride to "castOut">><<pass 5>><</link>>
+	<br>
+<<else>>
+	낚싯대가 있다면, 여기서 물고기를 잡을 수 있을 것이다.
+	<br>
+<</if>>
+<<link [[길을 따라 올라간다 (0:10)|Fishing Coast Path Approach Up]]>><</link>>
+
+
+:: Fishing Coast Path Approach Up
+<<set $bus to "fishingCoastPathApproach">>
+<<effects>>
+<<silently>><<dancedifficulty -300 600>><</silently>>
+<<if $rng gte 20 and $danceSuccess>>
+	딩신은 절벽 오솔길을 따라 해안로로 올라간다.
+<<else>>
+	당신은 절벽 오솔길을 올라간다. 반쯤 올라갔을 때 발이 <span class="red">미끄러지며</span> 앞으로 넘어지지만, 아래로 미끄러져 내려가기 전에 양손으로 바닥을 짚어 간신히 몸을 지탱한다.
+	<<gpain>><<pain 4>><<gstress>><<stress 3>>
+<</if>>
+<br><br>
+
+<<link [[다음|Coast Path]]>><<pass 10>><</link>>
+
+
+/* The PC gets sent here any time they start fishing or after an event. From here, they get sent into the wait loop, where events can happen. */
+:: Fishing Coast Path Wait
+<<run initFishingCoastPath()>>
+<<wearActiveFishingRodProp>>
+
+<<set _fishingEditBaitEnabled to true>>
+<<fishingLocationDescription $bus>>
+<<fishingLocationPopulation $bus>>
+<br><br>
+
+<<if $stress gte $stressmax>>
+	<<if isPregnancyEnding()>>
+		<<pregnancyPassout "fishingCoastPath">>
+	<<else>>
+		<<passoutbeach>>
+	<</if>>
+<<else>>
+	<<if $exposed gte 1>>
+		<<exhibitionism "coastPathFishing">>
+		<br><br>
+	<</if>>
+	<<if $arousal gte $arousalmax>>
+		<<orgasmFishingCoastPath>>
+	<<else>>
+		<<fishingCoastPathWaitAmbient>>
+	<</if>>
+	<br><br>
+
+	<<link [[입질을 기다린다 (0:05)|Fishing Coast Path Wait Loop]]>><<pass 5>><</link>>
+	<br>
+	<<link [[떠난다|Fishing Coast Path Approach]]>><</link>>
+<</if>>
+
+<<if $options.fishingBaitSelection is "dropdown">>
+	<br><br>
+	<<baitMobileDropdown>>
+<<elseif $options.images isnot 1>>
+	<br>
+	<<link "미끼 변경">><<run openBaitOverlay()>><</link>>
+<</if>>
+
+<<fishingCoastPathDebugLinks>>
+
+
+
+:: Fishing Coast Path Wait Loop
+<<run V.fishing.waitsSinceLastCatch++>>
+<<cleareventpool>>
+<<addinlineevent "bite" fishingCatchEventWeight("fishingCoastPath", 8)>>
+	<<set $fishingHookedFish to rollFish("fishingCoastPath")>>
+	<<set _isPreferredBait to $fishing.currentBait !== undefined && setup.fishing.lootTables.fish[$fishingHookedFish.type].preferredBait is $fishing.currentBait>>
+	<<run onBaitLoss()>>
+	<<if fishTriggersMinigame($fishingHookedFish)>>
+		<<run fishingMinigameStart($fishingHookedFish.type)>>
+		<<include "Fishing Coast Path Minigame Loop">>
+	<<else>>
+		<<= setup.foodstuff[$fishingHookedFish.type].name>>【이가】<<if _isPreferredBait>> 탐욕스럽게<</if>> <<if $fishing.currentBait>>미끼를 물면서<<else>>바늘을 물면서<</if>> 낚싯줄이 팽팽해지는 것을 느낀다. 당신은 낚싯줄을 홱 당겨 별다른 씨름 없이 물 밖으로 건져낸다.
+		<<onFishCaught>>
+		<<fishingCatchFishText $fishingHookedFish>>
+		<br><br>
+
+		<<include "Fishing Coast Path Catch">>
+	<</if>>
+<</addinlineevent>>
+
+<<addinlineevent "trash" .2>>
+	<<set $fishingTrash to rollFishingTrash("fishingCoastPath")>>
+	<<include "Fishing Coast Path Trash Catch">>
+<</addinlineevent>>
+
+<<addinlineevent "clothing" .2>>
+	<<set $clothingItem to rollFishingClothing("fishingCoastPath")>>
+	<<include "Fishing Coast Path Clothing Catch">>
+<</addinlineevent>>
+
+/* Nothing happens, wait loop continues */
+<<addinlineevent "wait" 40>>
+	<<include "Fishing Coast Path Wait">>
+<</addinlineevent>>
+<<runeventpool>>
+
+
+:: Fishing Coast Path Cat Eat
+<<effects>>
+당신은 입을 크게 벌리고 <<= setup.foodstuff[$fishingHookedFish.type].name>>【을를】 통째로 입 안에 넣는다. <<fishingEatFishTfProgress>><<lstress>><<stress -6>>
+<<unset $fishingHookedFish>>
+<br><br>
+
+<<link [[다음|Fishing Coast Path Wait]]>><<set $fishingAmbientOverride to "castOut">><</link>>
+
+
+:: Widgets Fishing Coast Path Wait Flavor [widget]
+<<widget "fishingCoastPathWaitAmbient">>
+	<<if $fishingAmbientOverride is "throwBack">>
+		<<if $fishing.currentBait>>
+			물고기를 다시 파도 속으로 던져주고 <<fishingRebaitMid>>
+		<<else>>
+			물고기를 다시 파도 속으로 던져버린다.
+		<</if>>
+	<<elseif $fishingAmbientOverride is "stowAway">>
+		<<if $fishing.currentBait>>
+			물고기를 보관하고 <<fishingRebaitMid>>
+		<<else>>
+			물고기를 보관한 뒤 낚싯줄을 다시 던진다.
+		<</if>>
+	<<elseif $fishingAmbientOverride is "reHook">>
+		<<if $fishing.currentBait>>
+			<<fishingRebaitStart>>
+		<<else>>
+			낚싯줄에 바늘을 다시 꿰고 물속으로 던진다.
+		<</if>>
+	<<elseif $fishingAmbientOverride is "keepClothing">>
+		<<generalSend "wardrobe" $clothingItem.slot $clothingItem.item.name $clothingItem.colour>>
+		<<= $clothingItem.item.name>>의 물기를 짜내고 보관한다.
+	<<elseif $fishingAmbientOverride is "tossClothing">>
+		<<= $clothingItem.item.name>>의 물기를 짜내고 보관한다. 마을로 돌아가면 버릴 것이다.
+		<<unset $fishingAmbientOverride>>
+	<<elseif $fishingAmbientOverride is "castOut">>
+		물속으로 낚싯줄을 던진다.
+	<<else>>
+		<<cleareventpool>>
+		<<fishingWaitAmbient $bus>>
+		<<runeventpool>>
+	<</if>>
+
+	<<unset $fishingAmbientOverride>><<unset $clothingItem>>
+<</widget>>

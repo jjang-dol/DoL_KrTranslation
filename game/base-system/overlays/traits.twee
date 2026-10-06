@@ -1,0 +1,1486 @@
+:: Traits [widget]
+<<widget "traits">>
+	<<if $sexStats and $sexStats.pills>>
+		<<set _pills to $sexStats.pills.pills>>
+	<</if>>
+	<<set _traitLists to [
+		{
+			title: "일반 특성",
+			traits: [
+				{
+					name: "순결한",
+					colour: "green",
+					has: $player.virginity.vaginal is true and $player.virginity.penile is true,
+					text: "순결도가 더 빨리 회복됩니다. 당신의 처녀와 동정은 꽤 가치 있을지도 모릅니다.",
+				},
+				{
+					name: "순결 서약",
+					colour: "blue",
+					has: $player.virginity.temple is true,
+					text: "당신의 <<if $player.penisExist>>자지가 감싸지거나<</if>><<if $player.penisExist and $player.vaginaExist>>, 혹은 당신의 <</if>><<if $player.vaginaExist>>보지가 삽입당하면<</if>> 서약을 잃습니다. 신전이 이 사실을 알게 될 것입니다.",
+				},
+				{
+					name: "깨진 서약",
+					colour: "red",
+					has: $player.virginity.temple isnot true and $temple_rank isnot "prospective" and $temple_rank isnot undefined,
+					text: "신전이 이 사실을 알게 될 것입니다.",
+				},
+				{
+					name: "약속의 의식: " + window.KR.gatPersonNameDictKR($templePromised),
+					colour: "blue",
+					has: $templePromised isnot "" and $player.virginity.temple is true,
+					text: "당신은 신전의 다른 인원과 맺어졌습니다. 이 사람과의 섹스는 서약을 깨뜨리지 않습니다.",
+				},
+				{
+					name: "깨진 약속: " + window.KR.gatPersonNameDictKR($templePromised),
+					colour: "red",
+					has: $templePromised isnot "" and $player.virginity.temple isnot true,
+					text: "신전이 이 사실을 알게 될 것입니다.",
+				},
+				{
+					name: "신전의 짐: $temple_burden%",
+					colour: "blue",
+					has: $temple_burden gte 1,
+					text: "당신은 세상에 퍼진 타락의 일부를 몸 안에 짊어지고 있습니다. 체격, 의지력, 체육, 춤, 속임수, 수영, 관리, 가사, 영어 스킬 판정이 $temple_burden% 확률로 자동 실패합니다.",
+				},
+				{
+					name: "순결 부스트",
+					colour: "green",
+					has: $featsPurityBoost gt 0,
+					text: () => {
+						let dailyPurity = 1;
+						if (V.fallenangel >= 2) dailyPurity -= 10;
+						if (V.player.virginity.vaginal === true && V.player.virginity.penile === true) dailyPurity += 2;
+						if (dailyPurity + V.featsPurityBoost > 0) return "매일 순결도를 얻고 있습니다.";
+						if (dailyPurity + V.featsPurityBoost === 0) return "매일 순결도를 잃지 않고 있습니다.";
+						return "매일 순결도를 덜 잃고 있습니다.";
+					},
+				},
+				{
+					name: "불결 부스트",
+					colour: "red",
+					has: $featsPurityBoost lt 0,
+					text: () => {
+						let dailyPurity = 1;
+						if (V.fallenangel >= 2) dailyPurity -= 10;
+						if (V.player.virginity.vaginal === true && V.player.virginity.penile === true) dailyPurity += 2;
+						if (dailyPurity + V.featsPurityBoost > 0) return "매일 순결도를 덜 얻고 있습니다.";
+						if (dailyPurity + V.featsPurityBoost === 0) return "매일 순결도를 얻지 못하고 있습니다.";
+						return "매일 순결도를 잃고 있습니다.";
+					},
+				},
+				{
+					name: $player.sex isnot $player.gender ? `\"크로스드레서\"` : "크로스드레서",
+					colour: $player.sex is "f" ? "lblue" : "pink",
+					has: $backgroundTraits.includes("crossdresser"),
+					text: `${$player.sex is "f" ? "소년" : "소녀"}처럼 보일 때는 스트레스가 더 빨리 감소하지만, <<pcSex>> 복장일 때는 더 느리게 감소합니다.`,
+				},
+				{
+					name: "호색한",
+					colour: "lewd",
+					has: $backgroundTraits.includes("lustful"),
+					text: "시간이 지날수록 흥분이 오르며 이를 관리해야 합니다.",
+				},
+				{
+					name: "녹색의 손",
+					colour: "green",
+					has: $backgroundTraits.includes("greenthumb"),
+					text: "비료를 사용하면 작물이 더 풍성해지고 부패하지 않습니다.",
+				},
+				{
+					name: () => V.submissive <= 850 ? "나무성애자" : "식물 애호가",
+					colour: "lewd",
+					has: $backgroundTraits.includes("plantlover"),
+					text: "당신에게 식물은 전부입니다. 더 이상 환각 수치가 없어도 인간형 식물과 식물형 촉수를 마주칠 수 있습니다. 트라우마가 증가할수록 관리 스킬에 보너스를 받습니다.",
+				},
+				{
+					name: "넥타르 중독",
+					colour: "red",
+					has: $backgroundTraits.includes("plantlover"),
+					text: "당신은 최음제와 알코올에 더 취약해집니다. 넥타르에서 영양을 얻습니다. 넥타르를 마시면 몸에 활력이 돌아 체력이 상승하고 스트레스가 감소합니다. 오랜 기간 넥타르를 마시지 않으면 몸에 악영향을 미치며, 결국 이 특성과 <<if $submissive lte 850>><span class='lewd'>나무성애자</span><<else>><span class='lewd'>식물 애호가</span><</if>> 특성이 사라집니다.<span class='hidden'></span>",
+				},
+				{
+					name: () => {
+						let focusName;
+						switch ($earSlime.focus) {
+							case "pregnancy": focusName = "임신"; break;
+							case "mixed": focusName = "혼합된"; break;
+							case "impregnation": focusName = "수정"; break;
+							default: focusName = $earSlime.focus;
+						}
+						return "귀 슬라임의 "  + focusName + " 의지";
+					},
+					colour: "lewd",
+					has: $earSlime.focus and $earSlime.focus isnot "none",
+					text: () => {
+						let result;
+						switch ($earSlime.focus) {
+							case "pregnancy":
+								result = "임신의 길을 선택했습니다. 귀 슬라임이 임신 관련 특성을 증폭시키고, 다른 특성은 약화시킵니다.";
+								break;
+							case "mixed":
+								result = "임신과 수정 사이의 길을 선택했습니다. 귀 슬라임이 두 관련 특성을 어느 정도 증폭시킵니다.";
+								break;
+							case "impregnation":
+								result = "수정의 길을 선택했습니다. 귀 슬라임이 타인을 임신시키는 관련 특성을 증폭시키고, 다른 특성은 약화시킵니다.";
+								break;
+						}
+						let parasites = [];
+						if ($parasite.breasts and $parasite.breasts.name is "parasite") {
+							if ($player.breastsize gte 1) {
+								parasites.push("가슴");
+							} else {
+								parasites.push("흉부");
+							}
+						}
+						if (($parasite.clit and $parasite.clit.name is "parasite") or ($parasite.penis and $parasite.penis.name is "parasite")) parasites.push("성기");
+						if (parasites.length) result += ` 그 기생충들이 옷처럼 당신의 ${parasites.length === 1 ? parasites[0] : parasites.slice(0, -1).join(", ") + "와 " + parasites[parasites.length - 1]}【을를】 덮고 있습니다.`;
+						return result;
+					}
+				},
+				{
+					name: "임신",
+					colour: "lewd",
+					has: playerIsPregnant() and playerAwareTheyArePregnant(),
+					text: () => playerBellySize() lt 10 or playerNormalPregnancyTotal() gte 20 ? "임신 중입니다." : "임신 중입니다. 배가 커질수록 일부 스킬에 페널티를 받습니다.",
+				},
+				{
+					name: "초보 어머니",
+					colour: "lewd",
+					has: playerNormalPregnancyTotal() is 1,
+					text: "첫 아이를 출산했습니다. 임신으로 인한 신체적 페널티가 줄어듭니다.",
+				},
+				{
+					name: "두 번째 어머니",
+					colour: "lewd",
+					has: playerNormalPregnancyTotal() is 2,
+					text: "이제 아이를 두 번 출산했습니다. 임신으로 인한 신체적 페널티가 줄어듭니다.",
+				},
+				{
+					name: "어머니",
+					colour: "lewd",
+					has: between(playerNormalPregnancyTotal(), 3, 7),
+					text: "어머니로서 꽤 좋은 경험을 가지고 있습니다. 임신으로 인한 신체적 페널티가 적당히 줄어듭니다.",
+				},
+				{
+					name: "부화장 어머니",
+					colour: "lewd",
+					has: between(playerNormalPregnancyTotal(), 8, 19),
+					text: "아주, 아주 많은 아이를 낳았습니다. 임신으로 인한 신체적 페널티가 크게 줄어듭니다.",
+				},
+				{
+					name: "가이아",
+					colour: "gold",
+					has: playerNormalPregnancyTotal() gte 20,
+					text: "당신은 말 그대로 아이들의 왕국을 낳았습니다. 임신으로 인한 신체적 페널티가 없어집니다.",
+				},
+				{
+					name: "기생충 부화장 어머니",
+					colour: "lewd",
+					has: $sexStats.anus.pregnancy.motherStatus is 2 or $sexStats.vagina.pregnancy.motherStatus is 2,
+					text: "당신은 끝없이 많은 작은 벌레들의 숙주가 되었습니다<<if $sexStats.anus.pregnancy.motherStatus is 2 and $sexStats.vagina.pregnancy.motherStatus is 2>>. <span class='lewd'>당신의 신체 여러 곳에서 말입니다</span><</if>><span class='hidden'></span>.",
+				},
+				{
+					name: "기생충 어머니",
+					colour: "lewd",
+					has: ($sexStats.anus.pregnancy.motherStatus is 1 or $sexStats.vagina.pregnancy.motherStatus is 1) and !($sexStats.anus.pregnancy.motherStatus is 2 or $sexStats.vagina.pregnancy.motherStatus is 2),
+					text: "당신은 작은 벌레들을 출산했습니다<<if $sexStats.anus.pregnancy.motherStatus is 1 and $sexStats.vagina.pregnancy.motherStatus is 1>>. <span class='lewd'>당신의 신체 여러 곳에서 말입니다</span><</if>><span class='hidden'></span>.",
+				},
+				{
+					name: "수유 중",
+					colour: "blue",
+					has: $lactating gte 1 and $settings.breastFeedingEnabled,
+					text: "당신의 가슴은 모유를 짜낼 준비가 되었습니다.",
+				},
+				{
+					name: "우유 공장",
+					colour: "blue",
+					has: $lactating gte 1 and $settings.breastFeedingEnabled and $milk_volume gte 1000,
+					text: "당신의 가슴은 어마어마한 양의 모유를 담을 수 있습니다.",
+				},
+				{
+					name: "정자 은행",
+					colour: "blue",
+					has: $semen_volume gte 1000 and $player.penisExist,
+					text: "당신은 어마어마한 양의 정액을 지니고 있습니다.",
+				},
+				{
+					name: "빙의됨",
+					colour: "wraith",
+					has: $possessed,
+					text: "당신의 몸은 당신의 것이 아닙니다.",
+				},
+				{
+					name: () => V.player.gender is "n" ? "늑대" : "늑대 <<pcGender>>",
+					colour: "grey",
+					has: $wolfgirl gte 6,
+					text: '야생의 정령이 당신 안에 살아 있습니다. 반항적인 선택지와 "요구한다" 행동을 항상 사용할 수 있으며, 이는 스트레스를 감소시킵니다. 지나치게 순종적일 때, 반항적인 행동을 하는 것은 트라우마를 유발하고 통제력을 낮춥니다. 귀와 꼬리가 당신을 더 눈에 띄게 만듭니다.',
+				},
+				{
+					name: () => V.player.gender is "n" ? "고양이" : "고양이 <<pcGender>>",
+					colour: "grey",
+					has: $cat gte 6,
+					text: '크림을 핥아먹고 싶은 충동을 느낍니다. 몸에 야한 체액을 묻힌 채 춤을 출 때 "치장한다" 행동이 해금됩니다. 귀와 꼬리가 당신을 더 눈에 띄게 만듭니다.',
+				},
+				{
+					name: () => {
+						if (V.player.gender_appearance is "m") {
+							if (V.player.gender is "n") {
+								return "황소";
+							}
+							return "황소 <<pcGender>>";
+						} else {
+							if (V.player.gender is "n") {
+								return "젖소";
+							}
+							return "젖소 <<pcGender>>";
+						}
+					},
+					colour: "brat",
+					has: $cow gte 6,
+					text: "당신은 젖이 짜이기를 갈망합니다. 모유와 정액의 생산량이 증가합니다. 특정 신체 부위가 커질 수도 있습니다. 당신의 뿔, 귀, 꼬리가 당신을 더 눈에 띄게 만듭니다.",
+				},
+				{
+					name: () => V.hallucinations gte 2 || !V.settings.bestialityEnabled ? "하피" : V.player.gender is "n" ? "새" : "새 <<pcGender>>",
+					colour: "grey",
+					has: $harpy gte 6,
+					text: "하늘이 부릅니다.",
+				},
+				{
+					name: () => {
+						if (V.player.gender_appearance is "m") {
+							if (V.player.gender is "n") {
+								return "여우";
+							}
+							return "여우 <<pcGender>>";
+						} else {
+							return "여우";
+						}
+					},
+					colour: "",
+					style: `background: linear-gradient(to right,#fe9000 0%, #ffffff 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;`,
+					has: $fox gte 6,
+					text: "당신 것이 아닌 걸 가지고 싶은 충동이 듭니다. 귀와 꼬리 덕분에 더 매혹적이고 매력적으로 보입니다.",
+				},
+				{
+					name: "송곳니",
+					colour: "def",
+					has: !["disabled", "hidden"].includes($transformationParts.traits.fangs),
+					text: "깨물기가 두 배로 효과적입니다.",
+				},
+				{
+					name: "날카로운 눈",
+					colour: "def",
+					has: !["disabled", "hidden"].includes($transformationParts.traits.sharpEyes),
+					text: "무언가 당신의 주의를 피해갈 확률이 낮아집니다. 속임수 +5%.",
+				},
+				{
+					name: "오드아이",
+					colour: "",
+					style: `background: linear-gradient(to right,${setup.colours.eyes_map[$rightEyeColour].canvasfilter.blend} 0%, ${setup.colours.eyes_map[$leftEyeColour].canvasfilter.blend} 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;`,
+					has: $heterochromia is 1,
+					text: "당신의 양쪽 눈 색깔이 다릅니다.",
+				},
+				{
+					name: "단단한 뿔",
+					colour: "def",
+					has: $cow gte 2 and $demon lt 2,
+					text: "박치기를 해도 더 이상 아프지 않습니다.",
+				},
+				{
+					name: "평생의 반려자",
+					colour: "",
+					style: `background: linear-gradient(to right,#e646c6 0%, #ffffff 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;`,
+					has: !["disabled", "hidden"].includes($transformationParts.traits.mateForLife),
+					text: "연인과 잠을 자거나 교미할 때 보너스를 얻습니다. 연인이 바뀌면 스트레스와 트라우마를 유발합니다.",
+				},
+				{
+					name: "추격의 스릴",
+					colour: "teal",
+					has: !["disabled", "hidden"].includes($transformationParts.traits.chase),
+					text: '체육 스킬에 보너스를 받고 스토킹 인카운터 시 "기습" 행동을 사용할 수 있습니다. 추적자에게서 도망치면 스트레스가 감소합니다.',
+				},
+				{
+					name: "타락 천사",
+					colour: "black",
+					has: $fallenangel gte 4,
+					text: '세상은 무척 잔인합니다. 나날이 순수함을 잃어간다고 느끼지만, 스스로를 놓아버리진 않을 것입니다. "비난한다" 행동이 해금됩니다.',
+				},
+				{
+					name: "타락 천사",
+					colour: "black",
+					has: $fallenangel is 2 or $fallenangel is 3,
+					text: "세상은 무척 잔인합니다. 나날이 순수함을 잃어간다고 느낍니다.",
+				},
+				{
+					name: "강철의 의지",
+					colour: "silver",
+					has: $fallenangel is 4,
+					text: "세상의 무게는 무겁지만, 당신은 그것을 견뎌낼 만큼 강합니다. 의지력이 더 이상 감소하지 않습니다.",
+				},
+				{
+					name: "천사",
+					colour: "gold",
+					has: $angel gte 6,
+					text: '당신은 순수함을 내뿜습니다. 인카운터 당 한 번 "용서한다" 행동이 해금되어, 여태 얻은 트라우마를 없앱니다. 주의하세요, 순결을 잃으면 이 특성이 사라지고 당신은 부서질 것입니다.',
+				},
+				{
+					name: () => {
+						if(V.player.gender_appearance is "m"){
+							if(V.player.sex is "f" and isCrossdressing()){
+								return "인큐버스 (♀)";
+							}
+							return "인큐버스";
+						}else{
+							if(V.player.sex is "m" and isCrossdressing()){
+								return "서큐버스 (♂)";
+							}
+							return "서큐버스";
+						}
+					},
+					colour: "red",
+					has: $demon gte 6,
+					text: "당신에겐 순수함이라곤 남아있지 않습니다. 무언가 당신 안에 사정하거나, 당신이 다른 무언가에 사정하면 트라우마가 감소합니다. 촉수는 트라우마 대신 스트레스와 고통을 줄여줍니다. 주의하세요, 순결도가 최하 수치가 아닌 상태로 하루를 마치면 상당한 스트레스를 받을 것입니다.",
+				},
+				{
+					name: "찬란함",
+					colour: "gold",
+					has: $angel gte 4,
+					text: '당신은 순결합니다. 천사 수치에 따라 하루에 몇 번 "추방한다" 행동을 사용하여 촉수에게 큰 피해를 줄 수 있습니다. 최대 순결도일 때 그 위력이 엄청나게 증가합니다. 오늘 남은 사용 횟수: ($angelBanish / $angelBanishMax)',
+				},
+				{
+					name: "검은 뿔",
+					colour: "def",
+					has: $cow lt 2 and $demon gte 2,
+					text: "박치기 시 데미지가 두 배로 들어갑니다.",
+				},
+				{
+					name: "복합 뿔",
+					colour: "def",
+					has: $cow gte 2 and $demon gte 2,
+					text: "당신의 박치기는 흉포합니다. 박치기가 두 배로 강해지고, 더 이상 박치기를 해도 아프지 않습니다.",
+				},
+				{
+					name: () => V.plucked ? "완전히 다듬어진 날개" : "강인한 날개",
+					colour: () => V.plucked ? "grey" : "gold",
+					has: $harpy gte 6 and $birdFly gte 1,
+					text: () => V.plucked ? "깃털이 몇 개 빠졌지만, 날개는 매끈하게 느껴집니다. 활강은 할 수 있지만, 당분간 날 수는 없습니다." : "높은 곳에서 활강할 수 있습니다. 바람이 허락하는 곳에서는 날 수도 있습니다.",
+					meter: {
+						has: V.plucked,
+						value: V.plucked,
+						min: 0,
+						max: 14,
+						colour: "bluebar",
+					},
+				},
+				{
+					name: "날개",
+					colour: "grey",
+					has: !($harpy gte 6 and $birdFly gte 1) and ($angel gte 6 or $fallenangel gte 2 or $demon gte 6 or $harpy gte 6),
+					text: "높은 곳에서 활강할 수 있습니다.",
+				},
+				{
+					name: "유순함",
+					colour: "meek",
+					has: $submissive gte 1150 and $submissive lt 1500,
+					text: '"신음한다" 행동이 해금됩니다.',
+				},
+				{
+					name: "순종",
+					colour: "sub",
+					has: $submissive gte 1500,
+					text: '"신음한다" 행동이 해금됩니다.',
+				},
+				{
+					name: "버릇없음",
+					colour: "brat",
+					has: $submissive lte 850 and $submissive gt 500,
+					text: '"요구한다" 행동이 해금됩니다.',
+				},
+				{
+					name: "반항적",
+					colour: "def",
+					has: $submissive lte 500,
+					text: '"요구한다" 행동이 해금됩니다.',
+				},
+				{
+					name: "순수함",
+					colour: "blue",
+					has: $innocencestate is 1,
+					text: "수많은 사람들이 당신과 함께 시간을 보내고 싶어하는 것을 기쁘게 생각합니다. 순수함 수치가 바닥나면 이 특성은 사라지며, 축적된 모든 트라우마가 한 번에 적용됩니다. 공격당하거나 통제력이 낮으면 순수함이 감소합니다.",
+				},
+				{
+					name: "죄책감 어린 마조히스트",
+					colour: "blue",
+					has: $masochism_level is 1,
+					text: "대부분의 고통 요인에 대해 작은 저항력을 제공합니다. 대신 해당 요인들은 흥분을 증가시킵니다.",
+				},
+				{
+					name: "마조히스트",
+					colour: "purple",
+					has: $masochism_level is 2,
+					text: "대부분의 고통 요인에 대해 저항력을 제공합니다. 대신 해당 요인들은 흥분을 증가시킵니다.",
+				},
+				{
+					name: "단련된 마조히스트",
+					colour: "pink",
+					has: $masochism_level is 3,
+					text: "대부분의 고통 요인에 대해 강한 저항력을 제공합니다. 대신 해당 요인들은 흥분을 증가시킵니다.",
+				},
+				{
+					name: "침 흘리는 마조히스트",
+					colour: "red",
+					has: $masochism_level is 4,
+					text: "대부분의 고통 요인에 대해 놀라운 저항력을 제공합니다. 대신 해당 요인들은 흥분을 증가시킵니다.",
+				},
+				{
+					name: "죄책감 어린 사디스트",
+					colour: "blue",
+					has: $sadism_level is 1,
+					text: "당신의 반항적인 행동이 조금 더 고통을 줍니다. 상대에게 고통을 가하면 흥분이 증가합니다.",
+				},
+				{
+					name: "사디스트",
+					colour: "purple",
+					has: $sadism_level is 2,
+					text: "당신의 반항적인 행동이 더 고통을 줍니다. 상대에게 고통을 가하면 흥분이 증가합니다.",
+				},
+				{
+					name: "단련된 사디스트",
+					colour: "pink",
+					has: $sadism_level is 3,
+					text: "당신의 반항적인 행동이 훨씬 더 큰 고통을 줍니다. 상대에게 고통을 가하면 흥분이 증가합니다.",
+				},
+				{
+					name: "복수심에 불타는 사디스트",
+					colour: "red",
+					has: $sadism_level is 4,
+					text: "당신의 반항적인 행동이 훨씬 위험해집니다. 상대에게 고통을 가하면 흥분이 증가합니다.",
+				},
+				{
+					name: "농부",
+					colour: "green",
+					has: $farm_stage gte 6,
+					text: "농장 축사 주변의 지리에 빠삭합니다. 체력을 관리하기 더 수월해집니다.",
+				},
+				{
+					name: "지식: 섬 주민 언어",
+					colour: "",
+					has: $islander_language gte 100,
+					text: "섬 주민들의 언어를 이해하고 구사할 수 있습니다.",
+				},
+				{
+					name: "지식: 유사",
+					colour: "",
+					has: $quicksand gte 5,
+					text: "이것에 빠졌을 때 어떻게 대처해야 하는지 알고 있습니다.",
+				},
+				{
+					name: "고대의 예술",
+					colour: "wraith",
+					has: $hc?.wraith,
+					text: "과거에 실전된 기술을 배웠습니다. 채찍이 몸의 일부처럼, 팔과 채찍이 하나가 되어 움직입니다.",
+				},
+				{
+					name: "거울의 광기",
+					colour: () => V.awareness < 200 ? "blue" : "blue",
+					has: $asylum_mirror gte 5,
+					text: "거울을 보면 하루에 한 번 경계심과 트라우마가 감소합니다. 경계심이 낮을 때만 활성화됩니다.",
+					textColour: () => V.awareness < 200 ? "blue" : "black",
+				},
+				{
+					name: "야행성 눈",
+					colour: "green",
+					has: $asylum_tunnels gte 6,
+					text: "밤에 숲에서 매력이 감소합니다.",
+				},
+			],
+		},
+		{
+			title: "약물 특성",
+			traits: [
+				{
+					name: "모발 성장제",
+					colour: "green",
+					has: _pills and _pills["Hair Growth Formula"] and _pills["Hair Growth Formula"].doseTaken,
+					text: () => {
+						return `모발의 빠른 성장을 촉진하기 위해 모발 성장제가 도포되었습니다. ${_pills["Hair Growth Formula"].doseTaken}일 남았습니다.`;
+					}
+				},
+				{
+					name: "기생충 방지 크림",
+					colour: "green",
+					has: _pills and _pills["Anti-Parasite Cream"] and _pills["Anti-Parasite Cream"].doseTaken,
+					text: () => {
+						return `체내 기생충의 추가 착상을 방지하는 기생충 퇴치 크림입니다. ${_pills["Anti-Parasite Cream"].doseTaken}일 남았습니다.`;
+					}
+				},
+				{
+					name: "배란 유도제",
+					colour: "lewd",
+					has: _pills and _pills["fertility booster"] and _pills["fertility booster"].doseTaken,
+					text: () => {
+						let result = `당신은 ${_pills["fertility booster"].doseTaken gte 2 ? "알약을 과다 복용했으며, 이로 인해 " : "알약을 복용했으며, 이로 인해 "}`;
+						let multiple = false;
+						let hasEffect = false;
+						if ((!playerIsPregnant() or !playerAwareTheyArePregnant()) and playerAwareTheyCanBePregnant()) {
+							multiple = true;
+							hasEffect = true;
+							result += "다태아 임신이 더 쉬워집니다";
+						}
+						if ($player.penisExist and $player.penissize gte 1) {
+							hasEffect = true;
+							if (multiple) result += " 그리고 ";
+							result += "정자의 수정력이 더 강해집니다";
+						}
+						if (!hasEffect) {
+							result += "현재는 아무런 효과가 없습니다";
+						}
+						result += `. ${_pills["fertility booster"].doseTaken}일 남았습니다.`;
+
+						return result;
+					}
+				},
+				{
+					name: "피임약",
+					colour: "lblue",
+					has: _pills and _pills["contraceptive"] and _pills["contraceptive"].doseTaken,
+					text: () => {
+						let result = `당신은 ${_pills["contraceptive"].doseTaken gte 2 ? "알약을 과다 복용했으며, 이로 인해 " : "알약을 복용했으며, 이로 인해 "}`;
+						let multiple = false;
+						let hasEffect = false;
+						if (!playerAwareTheyCanBePregnant() or !playerAwareTheyArePregnant()) {
+							multiple = true;
+							hasEffect = true;
+							result += "임신하기가 더 어려워집니다";
+						}
+						if ($player.penisExist and $player.penissize gte 1) {
+							hasEffect = true;
+							if (multiple) result += " 그리고 ";
+							result += "정자의 수정력이 약해집니다";
+						}
+						if (!hasEffect) {
+							result += "현재는 아무런 효과가 없습니다";
+						}
+						result += `. ${_pills["contraceptive"].doseTaken}일 남았습니다.`;
+
+						return result;
+					}
+				},
+				{
+					name: "자지 유지 알약",
+					colour: "green",
+					has: _pills and _pills["penis blocker"] and _pills["penis blocker"].doseTaken,
+					text: () => {
+						let result = `당신은`;
+						if ($player.penisExist) {
+							result += " 자지의 크기 변화를 방지하는 알약을 복용했습니다.";
+						} else {
+							result += " 아무런 효과가 없는 알약을 복용했습니다.";
+						}
+						return result;
+					}
+				},
+				{
+					name: "자지 성장 알약",
+					colour: "green",
+					has: _pills and _pills["penis growth"] and _pills["penis growth"].doseTaken,
+					text: () => {
+						let result = `당신은`;
+						if ($player.penisExist) {
+							result += ` 자지의 성장을 촉진하는 알약을 ${_pills["penis growth"].doseTaken gte 2 ? "과다 복용했습니다." : "복용했습니다."}`;
+						} else {
+							result += ` 아무런 효과가 없는 알약을 ${_pills["penis growth"].doseTaken gte 2 ? "과다 복용했습니다." : "복용했습니다."}`;
+						}
+						return result;
+					}
+				},
+				{
+					name: "자지 축소 알약",
+					colour: "green",
+					has: _pills and _pills["penis reduction"] and _pills["penis reduction"].doseTaken,
+					text: () => {
+						let result = `당신은`;
+						if ($player.penisExist) {
+							result += ` 자지의 축소를 촉진하는 알약을 ${_pills["penis reduction"].doseTaken gte 2 ? "과다 복용했습니다." : "복용했습니다."}`;
+						} else {
+							result += ` 아무런 효과가 없는 알약을 ${_pills["penis reduction"].doseTaken gte 2 ? "과다 복용했습니다." : "복용했습니다."}`;
+						}
+						return result;
+					}
+				},
+				{
+					name: "가슴 유지 알약",
+					colour: "green",
+					has: _pills and _pills["breast blocker"] and _pills["breast blocker"].doseTaken,
+					text: "당신은 가슴의 크기 변화를 방지하는 알약을 복용했습니다.",
+				},
+				{
+					name: "가슴 성장 알약",
+					colour: "green",
+					has: _pills and _pills["breast growth"] and _pills["breast growth"].doseTaken,
+					text: `당신은 가슴의 성장을 촉진하는 알약을 ${_pills and _pills["breast growth"].doseTaken gte 2 ? "과다 복용했습니다." : "복용했습니다."}`,
+				},
+				{
+					name: "가슴 축소 알약",
+					colour: "green",
+					has: _pills and _pills["breast reduction"] and _pills["breast reduction"].doseTaken,
+					text: `당신은 가슴의 축소를 촉진하는 알약을 ${_pills and _pills["breast reduction"].doseTaken gte 2 ? "과다 복용했습니다." : "복용했습니다."}`,
+				},
+				{
+					name: "엉덩이 유지 알약",
+					colour: "green",
+					has: _pills and _pills["bottom blocker"] and _pills["bottom blocker"].doseTaken,
+					text: "당신은 엉덩이의 크기 변화를 방지하는 알약을 복용했습니다.",
+				},
+				{
+					name: "엉덩이 성장 알약",
+					colour: "green",
+					has: _pills and _pills["bottom growth"] and _pills["bottom growth"].doseTaken,
+					text: `당신은 엉덩이의 성장을 촉진하는 알약을 ${_pills and _pills["bottom growth"].doseTaken gte 2 ? "과다 복용했습니다." : "복용했습니다."}`,
+				},
+				{
+					name: "엉덩이 축소 알약",
+					colour: "green",
+					has: _pills and _pills["bottom reduction"] and _pills["bottom reduction"].doseTaken,
+					text: `당신은 엉덩이의 축소를 촉진하는 알약을 ${_pills and _pills["bottom reduction"].doseTaken gte 2 ? "과다 복용했습니다." : "복용했습니다."}`,
+				},
+			]
+		},
+		{
+			title: "특별 특성",
+			traits: [
+				{
+					name: () => V.submissive <= 850 ? "쾌락주의자" : "절정 중독",
+					colour: "lewd",
+					has: $orgasmtrait gte 1,
+					text: "수많은 절정을 경험한 것이 생리학적으로 영구적인 영향을 남겼습니다. 절정에 오르는 것은 더 힘들어지지만, 쾌락을 동반한 절정은 더 많은 스트레스를 해소하고 고통스러운 절정은 더 이상 스트레스를 주지 않습니다.",
+				},
+				{
+					name: "질식애호증",
+					colour: "lewd",
+					has: $choketrait gte 1,
+					text: "산소가 부족할 때의 감각을 사랑하게 되었습니다. 목이 졸리면 섹스에서 더 큰 쾌락을 느낍니다.",
+				},
+				{
+					name: () => V.submissive <= 850 ? "정액 감별사" : "정액받이",
+					colour: "lewd",
+					has: $ejactrait gte 1,
+					text: "정액의 냄새에 익숙해졌고 이를 안정 효과로 삼을 수 있게 되었습니다. 얼마나 많은 슬라임과 정액이 당신을 덮고 있는지에 따라 매시간 스트레스가 감소합니다.",
+				},
+				{
+					name: () => V.submissive <= 850 ? "우아한" : "노리개",
+					colour: "lewd",
+					has: $molesttrait gte 1,
+					text: "심리적 트라우마를 잘 견뎌내는 방법을 배웠습니다. 이제 희롱당하더라도 통제력을 상실하지 않습니다 (강간은 여전히 통제력을 상실시킵니다).",
+				},
+				{
+					name: () => V.submissive <= 850 ? "살아남은자" : "육변기",
+					colour: "lewd",
+					has: $rapetrait gte 1,
+					text: "너무 많이 강간당한 나머지 대처하는 법을 배웠습니다. 트라우마 증가량이 더 느려집니다.",
+				},
+				{
+					name: () => V.submissive <= 850 ? "조련사" : "암캐",
+					colour: "lewd",
+					has: $bestialitytrait gte 1,
+					text: "동물들이 계속해서 당신과 <<if $settings.pregnancySpeechEnabled>>번식<<else>>교미<</if>>하려고 하다 보니 이젠 이골이 났습니다. 동물에게 공격당할 때 트라우마가 더 천천히 증가합니다.",
+				},
+				{
+					name: () => V.submissive <= 850 ? "마녀" : "사냥감",
+					colour: "lewd",
+					has: $tentacletrait gte 1,
+					text: "수많은 촉수들이 당신의 몸을 농락했습니다. 촉수에게 공격당할 때 트라우마가 더 천천히 증가합니다.",
+				},
+				{
+					name: () => V.submissive <= 850 ? "무모한 도전자" : "맛있는 자",
+					colour: "lewd",
+					has: $voretrait gte 1,
+					text: "당신은 수많은 괴물들의 뱃속으로 들어가는 길을 찾아냈습니다. 그들은 당신의 맛을 음미하느라 당신을 삼키는 데 더 애를 먹을 것입니다.",
+				},
+				{
+					name: () => V.submissive <= 850 ? "우유 애호가" : "우유 중독자",
+					colour: "lewd",
+					has: $milkdranktrait gte 1,
+					text: "신선한 모유의 영양을 온전히 이용할 수 있습니다. 마시면 몸에 활력이 돌고 체력이 상승합니다.",
+				},
+			],
+		},
+		{
+			title: "학교 특성",
+			traits: [
+				{
+					name: "나쁘지 않은 과학 성적",
+					colour: "blue",
+					has: $sciencetrait is 1,
+					text: "고통에 아주 약간 더 잘 대처합니다.",
+				},
+				{
+					name: "꽤 좋은 과학 성적",
+					colour: "lblue",
+					has: $sciencetrait is 2,
+					text: "고통에 꽤 잘 대처합니다.",
+				},
+				{
+					name: "좋은 과학 성적",
+					colour: "teal",
+					has: $sciencetrait is 3,
+					text: "고통에 쉽게 대처합니다.",
+				},
+				{
+					name: "훌륭한 과학 성적",
+					colour: "green",
+					has: $sciencetrait is 4,
+					text: "고통에 훨씬 더 잘 대처합니다.",
+				},
+				{
+					name: "나쁘지 않은 수학 성적",
+					colour: "blue",
+					has: $mathstrait is 1,
+					text: "팁과 협상한 요금에서 25%의 수익을 추가로 받습니다.",
+				},
+				{
+					name: "꽤 좋은 수학 성적",
+					colour: "lblue",
+					has: $mathstrait is 2,
+					text: "팁과 협상한 요금에서 50%의 수익을 추가로 받습니다.",
+				},
+				{
+					name: "좋은 수학 성적",
+					colour: "teal",
+					has: $mathstrait is 3,
+					text: "팁과 협상한 요금에서 75%의 수익을 추가로 받습니다.",
+				},
+				{
+					name: "훌륭한 수학 성적",
+					colour: "green",
+					has: $mathstrait is 4,
+					text: "팁과 협상한 요금에서 100%의 수익을 추가로 받습니다.",
+				},
+				{
+					name: "나쁘지 않은 영어 성적",
+					colour: "blue",
+					has: $englishtrait is 1,
+					text: "대화 행동 (애원, 신음, 요구, 사과, 조롱, 놀리기, 더 거칠게 해달라고 부탁하기) 이 두 배로 효과적입니다.",
+				},
+				{
+					name: "꽤 좋은 영어 성적",
+					colour: "lblue",
+					has: $englishtrait is 2,
+					text: "대화 행동 (애원, 신음, 요구, 사과, 조롱, 놀리기, 더 거칠게 해달라고 부탁하기) 이 세 배로 효과적입니다.",
+				},
+				{
+					name: "좋은 영어 성적",
+					colour: "teal",
+					has: $englishtrait is 3,
+					text: "대화 행동 (애원, 신음, 요구, 사과, 조롱, 놀리기, 더 거칠게 해달라고 부탁하기) 이 네 배로 효과적입니다.",
+				},
+				{
+					name: "훌륭한 영어 성적",
+					colour: "green",
+					has: $englishtrait is 4,
+					text: "대화 행동 (애원, 신음, 요구, 사과, 조롱, 놀리기, 더 거칠게 해달라고 부탁하기) 이 다섯 배로 효과적입니다.",
+				},
+				{
+					name: "나쁘지 않은 역사 성적",
+					colour: "blue",
+					has: $historytrait is 1,
+					text: "마을 곳곳의 비밀 통로를 알고 있습니다.",
+				},
+				{
+					name: "꽤 좋은 역사 성적",
+					colour: "lblue",
+					has: $historytrait is 2,
+					text: "마을 곳곳의 약간의 비밀 통로들을 알고 있습니다.",
+				},
+				{
+					name: "좋은 역사 성적",
+					colour: "teal",
+					has: $historytrait is 3,
+					text: "마을 곳곳의 몇몇 비밀 통로들을 알고 있습니다.",
+				},
+				{
+					name: "훌륭한 역사 성적",
+					colour: "green",
+					has: $historytrait is 4,
+					text: "마을 곳곳의 수많은 비밀 통로들을 알고 있습니다.",
+				},
+				{
+					name: "나쁘지 않은 성적",
+					colour: "blue",
+					has: $schooltrait is 1,
+					text: "학교에서의 성적이 자존감을 끌어올려 매일 트라우마 감소량이 조금 늘어났습니다.",
+				},
+				{
+					name: "꽤 좋은 성적",
+					colour: "lblue",
+					has: $schooltrait is 2,
+					text: "학교에서의 성적이 자존감을 끌어올려 매일 트라우마 감소량이 어느 정도 늘어났습니다.",
+				},
+				{
+					name: "좋은 성적",
+					colour: "teal",
+					has: $schooltrait is 3,
+					text: "학교에서의 성적이 자존감을 끌어올려 매일 트라우마 감소량이 늘어났습니다.",
+				},
+				{
+					name: "훌륭한 성적",
+					colour: "green",
+					has: $schooltrait is 4,
+					text: "학교에서의 성적이 자존감을 끌어올려 매일 트라우마 감소량이 크게 늘어났습니다.",
+				},
+				{
+					name: "과학 경시대회 우승자",
+					colour: "green",
+					has: $scienceprojectwon is 1,
+					text: "당신의 구체적이고 유익한 과학 프로젝트가 공개적으로 표창받았습니다.",
+				},
+				{
+					name: "수학 경시대회 우승자",
+					colour: "green",
+					has: $mathsprojectwon is 1,
+					text: "매우 도전적인 수학 문제에 대한 통찰력 있는 해결책으로 인해 공개적으로 표창받았습니다.",
+				},
+				{
+					name: "연극 무대 연기자",
+					colour: "green",
+					has: $englishPlayWell is 1,
+					text: "학생 연극 무대에서 보여준 빛나는 연기가 극을 엄청난 찬사 속에 성공으로 이끌었습니다.",
+				},
+			],
+		},
+		{
+			title: "트라우마 특성",
+			traits: [
+				{
+					name: () => V.hypnosis_traits.slumber ? "억제된 불면증" : V.controlled === 0 ? "불면증" : "통제된 불면증",
+					colour: () => V.hypnosis_traits.slumber ? "black" : V.controlled === 0 ? "red" : "blue",
+					has: $sleeptrouble gte 1,
+					text: "수면의 효과가 감소함.",
+					textColour: () => V.controlled === 0 && !V.hypnosis_traits.slumber ? "red" : "black",
+				},
+				{
+					name: () => V.controlled === 0 ? "악몽" : "통제된 악몽",
+					colour: () => V.controlled === 0 ? "red" : "blue",
+					has: $nightmares gte 1,
+					text: "잠을 자면 스트레스를 받음.",
+					textColour: () => V.controlled === 0 ? "red" : "black",
+				},
+				{
+					name: () => V.controlled === 0 ? "불안 장애" : "통제된 불안 장애",
+					colour: () => V.controlled === 0 ? "red" : "blue",
+					has: $anxiety gte 1,
+					text: "스트레스가 시간이 지나도 저절로 감소하지 않음.",
+					textColour: () => V.controlled === 0 ? "red" : "black",
+				},
+				{
+					name: () => V.controlled === 0 ? "심각한 불안 장애" : "통제된 심각한 불안 장애",
+					colour: () => V.controlled === 0 ? "red" : "blue",
+					has: $anxiety gte 2,
+					text: "스트레스가 시간이 지나면서 증가함.",
+					textColour: () => V.controlled === 0 ? "red" : "black",
+				},
+				{
+					name: () => V.controlled === 0 ? "플래시백" : "통제된 플래시백",
+					colour: () => V.controlled === 0 ? "red" : "blue",
+					has: $flashbacks gte 1,
+					text: "끔찍한 기억을 다시 겪을 수 있음.",
+					textColour: () => V.controlled === 0 ? "red" : "black",
+				},
+				{
+					name: () => V.controlled === 0 ? "공황 발작" : "통제된 공황 발작",
+					colour: () => V.controlled === 0 ? "red" : "blue",
+					has: $panicattacks gte 1,
+					text: "마비될 확률이 생김.",
+					textColour: () => V.controlled === 0 ? "red" : "black",
+				},
+				{
+					name: () => V.controlled === 0 ? "심각한 공황" : "통제된 심각한 공황",
+					colour: () => V.controlled === 0 ? "red" : "blue",
+					has: $panicattacks gte 2,
+					text: "통제할 수 없는 폭력적인 충동의 가능성.",
+					textColour: () => V.controlled === 0 ? "red" : "black",
+				},
+				{
+					name: () => V.controlled === 0 ? "환각" : "통제된 환각",
+					colour: () => V.controlled === 0 ? "red" : "blue",
+					has: $hallucinations gte 1,
+					text: "인카운터 시 더 위험해짐.",
+					textColour: () => V.controlled === 0 ? "red" : "black",
+				},
+				{
+					name: () => V.controlled === 0 ? "심각한 환각" : "통제된 심각한 환각",
+					colour: () => V.controlled === 0 ? "red" : "blue",
+					has: $hallucinations gte 2,
+					text: "더 위험해진 세상.",
+					textColour: () => V.controlled === 0 ? "red" : "black",
+				},
+				{
+					name: "눈에 띄게 불안정함",
+					colour: "red",
+					has: $dissociation gte 1,
+					text: "당신에게 뭔가 문제가 생겼고, 사람들은 이를 알아챌 수 있습니다.",
+					textColour: "red",
+				},
+				{
+					name: () => V.controlled === 0 ? "해리 상태" : "통제된 해리 상태",
+					colour: () => V.controlled === 0 ? "red" : "blue",
+					has: $dissociation gte 2,
+					text: "어느 것도 현실 같지 않습니다.",
+					textColour: () => V.controlled === 0 ? "red" : "black",
+				},
+			],
+		},
+		{
+			title: "NPC 특성",
+			traits: [
+				{
+					name: "로빈의 보호자",
+					colour: "lblue",
+					has: $robinpaid gte 1,
+					text: "로빈은 당신에게 의지하고 있습니다. 당신은 굳세어져야 합니다. 매일 트라우마 감소량이 증가합니다.",
+				},
+				{
+					name: "스톡홀름 신드롬: 에덴",
+					colour: "white",
+					has: $syndromeeden gte 1,
+					text: "숲에서 혼자 살아가는 건 정말 외로울 거예요.",
+					textColour: "red",
+				},
+				{
+					name: "스톡홀름 신드롬: 카일라",
+					colour: "white",
+					has: $syndromekylar gte 1 and (C.npc.Kylar.state isnot "prison" or $location is "prison"),
+					text: "모두에겐 친구가 필요하잖아요.",
+					textColour: "red",
+				},
+				{
+					name: () => V.settings.bestialityEnabled ? "스톡홀름 신드롬: 늑대" : "스톡홀름 신드롬: 늑대인간",
+					colour: "white",
+					has: $syndromewolves gte 1,
+					text: () => V.settings.bestialityEnabled ? "그저 귀여운 동물일 뿐입니다." : "그저 귀여운 괴물일 뿐입니다.",
+					textColour: "red",
+				},
+				{
+					name: "스톡홀름 신드롬: 거대 매",
+					colour: "white",
+					has: $syndromebird gte 1,
+					text: () => V.greathawkmonster === 2 || !V.settings.bestialityEnabled ? "<<nnpc_He 'Great Hawk'>>【은는】 짝을 원할 뿐입니다." : "그저 짝을 원할 뿐입니다.",
+					textColour: "red",
+				},
+				{
+					name: "에이버리의 구원자",
+					colour: "lblue",
+					has: $avery_fate is "saved",
+					text: "에이버리의 생명을 구했습니다. 매일 분노가 감소합니다.",
+				},
+			],
+		},
+		{
+			title: "최면 특성",
+			traits: [
+				{
+					name: "희미한 암시",
+					colour: "lblue",
+					has: $hypnosis_traits.suggestion is 1,
+					text: "하퍼 의사가 당신에게 뭔가를 하라고 했지만, 기억이 좀 흐릿합니다.",
+				},
+				{
+					name: "불안한 암시",
+					colour: "blue",
+					has: $hypnosis_traits.suggestion is 2,
+					text: "하퍼 의사가 당신에게 뭔가를 하라고 했지만, 그게 무엇인지 기억나지 않습니다.",
+				},
+				{
+					name: "강박적인 암시",
+					colour: "purple",
+					has: $hypnosis_traits.suggestion is 3,
+					text: "하퍼 의사가 당신에게 뭔가를 하라고 했지만, 뭐였는지 도저히 기억나지 않습니다.",
+				},
+				{
+					name: "매혹된 암시",
+					colour: "pink",
+					has: $hypnosis_traits.suggestion is 4,
+					text: "하퍼 의사가 당신에게 뭔가를 하라고 했지만, 머릿속이 하얗게 빕니다.",
+				},
+				{
+					name: "절정의 암시",
+					colour: "red",
+					has: $hypnosis_traits.suggestion is 5,
+					text: "하퍼 의사가 당신에게 뭔가를 하라고 했지만, 아무것도 전혀 기억이 안 납니다.",
+				},
+				{
+					name: "희미한 갈망",
+					colour: "lblue",
+					has: $hypnosis_traits.scream is 1,
+					text: "비명 지르는 대신 더 거칠게 대해달라고 부탁할 수도 있습니다.",
+				},
+				{
+					name: "불안한 갈망",
+					colour: "blue",
+					has: $hypnosis_traits.scream is 2,
+					text: "비명 지르는 대신 이따금씩 더 거칠게 대해달라고 부탁할 것입니다.",
+				},
+				{
+					name: "강박적인 갈망",
+					colour: "purple",
+					has: $hypnosis_traits.scream is 3,
+					text: "비명 지르는 대신 주로 더 거칠게 대해달라고 부탁할 것입니다.",
+				},
+				{
+					name: "매혹된 갈망",
+					colour: "pink",
+					has: $hypnosis_traits.scream is 4,
+					text: "비명 지르는 대신 자주 더 거칠게 대해달라고 부탁할 것입니다.",
+				},
+				{
+					name: "절정의 갈망",
+					colour: "red",
+					has: $hypnosis_traits.scream is 5,
+					text: "비명 지르는 대신 무조건 더 거칠게 대해달라고 부탁할 것입니다.",
+				},
+				{
+					name: "희미한 노출",
+					colour: "lblue",
+					has: $hypnosis_traits.cover is 1,
+					text: "몸을 가리는 대신 신체 부위를 드러내어 과시할 수도 있습니다.",
+				},
+				{
+					name: "불안한 노출",
+					colour: "blue",
+					has: $hypnosis_traits.cover is 2,
+					text: "몸을 가리는 대신 이따금씩 신체 부위를 드러내어 과시할 것입니다.",
+				},
+				{
+					name: "강박적인 노출",
+					colour: "purple",
+					has: $hypnosis_traits.cover is 3,
+					text: "몸을 가리는 대신 주로 신체 부위를 드러내어 과시할 것입니다.",
+				},
+				{
+					name: "매혹된 노출",
+					colour: "pink",
+					has: $hypnosis_traits.cover is 4,
+					text: "몸을 가리는 대신 자주 신체 부위를 드러내어 과시할 것입니다.",
+				},
+				{
+					name: "절정의 노출",
+					colour: "red",
+					has: $hypnosis_traits.cover is 5,
+					text: "몸을 가리는 대신 무조건 신체 부위를 드러내어 과시할 것입니다.",
+				},
+				{
+					name: "희미한 이상성욕",
+					colour: "lblue",
+					has: $hypnosis_traits.deviancy is 1,
+					text: "조우 시작 시 이따금 짐승을 도발할 수 있습니다.",
+				},
+				{
+					name: "불안한 이상성욕",
+					colour: "blue",
+					has: $hypnosis_traits.deviancy is 2,
+					text: "조우 시작 시 가끔 짐승을 도발할 것입니다.",
+				},
+				{
+					name: "강박적인 이상성욕",
+					colour: "purple",
+					has: $hypnosis_traits.deviancy is 3,
+					text: "보통 조우 시작 시 짐승을 도발할 것입니다.",
+				},
+				{
+					name: "매혹된 이상성욕",
+					colour: "pink",
+					has: $hypnosis_traits.deviancy is 4,
+					text: "조우 시작 시 자주 짐승을 도발할 것입니다.",
+				},
+				{
+					name: "절정의 이상성욕",
+					colour: "red",
+					has: $hypnosis_traits.deviancy is 5,
+					text: "조우 시작 시 항상 짐승을 도발할 것입니다.",
+				},
+
+				{
+					name: "마법에 걸림",
+					colour: basicHypnoCss(),
+					has: $hc?.bewitched,
+					text: "너의 천사.",
+					textColour: "red",
+				},
+
+				{
+					name: () => V.worn.neck.name === "familiar collar" && V.worn.neck.cursed === 1 ? "최면적인 헌신" : "최면적인 호기심",
+					colour: "lblue",
+					has: V.hypnosis_traits.devotion === 1,
+					text: "때때로 마음이 숲으로 향하는 것을 느낍니다. 그윌란의 요청이 묘하게 거부하기 힘들어집니다.",
+					meter: {
+						has: V.hypnosisTimers.devotion,
+						value: V.hypnosisTimers.devotion?.time,
+						min: 0,
+						max: 15,
+						colour: "lbluebar glowbar",
+					},
+				},
+				{
+					name: () => V.worn.neck.name === "familiar collar" && V.worn.neck.cursed === 1 ? "마법에 걸린 헌신" : "마법에 걸린 호기심",
+					colour: "blue",
+					has: V.hypnosis_traits.devotion === 2,
+					text: "그윌란과 함께 있으면 안정감을 느낍니다. 그윌란의 요청을 거절하기 어렵습니다. 이로운 최면 특성이 더 오래 지속됩니다.",
+					meter: {
+						has: V.hypnosisTimers.devotion,
+						value: V.hypnosisTimers.devotion?.time,
+						min: 15,
+						max: 35,
+						colour: "bluebar glowbar",
+					},
+				},
+				{
+					name: () => V.worn.neck.name === "familiar collar" && V.worn.neck.cursed === 1 ? "매료된 헌신" : "매료된 호기심",
+					colour: "purple",
+					has: V.hypnosis_traits.devotion === 3,
+					text: "그윌란과 함께 있으면 편안합니다. 그윌란의 요청을 거절하기가 더 어려워집니다. 이로운 최면 특성이 더 오래 지속됩니다. 학교 성적이 떨어지지 않습니다.",
+					meter: {
+						has: V.hypnosisTimers.devotion,
+						value: V.hypnosisTimers.devotion?.time,
+						min: 35,
+						max: 55,
+						colour: "purplebar glowbar",
+					},
+				},
+				{
+					name: () => V.worn.neck.name === "familiar collar" && V.worn.neck.cursed === 1 ? "최면적인 헌신" : "최면적인 호기심",
+					colour: "pink",
+					has: V.hypnosis_traits.devotion === 4,
+					text: "그윌란과 함께 있으면 따뜻함을 느낍니다. 그윌란의 요청을 거절하기가 훨씬 더 어려워집니다. 다른 사람이 당신에게 최면을 걸려는 시도는 실패할 수 있습니다. 이로운 최면 특성이 더 오래 지속됩니다. 학교 성적이 떨어지지 않습니다.",
+					meter: {
+						has: V.hypnosisTimers.devotion,
+						value: V.hypnosisTimers.devotion?.time,
+						min: 55,
+						max: 75,
+						colour: "pinkbar glowbar",
+					},
+				},
+				{
+					name: () => V.worn.neck.name === "familiar collar" && V.worn.neck.cursed === 1 ? "숭고한 헌신" : "숭고한 호기심",
+					colour: "red",
+					has: V.hypnosis_traits.devotion === 5,
+					text: "그윌란은 당신을 완전하게 만들어줍니다. 그윌란의 요청은 거절하는 것이 <span class='red'>불가능</span>합니다. 다른 사람이 당신에게 최면을 걸려는 시도는 실패하며, 그들에게 피해를 줄 수 있습니다. <span class='gold'>이로운 최면 특성과 학교 성적이 떨어지지 않습니다.</span>",
+					meter: {
+						has: V.hypnosisTimers.devotion,
+						hide: V.worn.neck.name === "familiar collar" && V.worn.neck.cursed === 1 && V.hypnosisTimers.devotion?.time >= gwylanHypnoMax("value"),
+						value: V.hypnosisTimers.devotion?.time,
+						min: 75,
+						max: 95,
+						colour: "redbar glowbar",
+					},
+				},
+				{
+					name: () => V.worn.neck.name === "familiar collar" && V.worn.neck.cursed === 1 ? "광란의 헌신" : "광란의 호기심",
+					colour: basicHypnoCss(),
+					has: V.hypnosis_traits.devotion >= 6,
+					text: "???",
+					meter: {
+						has: V.hypnosisTimers.devotion,
+						hide: V.worn.neck.name === "familiar collar" && V.worn.neck.cursed === 1 && V.hypnosisTimers.devotion?.time >= gwylanHypnoMax("value"),
+						value: V.hypnosisTimers.devotion?.time,
+						min: 95,
+						max: 100,
+						colour: "redbar glowbar",
+					},
+				},
+				{
+					name: "최면의 평화",
+					colour: "forest-green",
+					has: V.hypnosis_traits.peace gte 1,
+					text: "당신의 내면이 평화롭습니다. 변이 부위를 숨겨도 더 이상 트라우마를 유발하지 않습니다.",
+					meter: {
+						has: V.hypnosisTimers.peace,
+						hide: V.hypnosis_traits.devotion >= 5,
+						value: V.hypnosisTimers.peace?.time,
+						max: V.hypnosisTimers.peace?.max,
+						colour: "greenbar glowbar",
+					},
+				},
+				{
+					name: "최면의 침묵",
+					colour: "purple",
+					has: V.hypnosis_traits.silence gte 1,
+					text: "당신의 생각은 고독하고 고요합니다. 귀 슬라임이 일시적으로 조용해집니다.",
+					meter: {
+						has: V.hypnosisTimers.silence,
+						hide: V.hypnosis_traits.devotion >= 5,
+						value: V.hypnosisTimers.silence?.time,
+						max: V.hypnosisTimers.silence?.max,
+						colour: "purplebar glowbar",
+					},
+				},
+				{
+					name: "최면의 잠",
+					colour: "",
+					style: `background: linear-gradient(to right,rgb(31, 121, 196) 0%,rgb(77, 74, 247) 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;`,
+					has: V.hypnosis_traits.slumber gte 1,
+					text: "트라우마가 있을 때 수면이 더 편안해지며, '불면증' 특성이 있다면 억제됩니다.",
+					meter: {
+						has: V.hypnosisTimers.slumber,
+						hide: V.hypnosis_traits.devotion >= 5,
+						value: V.hypnosisTimers.slumber?.time,
+						max: V.hypnosisTimers.slumber?.max,
+						colour: "darkbluebar glowbar",
+					},
+				},
+				{
+					name: () => V.awareness >= 300 ? "최면의 무지" : "최면의 통찰",
+					colour: "",
+					style: `background: linear-gradient(to right,rgb(187, 214, 221) 0%,rgb(255, 252, 217) 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;`,
+					has: V.hypnosis_traits.insight gte 1,
+					text: "높은 인식은 더 이상 환각을 일으키지 않습니다. 대신 낮은 인식이 환각을 유발합니다.",
+					meter: {
+						has: V.hypnosisTimers.insight,
+						hide: V.hypnosis_traits.devotion >= 5,
+						value: V.hypnosisTimers.insight?.time,
+						max: V.hypnosisTimers.insight?.max,
+						colour: "bluebar glowbar",
+					},
+				},
+			],
+		},
+		{
+			title: "수용 특성",
+			traits: [
+				{
+					name: () => {
+						const penisSize = window.KR.getPenisDescKr(setup.penisSizes[$player.penissize]).toUpperFirst();
+						return `수용: ${penisSize} 자지`;
+					},
+					colour: "green",
+					has: $acceptance_penis_small gte 1000 and $player.penissize lte 3,
+					text: "당신은 작은 자지를 자랑스러워합니다.",
+				},
+				{
+					name: "수용: 보추",
+					colour: "green",
+					has: $acceptance_tomgirl gte 100 and $acceptance_penis_small gte 1000 and $player.penissize lte 2,
+					text: "당신은 보추가 된 것을 자랑스러워합니다.",
+				},
+				{
+					name: () => {
+						const penisSize = window.KR.getPenisDescKr(setup.penisSizes[$player.penissize]).toUpperFirst();
+						return `수용: ${penisSize} 자지`;
+					},
+					colour: "green",
+					has: $acceptance_penis_big gte 1000 and $player.penissize gte 6,
+					text: "당신은 거대한 자지를 자랑스러워합니다.",
+				},
+				{
+					name: "수용: 납작한 가슴",
+					colour: "green",
+					has: $acceptance_breasts_tiny gte 1000 and $player.breastsize lte 0 and $player.sex is "f",
+					text: "당신은 납작한 가슴을 자랑스러워합니다.",
+				},
+				{
+					name: () => {
+						const breastSize = window.KR.getBreastSizeKr(setup.breastsizes[$player.breastsize]).toUpperFirst();
+						return `수용: ${$player.breastsize ? breastSize + " 가슴" : "납작한 가슴"}`;
+					},
+					colour: "green",
+					has: $acceptance_breasts_small gte 1000 and between($player.breastsize, 0, 4),
+					text: "당신은 작은 가슴을 자랑스러워합니다.",
+				},
+				{
+					name: () => {
+						const breastSize = window.KR.getBreastSizeKr(setup.breastsizes[$player.breastsize]).toUpperFirst();
+						return `수용: ${breastSize} 가슴`;
+					},
+					colour: "green",
+					has: $acceptance_breasts_big gte 1000 and $player.breastsize gte 8,
+					text: "당신은 거대한 가슴을 자랑스러워합니다.",
+				},
+				{
+					name: () => playerAwareTheyArePregnant() ? "수용: 임신한 배" : "수용: 임신한 것 같은 배",
+					colour: "green",
+					has: $acceptance_pregnancy gte 1000 and playerBellySize() gte 8,
+					text: () => playerAwareTheyArePregnant() ? "당신은 생명을 품은 배를 자랑스러워합니다." : "당신은 커다란 배를 자랑스러워합니다.",
+				},
+			],
+		},
+		{
+			title: "???",
+			traits: [
+				{
+					name: "엘크의 흉터",
+					colour: "red",
+					has: $auriga_scar is 1,
+					text: "보이지 않는 상처가 당신의 심장 주위를 맴돕니다. 트라우마와 인식이 시간이 지남에 따라 증가합니다. 순결도가 시간이 지남에 따라 감소합니다.",
+					textColour: "red",
+				},
+				{
+					name: "엘크의 낙인",
+					colour: "red",
+					has: $auriga_scar is 2,
+					text: "지지직거리는 상처가 심장을 둘러싸고 있습니다. 당신은 눈에 띄기 어려워지고, 인간으로 인식되기도 힘들어집니다.",
+					textColour: "red",
+				},
+				{
+					name: "엘크에게 물림",
+					colour: "red",
+					has: $auriga_scar is 3,
+					text: "구멍이 당신의 검은 심장을 집어삼키려 합니다. 무언가 탈출하려고 합니다.",
+					textColour: "red",
+				},
+				{
+					name: "엘크의 파열",
+					colour: "red",
+					has: $auriga_scar is 4,
+					text: "파열이 당신의 뛰지 않는 검은 심장을 끊어냅니다. 파멸이 임박했습니다.",
+					textColour: "red",
+				},
+				{
+					name: "엘크의 부산물",
+					colour: "red",
+					has: $auriga_scar gte 5,
+					text: "파멸.",
+					textColour: "red",
+				},
+			],
+		},
+	]>>
+
+	<div id="traitListsSearch">
+		<<traitListsSearch>>
+	</div>
+	<br>
+	<div id="traitLists">
+		<<traitLists>>
+	</div>
+<</widget>>
+
+<<widget "traitListsSearch">>
+	<<if $options.traitOverlayFormat is undefined>><<set $options.traitOverlayFormat to "table">><</if>>
+	<<set _traitSearch to "">>
+	<<foldout false "_traitFilterFoldout">>
+		<span>필터</span>
+		<label>검색: <<textbox "_traitSearch" _traitSearch>></label>
+		<br><br>
+		<label>
+			표시 형식:
+			<<listbox "$options.traitOverlayFormat" autoselect>>
+				<<option "표" "table">>
+				<<option "축소된 표" "reducedTable">>
+				<<option "목록" "list">>
+			<</listbox>>
+		</label>
+		<br><br>
+		<<link 갱신>>
+			<<replace "#traitLists">><<traitLists>><</replace>>
+		<</link>> |
+		<<link 초기화>>
+			<<set _traitSearch to "">>
+			<<replace "#traitListsSearch">><<traitListsSearch>><</replace>>
+			<<replace "#traitLists">><<traitLists>><</replace>>
+		<</link>> |
+	<</foldout>>
+<</widget>>
+
+<<widget "traitLists">>
+	<<set _traitSearch2 to _traitSearch.toLowerCase()>>
+	<<for $_traitList range _traitLists>>
+		<<if !$_traitList.traits.find(trait => trait.has &&
+			(T.traitSearch2 === "" ||
+			(typeof trait.name === "function" && trait.name().toLowerCase().includes(T.traitSearch2)) ||
+			(typeof trait.name !== "function" && trait.name.toLowerCase().includes(T.traitSearch2)) ||
+			(trait.text && typeof trait.text === "function" && trait.text().toLowerCase().includes(T.traitSearch2)) ||
+			(trait.text && typeof trait.text !== "function" && trait.text.toLowerCase().includes(T.traitSearch2)))
+		)>>
+			<<continue>>
+		<</if>>
+		<<if ["table","reducedTable"].includes($options.traitOverlayFormat)>>
+			<div @class="$options.traitOverlayFormat is 'table' ? 'traitList' : 'traitListReducedText'">
+				<div class="traitHeading">
+					<<print $_traitList.title>>
+				</div>
+				<div class="traits">
+				<<for $_trait range $_traitList.traits.filter(trait => trait.has &&
+					(T.traitSearch2 === "" ||
+					(typeof trait.name === "function" && trait.name().toLowerCase().includes(T.traitSearch2)) ||
+					(typeof trait.name !== "function" && trait.name.toLowerCase().includes(T.traitSearch2)) ||
+					(trait.text && typeof trait.text === "function" && trait.text().toLowerCase().includes(T.traitSearch2)) ||
+					(trait.text && typeof trait.text !== "function" && trait.text.toLowerCase().includes(T.traitSearch2)))
+				)>>
+					<div class="trait">
+						<<set $_name to typeof $_trait.name is "function" ? $_trait.name() : $_trait.name>>
+						<<set $_colour to typeof $_trait.colour is "function" ? $_trait.colour() : $_trait.colour>>
+						<<set $_style to typeof $_trait.style is "function" ? $_trait.style() : $_trait.style>>
+						<<set $_text to typeof $_trait.text is "function" ? $_trait.text() : $_trait.text>>
+						<<set $_textColour to typeof $_trait.textColour is "function" ? $_trait.textColour() : $_trait.textColour>>
+						<<set $_meter to $_trait.meter>>
+						<span @class="$_colour" @style="$_style">
+							<<print $_name>>
+						</span>
+						<<if !$_text>>
+						<<elseif $options.traitOverlayFormat is "table">>
+							- <small @class="$_textColour"><<print $_text>></small>
+							<<if $_meter?.has and !$_meter.hide>>
+								<<set $_floor to $_meter.min || 0>>
+								<<set $_timeTotal to ($_meter.max - $_floor)>>
+								<<set $_percent to Math.floor(($_meter.value - $_floor) / $_timeTotal * 100)>>
+								<div class="meter">
+									<<print '<div @class="$_meter.colour" style="width:' + $_percent + '%"></div>'>>
+								</div>
+							<</if>>
+						<<else>>
+							<mouse class="tooltip linkBlue">정보 (?)<span @class="$_textColour"><<print $_text>></span></mouse>
+							<<if $_meter?.has and !$_meter.hide>>
+								<<set $_floor to $_meter.min || 0>>
+								<<set $_timeTotal to ($_meter.max - $_floor)>>
+								<<set $_percent to Math.floor($_meter.value / $_timeTotal * 100)>>
+								<div class="meter">
+									<<print '<div @class="$_meter.colour" style="width:' + $_percent + '%"></div>'>>
+								</div>
+							<</if>>
+						<</if>>
+					</div>
+				<</for>>
+				</div>
+			</div>
+			<br>
+		<</if>>
+		<<if $options.traitOverlayFormat is "list">>
+			<div>
+				<h4>
+					<<print $_traitList.title>>
+				</h4>
+				<<for $_trait range $_traitList.traits.filter(trait => trait.has &&
+					(T.traitSearch2 === "" ||
+					(typeof trait.name === "function" && trait.name().toLowerCase().includes(T.traitSearch2)) ||
+					(typeof trait.name !== "function" && trait.name.toLowerCase().includes(T.traitSearch2)) ||
+					(trait.text && typeof trait.text === "function" && trait.text().toLowerCase().includes(T.traitSearch2)) ||
+					(trait.text && typeof trait.text !== "function" && trait.text.toLowerCase().includes(T.traitSearch2)))
+				)>>
+					<div class="trait">
+						<<set $_name to typeof $_trait.name is "function" ? $_trait.name() : $_trait.name>>
+						<<set $_colour to typeof $_trait.colour is "function" ? $_trait.colour() : $_trait.colour>>
+						<<set $_style to typeof $_trait.style is "function" ? $_trait.style() : $_trait.style>>
+						<<set $_text to typeof $_trait.text is "function" ? $_trait.text() : $_trait.text>>
+						<<set $_textColour to typeof $_trait.textColour is "function" ? $_trait.textColour() : $_trait.textColour>>
+						<<set $_meter to $_trait.meter>>
+						<span @class="$_colour" @style="$_style">
+							<<print $_name>>
+						</span>
+						<<if $_text>>
+							- <span @class="$_textColour"><<print $_text>></span>
+							<<if $_meter?.has and !$_meter.hide>>
+								<<set $_floor to $_meter.min || 0>>
+								<<set $_timeTotal to ($_meter.max - $_floor)>>
+								<<set $_percent to Math.floor($_meter.value / $_timeTotal * 100)>>
+								<div class="meter">
+									<<print '<div @class="$_meter.colour" style="width:' + $_percent + '%"></div>'>>
+								</div>
+							<</if>>
+						<</if>>
+					</div>
+				<</for>>
+			</div>
+			<br>
+		<</if>>
+	<</for>>
+<</widget>>

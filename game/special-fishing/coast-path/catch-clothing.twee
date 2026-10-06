@@ -1,0 +1,8 @@
+:: Fishing Coast Path Clothing Catch
+<<effects>>
+<<fishingClothingCatchText>>
+<br><br>
+
+<<link [[가진다|Fishing Coast Path Wait]]>><<set $fishingAmbientOverride to "keepClothing">><</link>>
+<br>
+<<link [[버린다|Fishing Coast Path Wait]]>><<set $fishingAmbientOverride to "tossClothing">><</link>>
