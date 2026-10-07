@@ -3760,9 +3760,10 @@
 	<<set _tfPartSay.push("ears")>>
 <</if>>
 
+<<set _tfPartSayKr to _tfPartSay.map(part => ({wings: "날개", halo: "후광", horns: "뿔", tail: "꼬리", ears: "귀"})[part] || part)>>
 <<if _tfPartSay.length>>
 	<<set _tfPartsPlural to _tfPartSay.length is 1 and _tfPartSay.includesAny("halo", "tail") ? false : true>>
-	"이것들은... 내..." 당신은 당신의 <<print formatList(_tfPartSay)>> 【을를】 가리킨다.
+	"이것들은... 내..." 당신은 당신의 <<print formatList(_tfPartSayKr)>>【을를】 가리킨다.
 	<<if !_tfPartsPlural>>
 		"이걸 떠올리게 하거든."
 	<<elseif _tfPartSay.length gte 3>>
@@ -3814,7 +3815,7 @@
 	<</if>>
 	<br><br>
 
-	그윌란이 당신 주위를 돌며, 당신의 <<if _tfPartSay.length gte 2>>기이한 부위들<<else>><<print _tfPartSay[0]>><</if>> 쪽을 살핀다.
+	그윌란이 당신 주위를 돌며, 당신의 <<if _tfPartSay.length gte 2>>기이한 부위들<<else>><<print _tfPartSayKr[0]>><</if>> 쪽을 살핀다.
 	"설령 <<if _tfPartsPlural>>그것들이<<else>>그것이<</if>> 진짜라고 해도, 대부분의 사람들은 믿지 않을 거야.
 	그래도, 그렇게 자유롭게 <<if _tfPartsPlural>>이것들을<<else>>이것을<</if>> 드러내다니 대담하군. 음탕한 놈들은 널 더 매력적으로 볼지도 몰라."
 	<br><br>

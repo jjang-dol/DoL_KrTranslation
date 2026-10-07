@@ -2227,7 +2227,7 @@
 			<<default>>
 				"씨발 딱 기다려,"
 		<</switch>>
-		<span class="blue"><<print _args[0]>><<if _args[0] is "dining" or _args[0] is "display">> 방<</if>></span>에서 <<he>>【이가】 소리친다.
+		<span class="blue"><<print ({lounge:"응접실",dining:"식당",display:"전시실",kitchen:"부엌",garden:"정원",pool:"수영장",bedroom:"침실",bathroom:"욕실",study:"서재",garage:"차고",dungeon:"지하 감옥",hallway_1:"아트리움",hallway_1_w:"1층 서쪽 복도",hallway_1_e:"1층 동쪽 복도",hallway_2:"계단참",hallway_2_w:"2층 서쪽 복도",hallway_2_e:"2층 동쪽 복도",hallway_3:"3층 복도"})[_args[0]] || _args[0]>></span>에서 <<he>>【이가】 소리친다.
 		<<switch _args[0]>>
 			<<case "lounge">>
 				<<if random(0, 1)>>

@@ -31,7 +31,7 @@
 	<<default>>
 		<span class="pink">아무</span>
 <</switch>>
-<<number $hookah.lurkers>>마리의 럴커가 냉장고에 들어 있다.
+<<if $hookah.lurkers gte 1>>럴커가 냉장고에 들어 있다.<<else>>럴커도 냉장고에 들어 있지 않다.<</if>>
 <br><br>
 
 <<if $hookah.juice is 0>>

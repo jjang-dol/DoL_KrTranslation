@@ -22,6 +22,7 @@ function masturbationEffects() {
 		element.textContent = text;
 		return element;
 	};
+	const nativeCount = n => ({ 1: "한", 2: "두", 3: "세", 4: "네", 5: "다섯" })[Number(n)] || String(n);
 	const genitalsExposed = () => V.worn.over_lower.vagina_exposed >= 1 && V.worn.lower.vagina_exposed >= 1 && V.worn.under_lower.vagina_exposed >= 1;
 	const breastsExposed = () => V.worn.over_upper.exposed >= 1 && V.worn.upper.exposed >= 1 && V.worn.under_upper.exposed >= 1;
 
@@ -2302,34 +2303,34 @@ function masturbationEffectsArms(
 					if (V.vaginaArousalWetness >= 60) {
 						wikifier("vaginaFluidActive");
 						sWikifier(
-							`당신은 ${window.KR.getNativeCountKr(V.fingersInVagina)} ${altText.fingers}【을를】 <<pussy>> 안팎으로 움직여 음란한 체액과 벌레들을 끌어낸다.`
+							`당신은 ${nativeCount(V.fingersInVagina)} ${altText.fingers}【을를】 <<pussy>> 안팎으로 움직여 음란한 체액과 벌레들을 끌어낸다.`
 						);
 					} else {
-						sWikifier(`당신은 ${window.KR.getNativeCountKr(V.fingersInVagina)} ${altText.fingers}【을를】 <<pussy>> 안팎으로 움직여 벌레들을 끌어낸다.`);
+						sWikifier(`당신은 ${nativeCount(V.fingersInVagina)} ${altText.fingers}【을를】 <<pussy>> 안팎으로 움직여 벌레들을 끌어낸다.`);
 					}
 				} else if (V.arousal >= (V.arousalmax / 5) * 2) {
 					sWikifier(
-						`당신은 몸속의 벌레들을 느끼며 ${window.KR.getNativeCountKr(V.fingersInVagina)} ${altText.fingers}【을를】 <<pussy>> 안팎으로 움직인다.`
+						`당신은 몸속의 벌레들을 느끼며 ${nativeCount(V.fingersInVagina)} ${altText.fingers}【을를】 <<pussy>> 안팎으로 움직인다.`
 					);
 				} else {
 					sWikifier(
-						`당신은 ${window.KR.getNativeCountKr(V.fingersInVagina)} ${altText.fingers}【으로로】 <<pussy>> 입구를 부드럽게 쑤시며 벌레들을 밀어낸다.`
+						`당신은 ${nativeCount(V.fingersInVagina)} ${altText.fingers}【으로로】 <<pussy>> 입구를 부드럽게 쑤시며 벌레들을 밀어낸다.`
 					);
 				}
 			} else {
 				if (V.arousal >= (V.arousalmax / 5) * 4) {
 					if (V.vaginaArousalWetness >= 60) {
 						wikifier("vaginaFluidActive");
-						sWikifier(`당신은 ${window.KR.getNativeCountKr(V.fingersInVagina)} ${altText.fingers}【을를】 <<pussy>> 안팎으로 움직여 음란한 체액을 끌어낸다.`);
+						sWikifier(`당신은 ${nativeCount(V.fingersInVagina)} ${altText.fingers}【을를】 <<pussy>> 안팎으로 움직여 음란한 체액을 끌어낸다.`);
 					} else {
-						sWikifier(`당신은 닿을 수 있는 만큼 깊이 밀어 넣으며 ${window.KR.getNativeCountKr(V.fingersInVagina)} ${altText.fingers}【을를】 <<pussy>> 안팎으로 움직인다.`);
+						sWikifier(`당신은 닿을 수 있는 만큼 깊이 밀어 넣으며 ${nativeCount(V.fingersInVagina)} ${altText.fingers}【을를】 <<pussy>> 안팎으로 움직인다.`);
 					}
 				} else if (V.arousal >= (V.arousalmax / 5) * 2) {
 					sWikifier(
-						`당신은 너무 깊이 넣지 않아도 전율을 느끼며 ${window.KR.getNativeCountKr(V.fingersInVagina)} ${altText.fingers}【을를】 <<pussy>> 안팎으로 움직인다.`
+						`당신은 너무 깊이 넣지 않아도 전율을 느끼며 ${nativeCount(V.fingersInVagina)} ${altText.fingers}【을를】 <<pussy>> 안팎으로 움직인다.`
 					);
 				} else {
-					sWikifier(`당신은 ${window.KR.getNativeCountKr(V.fingersInVagina)} ${altText.fingers}【으로로】 <<pussy>> 입구를 부드럽게 쑤신다.`);
+					sWikifier(`당신은 ${nativeCount(V.fingersInVagina)} ${altText.fingers}【으로로】 <<pussy>> 입구를 부드럽게 쑤신다.`);
 				}
 			}
 			break;

@@ -1062,7 +1062,7 @@
 	<</addinlineevent>>
 
 	<<addinlineevent "socialise_warning_harper_pervert">>
-		의사 선생님이 나한테 그런 음란한 짓을 시켜." 한 <<person>>【이가】 말한다. "전에는 싫었는데, 이젠 다음 치료가 기다려져."
+		"의사 선생님이 나한테 그런 음란한 짓을 시켜." 한 <<person>>【이가】 말한다. "전에는 싫었는데, 이젠 다음 치료가 기다려져."
 	<</addinlineevent>>
 
 	<<addinlineevent "socialise_harper_sold" 2>>

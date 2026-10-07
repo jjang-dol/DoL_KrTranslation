@@ -100,7 +100,7 @@
 <<widget "toyUpdate">>
 	<<toySelection>>
 	<<set _category to Object.values(_toySelection).find(entry => entry.set is $selectedToy.set)>>
-	당신은 <<print _category ? window.KR.getToyNameKr(_toySelection, _category.name) : window.KR.getToyNameKr(_toySelection, $selectedToy.name)>> 모음을 살펴본다. 가격은 각각 <span class="gold"><<print $selectedToy.costDisplay>></span>이다.
+	당신은 <<print _category ? getToyNameKr(_toySelection, _category.name) : getToyNameKr(_toySelection, $selectedToy.name)>> 모음을 살펴본다. 가격은 각각 <span class="gold"><<print $selectedToy.costDisplay>></span>이다.
 <</widget>>
 
 <<widget "toyLinks">>
@@ -114,7 +114,7 @@
 				@class="($selectedToy.set is _entry.set ? 'selected' : '')"
 				@id="Dynamic.eventBinder(_id)"
 				onclick="(id) => $selectedToy = T.toySelection[id]"
-			><<print window.KR.getToyNameKr(_toySelection, _entry.name)>>
+			><<print getToyNameKr(_toySelection, _entry.name)>>
 			</button>
 		</div>
 	<</for>>
@@ -135,7 +135,7 @@
 		<</for>>
 		<<if $player.inventory.childrenToys.length gte 1>>
 			<<set $_toys = V.player.inventory.childrenToys.map(function(item) {
-				return '<span class="' + item.colour + '">' + window.KR.getToyNameKr(_toySelection, item.name) + '</span>';
+				return '<span class="' + item.colour + '">' + getToyNameKr(_toySelection, item.name) + '</span>';
 			}).join(", ")>>
 			보유한 장난감 (총 <<number $player.inventory.childrenToys.length>>개): <<= $_toys>>
 		<<else>>
@@ -154,7 +154,7 @@
 						<<set _icon to $selectedToy.options[_i].name.toLowerCase().replace(".","").replace(" ","_")>>
 						<<childicon _icon>>
 						<span @class="$selectedToy.options[_i].colour">
-							<<print window.KR.getToyNameKr(_toySelection, $selectedToy.options[_i].name)>>
+							<<print getToyNameKr(_toySelection, $selectedToy.options[_i].name)>>
 						</span>
 						|
 						<<if $player.inventory.childrenToys.length gte 5>>

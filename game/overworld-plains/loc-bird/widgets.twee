@@ -2700,17 +2700,14 @@
 				<<else>>
 					<<set $_spColour to "green">>
 				<</if>>
-				<<set $_gradeDisplay to $_grade>>
-				<<if $_gradeDisplay is "english">>
-					<<set $_gradeDisplay to $_gradeDisplay.toUpperFirst()>>
-				<</if>>
+				<<set $_gradeDisplay to ({ english: "영어", maths: "수학", science: "과학", history: "역사" })[$_grade] || $_grade>>
 				<br>
 				<span @class="$_spColour">
 				<<switch $_upgrade.gradeRequired[$_grade]>>
-					<<case 1>>Passable $_gradeDisplay required
-					<<case 2>>Decent $_gradeDisplay required
-					<<case 3>>Good $_gradeDisplay required
-					<<case 4>>Excellent $_gradeDisplay required
+					<<case 1>>나쁘지 않은 $_gradeDisplay 성적이 필요합니다
+					<<case 2>>꽤 좋은 $_gradeDisplay 성적이 필요합니다
+					<<case 3>>좋은 $_gradeDisplay 성적이 필요합니다
+					<<case 4>>훌륭한 $_gradeDisplay 성적이 필요합니다
 				<</switch>>
 				</span>
 			<</for>>
@@ -2727,6 +2724,7 @@
 		<</if>>
 
 		<<if $_upgrade.upgradesRequired>>
+			<<set _birdUpgradeKr to { tools: "도구", telescope: "망원경", tarp: "방수포", pot: "냄비", mirror: "거울", wardrobe: "옷장", firepit: "화덕", nest: "둥지", shelter: "쉼터" }>>
 			<<for $_uReq range Object.keys($_upgrade.upgradesRequired)>>
 				<<if $bird.upgrades[$_uReq] lt $_upgrade.upgradesRequired[$_uReq]>>
 					<<set $_spColour to "black">>
@@ -2738,15 +2736,16 @@
 				<<birdicon $_uReq>>
 				<span @class="$_spColour">
 				<<if ["tools", "telescope", "tarp", "pot", "mirror", "wardrobe"].includes($_uReq)>>
-					<<print $_uReq.toUpperFirst()>>【이가】 필요합니다
+					<<print _birdUpgradeKr[$_uReq] || $_uReq>>【이가】 필요합니다
 				<<else>>
-					<<print $_uReq.toUpperFirst()>> level $_upgrade.upgradesRequired[$_uReq] required
+					$_upgrade.upgradesRequired[$_uReq]단계 <<print _birdUpgradeKr[$_uReq] || $_uReq>>【이가】 필요합니다
 				<</if>>
 				</span>
 			<</for>>
 		<</if>>
 
 		<<if $_upgrade.materialsUsed>>
+			<<set _birdMaterialKr to { wood: "목재", sticks: "나뭇가지", leaves: "나뭇잎", fabric: "천", leather: "가죽", feathers: "깃털", lurkers: "럴커", junk: "잡동사니", silver: "은괴" }>>
 			<<for $_material, $_amtReq range $_upgrade.materialsUsed>>
 				<<if $bird.materials[$_material] lt $_amtReq>>
 					<<set $_spColour to "black">>
@@ -2757,7 +2756,7 @@
 				<br>
 				<<birdicon $_material>>
 				<span @class="$_spColour">
-					<<print $_material.toUpperFirst()>>【이가】 필요합니다
+					<<print _birdMaterialKr[$_material] || $_material>>【이가】 필요합니다
 					(<<print $bird.materials[$_material]>>/$_amtReq)
 				</span>
 			<</for>>

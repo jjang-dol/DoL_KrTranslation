@@ -4658,17 +4658,17 @@
 <<widget "actionsStrokerCooperate">>
 	<<set $_stroker to ($NPCList[$penistarget].lefthand is "penisstroker" ? $NPCList[$penistarget].lefttool : $NPCList[$penistarget].righttool)>>
 	<<if $arousal gte ($arousalmax / 5) * 4>>
-		본능에 이끌려 절정에 다가감에 따라, 당신은 $_stroker 안으로 <<peniletext>> 허리를 튕긴다.
+		본능에 이끌려 절정에 다가감에 따라, 당신은 <<print window.KR.getToolKr($_stroker)>> 안으로 <<peniletext>> 허리를 튕긴다.
 	<<elseif $arousal gte ($arousalmax / 5) * 2>>
-		당신은 <<penis>>에 씌워진 $_stroker 안으로 <<peniletext>> 허리를 튕긴다.
+		당신은 <<penis>>에 씌워진 <<print window.KR.getToolKr($_stroker)>> 안으로 <<peniletext>> 허리를 튕긴다.
 	<<else>>
-		당신은 <<penis>>에 씌워진 $_stroker 안으로 <<peniletext>> 허리짓한다.
+		당신은 <<penis>>에 씌워진 <<print window.KR.getToolKr($_stroker)>> 안으로 <<peniletext>> 허리짓한다.
 	<</if>>
 <</widget>>
 
 <<widget "actionsStrokerRest">>
 	<<set $_stroker to ($NPCList[$penistarget].lefthand is "penisstroker" ? $NPCList[$penistarget].lefttool : $NPCList[$penistarget].righttool)>>
-	당신의 <<penis>>【은는】 $_stroker 안에서 박힌다.
+	당신의 <<penis>>【은는】 <<print window.KR.getToolKr($_stroker)>> 안에서 박힌다.
 <</widget>>
 
 <<widget "actionsanusrub">>

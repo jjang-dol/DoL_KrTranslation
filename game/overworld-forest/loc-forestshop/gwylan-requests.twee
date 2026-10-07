@@ -2892,10 +2892,10 @@
                         <<set $_secondWord to "">>
                     <</if>>
                     <<set $_theName to "<u>" + $_shoppingList[$_i].name + "</u>">>
-                    <<set $_theRest to ($_firstWord ? $_firstWord + " " : "") + $_secondWord + ($_secondWord ? " " : "") + $_theName>>
+                    <<set $_theRest to ($_firstWord ? $_firstWord + ($_secondWord ? "" : " ") : "") + $_secondWord + ($_secondWord ? " " : "") + $_theName>>
                     <<set _shoppingListText.push($_theRest)>>
                 <</for>>
-                <<= formatList(_shoppingListText, "그리고", true).toUpperFirst()>>.
+                <<= formatList(_shoppingListText, "그리고", true).toUpperFirst()>>【이】야.
                 <<if $_request.items.some(item => item.integrity_requirement isnot "any")>>
                     <<set $_full to []>><<set $_frayed to []>><<set $_torn to []>><<set $_tattered to []>>
                     <<for $_i to 0; $_i lt $_shoppingList.filter(items => items.integrity_requirement isnot "any").length; $_i++>>

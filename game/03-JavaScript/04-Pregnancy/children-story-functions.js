@@ -64,6 +64,28 @@ function gatherToySets() {
 	return toySets;
 }
 
+/**
+ * 장난감 이름 한글 출력용. 호출부가 넘긴 카탈로그(toyShop.twee의 _toySelection)에서 .name으로 조회해 name_lower를 반환한다.
+ * 매칭되는 항목이 없으면 name 그대로 반환.
+ *
+ * @param {object} catalog
+ * @param {string} name
+ * @returns {string}
+ */
+function getToyNameKr(catalog, name) {
+	if (!catalog) return name;
+	for (const entry of Object.values(catalog)) {
+		if (entry.name === name) return entry.name_lower;
+		if (entry.options) {
+			for (const option of entry.options) {
+				if (option.name === name) return option.name_lower;
+			}
+		}
+	}
+	return name;
+}
+window.getToyNameKr = getToyNameKr;
+
 function humanChildActivity(childId) {
 	const child = V.childRecords[childId];
 	const childDays = getChildDays(childId);

@@ -2365,11 +2365,11 @@
 <</if>>
 
 <<if $lurkers_stored gte 2>>
-	<<Number $lurkers_stored>> 우리들이 덜컹거린다.
+	<<number $lurkers_stored>>개의 우리가 덜컹거린다.
 <<elseif $lurkers_stored is 1>>
-	우리가 덜컹거린다.
+	우리 하나가 덜컹거린다.
 <<else>>
-	우리들은 비어 있다.
+	우리가 모두 비어 있다.
 <</if>>
 
 <<if $phials_stored gte 2>>
@@ -2408,7 +2408,7 @@
 		<<if $lurkers_stored gte 1>>
 			<<pluralise $lurkers_stored "생물이 우리를 덜컹거리며 흔들지만," "생물들이 우리를 덜컹거리며 흔들지만,">> 탈출하지는 못한다.
 		<<else>>
-			지금은 우리들이 비어 있지만, 목덜미가 따끔거리는 불길한 느낌을 지울 수 없다.
+			지금은 우리가 모두 비어 있지만, 목덜미가 따끔거리는 불길한 느낌을 지울 수 없다.
 		<</if>>
 		<<pluralise $phials_stored "보랏빛 액체가 든 유리병이" "보랏빛 액체가 든 유리병들이">> 탁자 위에서 은은하게 빛나지만, 그 광경에 피가 차갑게 식어 내린다. <span class="purple">저 생물들로 만든 물건을 파는 게 좋은 생각인지는 확신할 수 없습니다.</span>
 		<br><br>

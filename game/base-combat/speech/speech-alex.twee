@@ -30,7 +30,7 @@
 		<</if>>
 	<<elseif $speechsextoy is 1>>
 		<<set $speechsextoy to 0>>
-		<<set $_sexToy to ($rightarm is "heldSexToy" and $leftarm is "heldSexToy" ? "성기구들" : "성기구")>>
+		<<set $_sexToy to ($rightarm is "heldSexToy" and $leftarm is "heldSexToy" ? "섹스 토이들" : "섹스 토이")>>
 		<<if C.npc.Alex.dom gte 30>>
 			<<print `<<He>>【은는】 당신의 $_sexToy【을를】 보고 씩 웃었다. "` + [`이제야 좀 말이 통하네.`, `귀여운 장난감이네. 어떻게 쓰는지 아는 게 좋을 거야.`, `도시에선 고작 그게 최선이야?`][random(0,2)] + `"`>>
 		<<elseif C.npc.Alex.dom lte -30>>

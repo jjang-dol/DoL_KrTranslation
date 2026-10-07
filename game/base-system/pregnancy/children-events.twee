@@ -578,7 +578,7 @@
 				<<for _i to 0; _i lt 10; _i++>>
 					<<set _toy to $player.inventory.childrenToys[_i]>>
 					<<if _toy and _i lt 5>>
-						<<set _name to window.KR.getToyNameKr(_toySelection, _toy.name)>>
+						<<set _name to getToyNameKr(_toySelection, _toy.name)>>
 						<<set _icon to _toy.name.toLowerCase().replace(".","")>>
 						<<set _index to _i - 1>>
 						<div @class="_selectedCurrentToy is _i ? 'item selected' : 'item'" @tooltip="_name" onclick="$(this).siblings().removeClass('selected'); $(this).addClass('selected')">
@@ -586,7 +586,7 @@
 								<<if $options.images is 1>>
 									<<childicon _icon>>
 								<<else>>
-									<span @class="_toy.colour"><<print window.KR.getToyNameKr(_toySelection, _toy.name)>></span>
+									<span @class="_toy.colour"><<print getToyNameKr(_toySelection, _toy.name)>></span>
 								<</if>>
 								<<radiobutton "_selectedCurrentToy" _i autocheck>>
 							</label>
@@ -642,14 +642,14 @@
 				<<for _i to 0; _i lt 10; _i++>>
 					<<set _toy to $storedChildrenToys[$location][_i]>>
 					<<if _toy>>
-						<<set _name to window.KR.getToyNameKr(_toySelection, _toy.name)>>
+						<<set _name to getToyNameKr(_toySelection, _toy.name)>>
 						<<set _icon to _toy.name.toLowerCase().replace(".","")>>
 						<div @class="_selectedLocationToy is _i ? 'item selected' : 'item'" @tooltip="_name" onclick="$(this).siblings().removeClass('selected'); $(this).addClass('selected')">
 							<label>
 								<<if $options.images is 1>>
 									<<childicon _icon>>
 								<<else>>
-									<span @class="_toy.colour"><<print window.KR.getToyNameKr(_toySelection, _toy.name)>></span>
+									<span @class="_toy.colour"><<print getToyNameKr(_toySelection, _toy.name)>></span>
 								<</if>>
 								<<radiobutton "_selectedLocationToy" _i autocheck>>
 							</label>

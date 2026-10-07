@@ -988,31 +988,31 @@
 <br><br>
 
 <<if $asylumstate is "sleep">>
-	정신병원의 거주 구역은 취침 시간입니다. 당신은 자리를 비운 것을 들키기 전에 돌아갑니다.
+	정신병원의 거주 구역은 취침 시간이다. 당신은 자리를 비운 것을 들키기 전에 돌아간다.
 	<br><br>
 
 	<<link [[다음|Asylum]]>><<endevent>><</link>>
 	<br>
 <<elseif $asylumstate is "exercise">>
-	정신병원의 거주 구역은 운동 시간입니다. 당신은 자리를 비운 것을 들키기 전에 돌아갑니다.
+	정신병원의 거주 구역은 운동 시간이다. 당신은 자리를 비운 것을 들키기 전에 돌아간다.
 	<br><br>
 
 	<<link [[다음|Asylum]]>><<endevent>><</link>>
 	<br>
 <<elseif $asylumstate is "firsttreatment" and $daily.asylumTreatment1 isnot 1>>
-	정신병원의 거주 구역에서 치료를 받을 시간입니다. 당신은 자리를 비운 것을 들키기 전에 돌아갑니다.
+	정신병원의 거주 구역에서 치료를 받을 시간이다. 당신은 자리를 비운 것을 들키기 전에 돌아간다.
 	<br><br>
 
 	<<link [[다음|Asylum]]>><<endevent>><</link>>
 	<br>
 <<elseif $asylumstate is "secondtreatment" and $daily.asylumTreatment2 isnot 1>>
-	정신병원의 거주 구역에서 치료를 받을 시간입니다. 당신은 자리를 비운 것을 들키기 전에 돌아갑니다.
+	정신병원의 거주 구역에서 치료를 받을 시간이다. 당신은 자리를 비운 것을 들키기 전에 돌아간다.
 	<br><br>
 
 	<<link [[다음|Asylum]]>><<endevent>><</link>>
 	<br>
 <<elseif $asylumstate is "assessment" and $daily.asylumAssessment isnot 1>>
-	정신병원의 거주 구역에서 평가를 받을 시간입니다. 당신은 자리를 비운 것을 들키기 전에 돌아갑니다.
+	정신병원의 거주 구역에서 평가를 받을 시간이다. 당신은 자리를 비운 것을 들키기 전에 돌아간다.
 	<br><br>
 
 	<<link [[다음|Asylum]]>><<endevent>><</link>>

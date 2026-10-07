@@ -2833,7 +2833,7 @@
 <<setTowerTemp>><<effects>>
 
 <<if $syndromebird is 1 or $harpy gte 6>>
-	당신은 둥지에 눕는다<<if ["sleep", "rest", "brood"].includes($bird.activity) and $bird.state is "home">><<npc "Great Hawk">><<set $bedGuest to "Great Hawk">>. <<if $syndromebird is 1>>당신의<<else>>그<</if>> <<beasttype>>【와과】 함께.<</if>>
+	<<if ["sleep", "rest", "brood"].includes($bird.activity) and $bird.state is "home">><<npc "Great Hawk">><<set $bedGuest to "Great Hawk">><<beasttype>>【와과】 함께 둥지에 눕는다.<<else>>당신은 둥지에 눕는다.<</if>>
 <<else>>
 	당신은 둥지에 눕는다.
 <</if>>

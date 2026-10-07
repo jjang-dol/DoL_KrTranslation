@@ -144,7 +144,7 @@
 			<<if !$gwylan.timer.petBed>>
 				<<bedicon "gwylanpet">><span class="purple"><<if $worn.neck.name is "familiar collar" and $worn.neck.cursed is 1>>당신의 애완동물 침대<<else>>그윌란이 당신을 위해 내놓은 침대<</if>>【을를】 찾을 수 없다.</span>
 			<<else>>
-				<<set _doggyBedText to $worn.neck.name is "familiar collar" and $worn.neck.cursed is 1 ? "Your pet bed" : "Pet bed">>
+				<<set _doggyBedText to $worn.neck.name is "familiar collar" and $worn.neck.cursed is 1 ? "당신의 애완동물 침대" : "애완동물 침대">>
 				<<bedicon "gwylanpet">><<link [[_doggyBedText|Forest Shop Dog Bed]]>><</link>>
 			<</if>>
 			<br>

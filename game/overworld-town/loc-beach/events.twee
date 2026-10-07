@@ -1107,15 +1107,15 @@
 	그들의 의도를 알 수 없어, 당신은 도망치기 시작한다.
 
 	<<if $athleticsSuccess>>
-		<span class="green">당신의 속도를 학급 친구들이 따라잡을 수 없습니다.</span> 거리가 벌어지는 것이 분명해지자, 그들은 포기하고 각자의 볼일을 보러 간다.
+		<span class="green">당신의 속도를 학급 친구들이 따라잡을 수 없다.</span> 거리가 벌어지는 것이 분명해지자, 그들은 포기하고 각자의 볼일을 보러 간다.
 		<br><br>
 		<<destinationBeach "다음">><<set $eventskip to 1>><</destinationBeach>>
 	<<elseif $cool gte 160>>
-		<span class="green">그들은 당신을 쫓아오지 않습니다.</span> 당신은 걸음으로 속도를 늦추고 가던 길을 계속 간다.
+		<span class="green">그들은 당신을 쫓아오지 않는다.</span> 당신은 걸음으로 속도를 늦추고 가던 길을 계속 간다.
 		<br><br>
 		<<destinationBeach "다음">><<set $eventskip to 1>><</destinationBeach>>
 	<<else>>
-		당신은 도망치려 하지만, <span class="red">학급 친구들이 당신보다 훨씬 빠릅니다.</span> 그들은 달려와 당신을 모래 위로 넘어뜨린다. 각자 팔다리를 하나씩 잡고 당신을 물가로 데려간다.
+		당신은 도망치려 하지만, <span class="red">학급 친구들이 당신보다 훨씬 빠르다.</span> 그들은 달려와 당신을 모래 위로 넘어뜨린다. 각자 팔다리를 하나씩 잡고 당신을 물가로 데려간다.
 		<br><br>
 		물이 충분히 깊어지자, 그들은 당신의 머리부터 바다에 던져 머리부터 발끝까지 흠뻑 젖게 만든다. 그들은 한바탕 웃고는 자기들끼리 재잘거리며 떠난다. <<lcool>><<gstress>><<status -5>><<stress 10>>
 		<br><br>

@@ -331,7 +331,7 @@
 		][random(0,4)]>>
 	<<elseif ($speechSextoyState is "aroused" or $speechsextoy is 1) and random(0,2) isnot 0 and ($rightarm is "heldSexToy" or $leftarm is "heldSexToy")>>
 		<<if $rightarm is "heldSexToy" and $leftarm is "heldSexToy">>
-			<<set $_sexToy to "성인용 장난감들">>
+			<<set $_sexToy to "섹스 토이들">>
 		<<elseif $rightarm is "heldSexToy">>
 			<<set $_sexToy to $currentSexToyRight.name>>
 		<<else>>
@@ -347,7 +347,7 @@
 		][random(0,4)]>>
 	<<elseif $speechSextoyState is "shocked" and ($rightarm is "heldSexToy" or $leftarm is "heldSexToy")>>
 		<<if $rightarm is "heldSexToy" and $leftarm is "heldSexToy">>
-			<<set $_sexToy to "성인용 장난감들">>
+			<<set $_sexToy to "섹스 토이들">>
 		<<elseif $rightarm is "heldSexToy">>
 			<<set $_sexToy to $currentSexToyRight.name>>
 		<<else>>
@@ -363,7 +363,7 @@
 		][random(0,4)]>>
 	<<elseif $speechSextoyState is "disappointed" and ($rightarm is "heldSexToy" or $leftarm is "heldSexToy")>>
 		<<if $rightarm is "heldSexToy" and $leftarm is "heldSexToy">>
-			<<set $_sexToy to "성인용 장난감들">>
+			<<set $_sexToy to "섹스 토이들">>
 		<<elseif $rightarm is "heldSexToy">>
 			<<set $_sexToy to $currentSexToyRight.name>>
 		<<else>>
@@ -379,7 +379,7 @@
 		][random(0,4)]>>
 	<<elseif $speechSextoyState is "angry" and ($rightarm is "heldSexToy" or $leftarm is "heldSexToy")>>
 		<<if $rightarm is "heldSexToy" and $leftarm is "heldSexToy">>
-			<<set $_sexToy to "성인용 장난감들">>
+			<<set $_sexToy to "섹스 토이들">>
 		<<elseif $rightarm is "heldSexToy">>
 			<<set $_sexToy to $currentSexToyRight.name>>
 		<<else>>
@@ -2369,11 +2369,11 @@
 		<</if>>
 		<<He>>【이가】 말한다.
 		<<if $enemyanger lte 20>>
-			"내 $_toyOrFinger【이가】 기분 좋게 해주고 있어?"
+			"내 <<print ($_toyOrFinger is "finger" ? "손가락" : window.KR.getToolKr($_toyOrFinger))>>【이가】 기분 좋게 해주고 있어?"
 		<<elseif $enemyanger lte 100>>
 			"이거 좋잖아, 안 그래."
 		<<else>>
-			"얌전히 구는 게 좋을 거야, 이것보다 훨씬 거칠게 다룰 수도 있으니까." <<He>>【이가】 본보기를 보여주기 위해 당신의 항문 안에서 $_toyOrFinger【을를】 더 격렬하게 움직인다.
+			"얌전히 구는 게 좋을 거야, 이것보다 훨씬 거칠게 다룰 수도 있으니까." <<He>>【이가】 본보기를 보여주기 위해 당신의 항문 안에서 <<print ($_toyOrFinger is "finger" ? "손가락" : window.KR.getToolKr($_toyOrFinger))>>【을를】 더 격렬하게 움직인다.
 		<</if>>
 
 	<<elseif $speechvaginamouth is 1>>

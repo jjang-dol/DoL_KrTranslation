@@ -690,11 +690,11 @@ Groups littermates by pregnancyId.*/
 				<<case "notext">>
 				<<case "lowercase">>
 					/* .name(영문, 불변)을 카탈로그에서 조회해 name_lower(한글)를 가져옴 */
-					<<set $_text_output to window.KR.getToyNameKr(_toySelection, _toy.name)>>
-					<<set _toyName to window.KR.getToyNameKr(_toySelection, _toy.name)>>
+					<<set $_text_output to getToyNameKr(_toySelection, _toy.name)>>
+					<<set _toyName to getToyNameKr(_toySelection, _toy.name)>>
 				<<default>>
-					<<set $_text_output to window.KR.getToyNameKr(_toySelection, _toy.name)>>
-					<<set _toyName to window.KR.getToyNameKr(_toySelection, _toy.name)>>
+					<<set $_text_output to getToyNameKr(_toySelection, _toy.name)>>
+					<<set _toyName to getToyNameKr(_toySelection, _toy.name)>>
 			<</switch>>
 		<</if>>
 	<</if>>

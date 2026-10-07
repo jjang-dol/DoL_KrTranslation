@@ -65,66 +65,69 @@
 	<<if npcHasSexToyOfType(_n,"dildo")>>
 
 		<<if $NPCList[_n].location.genitals is "head" or $mouthuse is "facesit" or $mouthuse is "penis">>
-			<<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>에 든 $_toy【으로로】 당신의 <<breasts>>【을를】 <<print either("찰싹 때린다","후려갈긴다","철썩 때린다","세게 친다","매섭게 내리친다")>>,
+			<<He>>【이가】 
 			<<if $worn.over_upper.name isnot "naked" and $worn.over_lower.state is "waist">>
-				당신의 $worn.over_upper.name 너머로.
+				당신의 $worn.over_upper.name 너머로 
 			<<elseif $worn.upper.name isnot "naked" and $worn.lower.state is "waist">>
-				당신의 $worn.upper.name 너머로.
+				당신의 $worn.upper.name 너머로 
 			<<elseif $worn.under_upper.name isnot "naked" and $worn.under_lower.state is "waist">>
-				당신의 $worn.under_upper.name 너머로.
+				당신의 $worn.under_upper.name 너머로 
 			<<else>>
-				노출된 피부를 붉게 물들이며.
+				당신의 노출된 피부를 붉게 물들이며 
 			<</if>>
+			<<print ($_hand is "left" ? "왼손" : "오른손")>>에 든 <<print window.KR.getToolKr($_toy)>>【으로로】 당신의 <<breasts>>【을를】 <<print either("찰싹 때린다","후려갈긴다","철썩 때린다","세게 친다","매섭게 내리친다")>>.
 		<<else>>
-			<<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>에 든 $_toy【으로로】 당신의 <<bottom>>【을를】 <<print either("찰싹 때린다","후려갈긴다","철썩 때린다","세게 친다","매섭게 내리친다")>>,
+			<<He>>【이가】 
 			<<if $worn.lower.anus_exposed is 1 and $worn.over_lower.anus_exposed is 1>>
 				<<if $worn.under_lower.name isnot "naked" and $worn.under_lower.anus_exposed is 0>>
-					당신의 $worn.under_lower.name 너머로.
+					당신의 $worn.under_lower.name 너머로 
 				<<else>>
-					노출된 피부를 붉게 물들이며.
+					당신의 노출된 피부를 붉게 물들이며 
 				<</if>>
 			<<elseif $worn.over_lower.name isnot "naked" and $worn.over_lower.state is "waist">>
-				당신의 $worn.over_lower.name 너머로.
+				당신의 $worn.over_lower.name 너머로 
 			<<elseif $worn.lower.name isnot "naked" and $worn.lower.state is "waist">>
-				당신의 $worn.lower.name 너머로.
+				당신의 $worn.lower.name 너머로 
 			<<elseif $worn.under_lower.name isnot "naked" and $worn.under_lower.state is "waist">>
-				당신의 $worn.under_lower.name 너머로.
+				당신의 $worn.under_lower.name 너머로 
 			<<else>>
-				노출된 피부를 붉게 물들이며.
+				당신의 노출된 피부를 붉게 물들이며 
 			<</if>>
+			<<print ($_hand is "left" ? "왼손" : "오른손")>>에 든 <<print window.KR.getToolKr($_toy)>>【으로로】 당신의 <<bottom>>【을를】 <<print either("찰싹 때린다","후려갈긴다","철썩 때린다","세게 친다","매섭게 내리친다")>>.
 			<<bodypart_admire_chance random_bottom>>
 		<</if>>
 		<<violence 5 1 1 1 _n>>
 	<<elseif npcHasSexToyOfType(_n,"whip")>>
 		<<if $NPCList[_n].location.genitals is "head" or $mouthuse is "facesit" or $mouthuse is "penis">>
-			<<He>>【은는】 <<print either("잔인하게","악랄하게","능숙하게","가학적으로","악의적으로")>>
-			<<print ($_hand is "left" ? "오른손" : "왼손")>>에 든 $_toy【으로로】 당신의 <<breasts>>【을를】 <<print either("찰싹 때린다","후려갈긴다","철썩 때린다","세게 친다","매섭게 내리친다")>>,
+			<<He>>【은는】 <<print either("잔인하게","악랄하게","능숙하게","가학적으로","악의적으로")>> 
 			<<if $worn.over_upper.name isnot "naked" and $worn.over_lower.state is "waist">>
-				당신의 $worn.over_upper.name 너머로.
+				당신의 $worn.over_upper.name 너머로 
 			<<elseif $worn.upper.name isnot "naked" and $worn.lower.state is "waist">>
-				당신의 $worn.upper.name 너머로.
+				당신의 $worn.upper.name 너머로 
 			<<elseif $worn.under_upper.name isnot "naked" and $worn.under_lower.state is "waist">>
-				당신의 $worn.under_upper.name 너머로.
+				당신의 $worn.under_upper.name 너머로 
 			<<else>>
-				노출된 피부를 붉게 물들이며.
+				당신의 노출된 피부를 붉게 물들이며 
 			<</if>>
+			<<print ($_hand is "left" ? "왼손" : "오른손")>>에 든 <<print window.KR.getToolKr($_toy)>>【으로로】 당신의 <<breasts>>【을를】 <<print either("찰싹 때린다","후려갈긴다","철썩 때린다","세게 친다","매섭게 내리친다")>>.
 		<<else>>
-			<<He>>【이가】 <<print either("무자비하게","악랄하게","교묘하게","가학적으로","악의적으로")>> <<print ($_hand is "left" ? "오른손" : "왼손")>>에 든 $_toy【으로로】 당신의 <<bottom>>【을를】 <<print either("찰싹 때린다","후려갈긴다","철썩 때린다","세게 친다","매섭게 내리친다")>>,
+			<<He>>【이가】 <<print either("무자비하게","악랄하게","교묘하게","가학적으로","악의적으로")>> 
 			<<if $worn.lower.anus_exposed is 1 and $worn.over_lower.anus_exposed is 1>>
 				<<if $worn.under_lower.name isnot "naked" and $worn.under_lower.anus_exposed is 0>>
-					당신의 $worn.under_lower.name 너머로.
+					당신의 $worn.under_lower.name 너머로 
 				<<else>>
-					노출된 피부를 붉게 물들이며.
+					당신의 노출된 피부를 붉게 물들이며 
 				<</if>>
 			<<elseif $worn.over_lower.name isnot "naked" and $worn.over_lower.state is "waist">>
-				당신의 $worn.over_lower.name 너머로.
+				당신의 $worn.over_lower.name 너머로 
 			<<elseif $worn.lower.name isnot "naked" and $worn.lower.state is "waist">>
-				당신의 $worn.lower.name 너머로.
+				당신의 $worn.lower.name 너머로 
 			<<elseif $worn.under_lower.name isnot "naked" and $worn.under_lower.state is "waist">>
-				당신의 $worn.under_lower.name 너머로.
+				당신의 $worn.under_lower.name 너머로 
 			<<else>>
-				노출된 피부를 붉게 물들이며.
+				당신의 노출된 피부를 붉게 물들이며 
 			<</if>>
+			<<print ($_hand is "left" ? "왼손" : "오른손")>>에 든 <<print window.KR.getToolKr($_toy)>>【으로로】 당신의 <<bottom>>【을를】 <<print either("찰싹 때린다","후려갈긴다","철썩 때린다","세게 친다","매섭게 내리친다")>>.
 		<</if>>
 		<<bodypart_admire_chance random_bottom>>
 		<<violence 20 1 1 1 _n>>
@@ -265,7 +268,7 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 			<<set $leftarm to 0>>
 		<</if>>
 	<<else>>
-		<<He>>【이가】 자신의 손으로 당신의 <<print ($_hand is "left" ? "오른손" : "왼손")>>【을를】 <<strokes>>
+		<<He>>【이가】 자신의 손으로 당신의 <<print ($_hand is "left" ? "왼손" : "오른손")>>【을를】 <<strokes>>
 	<</if>>
 <</widget>>
 
@@ -405,20 +408,20 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 
 	<<set $_rng to random(1, 100)>>
 	<<if $_rng gte 96>>
-		<span class="blue"><<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【을를】 당신의 <<pussy>>에서 치운다.</span>
+		<span class="blue"><<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【을를】 당신의 <<pussy>>에서 치운다.</span>
 		<<combat-reset-hand _args[0]>><<set $NPCList[_n][$_hand + "tool"] to 0>>
 		/*<<set $vaginause to 0>>*/
 	<<elseif $rng gte 61>>
-		<<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【으로로】 당신의 음순을 <<strokes>><<if $_clothing isnot undefined>> 그리고 당신의 <<print $_clothing>>【을를】 너머로<</if>>.
+		<<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【으로로】 당신의 음순을 <<strokes>><<if $_clothing isnot undefined>> 그리고 당신의 <<print $_clothing>>【을를】 너머로<</if>>.
 		<<neutral 10 "genitals" _n>>
 		<<bodypart_admire_chance pubic>>
 	<<elseif ($_rng gte 21 or $novaginal is 0) and (!$player.penisExist or random(1,100) gte 51)>>
-		<<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【으로로】 당신의 클리토리스를 <<print either("문지른다","가볍게 때린다")>><<if $_clothing isnot undefined>>, 당신의 <<print $_clothing>>【을를】 너머로<</if>>.
+		<<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【으로로】 당신의 클리토리스를 <<print either("문지른다","가볍게 때린다")>><<if $_clothing isnot undefined>>, 당신의 <<print $_clothing>>【을를】 너머로<</if>>.
 		<<set $speechclit to 1>><<neutral 10 "genitals" _n>>
 		<<violence 1>>
 		<<bodypart_admire_chance pubic>>
 	<<elseif $_rng gte 21 or $novaginal is 0>>
-		<<He>>【이가】 당신의 보지를 희롱하는 동시에 <<his>> $_toy【으로로】 당신의 <<penisSimple>> 밑동을 문지른다<<if $_clothing isnot undefined>>, 당신의 <<print $_clothing>>【을를】 통해<</if>>.
+		<<He>>【이가】 당신의 보지를 희롱하는 동시에 <<his>> <<print window.KR.getToolKr($_toy)>>【으로로】 당신의 <<penisSimple>> 밑동을 문지른다<<if $_clothing isnot undefined>>, 당신의 <<print $_clothing>>【을를】 통해<</if>>.
 		<<neutral 10 "genitals" _n>><<set $speechfutapenis to 1>>
 		<<bodypart_admire_chance pubic>>
 	<<elseif $_rng lte 20 and $novaginal is 0
@@ -428,11 +431,11 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 	and !playerChastity("vagina")) and $vaginause isnot "othermouth" and ($settings.vaginalDoubleEnabled and $settings.toyMultiplePenetrationEnabled or $vaginause is 0)>>
 		/* penetration */
 		/* Doesn't check if the PC is already penetrated (aside from mouth) in order to allow for multiple penetrations. */
-		<span class="pink"><<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【을를】 당신의 따뜻한 <<pussy>>에 깊숙이 쑤셔 넣는다.</span>
+		<span class="pink"><<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【을를】 당신의 따뜻한 <<pussy>>에 깊숙이 쑤셔 넣는다.</span>
 		<<neutral 15 "genitals" _n>><<set $speechvagina to 1>><<combat-set-hand-target _args[0] "vaginadildo">>
 		<<bodypart_admire_chance pubic>>
 	<<else>>
-		<<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【으로로】 당신의 음순을 <<strokes>>
+		<<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【으로로】 당신의 음순을 <<strokes>>
 		<<neutral 10 "genitals" _n>>
 		<<bodypart_admire_chance pubic>>
 	<</if>>
@@ -443,11 +446,11 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 	<<set $_toy to (_args[0] is "left" ? $NPCList[_n].lefttool : $NPCList[_n].righttool)>>
 	<<rng>>
 	<<if $rng gte 101>>
-		<span class="purple"><<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【을를】 당신의 <<pussy>>에서 미끄러뜨리듯 빼낸다.</span>
+		<span class="purple"><<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【을를】 당신의 <<pussy>>에서 미끄러뜨리듯 빼낸다.</span>
 		<<combat-set-hand-target _args[0] "dildo">><<set $NPCList[_n][$_hand + "tool"] to 0>>
 		<<neutral 15 "genitals" _n>>
 	<<elseif $rng lte 100>>
-		<<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【을를】 당신의 <<pussy>> 안에서 <<strokes>> 그리고
+		<<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【을를】 당신의 <<pussy>> 안에서 <<strokes>> 그리고
 		<<if $vaginastate isnot 0 and $vaginastate.includes("double")>>
 			두 개의 자지와 ?alongside,
 		<<elseif $vaginastate isnot 0 and $vaginastate is "penetrated">>
@@ -483,7 +486,7 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 
 	<<rng>>
 	<<if $rng gte 96 or !$settings.toyMultiplePenetrationEnabled>>
-		<span class="blue"><<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【을를】 당신의 <<penis>>에서 멀리 치운다.</span>
+		<span class="blue"><<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【을를】 당신의 <<penis>>에서 멀리 치운다.</span>
 		<<combat-reset-hand _args[0]>><<set $NPCList[_n][$_hand + "tool"] to 0>>
 		/*<<set $penisuse to 0>>*/
 	<<elseif $rng gte 51>>
@@ -492,11 +495,11 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 			<<case "penetrated">><<set $_teased to "vagina">>
 			<<case "penispenetrated">><<set $_teased to "cock">>
 		<</switch>>
-		<<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【을를】 사용하여 당신의 <<penis>>【을를】 <<strokes>><<if $_clothing isnot undefined>>, 당신의 <<print $_clothing>>【을를】 통해.<<elseif $penisstate is "otheranus" or $penisstate is "penetrated">><<set $_n to _n>>, <<personselect $penistarget>><<combatpersons>> $_teased【을를】 희롱하며.<<personselect $_n>><<else>>.<</if>>
+		<<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【을를】 사용하여 당신의 <<penis>>【을를】 <<strokes>><<if $_clothing isnot undefined>>, 당신의 <<print $_clothing>>【을를】 통해.<<elseif $penisstate is "otheranus" or $penisstate is "penetrated">><<set $_n to _n>>, <<personselect $penistarget>><<combatpersons>> $_teased【을를】 희롱하며.<<personselect $_n>><<else>>.<</if>>
 		<<neutral 10 "genitals" _n>>
 		<<bodypart_admire_chance pubic>>
 	<<elseif $rng gte 21>>
-		<<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【으로로】 당신의 귀두를 <<print either("가볍게 친다","찰싹 때린다","희롱한다","문지른다")>><<if $_clothing isnot undefined>>, 당신의 <<print $_clothing>>【을를】 너머로<</if>>.
+		<<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【으로로】 당신의 귀두를 <<print either("가볍게 친다","찰싹 때린다","희롱한다","문지른다")>><<if $_clothing isnot undefined>>, 당신의 <<print $_clothing>>【을를】 너머로<</if>>.
 		<<neutral 10 "genitals" _n>><<set $speechglans to 1>>
 		<<violence 1>>
 		<<bodypart_admire_chance pubic>>
@@ -506,13 +509,13 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 	and $worn.over_lower.name isnot "naked" and ($worn.over_lower.state isnot "waist" or $worn.over_lower.vagina_exposed gte 1)
 	and !playerChastity("penis")>>
 		/* escalation */
-		<span class="pink"><<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【을를】 당신의 <<penisSimple>>에 <<print either("문지른다","비벼댄다","펜싱하듯 부딪친다")>>.</span>
+		<span class="pink"><<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【을를】 당신의 <<penisSimple>>에 <<print either("문지른다","비벼댄다","펜싱하듯 부딪친다")>>.</span>
 		<<neutral 15 "genitals" _n>>
 		<<set $speechpenis to 1>>
 		<<combat-set-hand-target _args[0] "penisdildo">>
 		<<bodypart_admire_chance pubic>>
 	<<else>>
-		<<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【으로로】 당신의 <<penis>>【을를】 <<strokes>>
+		<<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【으로로】 당신의 <<penis>>【을를】 <<strokes>>
 		<<neutral 10 "genitals" _n>>
 		<<bodypart_admire_chance pubic>>
 	<</if>>
@@ -526,7 +529,7 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 		<<set $rng += 10>>
 	<</if>>
 	<<if $rng gte 96>>
-		<span class="purple"><<He>>【이가】 당신의 <<penis>>에서 $_toy【을를】 빼낸다.</span>
+		<span class="purple"><<He>>【이가】 당신의 <<penis>>에서 <<print window.KR.getToolKr($_toy)>>【을를】 빼낸다.</span>
 		<<combat-set-hand-target _args[0] "dildo">><<set $NPCList[_n][$_hand + "tool"] to 0>>
 		<<neutral 15 "genitals" _n>>
 	<<elseif $rng lte 100>>
@@ -539,7 +542,7 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 			<<his>> <<print _args[0] is "left" ? "왼손" : "오른손">>【으로로】, <<he>>【이가】 당신의 <<penis>> 전체를 <<print either("마사지한다","문지른다","펜싱하듯 부딪친다","비빈다")>>
 			당신이 <<set $_n to _n>><<personselect $penistarget>><<combatpersons>> $_teased【을를】 $_fuck 동안.<<personselect $_n>>
 		<<else>>
-			<<He>>【이가】 <<his>> <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【으로로】 당신의 <<penis>> 전체를 <<print either("마사지한다","문지른다","펜싱하듯 부딪친다","비빈다")>>,
+			<<He>>【이가】 <<his>> <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【으로로】 당신의 <<penis>> 전체를 <<print either("마사지한다","문지른다","펜싱하듯 부딪친다","비빈다")>>,
 			<<neutral 20 "genitals" _n>><<set $speechpenis to 1>>
 			<<if !playerHasStrapon()>>
 				<<if $arousal gte ($arousalmax / 5) * 4>>
@@ -578,17 +581,17 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 
 	<<rng>>
 	<<if $rng gte 96>>
-		<span class="blue"><<he>>【이가】 <<his>> <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【을를】 당신의 <<penis>>에서 치운다.</span>
+		<span class="blue"><<he>>【이가】 <<his>> <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【을를】 당신의 <<penis>>에서 치운다.</span>
 		<<combat-reset-hand _args[0]>><<set $NPCList[_n][$_hand + "tool"] to 0>>
 	<<elseif $rng gte 61 and $penisuse is 0 and $worn.under_lower.name isnot "naked" and ($worn.under_lower.state isnot "waist" or $worn.under_lower.vagina_exposed gte 1) and $worn.lower.name isnot "naked" and ($worn.lower.state isnot "waist" or $worn.lower.vagina_exposed gte 1) and $worn.over_lower.name isnot "naked" and ($worn.over_lower.state isnot "waist" or $worn.over_lower.vagina_exposed gte 1)>>
-		<span class="pink"><<he>>【이가】 <<his>> <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【을를】 당신의 자지 위로 찔러넣는다.</span>
+		<span class="pink"><<he>>【이가】 <<his>> <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【을를】 당신의 자지 위로 찔러넣는다.</span>
 		<<set $penisuse to "stroker">><<set $penisstate to "stroker">>
 		<<neutral 15 "genitals" _n>>
 		<<set $speechpenis to 1>>
 		<<combat-set-hand-target _args[0] "penisstroker">>
 		<<bodypart_admire_chance pubic>>
 	<<else>>
-		<<he>>【이가】 <<his>> <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【으로로】 <<if $_clothing isnot "none">>당신의 $_clothing【을를】 너머로, <</if>>당신의 귀두를 애태운다.
+		<<he>>【이가】 <<his>> <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【으로로】 <<if $_clothing isnot "none">>당신의 $_clothing【을를】 너머로, <</if>>당신의 귀두를 애태운다.
 		<<neutral 10 "genitals" _n>><<set $speechglans to 1>>
 		<<bodypart_admire_chance pubic>>
 	<</if>>
@@ -599,14 +602,14 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 	<<set $_toy to (_args[0] is "left" ? $NPCList[_n].lefttool : $NPCList[_n].righttool)>>
 	<<rng>>
 	<<if $rng gte 101>>
-		<span class="blue"><<he>>【이가】 <<his>> <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【을를】 당신의 <<penis>>에서 치운다.</span>
+		<span class="blue"><<he>>【이가】 <<his>> <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【을를】 당신의 <<penis>>에서 치운다.</span>
 		<<combat-reset-hand _args[0]>><<set $NPCList[_n][$_hand + "tool"] to 0>>
 		<<set $penisuse to 0>>
 	<<elseif $enemyarousal gte (($enemyarousalmax / 5) * 4)>>
-		힘을 더하며, <<he>>【이가】 <<his>> <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【으로로】 당신의 <<penis>>【을를】 유린한다.
+		힘을 더하며, <<he>>【이가】 <<his>> <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【으로로】 당신의 <<penis>>【을를】 유린한다.
 	<<else>>
 		<<set $_toy to (_args[0] is "left" ? $NPCList[_n].lefttool : $NPCList[_n].righttool)>>
-		<<he>>【이가】 <<his>> <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【으로로】 당신의 자지를 <<print either("유린한다","유린한다","리듬감 있게 다룬다")>>.
+		<<he>>【이가】 <<his>> <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【으로로】 당신의 자지를 <<print either("유린한다","유린한다","리듬감 있게 다룬다")>>.
 	<</if>>
 <</widget>>
 
@@ -626,11 +629,11 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 
 	<<rng>>
 	<<if $rng gte 96>>
-		<span class="blue"><<He>>【이가】 당신의 엉덩이에서 <<his>> <<print _hand is "left" ? "왼손" : "오른손">>에 든 $_toy【을를】 치운다.</span>
+		<span class="blue"><<He>>【이가】 당신의 엉덩이에서 <<his>> <<print _hand is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【을를】 치운다.</span>
 		<<combat-reset-hand _args[0]>><<set $NPCList[_n][$_hand + "tool"] to 0>>
 		/*<<set $anususe to 0>>*/
 	<<elseif $rng gte 21 or $noanal is 1>>
-		<<He>>【이가】 <<his>> <<print _hand is "left" ? "왼손" : "오른손">>에 든 $_toy【으로로】 당신의 <<print either("항문을","엉덩이를")>> <<print either("문지르며","때리며")>> 애태운다<<if $_clothing isnot undefined>>, 당신의 <<print $_clothing>> 너머로<<elseif playerHasButtPlug()>>, 당신의 $worn.butt_plug.name【을를】 <<print either("문지르며","가로질러서")>><</if>>.
+		<<He>>【이가】 <<his>> <<print _hand is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【으로로】 당신의 <<print either("항문을","엉덩이를")>> <<print either("문지르며","때리며")>> 애태운다<<if $_clothing isnot undefined>>, 당신의 <<print $_clothing>> 너머로<<elseif playerHasButtPlug()>>, 당신의 $worn.butt_plug.name【을를】 <<print either("문지르며","가로질러서")>><</if>>.
 		<<neutral 10 _n>>
 		<<violence 1>>
 		<<bodypart_admire_chance random_bottom>>
@@ -641,13 +644,13 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 	and !playerChastity("anus") and (!playerHasButtPlug() or random(0,1) isnot 0) and $anususe isnot "othermouth" and ($settings.analDoubleEnabled and $settings.toyMultiplePenetrationEnabled or $anususe is 0)>>
 		/* penetration */
 		/* Doesn't check if the PC is already penetrated (aside from mouth) in order to allow for multiple penetrations. */
-		<span class="pink"><<He>>【이가】 <<his>> <<print _hand is "left" ? "왼손" : "오른손">>에 든 $_toy【을를】 당신의 엉덩이에 찔러 넣는다<<if playerHasButtPlug()>>, 당신의 $worn.butt_plug.name【은는】 아랑곳하지 않고<</if>>.</span>
+		<span class="pink"><<He>>【이가】 <<his>> <<print _hand is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【을를】 당신의 엉덩이에 찔러 넣는다<<if playerHasButtPlug()>>, 당신의 $worn.butt_plug.name【은는】 아랑곳하지 않고<</if>>.</span>
 		<<combat-set-hand-target _hand "anusdildo">>
 		<<neutral 15 _n>>
 		<<set $speechanus to 1>>
 		<<bodypart_admire_chance random_bottom>>
 	<<else>>
-		<<He>>【이가】 <<his>> <<print _hand is "left" ? "왼손" : "오른손">>에 든 $_toy【으로로】 당신의 <<bottom>>【을를】 <<strokes>><<if playerHasButtPlug()>>, 당신의 $worn.butt_plug.name【을를】 문지르면서<</if>>.
+		<<He>>【이가】 <<his>> <<print _hand is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【으로로】 당신의 <<bottom>>【을를】 <<strokes>><<if playerHasButtPlug()>>, 당신의 $worn.butt_plug.name【을를】 문지르면서<</if>>.
 		<<neutral 10 _n>>
 		<<bodypart_admire_chance pubic>>
 	<</if>>
@@ -657,18 +660,18 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 	<<set $_toy to (_args[0] is "left" ? $NPCList[_n].lefttool : $NPCList[_n].righttool)>>
 	<<rng>>
 	<<if $rng gte 101>>
-		<span class="purple"><<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 들린 $_toy【을를】 당신의 항문에서 빼낸다.</span>
+		<span class="purple"><<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 들린 <<print window.KR.getToolKr($_toy)>>【을를】 당신의 항문에서 빼낸다.</span>
 		<<combat-set-hand-target _args[0] "dildo">>
 		<<neutral 15 _n>>
 	<<elseif $rng lte 100>>
 		<<set $_rhythmically to either("리듬에 맞춰","리듬에 맞춰","거칠게","부드럽게","애태우듯","능숙하게")>>
 		<<if $anusstate isnot 0 and $anusstate.includes("double")>>
-			<<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【을를】 두 자지와 ?alongside 당신의 항문에 $_rhythmically 쑤셔 넣었다 뺀다,
+			<<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【을를】 두 자지와 ?alongside 당신의 항문에 $_rhythmically 쑤셔 넣었다 뺀다,
 		<<elseif $anusstate isnot 0 and $anusstate is "penetrated">>
-			<<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【을를】 당신의 항문 안팎으로 $_rhythmically 쑤셔 넣었다 뺀다, <<print either("리듬에 맞춰","아랑곳하지 않고","나란히")>>
+			<<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【을를】 당신의 항문 안팎으로 $_rhythmically 쑤셔 넣었다 뺀다, <<print either("리듬에 맞춰","아랑곳하지 않고","나란히")>>
 			<<if $anustarget is _n>><<his>> <<npcPenisSimple _n>>,<<else>><<personselect $anustarget>><<combatPersons>>의 자지,<</if>>
 		<<else>>
-			<<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 $_toy【을를】 당신의 항문 안팎으로 $_rhythmically 쑤셔 넣었다 뺀다,
+			<<He>>【이가】 <<print _args[0] is "left" ? "왼손" : "오른손">>에 든 <<print window.KR.getToolKr($_toy)>>【을를】 당신의 항문 안팎으로 $_rhythmically 쑤셔 넣었다 뺀다,
 		<</if>>
 		<<neutral 20 _n>><<set $speechanus to 1>>
 		<<if $player.sex is "f">>
@@ -719,7 +722,7 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 	<<set $_hand to _args[0]>>
 	<<set $_dildo to ($_hand is "left" ? $NPCList[_n].lefttool : $NPCList[_n].righttool)>>
 	<<set $_consentcolour to ($consensual is 1 ? "blue" : "red")>>
-	<<set $_dildocolouredtext to "<span @class='$_consentcolour'>$_dildo</span>">>
+	<<set $_dildocolouredtext to "<span @class='$_consentcolour'>" + window.KR.getToolKr($_dildo) + "</span>">>
 	<<set $_eagerly to ($consensual is 1 ? "열렬하게" : "위협적으로")>>
 
 	<<if $NPCList[_n][($_hand is "left" ? "righthand" : "lefthand")] is 0>>
@@ -730,7 +733,7 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 
 	<span class="purple">
 		<<if _args[1] isnot undefined and _args[1] is "pocket">>
-			<<He>>【이가】 주머니에서 <span class="blue">$_dildo</span>【을를】 꺼내어, <<his>> $_npcpart에 $_eagerly 찰싹거린다.
+			<<He>>【이가】 주머니에서 <span class="blue"><<print window.KR.getToolKr($_dildo)>></span>【을를】 꺼내어, <<his>> $_npcpart에 $_eagerly 찰싹거린다.
 		<<else>>
 			<<switch random(0,3)>>
 <<case 0>> <<He>>【이가】 <<his>> $_dildocolouredtext【을를】 $_eagerly <<print either("휘두른다","과시한다","흔들어댄다","흔든다")>>.				<<case 1 2>><<He>>【이가】 <<his>> $_dildocolouredtext【을를】 <<his>> $_npcpart에 <<print either("찰싹거린다","때린다")>>.
@@ -982,9 +985,9 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 	<<switch _origin>>
 		<<case "chest">>
 			<<if $_target is "upper">>
-				<<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing_upper.name 상의 부분을 끌어내려,
+				<<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing_upper.name 상의 부분을 끌어내려,
 			<<else>>
-				<<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing_lower.name【을를】 잡아당기며 $_clothing_upper.name 역시 끌어내려,
+				<<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing_lower.name【을를】 잡아당기며 $_clothing_upper.name 역시 끌어내려,
 			<</if>>
 			<<if !_toplessExposed>>
 				당신의 <<exposedupper>>【을를】 드러낸다.
@@ -995,15 +998,15 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 			<</if>>
 		<<case "midriff">>
 			<<if $_target is "upper">>
-				<<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing_upper.name【을를】 복부 아래로 끌어내린다.
+				<<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing_upper.name【을를】 복부 아래로 끌어내린다.
 				<<neutral 1 _n>>
 			<<else>>
-				<<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing_lower.name【을를】 잡아당기며, 당신의 $_clothing_upper.name【을를】 복부 아래로 끌어내린다.
+				<<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing_lower.name【을를】 잡아당기며, 당신의 $_clothing_upper.name【을를】 복부 아래로 끌어내린다.
 				<<neutral 1 _n>>
 			<</if>>
 			<<if playerBellyVisible()>><<set $speechpregnant to 1>><</if>>
 		<<case "waist">>
-			<<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing_upper.name【을를】 허벅지까지 끌어내려,
+			<<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing_upper.name【을를】 허벅지까지 끌어내려,
 			<<if !_bottomlessExposed>>
 				당신의 <<exposedlower>>【을를】 드러낸다.
 				<<neutral 2 _n>>
@@ -1012,13 +1015,13 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 				<<neutral 5 _n>><<set $speechgenitals to 1>>
 			<</if>>
 		<<case "thighs">>
-			<<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing_upper.name【을를】 무릎까지 끌어내린다.
+			<<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing_upper.name【을를】 무릎까지 끌어내린다.
 			<<neutral 1 _n>>
 		<<case "knees">>
-			<<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing_upper.name【을를】 발목까지 끌어내린다.
+			<<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing_upper.name【을를】 발목까지 끌어내린다.
 			<<neutral 1 _n>>
 		<<case "ankles">>
-			<span class="purple"><<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing_upper.name【을를】 다리 아래로 완전히 벗겨낸다.</span>
+			<span class="purple"><<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing_upper.name【을를】 다리 아래로 완전히 벗겨낸다.</span>
 			<<neutral 5 _n>>
 	<</switch>>
 <</widget>>
@@ -1065,7 +1068,7 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 					<<if $_target is "upper">>
 						<<He>>【이가】 돌돌 말려 뭉친 당신의 $_clothing_upper.name【을를】 복부 위로 끌어 올린다.
 					<<else>>
-						<<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing_upper.name【을를】 복부 위로 걷어 올린다.
+						<<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing_upper.name【을를】 복부 위로 걷어 올린다.
 					<</if>>
 					<<neutral 2 _n>>
 					<<if playerBellyVisible()>><<set $speechpregnant to 1>><</if>>
@@ -1074,7 +1077,7 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 				<<if $_target is "upper">>
 					<<He>>【이가】 돌돌 말려 뭉친 당신의 $_clothing_upper.name【을를】 당신의 <<exposedupper>> 위로 끌어 올린다.
 				<<else>>
-					<<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing_upper.name【을를】 걷어 올려,
+					<<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing_upper.name【을를】 걷어 올려,
 					<<if !_toplessExposed>>
 						당신의 <<exposedupper>>【을를】 노출시킨다.
 						<<neutral 2 _n>>
@@ -1085,9 +1088,9 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 				<</if>>
 			<<case "chest">>
 				<<if $_target is "upper">>
-					<span class="purple"><<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 몸에서 $_clothing_upper.name【을를】 벗겨낸다.</span>
+					<span class="purple"><<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 몸에서 $_clothing_upper.name【을를】 벗겨낸다.</span>
 				<<else>>
-					<span class="purple"><<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing_upper.name【을를】 완전히 벗겨낸다.</span>
+					<span class="purple"><<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing_upper.name【을를】 완전히 벗겨낸다.</span>
 				<</if>>
 				<<neutral 3 _n>>
 		<</switch>>
@@ -1109,7 +1112,7 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 
 	<<switch _origin>>
 		<<case "chest">>
-			<<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing.name【을를】 끌어내려,
+			<<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing.name【을를】 끌어내려,
 			<<if !_toplessExposed>>
 				당신의 <<exposedupper>>【을를】 드러낸다.
 				<<neutral 2 _n>>
@@ -1118,11 +1121,11 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 				<<neutral 3 _n>><<set $speechbreasts to 1>>
 			<</if>>
 		<<case "midriff">>
-			<<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing.name【을를】 복부 아래로 끌어내린다.
+			<<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing.name【을를】 복부 아래로 끌어내린다.
 			<<neutral 1 _n>>
 			<<if playerBellyVisible()>><<set $speechpregnant to 1>><</if>>
 		<<case "waist">>
-			<<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing.name【을를】 허벅지까지 끌어내려,
+			<<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing.name【을를】 허벅지까지 끌어내려,
 			<<if !_bottomlessExposed and $_slot isnot "under_lower" and setup.clothes.lower[clothesIndex('lower', $worn.lower)].skirt isnot 1>>
 				당신의 <<exposedlower>>【을를】 드러낸다.
 				<<neutral 2 _n>>
@@ -1131,13 +1134,13 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 				<<neutral 5 _n>><<set $speechgenitals to 1>>
 			<</if>>
 		<<case "thighs">>
-			<<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing.name【을를】 무릎까지 끌어내린다.
+			<<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing.name【을를】 무릎까지 끌어내린다.
 			<<neutral 1 _n>>
 		<<case "knees">>
-			<<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing.name【을를】 발목까지 끌어내린다.
+			<<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing.name【을를】 발목까지 끌어내린다.
 			<<neutral 1 _n>>
 		<<case "ankles">>
-			<span class="purple"><<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 다리에서 $_clothing.name【을를】 완전히 벗겨낸다.</span>
+			<span class="purple"><<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 다리에서 $_clothing.name【을를】 완전히 벗겨낸다.</span>
 			<<neutral 3 _n>>
 	<</switch>>
 <</widget>>
@@ -1152,19 +1155,19 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 		<<combat-pull-clothing-state $_slot "up" $_hand>>
 		<<switch _dest>>
 			<<case "midriff">>
-				<<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing.name【을를】 걷어 올려, 당신의 복부를 노출시킨다.
+				<<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing.name【을를】 걷어 올려, 당신의 복부를 노출시킨다.
 				<<neutral 1 _n>>
 				<<if playerBellyVisible()>><<set $speechpregnant to 1>><</if>>
 			<<case "chest">>
 				<<if _toplessExposed>>
-					<<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing.name【을를】 걷어 올려, <span class="lewd">당신의 <<breasts>>【을를】 노출시킨다.</span>
+					<<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing.name【을를】 걷어 올려, <span class="lewd">당신의 <<breasts>>【을를】 노출시킨다.</span>
 					<<neutral 2 _n>><<set $speechbreasts to 1>>
 				<<else>>
-					<<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing.name【을를】 가슴 위로 걷어 올려, 당신의 <<exposedupper>>【을를】 노출시킨다.
+					<<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing.name【을를】 가슴 위로 걷어 올려, 당신의 <<exposedupper>>【을를】 노출시킨다.
 					<<neutral 1 _n>>
 				<</if>>
 			<<case 0>>
-				<span class="purple"><<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing.name【을를】 완전히 벗겨낸다.</span>
+				<span class="purple"><<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing.name【을를】 완전히 벗겨낸다.</span>
 				<<neutral 3 _n>>
 		<</switch>>
 	<<else>>
@@ -1179,7 +1182,7 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 	<<set $_hand to _args[1]>>
 
 	<<if playerHasStrapon() and $penisstate isnot 0>>
-		<<He>>【이가】 당신의 <<print setup.colourName($worn.under_lower.colour)>> $worn.under_lower.name에서 <<print ($_hand is "left" ? "오른손" : "왼손")>>【을를】 치운다.
+		<<He>>【이가】 당신의 <<print setup.colourName($worn.under_lower.colour)>> $worn.under_lower.name에서 <<print ($_hand is "left" ? "왼손" : "오른손")>>【을를】 치운다.
 		<<combat-reset-hand $_hand>><<neutral 5 _n>>
 	<<else>>
 		<<He>>【이가】 당신의 $_clothing.name【을를】 옆으로 젖혀, <span class="lewd">당신의 <<genitals>>【을를】 드러낸다.</span>
@@ -1284,7 +1287,7 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 	<<set $_clothing.skirt_down to 0>><<set $_clothing.vagina_exposed to 1>><<set $_clothing.anus_exposed to 1>><<set $_clothing.exposed to 2>>
 	<<outfitChecksExposed>>
 
-	<<He>>【이가】 <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $_clothing.name【을를】 걷어 올려, 당신의
+	<<He>>【이가】 <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $_clothing.name【을를】 걷어 올려, 당신의
 	<<if !_bottomlessExposed>>
 		<<exposedlower>>.
 		<<neutral 2 _n>>
@@ -1311,7 +1314,7 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 	<<set $_slot to _args[0]>>
 	<<set $_hand to _args[1]>>
 
-	<<he>>【이가】 <<his>> <<print ($_hand is "left" ? "오른손" : "왼손")>>으로 당신의 $worn[$_slot].name【을를】 잡아당겨, <<it $_slot>>【을를】 찢어버린 후 <span class="blue">놓아준다.</span>
+	<<he>>【이가】 <<his>> <<print ($_hand is "left" ? "왼손" : "오른손")>>으로 당신의 $worn[$_slot].name【을를】 잡아당겨, <<it $_slot>>【을를】 찢어버린 후 <span class="blue">놓아준다.</span>
 	<<combat-reset-hand $_hand>><<neutral 1 _n>>
 	<<set $worn[$_slot].integrity -= 10>>
 <</widget>>
@@ -1365,7 +1368,7 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 	<<set $_hand to _args[0]>>
 
 	<<if random(0,3) is 0>>
-		<<print ($_hand is "left" ? "오른손" : "왼손")>>으로, <<he>>【이가】 당신의 $_clothing【으로로】 항문을 맴돌며 애태운다.
+		<<print ($_hand is "left" ? "왼손" : "오른손")>>으로, <<he>>【이가】 당신의 $_clothing【으로로】 항문을 맴돌며 애태운다.
 	<<else>>
 		<<combat-remove-buttplug $_hand>>
 	<</if>>
@@ -4131,7 +4134,7 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 							<<he>>【이가】 당신을 따먹을 때마다, 기둥을 감싼 <<his>> 보지가 씰룩거리며 고동치는 것이 느껴진다.
 						<</if>>
 					<<elseif $enemyarousal gte (($enemyarousalmax / 5) * 2)>>
-						<<He>>【은는】 당신을 성인용 장난감 다루듯 하며 당신의 <<penis>>【을를】 계속 유린한다.
+						<<He>>【은는】 당신을 섹스 토이 다루듯 하며 당신의 <<penis>>【을를】 계속 유린한다.
 					<<else>>
 						<<He>>【은는】 최대한 깊이 <<his>> 보지 안으로 당신을 받아들이며 당신의 <<penis>>【을를】 유린한다.
 					<</if>>
@@ -4460,7 +4463,7 @@ Hands are 'inverted': NPC holds PC's left hand with their right one, and vice ve
 					<<if $enemyarousal gte (($enemyarousalmax / 5) * 4)>>
 						<<he>>【이가】 당신을 범하는 동안 <<his>> 엉덩이가 당신의 기둥을 감싸 쥐며 움찔거리는 것이 느껴진다.
 					<<elseif $enemyarousal gte (($enemyarousalmax / 5) * 2)>>
-						<<He>>【은는】 당신을 성인용 장난감 다루듯 하며 당신의 <<penis>>【을를】 계속 유린한다.
+						<<He>>【은는】 당신을 섹스 토이 다루듯 하며 당신의 <<penis>>【을를】 계속 유린한다.
 					<<else>>
 						<<He>>【은는】 <<his>> 엉덩이 속에 당신을 최대한 많이 집어삼키며 당신의 <<penis>>에 박아댄다.
 					<</if>>

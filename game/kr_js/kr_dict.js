@@ -1085,6 +1085,7 @@ window.KR.dict = {
 
   "dildo": "딜도",
   "small dildo": "소형 딜도",
+  "length of anal beads": "애널 비즈",
   "anal beads": "애널 비즈",
   "bullet vibe": "불릿 바이브",
   "butt plug": "애널 플러그",
@@ -1511,8 +1512,11 @@ window.KR.getToolKr = function(tool) {
         case "riding crop": return "승마 채찍";
         case "length of anal beads": return "애널 비즈";
         case "flog": return "채찍";
+        case "vibrator": return "바이브레이터";
+        case "bullet vibe": return "불릿 바이브";
+        case "stroker": return "오나홀";
         case "paddle": return "패들";
-        default: return tool;
+        default: return (window.KR.dict && Object.prototype.hasOwnProperty.call(window.KR.dict, tool)) ? window.KR.dict[tool] : tool;
     }
 };
 
@@ -1585,22 +1589,6 @@ window.KR.getDescriptionKr = function(text) {
         return word;
     }).join(" ");
     return translated;
-};
-
-/* 보육원/장난감 이름 출력용. 호출부가 넘긴 카탈로그(toyShop.twee의 _toySelection)에서 .name으로 조회해 name_lower 반환. */
-window.KR.getToyNameKr = function(catalog, name) {
-    if (!catalog) return name;
-    var ids = Object.keys(catalog);
-    for (var i = 0; i < ids.length; i++) {
-        var entry = catalog[ids[i]];
-        if (entry.name === name) return entry.name_lower;
-        if (entry.options) {
-            for (var j = 0; j < entry.options.length; j++) {
-                if (entry.options[j].name === name) return entry.options[j].name_lower;
-            }
-        }
-    }
-    return name;
 };
 
 /* 사람 이름(랜덤 몹 이름 + 네임드 스토리 캐릭터 이름) 통합 사전. 아래 gatPersonNameDictKR가 이 사전을 조회한다. */
@@ -1752,14 +1740,3 @@ window.KR.getBodywritingKr = function(writing) {
     return entry ? entry.writingKr : writing;
 };
 
-/* 손가락 개수 등 소수의 고유어 수 표현(한/두/세/네/다섯). "숫자 손가락" 같은 부자연스러운 표기 대신 "두 손가락"처럼 자연스럽게 쓰기 위함. */
-window.KR.getNativeCountKr = function(n) {
-    switch (Number(n)) {
-        case 1: return "한";
-        case 2: return "두";
-        case 3: return "세";
-        case 4: return "네";
-        case 5: return "다섯";
-        default: return String(n);
-    }
-};

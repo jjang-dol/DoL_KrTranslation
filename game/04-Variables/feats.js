@@ -1315,7 +1315,7 @@ setup.feats = {
 	},
 	"Stolen Technology": {
 		title: "도난당한 기술",
-		desc: "사창가 성기구 수리하기.",
+		desc: "사창가 섹스 토이 수리하기.",
 		difficulty: 2,
 		series: "",
 		filter: ["All", "Discoveries-Town"],
